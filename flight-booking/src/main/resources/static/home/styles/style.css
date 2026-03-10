@@ -7,6 +7,22 @@ main {
     padding: 5px 20px;
 }
 
+.home {
+    align-items: center;
+}
+
+.centre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-card {
+    padding: 12px 20px;
+    gap: 20px;
+}
+
 .top-nav {
     display: flex;
     justify-content: space-between;

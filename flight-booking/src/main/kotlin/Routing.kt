@@ -8,6 +8,7 @@ import io.ktor.server.http.content.*
 
 fun Application.configureRouting() {
     routing {
-        staticResources("/", "static")
+        staticResources("/", "static/home")
+        staticResources("/log_in", "static/log_in")
     }
 }
