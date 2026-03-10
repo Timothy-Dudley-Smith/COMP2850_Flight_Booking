@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+  <nav class="top-nav">
+    <div class="left-nav">
+        <a href="/">Home</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/book">Book</a>
+        <a href="/manage">Manage</a>
+    </div>
+    <div class="right-nav">
+    <a href="/log_in">Log In</a>
+    </div>
+  </nav>
+
+  <main class="home">
+        <section class="centre">
+            <h1>Flights</h1>
+            <p>Where would you like to go?</p>
+        </section>
+        <section class="search-card centre">
+            <form action="/search" method="get" class="flight-search-form">
+                <label for="from">From</label>
+                <input id="from" name="from" type="text">
+                <label for="to">To</label>
+                <input id="to" name="to" type="text">
+                <label for="date">Date</label>         <!--TODO: Add trip type (Return / Single) once search functionality exists-->
+                <input id="date" name="date" type="date">
+                <label for="passengers">Passengers</label>
+                <input id="passengers" name="passengers" type="number">
+
+                <button type="submit">Search</button>
+            </form>
+        </section>
+  </main>
+</body>
+</html>
