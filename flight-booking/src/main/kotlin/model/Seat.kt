@@ -10,7 +10,7 @@ data class Seat(
 )
 
 object Seats : Table() {
-    val flightId = reference("flight_id", Flights.flightId)
+    val flightId = reference("flightId", Flights.flightId)
     val seatNumber = varchar("seatNumber", VARCHAR_LENGTH)
     val isAvailable = bool("isAvailable")
 
