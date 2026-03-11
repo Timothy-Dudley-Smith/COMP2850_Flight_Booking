@@ -11,10 +11,10 @@ import io.ktor.server.routing.*
 import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
 
-fun Application.configureRouting() {
+fun Application.configureSerialization() {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
+        get("/json/kotlinx-serialization") {
+            call.respond(mapOf("hello" to "world"))
         }
     }
 }

@@ -7,5 +7,8 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    configureTemplating()
+    configureDatabases()
+    configureSerialization()
     configureRouting()
 }
