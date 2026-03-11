@@ -1,5 +1,4 @@
 package com.example.com
-
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

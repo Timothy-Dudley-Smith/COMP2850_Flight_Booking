@@ -14,7 +14,7 @@ import org.jetbrains.exposed.sql.*
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondResource("content/homepage/index.html")
         }
     }
 }
