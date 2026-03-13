@@ -42,4 +42,10 @@ class BookingService {
             payment = payment
         )
     }
+
+    fun cancelBooking(booking: Booking) {
+        for(seat in booking.seatsBooked) {
+            seat.isAvailable = true
+        }
+    }
 }
