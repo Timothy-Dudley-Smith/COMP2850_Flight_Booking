@@ -38,7 +38,7 @@ class BookingService {
         }
 
 
-        val Booking(
+        val booking = Booking(
             bookingId = bookingID,
             user = user, 
             flight = flight, 
@@ -65,5 +65,14 @@ class BookingService {
             }
         }
         return availableSeats
+    }
+
+    fun getBookingDetails(bookingID: String): Booking? {
+        for (booking in bookings) {
+            if (booking.bookingId == bookingId) {
+                return booking
+            }
+        }
+        return null
     }
 }
