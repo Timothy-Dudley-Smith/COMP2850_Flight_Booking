@@ -69,7 +69,7 @@ class BookingService {
 
     fun getBookingDetails(bookingID: String): Booking? {
         for (booking in bookings) {
-            if (booking.bookingId == bookingId) {
+            if (booking.bookingId == bookingID) {
                 return booking
             }
         }
