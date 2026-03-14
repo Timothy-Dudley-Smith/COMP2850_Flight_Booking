@@ -67,6 +67,7 @@ class BookingService {
         return availableSeats
     }
 
+    // return a booking that matches the provided booking Id
     fun getBookingDetails(bookingID: String): Booking? {
         for (booking in bookings) {
             if (booking.bookingId == bookingID) {
@@ -74,5 +75,22 @@ class BookingService {
             }
         }
         return null
+    }
+
+    // return a list of all bookings 
+    fun getAllBookings(): List<Booking> {
+        return bookings
+    }
+
+    // return all bookings made by a specific user
+    fun getBookingsByUser(user: User): List<Booking> {
+        val userBookings = mutableListOf<Booking>()
+
+        for (booking in bookings) {
+            if (booking.user == user) {
+                userBookings.add(booking)
+            }
+        }
+        return userBookings
     }
 }
