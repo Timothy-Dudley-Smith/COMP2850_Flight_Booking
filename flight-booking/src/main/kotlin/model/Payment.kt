@@ -5,14 +5,16 @@ import org.jetbrains.exposed.sql.Table
 
 data class Payment(
     val paymentId: Int,
+    val bookingId: Int,
     val amount: Double,
-    val status: String
+    val status: Boolean
 )
 
 object Payments : Table() {
     val paymentId = integer("paymentId").autoIncrement()
+    val bookingId = reference("bookingId", Bookings.bookingId)
     val amount = double("amount")
-    val status = varchar("status", VARCHAR_LENGTH)
+    val status = bool("status")
 
     override val primaryKey = PrimaryKey(paymentId)
 }

@@ -28,11 +28,11 @@ fun Application.configureDatabases() {
         SchemaUtils.create(
             Airports,
             Users,
-            Payments,
             Flights,
             Layovers,
             Seats,
             Bookings,
+            Payments,
             BookingSeats
         )
     }
