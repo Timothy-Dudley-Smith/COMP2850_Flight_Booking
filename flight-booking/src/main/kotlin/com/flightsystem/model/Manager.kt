@@ -5,7 +5,8 @@ class Manager(
     name: String,
     email: String,
     passwordHash: String
-) : User(userId, name, email, passwordHash) {
+    salt: String
+) : User(userId, name, email, passwordHash, salt) {
 
     fun viewBookings(bookings: List<Booking>) {
         println("Bookings as requested by the manager: ")
