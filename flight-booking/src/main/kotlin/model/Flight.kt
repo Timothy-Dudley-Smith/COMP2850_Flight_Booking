@@ -15,7 +15,7 @@ data class Flight(
 
 object Flights : Table() {
     val flightId = varchar("flightId", VARCHAR_LENGTH)
-    val date = String("date", VARCHAR_LENGTH)
+    val date = varchar("date", VARCHAR_LENGTH)
     val departureAirport = reference("departureAirport", Airports.code)
     val arrivalAirport = reference("arrivalAirport", Airports.code)
     val price = double("price")
