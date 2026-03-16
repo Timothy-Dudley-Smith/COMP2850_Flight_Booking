@@ -93,4 +93,58 @@ class BookingService {
         }
         return userBookings
     }
+
+    // temporarily hold seat so it can't be booked by others
+    fun holdSeat(seat: Seat): Boolean {
+        if (!seat.isAvailable) {
+            return false
+        }
+        seat.isAvailable = false 
+        return true
+    }
+
+    // release a held seat 
+    fun releaseSeat(seat: Seat) {
+        seat.isAvailable = true
+    }
+
+    // calc total price based on seat class
+    fun calculatePriceByClass(flight: Flight, seats: List<Seat>): Double {
+        var totalPrice = 0.0
+
+        for (seat in seats) {
+            val seatPrice = when (seat.seatClass) {
+                SeatClass.ECONOMY -> flight.price
+                SeatClass.BUSINESS -> flight.price * 1.5
+                SeatClass.FIRST -> flight.price * 2
+            }
+            totalPrice += seatPrice
+        }
+        return totalPrice
+    }
+
+    // update the seats assigned to an existing booking
+    fun updateBookingSeats(
+        booking: Boking,
+        newSeats: List<Seat>
+    ): Boolean {
+        //check if new seats are available
+        if (!validateSeats(newSeats)) {
+            return false
+        }
+
+        // release old seats
+        for (seat in booking.seatsBooked) {
+            seat.isAvailable = true
+        }
+
+        // reserve new seats
+        for (seat in newSeats) {
+            seat.isAvailable = false
+        }
+        //update the booking with the new seats
+        booking.seatBooked.clear()
+        booking.seatsBooked.addAll(newSeats)
+        return true
+    }
 }
