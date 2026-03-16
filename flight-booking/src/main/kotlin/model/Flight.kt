@@ -8,7 +8,6 @@ data class Flight(
     val date: String,
     val departureAirport: String,
     val arrivalAirport: String,
-    val price: Double,
     val seats: List<Seat>,
     val layovers: List<Layover> = emptyList()
 )
