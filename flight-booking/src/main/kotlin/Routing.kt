@@ -10,11 +10,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
+import io.ktor.http.*
+import io.ktor.server.http.content.*
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondResource("content/homepage/index.html")
-        }
+        staticResources("/", "static/home")
+        staticResources("/log_in", "static/log_in")
     }
 }
