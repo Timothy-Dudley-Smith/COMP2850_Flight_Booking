@@ -10,7 +10,8 @@
     "arr_time_local": "11:15",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 689.0
+    "price_gbp": 689.0,
+    "flight_length_minutes": 405
   },
   {
     "flight_id": "BA286-2026-03-16",
@@ -23,7 +24,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A380-800",
     "status": "scheduled",
-    "price_gbp": 742.0
+    "price_gbp": 742.0,
+    "flight_length_minutes": 675
   },
   {
     "flight_id": "BA294-2026-03-17",
@@ -36,7 +38,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 602.0
+    "price_gbp": 602.0,
+    "flight_length_minutes": 555
   },
   {
     "flight_id": "BA295-2026-03-17",
@@ -49,7 +52,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 615.0
+    "price_gbp": 615.0,
+    "flight_length_minutes": 465
   },
   {
     "flight_id": "BA2272-2026-03-18",
@@ -62,7 +66,8 @@
     "arr_time_local": "15:35",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 571.0
+    "price_gbp": 571.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA2273-2026-03-18",
@@ -75,7 +80,8 @@
     "arr_time_local": "07:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 558.0
+    "price_gbp": 558.0,
+    "flight_length_minutes": 465
   },
   {
     "flight_id": "BA212-2026-03-19",
@@ -88,7 +94,8 @@
     "arr_time_local": "06:55",
     "aircraft": "A380-800",
     "status": "scheduled",
-    "price_gbp": 521.0
+    "price_gbp": 521.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA213-2026-03-19",
@@ -101,7 +108,8 @@
     "arr_time_local": "17:35",
     "aircraft": "A380-800",
     "status": "scheduled",
-    "price_gbp": 534.0
+    "price_gbp": 534.0,
+    "flight_length_minutes": 390
   },
   {
     "flight_id": "BA249-2026-03-20",
@@ -114,7 +122,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 798.0
+    "price_gbp": 798.0,
+    "flight_length_minutes": 645
   },
   {
     "flight_id": "BA248-2026-03-21",
@@ -127,7 +136,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 784.0
+    "price_gbp": 784.0,
+    "flight_length_minutes": 750
   },
   {
     "flight_id": "BA15-2026-03-22",
@@ -140,7 +150,8 @@
     "arr_time_local": "06:10",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 1280.0
+    "price_gbp": 1280.0,
+    "flight_length_minutes": 1275
   },
   {
     "flight_id": "BA16-2026-03-23",
@@ -153,7 +164,8 @@
     "arr_time_local": "05:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 1264.0
+    "price_gbp": 1264.0,
+    "flight_length_minutes": 1535
   },
   {
     "flight_id": "BA31-2026-03-24",
@@ -166,7 +178,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 902.0
+    "price_gbp": 902.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA32-2026-03-25",
@@ -179,7 +192,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 889.0
+    "price_gbp": 889.0,
+    "flight_length_minutes": 870
   },
   {
     "flight_id": "BA902-2026-03-26",
@@ -192,7 +206,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 95
   },
   {
     "flight_id": "BA903-2026-03-26",
@@ -205,7 +220,8 @@
     "arr_time_local": "11:40",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA451-2026-03-27",
@@ -218,7 +234,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 102.0
+    "price_gbp": 102.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-03-27",
@@ -231,7 +248,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 98.0
+    "price_gbp": 98.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA139-2026-03-28",
@@ -244,7 +262,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 744.0
+    "price_gbp": 744.0,
+    "flight_length_minutes": 510
   },
   {
     "flight_id": "BA138-2026-03-29",
@@ -257,7 +276,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 731.0
+    "price_gbp": 731.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA257-2026-03-30",
@@ -270,7 +290,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 699.0
+    "price_gbp": 699.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA256-2026-03-31",
@@ -283,7 +304,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 686.0
+    "price_gbp": 686.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA178-2026-04-01",
@@ -296,7 +318,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 612.0
+    "price_gbp": 612.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-04-01",
@@ -309,7 +332,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 634.0
+    "price_gbp": 634.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4001-2026-04-01",
@@ -322,7 +346,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-04-01",
@@ -335,7 +360,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-04-01",
@@ -348,7 +374,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-04-01",
@@ -361,7 +388,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 122.0
+    "price_gbp": 122.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-04-01",
@@ -374,7 +402,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-04-01",
@@ -387,7 +416,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-01",
@@ -400,7 +430,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA243-2026-04-02",
@@ -413,7 +444,8 @@
     "arr_time_local": "19:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 719.0
+    "price_gbp": 719.0,
+    "flight_length_minutes": 770
   },
   {
     "flight_id": "BA244-2026-04-02",
@@ -426,7 +458,8 @@
     "arr_time_local": "13:20",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 702.0
+    "price_gbp": 702.0,
+    "flight_length_minutes": 665
   },
   {
     "flight_id": "BA4002-2026-04-02",
@@ -439,7 +472,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-04-02",
@@ -452,7 +486,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-04-02",
@@ -465,7 +500,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-04-02",
@@ -478,7 +514,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-04-02",
@@ -491,7 +528,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-02",
@@ -504,7 +542,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-02",
@@ -517,7 +556,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 131.0
+    "price_gbp": 131.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA58-2026-04-03",
@@ -530,7 +570,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 915.0
+    "price_gbp": 915.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-04-03",
@@ -543,7 +584,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 934.0
+    "price_gbp": 934.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4003-2026-04-03",
@@ -556,7 +598,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-04-03",
@@ -569,7 +612,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-04-03",
@@ -582,7 +626,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-04-03",
@@ -595,7 +640,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-03",
@@ -608,7 +654,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-03",
@@ -621,7 +668,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-03",
@@ -634,7 +682,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA106-2026-04-04",
@@ -647,7 +696,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 451.0
+    "price_gbp": 451.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-04-04",
@@ -660,7 +710,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 468.0
+    "price_gbp": 468.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4004-2026-04-04",
@@ -673,7 +724,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-04-04",
@@ -686,7 +738,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-04-04",
@@ -699,7 +752,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-04",
@@ -712,7 +766,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-04",
@@ -725,7 +780,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-04",
@@ -738,7 +794,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-04",
@@ -751,7 +808,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA203-2026-04-05",
@@ -764,7 +822,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 588.0
+    "price_gbp": 588.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-04-05",
@@ -777,7 +836,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 573.0
+    "price_gbp": 573.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4005-2026-04-05",
@@ -790,7 +850,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-04-05",
@@ -803,7 +864,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-05",
@@ -816,7 +878,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-05",
@@ -829,7 +892,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-05",
@@ -842,7 +906,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-05",
@@ -855,7 +920,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-05",
@@ -868,7 +934,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 131.0
+    "price_gbp": 131.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA518-2026-04-06",
@@ -881,7 +948,8 @@
     "arr_time_local": "13:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA519-2026-04-06",
@@ -894,7 +962,8 @@
     "arr_time_local": "09:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4006-2026-04-06",
@@ -907,7 +976,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-04-06",
@@ -920,7 +990,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-06",
@@ -933,7 +1004,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-06",
@@ -946,7 +1018,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-06",
@@ -959,7 +1032,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-06",
@@ -972,7 +1046,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-06",
@@ -985,7 +1060,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA712-2026-04-07",
@@ -998,7 +1074,8 @@
     "arr_time_local": "17:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 95
   },
   {
     "flight_id": "BA713-2026-04-07",
@@ -1011,7 +1088,8 @@
     "arr_time_local": "18:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 124.0
+    "price_gbp": 124.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4007-2026-04-07",
@@ -1024,7 +1102,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-04-07",
@@ -1037,7 +1116,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-07",
@@ -1050,7 +1130,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-07",
@@ -1063,7 +1144,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-07",
@@ -1076,7 +1158,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-07",
@@ -1089,7 +1172,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-07",
@@ -1102,7 +1186,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA229-2026-04-08",
@@ -1115,7 +1200,8 @@
     "arr_time_local": "19:40",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 578.0
+    "price_gbp": 578.0,
+    "flight_length_minutes": 480
   },
   {
     "flight_id": "BA230-2026-04-08",
@@ -1128,7 +1214,8 @@
     "arr_time_local": "09:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 561.0
+    "price_gbp": 561.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4008-2026-04-08",
@@ -1141,7 +1228,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-04-08",
@@ -1154,7 +1242,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-08",
@@ -1167,7 +1256,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-08",
@@ -1180,7 +1270,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-08",
@@ -1193,7 +1284,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-08",
@@ -1206,7 +1298,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-08",
@@ -1219,7 +1312,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA390-2026-04-09",
@@ -1232,7 +1326,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA391-2026-04-09",
@@ -1245,7 +1340,8 @@
     "arr_time_local": "13:35",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4009-2026-04-09",
@@ -1258,7 +1354,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-04-09",
@@ -1271,7 +1368,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-09",
@@ -1284,7 +1382,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-09",
@@ -1297,7 +1396,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-09",
@@ -1310,7 +1410,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-09",
@@ -1323,7 +1424,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-09",
@@ -1336,7 +1438,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 151.0
+    "price_gbp": 151.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA274-2026-04-10",
@@ -1349,7 +1452,8 @@
     "arr_time_local": "10:15",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 637.0
+    "price_gbp": 637.0,
+    "flight_length_minutes": 595
   },
   {
     "flight_id": "BA275-2026-04-10",
@@ -1362,7 +1466,8 @@
     "arr_time_local": "14:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 652.0
+    "price_gbp": 652.0,
+    "flight_length_minutes": 650
   },
   {
     "flight_id": "BA4010-2026-04-10",
@@ -1375,7 +1480,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-04-10",
@@ -1388,7 +1494,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-10",
@@ -1401,7 +1508,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-10",
@@ -1414,7 +1522,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-10",
@@ -1427,7 +1536,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-10",
@@ -1440,7 +1550,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-10",
@@ -1453,7 +1564,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA560-2026-04-11",
@@ -1466,7 +1578,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 146.0
+    "price_gbp": 146.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-04-11",
@@ -1479,7 +1592,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4011-2026-04-11",
@@ -1492,7 +1606,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-04-11",
@@ -1505,7 +1620,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-11",
@@ -1518,7 +1634,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-11",
@@ -1531,7 +1648,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-11",
@@ -1544,7 +1662,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-11",
@@ -1557,7 +1676,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA142-2026-04-12",
@@ -1570,7 +1690,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 709.0
+    "price_gbp": 709.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA143-2026-04-12",
@@ -1583,7 +1704,8 @@
     "arr_time_local": "03:05",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 723.0
+    "price_gbp": 723.0,
+    "flight_length_minutes": 545
   },
   {
     "flight_id": "BA4012-2026-04-12",
@@ -1596,7 +1718,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-04-12",
@@ -1609,7 +1732,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-12",
@@ -1622,7 +1746,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-12",
@@ -1635,7 +1760,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-12",
@@ -1648,7 +1774,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-04-12",
@@ -1661,7 +1788,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA326-2026-04-13",
@@ -1674,7 +1802,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 70
   },
   {
     "flight_id": "BA327-2026-04-13",
@@ -1687,7 +1816,8 @@
     "arr_time_local": "15:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 112.0
+    "price_gbp": 112.0,
+    "flight_length_minutes": 70
   },
   {
     "flight_id": "BA4013-2026-04-13",
@@ -1700,7 +1830,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-04-13",
@@ -1713,7 +1844,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-13",
@@ -1726,7 +1858,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 157.0
+    "price_gbp": 157.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-13",
@@ -1739,7 +1872,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-04-13",
@@ -1752,7 +1886,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-04-13",
@@ -1765,7 +1900,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 100.0
+    "price_gbp": 100.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA148-2026-04-14",
@@ -1778,7 +1914,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 421.0
+    "price_gbp": 421.0,
+    "flight_length_minutes": 435
   },
   {
     "flight_id": "BA149-2026-04-14",
@@ -1791,7 +1928,8 @@
     "arr_time_local": "04:10",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 438.0
+    "price_gbp": 438.0,
+    "flight_length_minutes": 280
   },
   {
     "flight_id": "BA4014-2026-04-14",
@@ -1804,7 +1942,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-04-14",
@@ -1817,7 +1956,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-14",
@@ -1830,7 +1970,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-04-14",
@@ -1843,7 +1984,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 94.0
+    "price_gbp": 94.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-04-14",
@@ -1856,7 +1998,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-04-14",
@@ -1869,7 +2012,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA302-2026-04-15",
@@ -1882,7 +2026,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 589.0
+    "price_gbp": 589.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-04-15",
@@ -1895,7 +2040,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 603.0
+    "price_gbp": 603.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4015-2026-04-15",
@@ -1908,7 +2054,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-04-15",
@@ -1921,7 +2068,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-04-15",
@@ -1934,7 +2082,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-04-15",
@@ -1947,7 +2096,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-04-15",
@@ -1960,7 +2110,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-04-15",
@@ -1973,7 +2124,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA178-2026-04-16",
@@ -1986,7 +2138,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 614.0
+    "price_gbp": 614.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-04-16",
@@ -1999,7 +2152,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 636.0
+    "price_gbp": 636.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4016-2026-04-16",
@@ -2012,7 +2166,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-04-16",
@@ -2025,7 +2180,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-04-16",
@@ -2038,7 +2194,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-04-16",
@@ -2051,7 +2208,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-04-16",
@@ -2064,7 +2222,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-04-16",
@@ -2077,7 +2236,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA203-2026-04-17",
@@ -2090,7 +2250,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 592.0
+    "price_gbp": 592.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-04-17",
@@ -2103,7 +2264,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 577.0
+    "price_gbp": 577.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4017-2026-04-17",
@@ -2116,7 +2278,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-04-17",
@@ -2129,7 +2292,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-04-17",
@@ -2142,7 +2306,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-04-17",
@@ -2155,7 +2320,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-04-17",
@@ -2168,7 +2334,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-04-17",
@@ -2181,7 +2348,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA294-2026-04-18",
@@ -2194,7 +2362,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 608.0
+    "price_gbp": 608.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-04-18",
@@ -2207,7 +2376,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 621.0
+    "price_gbp": 621.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4018-2026-04-18",
@@ -2220,7 +2390,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-04-18",
@@ -2233,7 +2404,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-04-18",
@@ -2246,7 +2418,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-04-18",
@@ -2259,7 +2432,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-04-18",
@@ -2272,7 +2446,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-04-18",
@@ -2285,7 +2460,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA248-2026-04-19",
@@ -2298,7 +2474,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 792.0
+    "price_gbp": 792.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-04-19",
@@ -2311,7 +2488,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 806.0
+    "price_gbp": 806.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4019-2026-04-19",
@@ -2324,7 +2502,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-04-19",
@@ -2337,7 +2516,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-04-19",
@@ -2350,7 +2530,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-04-19",
@@ -2363,7 +2544,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-04-19",
@@ -2376,7 +2558,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-04-19",
@@ -2389,7 +2572,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA138-2026-04-20",
@@ -2402,7 +2586,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 731.0
+    "price_gbp": 731.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-04-20",
@@ -2415,7 +2600,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 744.0
+    "price_gbp": 744.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4020-2026-04-20",
@@ -2428,7 +2614,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-04-20",
@@ -2441,7 +2628,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-04-20",
@@ -2454,7 +2642,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-04-20",
@@ -2467,7 +2656,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-04-20",
@@ -2480,7 +2670,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-04-20",
@@ -2493,7 +2684,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA256-2026-04-21",
@@ -2506,7 +2698,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 688.0
+    "price_gbp": 688.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-04-21",
@@ -2519,7 +2712,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 701.0
+    "price_gbp": 701.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4021-2026-04-21",
@@ -2532,7 +2726,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 82.0
+    "price_gbp": 82.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-04-21",
@@ -2545,7 +2740,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-04-21",
@@ -2558,7 +2754,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-04-21",
@@ -2571,7 +2768,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 76.0
+    "price_gbp": 76.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-04-21",
@@ -2584,7 +2782,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-04-21",
@@ -2597,7 +2796,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA31-2026-04-22",
@@ -2610,7 +2810,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 906.0
+    "price_gbp": 906.0,
+    "flight_length_minutes": 800
   },
   {
     "flight_id": "BA32-2026-04-22",
@@ -2623,7 +2824,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 893.0
+    "price_gbp": 893.0,
+    "flight_length_minutes": 810
   },
   {
     "flight_id": "BA4022-2026-04-22",
@@ -2636,7 +2838,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-04-22",
@@ -2649,7 +2852,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-04-22",
@@ -2662,7 +2866,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-04-22",
@@ -2675,7 +2880,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-04-22",
@@ -2688,7 +2894,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-04-22",
@@ -2701,7 +2908,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA58-2026-04-23",
@@ -2714,7 +2922,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 921.0
+    "price_gbp": 921.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-04-23",
@@ -2727,7 +2936,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 940.0
+    "price_gbp": 940.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4023-2026-04-23",
@@ -2740,7 +2950,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-04-23",
@@ -2753,7 +2964,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-04-23",
@@ -2766,7 +2978,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-04-23",
@@ -2779,7 +2992,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-04-23",
@@ -2792,7 +3006,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-04-23",
@@ -2805,7 +3020,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA106-2026-04-24",
@@ -2818,7 +3034,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 459.0
+    "price_gbp": 459.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-04-24",
@@ -2831,7 +3048,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 476.0
+    "price_gbp": 476.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4024-2026-04-24",
@@ -2844,7 +3062,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-04-24",
@@ -2857,7 +3076,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-04-24",
@@ -2870,7 +3090,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-04-24",
@@ -2883,7 +3104,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-04-24",
@@ -2896,7 +3118,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-04-24",
@@ -2909,7 +3132,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA302-2026-04-25",
@@ -2922,7 +3146,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 589.0
+    "price_gbp": 589.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-04-25",
@@ -2935,7 +3160,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 603.0
+    "price_gbp": 603.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4025-2026-04-25",
@@ -2948,7 +3174,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-04-25",
@@ -2961,7 +3188,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-04-25",
@@ -2974,7 +3202,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-04-25",
@@ -2987,7 +3216,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-04-25",
@@ -3000,7 +3230,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-04-25",
@@ -3013,7 +3244,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA560-2026-04-26",
@@ -3026,7 +3258,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-04-26",
@@ -3039,7 +3272,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4026-2026-04-26",
@@ -3052,7 +3286,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-04-26",
@@ -3065,7 +3300,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-04-26",
@@ -3078,7 +3314,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-04-26",
@@ -3091,7 +3328,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-04-26",
@@ -3104,7 +3342,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-04-26",
@@ -3117,7 +3356,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA451-2026-04-27",
@@ -3130,7 +3370,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 106.0
+    "price_gbp": 106.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-04-27",
@@ -3143,7 +3384,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 102.0
+    "price_gbp": 102.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4027-2026-04-27",
@@ -3156,7 +3398,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-04-27",
@@ -3169,7 +3412,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-04-27",
@@ -3182,7 +3426,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-04-27",
@@ -3195,7 +3440,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-04-27",
@@ -3208,7 +3454,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-04-27",
@@ -3221,7 +3468,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA178-2026-04-28",
@@ -3234,7 +3482,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 618.0
+    "price_gbp": 618.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-04-28",
@@ -3247,7 +3496,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 640.0
+    "price_gbp": 640.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4028-2026-04-28",
@@ -3260,7 +3510,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-04-28",
@@ -3273,7 +3524,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-04-28",
@@ -3286,7 +3538,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-04-28",
@@ -3299,7 +3552,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-04-28",
@@ -3312,7 +3566,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-04-28",
@@ -3325,7 +3580,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA203-2026-04-29",
@@ -3338,7 +3594,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 596.0
+    "price_gbp": 596.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-04-29",
@@ -3351,7 +3608,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 581.0
+    "price_gbp": 581.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4029-2026-04-29",
@@ -3364,7 +3622,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-04-29",
@@ -3377,7 +3636,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-04-29",
@@ -3390,7 +3650,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-04-29",
@@ -3403,7 +3664,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-04-29",
@@ -3416,7 +3678,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-04-29",
@@ -3429,7 +3692,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA294-2026-04-30",
@@ -3442,7 +3706,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 602.0
+    "price_gbp": 602.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-04-30",
@@ -3455,7 +3720,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 615.0
+    "price_gbp": 615.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4030-2026-04-30",
@@ -3468,7 +3734,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-04-30",
@@ -3481,7 +3748,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-04-30",
@@ -3494,7 +3762,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-04-30",
@@ -3507,7 +3776,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-04-30",
@@ -3520,7 +3790,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-04-30",
@@ -3533,7 +3804,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA178-2026-05-01",
@@ -3546,7 +3818,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 614.0
+    "price_gbp": 614.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-05-01",
@@ -3559,7 +3832,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 636.0
+    "price_gbp": 636.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4001-2026-05-01",
@@ -3572,7 +3846,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-05-01",
@@ -3585,7 +3860,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-05-01",
@@ -3598,7 +3874,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-05-01",
@@ -3611,7 +3888,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 122.0
+    "price_gbp": 122.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-05-01",
@@ -3624,7 +3902,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-05-01",
@@ -3637,7 +3916,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-01",
@@ -3650,7 +3930,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA203-2026-05-02",
@@ -3663,7 +3944,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 592.0
+    "price_gbp": 592.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-05-02",
@@ -3676,7 +3958,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 577.0
+    "price_gbp": 577.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4002-2026-05-02",
@@ -3689,7 +3972,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-05-02",
@@ -3702,7 +3986,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-05-02",
@@ -3715,7 +4000,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-05-02",
@@ -3728,7 +4014,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-05-02",
@@ -3741,7 +4028,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-02",
@@ -3754,7 +4042,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-02",
@@ -3767,7 +4056,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 131.0
+    "price_gbp": 131.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA294-2026-05-03",
@@ -3780,7 +4070,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 608.0
+    "price_gbp": 608.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-05-03",
@@ -3793,7 +4084,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 621.0
+    "price_gbp": 621.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4003-2026-05-03",
@@ -3806,7 +4098,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-05-03",
@@ -3819,7 +4112,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-05-03",
@@ -3832,7 +4126,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-05-03",
@@ -3845,7 +4140,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-03",
@@ -3858,7 +4154,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-03",
@@ -3871,7 +4168,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-03",
@@ -3884,7 +4182,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA248-2026-05-04",
@@ -3897,7 +4196,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 792.0
+    "price_gbp": 792.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-05-04",
@@ -3910,7 +4210,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 806.0
+    "price_gbp": 806.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4004-2026-05-04",
@@ -3923,7 +4224,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-05-04",
@@ -3936,7 +4238,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-05-04",
@@ -3949,7 +4252,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-04",
@@ -3962,7 +4266,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-04",
@@ -3975,7 +4280,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-04",
@@ -3988,7 +4294,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-04",
@@ -4001,7 +4308,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA138-2026-05-05",
@@ -4014,7 +4322,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 731.0
+    "price_gbp": 731.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-05-05",
@@ -4027,7 +4336,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 744.0
+    "price_gbp": 744.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4005-2026-05-05",
@@ -4040,7 +4350,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-05-05",
@@ -4053,7 +4364,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-05",
@@ -4066,7 +4378,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-05",
@@ -4079,7 +4392,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-05",
@@ -4092,7 +4406,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-05",
@@ -4105,7 +4420,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA256-2026-05-06",
@@ -4118,7 +4434,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 688.0
+    "price_gbp": 688.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-05-06",
@@ -4131,7 +4448,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 701.0
+    "price_gbp": 701.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4006-2026-05-06",
@@ -4144,7 +4462,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-05-06",
@@ -4157,7 +4476,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-06",
@@ -4170,7 +4490,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-06",
@@ -4183,7 +4504,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-06",
@@ -4196,7 +4518,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-05-06",
@@ -4209,7 +4532,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA31-2026-05-07",
@@ -4222,7 +4546,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 906.0
+    "price_gbp": 906.0,
+    "flight_length_minutes": 800
   },
   {
     "flight_id": "BA32-2026-05-07",
@@ -4235,7 +4560,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 893.0
+    "price_gbp": 893.0,
+    "flight_length_minutes": 810
   },
   {
     "flight_id": "BA4007-2026-05-07",
@@ -4248,7 +4574,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-05-07",
@@ -4261,7 +4588,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-07",
@@ -4274,7 +4602,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-07",
@@ -4287,7 +4616,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-05-07",
@@ -4300,7 +4630,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-05-07",
@@ -4313,7 +4644,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA58-2026-05-08",
@@ -4326,7 +4658,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 921.0
+    "price_gbp": 921.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-05-08",
@@ -4339,7 +4672,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 940.0
+    "price_gbp": 940.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4008-2026-05-08",
@@ -4352,7 +4686,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-05-08",
@@ -4365,7 +4700,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-08",
@@ -4378,7 +4714,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-05-08",
@@ -4391,7 +4728,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-05-08",
@@ -4404,7 +4742,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-05-08",
@@ -4417,7 +4756,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA106-2026-05-09",
@@ -4430,7 +4770,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 459.0
+    "price_gbp": 459.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-05-09",
@@ -4443,7 +4784,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 476.0
+    "price_gbp": 476.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4009-2026-05-09",
@@ -4456,7 +4798,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-05-09",
@@ -4469,7 +4812,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-05-09",
@@ -4482,7 +4826,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-05-09",
@@ -4495,7 +4840,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-05-09",
@@ -4508,7 +4854,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-05-09",
@@ -4521,7 +4868,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA302-2026-05-10",
@@ -4534,7 +4882,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 589.0
+    "price_gbp": 589.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-05-10",
@@ -4547,7 +4896,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 603.0
+    "price_gbp": 603.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4010-2026-05-10",
@@ -4560,7 +4910,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-05-10",
@@ -4573,7 +4924,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-05-10",
@@ -4586,7 +4938,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-05-10",
@@ -4599,7 +4952,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-05-10",
@@ -4612,7 +4966,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-05-10",
@@ -4625,7 +4980,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA560-2026-05-11",
@@ -4638,7 +4994,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-05-11",
@@ -4651,7 +5008,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4011-2026-05-11",
@@ -4664,7 +5022,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-05-11",
@@ -4677,7 +5036,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-05-11",
@@ -4690,7 +5050,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-05-11",
@@ -4703,7 +5064,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-05-11",
@@ -4716,7 +5078,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-05-11",
@@ -4729,7 +5092,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA451-2026-05-12",
@@ -4742,7 +5106,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 106.0
+    "price_gbp": 106.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-05-12",
@@ -4755,7 +5120,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 102.0
+    "price_gbp": 102.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4012-2026-05-12",
@@ -4768,7 +5134,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-05-12",
@@ -4781,7 +5148,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-05-12",
@@ -4794,7 +5162,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-05-12",
@@ -4807,7 +5176,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-05-12",
@@ -4820,7 +5190,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-05-12",
@@ -4833,7 +5204,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA178-2026-05-13",
@@ -4846,7 +5218,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 618.0
+    "price_gbp": 618.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-05-13",
@@ -4859,7 +5232,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 640.0
+    "price_gbp": 640.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4013-2026-05-13",
@@ -4872,7 +5246,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-05-13",
@@ -4885,7 +5260,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-05-13",
@@ -4898,7 +5274,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 157.0
+    "price_gbp": 157.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-05-13",
@@ -4911,7 +5288,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-05-13",
@@ -4924,7 +5302,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-05-13",
@@ -4937,7 +5316,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 100.0
+    "price_gbp": 100.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA203-2026-05-14",
@@ -4950,7 +5330,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 596.0
+    "price_gbp": 596.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-05-14",
@@ -4963,7 +5344,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 581.0
+    "price_gbp": 581.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4014-2026-05-14",
@@ -4976,7 +5358,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-05-14",
@@ -4989,7 +5372,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-05-14",
@@ -5002,7 +5386,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-05-14",
@@ -5015,7 +5400,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 94.0
+    "price_gbp": 94.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-05-14",
@@ -5028,7 +5414,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-05-14",
@@ -5041,7 +5428,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA294-2026-05-15",
@@ -5054,7 +5442,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 602.0
+    "price_gbp": 602.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-05-15",
@@ -5067,7 +5456,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 615.0
+    "price_gbp": 615.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4015-2026-05-15",
@@ -5080,7 +5470,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-05-15",
@@ -5093,7 +5484,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-05-15",
@@ -5106,7 +5498,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-05-15",
@@ -5119,7 +5512,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-05-15",
@@ -5132,7 +5526,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-05-15",
@@ -5145,7 +5540,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA248-2026-05-16",
@@ -5158,7 +5554,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 786.0
+    "price_gbp": 786.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-05-16",
@@ -5171,7 +5568,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 800.0
+    "price_gbp": 800.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4016-2026-05-16",
@@ -5184,7 +5582,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-05-16",
@@ -5197,7 +5596,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-05-16",
@@ -5210,7 +5610,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-05-16",
@@ -5223,7 +5624,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-05-16",
@@ -5236,7 +5638,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-05-16",
@@ -5249,7 +5652,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA138-2026-05-17",
@@ -5262,7 +5666,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 735.0
+    "price_gbp": 735.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-05-17",
@@ -5275,7 +5680,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 748.0
+    "price_gbp": 748.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4017-2026-05-17",
@@ -5288,7 +5694,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-05-17",
@@ -5301,7 +5708,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-05-17",
@@ -5314,7 +5722,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-05-17",
@@ -5327,7 +5736,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-05-17",
@@ -5340,7 +5750,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-05-17",
@@ -5353,7 +5764,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA256-2026-05-18",
@@ -5366,7 +5778,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 692.0
+    "price_gbp": 692.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-05-18",
@@ -5379,7 +5792,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 705.0
+    "price_gbp": 705.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4018-2026-05-18",
@@ -5392,7 +5806,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-05-18",
@@ -5405,7 +5820,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-05-18",
@@ -5418,7 +5834,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-05-18",
@@ -5431,7 +5848,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-05-18",
@@ -5444,7 +5862,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-05-18",
@@ -5457,7 +5876,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA31-2026-05-19",
@@ -5470,7 +5890,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 910.0
+    "price_gbp": 910.0,
+    "flight_length_minutes": 800
   },
   {
     "flight_id": "BA32-2026-05-19",
@@ -5483,7 +5904,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 897.0
+    "price_gbp": 897.0,
+    "flight_length_minutes": 810
   },
   {
     "flight_id": "BA4019-2026-05-19",
@@ -5496,7 +5918,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-05-19",
@@ -5509,7 +5932,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-05-19",
@@ -5522,7 +5946,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-05-19",
@@ -5535,7 +5960,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-05-19",
@@ -5548,7 +5974,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-05-19",
@@ -5561,7 +5988,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA58-2026-05-20",
@@ -5574,7 +6002,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 915.0
+    "price_gbp": 915.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-05-20",
@@ -5587,7 +6016,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 934.0
+    "price_gbp": 934.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4020-2026-05-20",
@@ -5600,7 +6030,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-05-20",
@@ -5613,7 +6044,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-05-20",
@@ -5626,7 +6058,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-05-20",
@@ -5639,7 +6072,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-05-20",
@@ -5652,7 +6086,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-05-20",
@@ -5665,7 +6100,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA106-2026-05-21",
@@ -5678,7 +6114,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 453.0
+    "price_gbp": 453.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-05-21",
@@ -5691,7 +6128,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 470.0
+    "price_gbp": 470.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4021-2026-05-21",
@@ -5704,7 +6142,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 82.0
+    "price_gbp": 82.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-05-21",
@@ -5717,7 +6156,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-05-21",
@@ -5730,7 +6170,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-05-21",
@@ -5743,7 +6184,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 76.0
+    "price_gbp": 76.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-05-21",
@@ -5756,7 +6198,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-05-21",
@@ -5769,7 +6212,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA302-2026-05-22",
@@ -5782,7 +6226,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 593.0
+    "price_gbp": 593.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-05-22",
@@ -5795,7 +6240,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 607.0
+    "price_gbp": 607.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4022-2026-05-22",
@@ -5808,7 +6254,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-05-22",
@@ -5821,7 +6268,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-05-22",
@@ -5834,7 +6282,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-05-22",
@@ -5847,7 +6296,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-05-22",
@@ -5860,7 +6310,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-05-22",
@@ -5873,7 +6324,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA560-2026-05-23",
@@ -5886,7 +6338,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-05-23",
@@ -5899,7 +6352,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4023-2026-05-23",
@@ -5912,7 +6366,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-05-23",
@@ -5925,7 +6380,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-05-23",
@@ -5938,7 +6394,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-05-23",
@@ -5951,7 +6408,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-05-23",
@@ -5964,7 +6422,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-05-23",
@@ -5977,7 +6436,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA451-2026-05-24",
@@ -5990,7 +6450,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 110.0
+    "price_gbp": 110.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-05-24",
@@ -6003,7 +6464,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 106.0
+    "price_gbp": 106.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4024-2026-05-24",
@@ -6016,7 +6478,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-05-24",
@@ -6029,7 +6492,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-05-24",
@@ -6042,7 +6506,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-05-24",
@@ -6055,7 +6520,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-05-24",
@@ -6068,7 +6534,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-05-24",
@@ -6081,7 +6548,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA178-2026-05-25",
@@ -6094,7 +6562,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 612.0
+    "price_gbp": 612.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-05-25",
@@ -6107,7 +6576,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 634.0
+    "price_gbp": 634.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4025-2026-05-25",
@@ -6120,7 +6590,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-05-25",
@@ -6133,7 +6604,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-05-25",
@@ -6146,7 +6618,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-05-25",
@@ -6159,7 +6632,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-05-25",
@@ -6172,7 +6646,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-05-25",
@@ -6185,7 +6660,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA203-2026-05-26",
@@ -6198,7 +6674,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 590.0
+    "price_gbp": 590.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-05-26",
@@ -6211,7 +6688,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 575.0
+    "price_gbp": 575.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4026-2026-05-26",
@@ -6224,7 +6702,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-05-26",
@@ -6237,7 +6716,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-05-26",
@@ -6250,7 +6730,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-05-26",
@@ -6263,7 +6744,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-05-26",
@@ -6276,7 +6758,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-05-26",
@@ -6289,7 +6772,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA294-2026-05-27",
@@ -6302,7 +6786,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 606.0
+    "price_gbp": 606.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-05-27",
@@ -6315,7 +6800,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 619.0
+    "price_gbp": 619.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4027-2026-05-27",
@@ -6328,7 +6814,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-05-27",
@@ -6341,7 +6828,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-05-27",
@@ -6354,7 +6842,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-05-27",
@@ -6367,7 +6856,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-05-27",
@@ -6380,7 +6870,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-05-27",
@@ -6393,7 +6884,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA248-2026-05-28",
@@ -6406,7 +6898,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 790.0
+    "price_gbp": 790.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-05-28",
@@ -6419,7 +6912,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 804.0
+    "price_gbp": 804.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4028-2026-05-28",
@@ -6432,7 +6926,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-05-28",
@@ -6445,7 +6940,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-05-28",
@@ -6458,7 +6954,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-05-28",
@@ -6471,7 +6968,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-05-28",
@@ -6484,7 +6982,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-05-28",
@@ -6497,7 +6996,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA138-2026-05-29",
@@ -6510,7 +7010,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 739.0
+    "price_gbp": 739.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-05-29",
@@ -6523,7 +7024,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 752.0
+    "price_gbp": 752.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4029-2026-05-29",
@@ -6536,7 +7038,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-05-29",
@@ -6549,7 +7052,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-05-29",
@@ -6562,7 +7066,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-05-29",
@@ -6575,7 +7080,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-05-29",
@@ -6588,7 +7094,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-05-29",
@@ -6601,7 +7108,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA256-2026-05-30",
@@ -6614,7 +7122,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 686.0
+    "price_gbp": 686.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-05-30",
@@ -6627,7 +7136,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 699.0
+    "price_gbp": 699.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4030-2026-05-30",
@@ -6640,7 +7150,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-05-30",
@@ -6653,7 +7164,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-05-30",
@@ -6666,7 +7178,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-05-30",
@@ -6679,7 +7192,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-05-30",
@@ -6692,7 +7206,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-05-30",
@@ -6705,7 +7220,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4031-2026-05-31",
@@ -6718,7 +7234,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-05-31",
@@ -6731,7 +7248,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-05-31",
@@ -6744,7 +7262,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 123.0
+    "price_gbp": 123.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-05-31",
@@ -6757,7 +7276,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-05-31",
@@ -6770,7 +7290,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-05-31",
@@ -6783,7 +7304,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 126.0
+    "price_gbp": 126.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA178-2026-06-01",
@@ -6796,7 +7318,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 614.0
+    "price_gbp": 614.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-06-01",
@@ -6809,7 +7332,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 636.0
+    "price_gbp": 636.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4001-2026-06-01",
@@ -6822,7 +7346,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-06-01",
@@ -6835,7 +7360,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-06-01",
@@ -6848,7 +7374,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-06-01",
@@ -6861,7 +7388,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 122.0
+    "price_gbp": 122.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-06-01",
@@ -6874,7 +7402,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-06-01",
@@ -6887,7 +7416,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-01",
@@ -6900,7 +7430,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA203-2026-06-02",
@@ -6913,7 +7444,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 592.0
+    "price_gbp": 592.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-06-02",
@@ -6926,7 +7458,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 577.0
+    "price_gbp": 577.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4002-2026-06-02",
@@ -6939,7 +7472,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 118.0
+    "price_gbp": 118.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-06-02",
@@ -6952,7 +7486,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-06-02",
@@ -6965,7 +7500,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-06-02",
@@ -6978,7 +7514,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-06-02",
@@ -6991,7 +7528,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-02",
@@ -7004,7 +7542,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-02",
@@ -7017,7 +7556,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 131.0
+    "price_gbp": 131.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA294-2026-06-03",
@@ -7030,7 +7570,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 608.0
+    "price_gbp": 608.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-06-03",
@@ -7043,7 +7584,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 621.0
+    "price_gbp": 621.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4003-2026-06-03",
@@ -7056,7 +7598,8 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4004-2026-06-03",
@@ -7069,7 +7612,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-06-03",
@@ -7082,7 +7626,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-06-03",
@@ -7095,7 +7640,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 161.0
+    "price_gbp": 161.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-03",
@@ -7108,7 +7654,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-03",
@@ -7121,7 +7668,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-03",
@@ -7134,7 +7682,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA248-2026-06-04",
@@ -7147,7 +7696,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 792.0
+    "price_gbp": 792.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-06-04",
@@ -7160,7 +7710,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 806.0
+    "price_gbp": 806.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4004-2026-06-04",
@@ -7173,7 +7724,8 @@
     "arr_time_local": "13:55",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4005-2026-06-04",
@@ -7186,7 +7738,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-06-04",
@@ -7199,7 +7752,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-04",
@@ -7212,7 +7766,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-04",
@@ -7225,7 +7780,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-04",
@@ -7238,7 +7794,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-04",
@@ -7251,7 +7808,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA138-2026-06-05",
@@ -7264,7 +7822,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 731.0
+    "price_gbp": 731.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-06-05",
@@ -7277,7 +7836,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 744.0
+    "price_gbp": 744.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4005-2026-06-05",
@@ -7290,7 +7850,8 @@
     "arr_time_local": "14:55",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 167.0
+    "price_gbp": 167.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4006-2026-06-05",
@@ -7303,7 +7864,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-05",
@@ -7316,7 +7878,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-05",
@@ -7329,7 +7892,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-05",
@@ -7342,7 +7906,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-05",
@@ -7355,7 +7920,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-05",
@@ -7368,7 +7934,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 131.0
+    "price_gbp": 131.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA256-2026-06-06",
@@ -7381,7 +7948,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 688.0
+    "price_gbp": 688.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-06-06",
@@ -7394,7 +7962,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 701.0
+    "price_gbp": 701.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4006-2026-06-06",
@@ -7407,7 +7976,8 @@
     "arr_time_local": "17:45",
     "aircraft": "A321neo",
     "status": "scheduled",
-    "price_gbp": 164.0
+    "price_gbp": 164.0,
+    "flight_length_minutes": 225
   },
   {
     "flight_id": "BA4007-2026-06-06",
@@ -7420,7 +7990,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-06",
@@ -7433,7 +8004,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-06",
@@ -7446,7 +8018,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-06",
@@ -7459,7 +8032,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 140.0
+    "price_gbp": 140.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-06",
@@ -7472,7 +8046,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-06",
@@ -7485,7 +8060,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA31-2026-06-07",
@@ -7498,7 +8074,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 906.0
+    "price_gbp": 906.0,
+    "flight_length_minutes": 800
   },
   {
     "flight_id": "BA32-2026-06-07",
@@ -7511,7 +8088,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 893.0
+    "price_gbp": 893.0,
+    "flight_length_minutes": 810
   },
   {
     "flight_id": "BA4007-2026-06-07",
@@ -7524,7 +8102,8 @@
     "arr_time_local": "10:00",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4008-2026-06-07",
@@ -7537,7 +8116,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-07",
@@ -7550,7 +8130,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-07",
@@ -7563,7 +8144,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 133.0
+    "price_gbp": 133.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-07",
@@ -7576,7 +8158,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-07",
@@ -7589,7 +8172,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-07",
@@ -7602,7 +8186,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA58-2026-06-08",
@@ -7615,7 +8200,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 921.0
+    "price_gbp": 921.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-06-08",
@@ -7628,7 +8214,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 940.0
+    "price_gbp": 940.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4008-2026-06-08",
@@ -7641,7 +8228,8 @@
     "arr_time_local": "12:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 135
   },
   {
     "flight_id": "BA4009-2026-06-08",
@@ -7654,7 +8242,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-08",
@@ -7667,7 +8256,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-08",
@@ -7680,7 +8270,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-08",
@@ -7693,7 +8284,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-08",
@@ -7706,7 +8298,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-08",
@@ -7719,7 +8312,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA106-2026-06-09",
@@ -7732,7 +8326,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 459.0
+    "price_gbp": 459.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-06-09",
@@ -7745,7 +8340,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 476.0
+    "price_gbp": 476.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4009-2026-06-09",
@@ -7758,7 +8354,8 @@
     "arr_time_local": "17:00",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4010-2026-06-09",
@@ -7771,7 +8368,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-09",
@@ -7784,7 +8382,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-09",
@@ -7797,7 +8396,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 125.0
+    "price_gbp": 125.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-09",
@@ -7810,7 +8410,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-09",
@@ -7823,7 +8424,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-09",
@@ -7836,7 +8438,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 151.0
+    "price_gbp": 151.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA302-2026-06-10",
@@ -7849,7 +8452,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 589.0
+    "price_gbp": 589.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-06-10",
@@ -7862,7 +8466,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 603.0
+    "price_gbp": 603.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4010-2026-06-10",
@@ -7875,7 +8480,8 @@
     "arr_time_local": "19:15",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4011-2026-06-10",
@@ -7888,7 +8494,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-10",
@@ -7901,7 +8508,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-10",
@@ -7914,7 +8522,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-10",
@@ -7927,7 +8536,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-10",
@@ -7940,7 +8550,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-10",
@@ -7953,7 +8564,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA560-2026-06-11",
@@ -7966,7 +8578,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-06-11",
@@ -7979,7 +8592,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4011-2026-06-11",
@@ -7992,7 +8606,8 @@
     "arr_time_local": "13:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4012-2026-06-11",
@@ -8005,7 +8620,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-11",
@@ -8018,7 +8634,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-11",
@@ -8031,7 +8648,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-11",
@@ -8044,7 +8662,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-11",
@@ -8057,7 +8676,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA451-2026-06-12",
@@ -8070,7 +8690,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 106.0
+    "price_gbp": 106.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-06-12",
@@ -8083,7 +8704,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 102.0
+    "price_gbp": 102.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4012-2026-06-12",
@@ -8096,7 +8718,8 @@
     "arr_time_local": "15:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 125
   },
   {
     "flight_id": "BA4013-2026-06-12",
@@ -8109,7 +8732,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-12",
@@ -8122,7 +8746,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-12",
@@ -8135,7 +8760,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 154.0
+    "price_gbp": 154.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-12",
@@ -8148,7 +8774,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-06-12",
@@ -8161,7 +8788,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA178-2026-06-13",
@@ -8174,7 +8802,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 618.0
+    "price_gbp": 618.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-06-13",
@@ -8187,7 +8816,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 640.0
+    "price_gbp": 640.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4013-2026-06-13",
@@ -8200,7 +8830,8 @@
     "arr_time_local": "11:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4014-2026-06-13",
@@ -8213,7 +8844,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 144.0
+    "price_gbp": 144.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-13",
@@ -8226,7 +8858,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 157.0
+    "price_gbp": 157.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-13",
@@ -8239,7 +8872,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-06-13",
@@ -8252,7 +8886,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 101.0
+    "price_gbp": 101.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-06-13",
@@ -8265,7 +8900,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 100.0
+    "price_gbp": 100.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA203-2026-06-14",
@@ -8278,7 +8914,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 596.0
+    "price_gbp": 596.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-06-14",
@@ -8291,7 +8928,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 581.0
+    "price_gbp": 581.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4014-2026-06-14",
@@ -8304,7 +8942,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA4015-2026-06-14",
@@ -8317,7 +8956,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-14",
@@ -8330,7 +8970,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-06-14",
@@ -8343,7 +8984,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 94.0
+    "price_gbp": 94.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-06-14",
@@ -8356,7 +8998,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-06-14",
@@ -8369,7 +9012,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA294-2026-06-15",
@@ -8382,7 +9026,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 602.0
+    "price_gbp": 602.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-06-15",
@@ -8395,7 +9040,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 615.0
+    "price_gbp": 615.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4015-2026-06-15",
@@ -8408,7 +9054,8 @@
     "arr_time_local": "15:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 150.0
+    "price_gbp": 150.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4016-2026-06-15",
@@ -8421,7 +9068,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-06-15",
@@ -8434,7 +9082,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-06-15",
@@ -8447,7 +9096,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 93.0
+    "price_gbp": 93.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-06-15",
@@ -8460,7 +9110,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-06-15",
@@ -8473,7 +9124,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA248-2026-06-16",
@@ -8486,7 +9138,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 786.0
+    "price_gbp": 786.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-06-16",
@@ -8499,7 +9152,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 800.0
+    "price_gbp": 800.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4016-2026-06-16",
@@ -8512,7 +9166,8 @@
     "arr_time_local": "17:40",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 148.0
+    "price_gbp": 148.0,
+    "flight_length_minutes": 145
   },
   {
     "flight_id": "BA4017-2026-06-16",
@@ -8525,7 +9180,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-06-16",
@@ -8538,7 +9194,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-06-16",
@@ -8551,7 +9208,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-06-16",
@@ -8564,7 +9222,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-06-16",
@@ -8577,7 +9236,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA138-2026-06-17",
@@ -8590,7 +9250,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 735.0
+    "price_gbp": 735.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-06-17",
@@ -8603,7 +9264,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 748.0
+    "price_gbp": 748.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4017-2026-06-17",
@@ -8616,7 +9278,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 97.0
+    "price_gbp": 97.0,
+    "flight_length_minutes": 80
   },
   {
     "flight_id": "BA4018-2026-06-17",
@@ -8629,7 +9292,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-06-17",
@@ -8642,7 +9306,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-06-17",
@@ -8655,7 +9320,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 87.0
+    "price_gbp": 87.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-06-17",
@@ -8668,7 +9334,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-06-17",
@@ -8681,7 +9348,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA256-2026-06-18",
@@ -8694,7 +9362,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 692.0
+    "price_gbp": 692.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-06-18",
@@ -8707,7 +9376,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 705.0
+    "price_gbp": 705.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4018-2026-06-18",
@@ -8720,7 +9390,8 @@
     "arr_time_local": "16:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 96.0
+    "price_gbp": 96.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4019-2026-06-18",
@@ -8733,7 +9404,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-06-18",
@@ -8746,7 +9418,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-06-18",
@@ -8759,7 +9432,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 86.0
+    "price_gbp": 86.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-06-18",
@@ -8772,7 +9446,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-06-18",
@@ -8785,7 +9460,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA31-2026-06-19",
@@ -8798,7 +9474,8 @@
     "arr_time_local": "14:55",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 910.0
+    "price_gbp": 910.0,
+    "flight_length_minutes": 800
   },
   {
     "flight_id": "BA32-2026-06-19",
@@ -8811,7 +9488,8 @@
     "arr_time_local": "05:40",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 897.0
+    "price_gbp": 897.0,
+    "flight_length_minutes": 810
   },
   {
     "flight_id": "BA4019-2026-06-19",
@@ -8824,7 +9502,8 @@
     "arr_time_local": "09:55",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 91.0
+    "price_gbp": 91.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4020-2026-06-19",
@@ -8837,7 +9516,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-06-19",
@@ -8850,7 +9530,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-06-19",
@@ -8863,7 +9544,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 85.0
+    "price_gbp": 85.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-06-19",
@@ -8876,7 +9558,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-06-19",
@@ -8889,7 +9572,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA58-2026-06-20",
@@ -8902,7 +9586,8 @@
     "arr_time_local": "05:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 915.0
+    "price_gbp": 915.0,
+    "flight_length_minutes": 695
   },
   {
     "flight_id": "BA59-2026-06-20",
@@ -8915,7 +9600,8 @@
     "arr_time_local": "10:55",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 934.0
+    "price_gbp": 934.0,
+    "flight_length_minutes": 740
   },
   {
     "flight_id": "BA4020-2026-06-20",
@@ -8928,7 +9614,8 @@
     "arr_time_local": "12:10",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 90.0
+    "price_gbp": 90.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4021-2026-06-20",
@@ -8941,7 +9628,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 89.0
+    "price_gbp": 89.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-06-20",
@@ -8954,7 +9642,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 88.0
+    "price_gbp": 88.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-06-20",
@@ -8967,7 +9656,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 84.0
+    "price_gbp": 84.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-06-20",
@@ -8980,7 +9670,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 83.0
+    "price_gbp": 83.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-06-20",
@@ -8993,7 +9684,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA106-2026-06-21",
@@ -9006,7 +9698,8 @@
     "arr_time_local": "12:55",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 453.0
+    "price_gbp": 453.0,
+    "flight_length_minutes": 460
   },
   {
     "flight_id": "BA107-2026-06-21",
@@ -9019,7 +9712,8 @@
     "arr_time_local": "06:40",
     "aircraft": "B777-200",
     "status": "scheduled",
-    "price_gbp": 470.0
+    "price_gbp": 470.0,
+    "flight_length_minutes": 420
   },
   {
     "flight_id": "BA4021-2026-06-21",
@@ -9032,7 +9726,8 @@
     "arr_time_local": "16:30",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 82.0
+    "price_gbp": 82.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4022-2026-06-21",
@@ -9045,7 +9740,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-06-21",
@@ -9058,7 +9754,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-06-21",
@@ -9071,7 +9768,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 76.0
+    "price_gbp": 76.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-06-21",
@@ -9084,7 +9782,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-06-21",
@@ -9097,7 +9796,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA302-2026-06-22",
@@ -9110,7 +9810,8 @@
     "arr_time_local": "06:20",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 593.0
+    "price_gbp": 593.0,
+    "flight_length_minutes": 395
   },
   {
     "flight_id": "BA303-2026-06-22",
@@ -9123,7 +9824,8 @@
     "arr_time_local": "15:05",
     "aircraft": "A350-1000",
     "status": "scheduled",
-    "price_gbp": 607.0
+    "price_gbp": 607.0,
+    "flight_length_minutes": 430
   },
   {
     "flight_id": "BA4022-2026-06-22",
@@ -9136,7 +9838,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 81.0
+    "price_gbp": 81.0,
+    "flight_length_minutes": 85
   },
   {
     "flight_id": "BA4023-2026-06-22",
@@ -9149,7 +9852,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-06-22",
@@ -9162,7 +9866,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-06-22",
@@ -9175,7 +9880,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 129.0
+    "price_gbp": 129.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-06-22",
@@ -9188,7 +9894,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-06-22",
@@ -9201,7 +9908,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA560-2026-06-23",
@@ -9214,7 +9922,8 @@
     "arr_time_local": "11:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 150
   },
   {
     "flight_id": "BA561-2026-06-23",
@@ -9227,7 +9936,8 @@
     "arr_time_local": "14:45",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 160
   },
   {
     "flight_id": "BA4023-2026-06-23",
@@ -9240,7 +9950,8 @@
     "arr_time_local": "10:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 80.0
+    "price_gbp": 80.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4024-2026-06-23",
@@ -9253,7 +9964,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-06-23",
@@ -9266,7 +9978,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-06-23",
@@ -9279,7 +9992,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 127.0
+    "price_gbp": 127.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-06-23",
@@ -9292,7 +10006,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-06-23",
@@ -9305,7 +10020,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA451-2026-06-24",
@@ -9318,7 +10034,8 @@
     "arr_time_local": "15:55",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 110.0
+    "price_gbp": 110.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA452-2026-06-24",
@@ -9331,7 +10048,8 @@
     "arr_time_local": "17:20",
     "aircraft": "A319",
     "status": "scheduled",
-    "price_gbp": 106.0
+    "price_gbp": 106.0,
+    "flight_length_minutes": 75
   },
   {
     "flight_id": "BA4024-2026-06-24",
@@ -9344,7 +10062,8 @@
     "arr_time_local": "12:20",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 79.0
+    "price_gbp": 79.0,
+    "flight_length_minutes": 65
   },
   {
     "flight_id": "BA4025-2026-06-24",
@@ -9357,7 +10076,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-06-24",
@@ -9370,7 +10090,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-06-24",
@@ -9383,7 +10104,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 134.0
+    "price_gbp": 134.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-06-24",
@@ -9396,7 +10118,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-06-24",
@@ -9409,7 +10132,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA178-2026-06-25",
@@ -9422,7 +10146,8 @@
     "arr_time_local": "06:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 612.0
+    "price_gbp": 612.0,
+    "flight_length_minutes": 415
   },
   {
     "flight_id": "BA179-2026-06-25",
@@ -9435,7 +10160,8 @@
     "arr_time_local": "16:00",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 634.0
+    "price_gbp": 634.0,
+    "flight_length_minutes": 470
   },
   {
     "flight_id": "BA4025-2026-06-25",
@@ -9448,7 +10174,8 @@
     "arr_time_local": "09:35",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 100
   },
   {
     "flight_id": "BA4026-2026-06-25",
@@ -9461,7 +10188,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-06-25",
@@ -9474,7 +10202,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-06-25",
@@ -9487,7 +10216,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 132.0
+    "price_gbp": 132.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-06-25",
@@ -9500,7 +10230,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-06-25",
@@ -9513,7 +10244,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA203-2026-06-26",
@@ -9526,7 +10258,8 @@
     "arr_time_local": "14:25",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 590.0
+    "price_gbp": 590.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA207-2026-06-26",
@@ -9539,7 +10272,8 @@
     "arr_time_local": "09:40",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 575.0
+    "price_gbp": 575.0,
+    "flight_length_minutes": 540
   },
   {
     "flight_id": "BA4026-2026-06-26",
@@ -9552,7 +10286,8 @@
     "arr_time_local": "11:25",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 130.0
+    "price_gbp": 130.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4027-2026-06-26",
@@ -9565,7 +10300,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-06-26",
@@ -9578,7 +10314,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-06-26",
@@ -9591,7 +10328,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 149.0
+    "price_gbp": 149.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-06-26",
@@ -9604,7 +10342,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-06-26",
@@ -9617,7 +10356,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA294-2026-06-27",
@@ -9630,7 +10370,8 @@
     "arr_time_local": "08:25",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 606.0
+    "price_gbp": 606.0,
+    "flight_length_minutes": 495
   },
   {
     "flight_id": "BA295-2026-06-27",
@@ -9643,7 +10384,8 @@
     "arr_time_local": "13:45",
     "aircraft": "B787-10",
     "status": "scheduled",
-    "price_gbp": 619.0
+    "price_gbp": 619.0,
+    "flight_length_minutes": 525
   },
   {
     "flight_id": "BA4027-2026-06-27",
@@ -9656,7 +10398,8 @@
     "arr_time_local": "14:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 137.0
+    "price_gbp": 137.0,
+    "flight_length_minutes": 105
   },
   {
     "flight_id": "BA4028-2026-06-27",
@@ -9669,7 +10412,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 135.0
+    "price_gbp": 135.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-06-27",
@@ -9682,7 +10426,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 152.0
+    "price_gbp": 152.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-06-27",
@@ -9695,7 +10440,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 147.0
+    "price_gbp": 147.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-06-27",
@@ -9708,7 +10454,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-06-27",
@@ -9721,7 +10468,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA248-2026-06-28",
@@ -9734,7 +10482,8 @@
     "arr_time_local": "06:35",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 790.0
+    "price_gbp": 790.0,
+    "flight_length_minutes": 690
   },
   {
     "flight_id": "BA249-2026-06-28",
@@ -9747,7 +10496,8 @@
     "arr_time_local": "06:15",
     "aircraft": "B777-300ER",
     "status": "scheduled",
-    "price_gbp": 804.0
+    "price_gbp": 804.0,
+    "flight_length_minutes": 705
   },
   {
     "flight_id": "BA4028-2026-06-28",
@@ -9760,7 +10510,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 110
   },
   {
     "flight_id": "BA4029-2026-06-28",
@@ -9773,7 +10524,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-06-28",
@@ -9786,7 +10538,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-06-28",
@@ -9799,7 +10552,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 138.0
+    "price_gbp": 138.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-06-28",
@@ -9812,7 +10566,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-06-28",
@@ -9825,7 +10580,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA138-2026-06-29",
@@ -9838,7 +10594,8 @@
     "arr_time_local": "10:30",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 739.0
+    "price_gbp": 739.0,
+    "flight_length_minutes": 590
   },
   {
     "flight_id": "BA139-2026-06-29",
@@ -9851,7 +10608,8 @@
     "arr_time_local": "02:25",
     "aircraft": "B787-9",
     "status": "scheduled",
-    "price_gbp": 752.0
+    "price_gbp": 752.0,
+    "flight_length_minutes": 570
   },
   {
     "flight_id": "BA4029-2026-06-29",
@@ -9864,7 +10622,8 @@
     "arr_time_local": "10:10",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 145.0
+    "price_gbp": 145.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4030-2026-06-29",
@@ -9877,7 +10636,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-06-29",
@@ -9890,7 +10650,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-06-29",
@@ -9903,7 +10664,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 136.0
+    "price_gbp": 136.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-06-29",
@@ -9916,7 +10678,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-06-29",
@@ -9929,7 +10692,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA256-2026-06-30",
@@ -9942,7 +10706,8 @@
     "arr_time_local": "16:20",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 686.0
+    "price_gbp": 686.0,
+    "flight_length_minutes": 520
   },
   {
     "flight_id": "BA257-2026-06-30",
@@ -9955,7 +10720,8 @@
     "arr_time_local": "09:10",
     "aircraft": "B787-8",
     "status": "scheduled",
-    "price_gbp": 699.0
+    "price_gbp": 699.0,
+    "flight_length_minutes": 550
   },
   {
     "flight_id": "BA4030-2026-06-30",
@@ -9968,7 +10734,8 @@
     "arr_time_local": "13:50",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 143.0
+    "price_gbp": 143.0,
+    "flight_length_minutes": 155
   },
   {
     "flight_id": "BA4031-2026-06-30",
@@ -9981,7 +10748,8 @@
     "arr_time_local": "16:45",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 141.0
+    "price_gbp": 141.0,
+    "flight_length_minutes": 115
   },
   {
     "flight_id": "BA4032-2026-06-30",
@@ -9994,7 +10762,8 @@
     "arr_time_local": "18:50",
     "aircraft": "A320",
     "status": "scheduled",
-    "price_gbp": 139.0
+    "price_gbp": 139.0,
+    "flight_length_minutes": 120
   },
   {
     "flight_id": "BA4001-2026-06-30",
@@ -10007,7 +10776,8 @@
     "arr_time_local": "10:35",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 120.0
+    "price_gbp": 120.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4002-2026-06-30",
@@ -10020,7 +10790,8 @@
     "arr_time_local": "12:45",
     "aircraft": "A320neo",
     "status": "scheduled",
-    "price_gbp": 119.0
+    "price_gbp": 119.0,
+    "flight_length_minutes": 140
   },
   {
     "flight_id": "BA4003-2026-06-30",
@@ -10033,6 +10804,7 @@
     "arr_time_local": "11:20",
     "aircraft": "A321",
     "status": "scheduled",
-    "price_gbp": 128.0
+    "price_gbp": 128.0,
+    "flight_length_minutes": 135
   }
 ]
