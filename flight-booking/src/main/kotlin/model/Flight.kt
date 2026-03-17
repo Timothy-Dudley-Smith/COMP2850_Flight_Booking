@@ -10,7 +10,7 @@ data class Flight(
     val arrivalAirport: String,
     val departureTime: String,
     val arrivalTime: String,
-    val length: double,
+    val length: Double,
     val seats: List<Seat>,
     val layovers: List<Layover> = emptyList()
 )
