@@ -10,6 +10,7 @@ data class Flight(
     val arrivalAirport: String,
     val departureTime: String,
     val arrivalTime: String,
+    val length: double,
     val seats: List<Seat>,
     val layovers: List<Layover> = emptyList()
 )
@@ -21,6 +22,7 @@ object Flights : Table() {
     val arrivalAirport = reference("arrivalAirport", Airports.code)
     val departureTime = varchar("departureTime", VARCHAR_LENGTH)
     val arrivalTime = varchar("arrivalTime", VARCHAR_LENGTH)
+    val length = double("length")
     val price = double("price")
 
     override val primaryKey = PrimaryKey(flightId)
