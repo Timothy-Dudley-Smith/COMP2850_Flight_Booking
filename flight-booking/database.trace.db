@@ -400,3 +400,14 @@ SELECT "flightId", "departureTime", "arrivalTime", "length", ROUND("length" * 60
 	at org.h2.tools.Shell.execute(Shell.java:474)
 	at org.h2.tools.Shell.runTool(Shell.java:158)
 	at org.h2.tools.Shell.main(Shell.java:80)
+2026-03-17 15:05:04.700982Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "FIGHTS" not found; SQL statement:
+SELECT * FROM Fights
+SELECT "flightId","departureTime","arrivalTime","length",
+       ROUND("length"*60,0) AS flight_length_minutes
+FROM FLIGHTS
+WHERE "flightId"
+SELECT "flightId","departureTime","arrivalTime","length",
+       ROUND("length"*60,0) AS flight_length_minutes
+FROM FLIGHTS
+WHERE "flightId"='BA139-2026-06-29' [42102-232]
