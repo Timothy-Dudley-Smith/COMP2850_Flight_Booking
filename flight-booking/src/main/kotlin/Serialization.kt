@@ -1,5 +1,4 @@
 package com.example.com
-
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -10,12 +9,11 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
-import io.ktor.http.*
-import io.ktor.server.http.content.*
 
-fun Application.configureRouting() {
+fun Application.configureSerialization() {
     routing {
-        staticResources("/", "static/home")
-        staticResources("/log_in", "static/log_in")
+        get("/json/kotlinx-serialization") {
+            call.respond(mapOf("hello" to "world"))
+        }
     }
 }

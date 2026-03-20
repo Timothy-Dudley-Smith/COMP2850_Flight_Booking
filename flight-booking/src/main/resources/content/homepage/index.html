@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Search and compare routes for your next trip." />
+    <title>SkyPath | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+</div>
+
+<header class="top-nav">
+    <a class="brand" href="/">SkyPath</a>
+    <nav aria-label="Primary">
+        <div class="left-nav">
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <a class="login-link" href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<main class="home">
+    <section class="hero">
+        <p class="kicker">Flight booking made simple</p>
+        <h1>Find the smartest route in minutes.</h1>
+        <p class="hero-copy">
+            Search routes, compare options, and plan your next trip with a cleaner flow from takeoff to landing.
+        </p>
+    </section>
+
+    <section class="search-card" aria-labelledby="search-title">
+        <div class="card-head">
+            <h2 id="search-title">Search Flights</h2>
+            <p>Enter your route and departure date to start exploring options.</p>
+        </div>
+
+        <form action="/search" method="get" class="flight-search-form">
+            <label class="field" for="from">
+                <span>From</span>
+                <input id="from" name="from" type="text" placeholder="e.g. London (LHR)" required />
+            </label>
+
+            <label class="field" for="to">
+                <span>To</span>
+                <input id="to" name="to" type="text" placeholder="e.g. New York (JFK)" required />
+            </label>
+
+            <label class="field" for="date">
+                <span>Departure date</span>
+                <input id="date" name="date" type="date" required />
+            </label>
+
+            <label class="field field-small" for="passengers">
+                <span>Passengers</span>
+                <input id="passengers" name="passengers" type="number" min="1" value="1" required />
+            </label>
+
+            <button class="search-btn" type="submit">Search Flights</button>
+        </form>
+
+        <p class="card-note">Tip: Use airport codes for more accurate results.</p>
+    </section>
+
+    <section class="highlights" aria-label="Highlights">
+        <article class="tile">
+            <h3>Flexible Booking</h3>
+            <p>Hold plans lightly and adapt quickly with easy change paths.</p>
+        </article>
+        <article class="tile">
+            <h3>Route Insights</h3>
+            <p>See practical options at a glance to avoid long, costly layovers.</p>
+        </article>
+        <article class="tile">
+            <h3>Fast Workflow</h3>
+            <p>Move from search to booking in a single, focused experience.</p>
+        </article>
+    </section>
+</main>
+</body>
+</html>
