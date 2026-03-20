@@ -1,43 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
-  <link rel="stylesheet" href="/styles/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<link rel="stylesheet" href="styles/style.css">
 </head>
+
 <body>
-  <nav class="top-nav">
-    <div class="left-nav">
-        <a href="/">Home</a>
-        <a href="/recommendations">Recommendations</a>
-        <a href="/book">Book</a>
-        <a href="/manage">Manage</a>
-    </div>
-    <div class="right-nav">
-    <a href="/log_in">Log In</a>
-    </div>
-  </nav>
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="styles/Images/Logo.png" class="Airline_Logo">
+                <img src="styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
 
-  <main class="home">
-        <section class="centre">
-            <h1>Flights</h1>
-            <p>Where would you like to go?</p>
-        </section>
-        <section class="search-card centre">
-            <form action="/search" method="get" class="flight-search-form">
-                <label for="from">From</label>
-                <input id="from" name="from" type="text">
-                <label for="to">To</label>
-                <input id="to" name="to" type="text">
-                <label for="date">Date</label>         <!--TODO: Add trip type (Return / Single) once search functionality exists-->
-                <input id="date" name="date" type="date">
-                <label for="passengers">Passengers</label>
-                <input id="passengers" name="passengers" type="number">
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
 
-                <button type="submit">Search</button>
-            </form>
-        </section>
-  </main>
+
+<!-- main nav bar at top -->
+
+
+
+
+
+<!-- section with banner + search -->
+
+<section class="Airoplane_Banner">
+
+
+    <!-- full width banner image of plane for upper 1/3rd of page -->
+
+
+    <img src="styles/Images/Aeroplane_Banner.jpg" 
+    alt="Flights banner"
+    class="Banner-plane">
+
+
+    <div class="search-card">
+
+    <form action="/search" method="get" class="flight-bar">
+
+        <!-- flight search fields + button -->
+
+
+        <input type="text" placeholder="From">
+
+        <input type="text" placeholder="To">
+
+        <input type="date">
+
+        <select>
+            <option>1 Passenger Economy</option>
+            <option>2 Passengers Economy</option>
+        </select>
+
+        <button type="submit" class="search-btn">Search flights</button>
+
+    </form>
+
+    </div>
+    
+
+    <!-- search box sits on top of banner -->
+
+
+
+</section>
+
+
+<!-- featured destinations section -->
+
+
+<section class="experience">
+    <h2>Featured destinations from United Kingdom</h2>
+    <p>Browse our itineraries to discover routes, destinations, and travel options designed to help you plan your next trip</p>
+
+    <div class="experience-grid">
+
+        <button class="experience-card">
+            <img src="styles/Images/Experience_placholder.jpg" alt="">
+            <span>Fly the World's Best Business Class</span>
+        </button>
+
+        <button class="experience-card">
+            <img src="styles/Images/Experience_placholder.jpg" alt="">
+            <span>Stopover at the Best Middle East Airport</span>
+        </button>
+
+        <button class="experience-card">
+            <img src="styles/Images/Experience_placholder.jpg" alt="">
+            <span>Savour a world of exquisite flavors</span>
+        </button>
+
+        <button class="experience-card">
+            <img src="styles/Images/Experience_placholder.jpg" alt="">
+            <span>8,500+ entertainment choices</span>
+        </button>
+
+    </div>
+</section>
+
+
+<!-- banner as button for manage account section -->
+
+
+
+<a href="Manage_account" class="promo-banner">
+    <img src="styles/Images/Manageaccount.png" alt="Starlink Wi-Fi">
+</a>
+
+<section class="blue-box">
+    <!-- loyalty section with blue background -->
+
+    <div class="card-promo">
+
+        <div class="card-image">
+            <img src="styles/Images/AMEX_Loyalty_card.png" alt="British Airways Amex card">
+        </div>
+
+        <div class="card-text">
+
+            <h2>Collect 5,000 Welcome Bonus Avios</h2>
+
+            <p>
+            When you spend £2,000 in your first three months of Cardmembership
+            with a British Airways American Express® Credit Card.
+            Plus, get 1 Avios for every £1 you spend on purchases,
+            with no annual fee.
+            </p>
+
+            <h3>Representative 29.1% APR variable.</h3>
+
+            <p class="small-text">
+            Eligible new Cardmembers only. Your rates may vary depending on your
+            circumstances. Terms apply. 18+ UK residents, subject to status.
+            </p>
+
+            <a href="#" class="apply-link">Apply now →</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="white-box">
+    <!-- empty section placeholder for footer + more -->
+
+</section>
+
 </body>
 </html>
