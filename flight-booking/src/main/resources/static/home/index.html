@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home</title>
-<link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
@@ -53,22 +53,22 @@
 
     <div class="search-card">
 
-    <form action="/search" method="get" class="flight-bar">
+    <form action="/book" method="get" class="flight-bar">
 
         <!-- flight search fields + button -->
 
 
-        <input type="text" placeholder="From">
+        <input type="text" name="from" placeholder="From">
 
-        <input type="text" placeholder="To">
+        <input type="text" name="to" placeholder="To">
 
-        <input type="date">
+        <input type="date" name="date">
 
-        <select>
-            <option>1 Passenger Economy</option>
-            <option>2 Passengers Economy</option>
+         <select name="passengers">
+        <option>1 Passenger Economy</option>
+        <option>2 Passengers Economy</option>
         </select>
-
+        
         <button type="submit" class="search-btn">Search flights</button>
 
     </form>

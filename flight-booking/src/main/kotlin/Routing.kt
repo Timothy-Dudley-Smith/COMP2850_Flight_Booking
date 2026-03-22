@@ -13,9 +13,20 @@ import org.jetbrains.exposed.sql.*
 import io.ktor.http.*
 import io.ktor.server.http.content.*
 
+import java.io.File
+
 fun Application.configureRouting() {
     routing {
+
         staticResources("/", "static/home")
         staticResources("/log_in", "static/log_in")
+
+        get("/book") {
+            call.respondFile(
+                File("src/main/resources/static/home/book.html")
+            )
+        }
+
     }
 }
+
