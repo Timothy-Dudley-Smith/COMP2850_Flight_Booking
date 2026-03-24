@@ -1,6 +1,7 @@
 package com.example.com
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.pebble.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -14,6 +15,10 @@ fun Application.configureSerialization() {
     routing {
         get("/json/kotlinx-serialization") {
             call.respond(mapOf("hello" to "world"))
+
         }
+    }
+    install(ContentNegotiation) {
+        json()
     }
 }
