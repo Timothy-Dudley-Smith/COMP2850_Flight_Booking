@@ -1,3 +1,6 @@
+
+
+
 val exposed_version: String by project
 val h2_version: String by project
 val kotlin_version: String by project
@@ -21,6 +24,8 @@ kotlin {
 }
 
 dependencies {
+    implementation("io.ktor:ktor-server-content-negotiation")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-pebble")
     implementation("io.ktor:ktor-server-core")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
