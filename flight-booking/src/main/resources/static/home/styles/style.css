@@ -4,7 +4,7 @@ body {
     background-color: #f2f2f2;
 }
 
-/*Sets main font and grey background for whole page/*
+/*Sets main font and grey background for whole page*/
 
 
 
@@ -20,7 +20,7 @@ body {
     z-index: 1000;
 }
 
-/*Add's a white background for the header, which is kept fixed even when scrolling/*
+/*Add's a white background for the header, which is kept fixed even when scrolling*/
 
 
 
@@ -38,7 +38,7 @@ body {
     
 }
 
-/*Makes a navbar adds spacing between the elements/*
+/*Makes a navbar adds spacing between the elements*/
 
 
 /* -----------------------------  */
@@ -53,7 +53,7 @@ body {
     gap: 60px;
 }
 
-/*main menu links/*
+/*main menu links*/
 
 .center-nav a{
     text-decoration: none;
@@ -495,3 +495,102 @@ body {
 /*white under blue box to add footer of website later*/
 
 
+/* --- LAYOUT CONTAINERS --- */
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/*allows for the results to be displayed in a scroll down manner*/
+
+
+
+/* --- FLIGHT CARDS --- */
+
+.flight-card {
+
+    background: rgb(249, 249, 249);
+    width: 90%;
+    margin: 0 auto; 
+    border-radius: 10px;
+    padding: 20px;      
+    min-height: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+
+
+.flight-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+}
+
+/* --- HEADER & FILTERS --- */
+
+.results-top {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+.results-header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.results-header h1 {
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+/* --- CUSTOM SELECTS --- */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 14px 50px 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #cfd6e0;
+    background: #f7f9fc;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.dropdown select {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.dropdown select:focus {
+    outline: none;
+    border-color: #2a4b8d;
+}
+
+.dropdown select {
+    padding-left: 25px;
+}
+
+.filter label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.sort label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+}
