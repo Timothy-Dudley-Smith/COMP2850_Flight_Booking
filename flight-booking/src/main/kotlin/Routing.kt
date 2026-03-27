@@ -109,15 +109,15 @@ fun Application.configureRouting() {
                     if (match == true) {
                         // only include flights that match everything
 
-                        mapOf(
-                            "flightId" to row[Flights.flightId],
-                            "departureAirport" to row[Flights.departureAirport],
-                            "arrivalAirport" to row[Flights.arrivalAirport],
-                            "price" to row[Flights.price],
-                            "date" to row[Flights.date],
-                            "departureTime" to row[Flights.departureTime],
-                            "arrivalTime" to row[Flights.arrivalTime],
-                            "length" to row[Flights.length]
+                        FlightResponse(
+                            row[Flights.flightId],
+                            row[Flights.departureAirport],
+                            row[Flights.arrivalAirport],
+                            row[Flights.price],
+                            row[Flights.date],
+                            row[Flights.departureTime],
+                            row[Flights.arrivalTime],
+                            row[Flights.length]
                         )
                     }
                     else {
