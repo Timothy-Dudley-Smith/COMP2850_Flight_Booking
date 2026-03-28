@@ -27,7 +27,9 @@
             .filter((a) =>
                 normalize(a.code).startsWith(q) ||
                 normalize(a.city).startsWith(q) ||
-                normalize(a.name).startsWith(q)
+                normalize(a.name).startsWith(q) ||
+                normalize(a.country).startsWith(q)
+
             )
             .slice(0, MAX_OPTIONS);
     }
