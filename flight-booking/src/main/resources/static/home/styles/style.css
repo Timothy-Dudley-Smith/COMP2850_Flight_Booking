@@ -594,3 +594,142 @@ body {
     font-size: 14px;
     color: #555;
 }
+
+/* Flight Result Page */
+
+
+/* containor for each result  */
+.flight-card {
+    display: flex;
+    justify-content: space-between;
+    /* pushes prices to far right to space out all the information*/
+    /* Used Claude 4.6 To figure how to do this */
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* styling and spacing etc */
+}
+
+/* left side of each result ie logo and button */
+.flight-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* space between logo and times */
+    flex: 1;
+}
+
+/* puts the logo above the details button */
+.airline-block {
+    display: flex;
+    flex-direction: column;
+    /* makes a col so logo goes on top and button on bottom */
+    align-items: center;
+    gap: 8px;
+}
+
+/* airline logo*/
+
+.flight-logo {
+    width: 120px;
+}
+
+/* makes a button for showing details */
+.details-btn {
+    background: white;
+    border: 1px solid #007bff;
+    color: #007bff;
+    margin-top: 90px;
+    /* makes a gap between the logo */
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    /* makes the button clickable and adds a hover animation */
+    cursor: pointer;
+    transition: 0.2s;
+}
+/* changes col when hover over */
+.details-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+
+/* section which houses the times ie dep arrival and length */
+.time-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    /* makes space between the times */
+    justify-content: center;
+    /* puts the times and text in middle of the block  */
+    flex: 1;
+}
+
+/* makes the times bold and big */
+.time-section h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* makes the airport small and descreet by changing col */
+.time-section span {
+    font-size: 12px;
+    color: #666;
+}
+
+.time-block {
+    text-align: center;
+}
+
+/*direct label and line and length*/
+.duration {
+    display: flex;
+    flex-direction: column; /* makes a col where top is num of stops then line then length */
+    align-items: center;
+    width: 120px;
+}
+
+
+/*line between num of stops and len*/
+.duration .line {
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+    margin: 3px 0;
+}
+
+/* right side which has prices */
+.flight-prices {
+    display: flex;
+    gap: 15px;
+    /* mspace between each option of class */
+}
+
+
+/* box for the different flight options */
+.price-box {
+    background: #f1f5f9;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.price-box span {
+    display: block;
+    font-size: 12px;
+    color: #555;
+}
+
+/* size for price in bold */
+.price-box strong {
+    font-size: 16px;
+}
+
+
+
