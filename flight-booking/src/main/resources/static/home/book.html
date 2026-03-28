@@ -65,71 +65,116 @@
 
 <section class="results-wrapper">
     <div class="results-list" id="flight-list">
-        <p>Loading flights...</p>
     </div>
 </section>
 
-<script>
-    const params = new URLSearchParams(window.location.search);
-    const from = params.get("from");
-    const to   = params.get("to");
-    const date = params.get("date");
 
-    document.getElementById("route-title").textContent = from + " → " + to;
-    if (date) {
-        document.getElementById("route-date").textContent =
-            new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
-    }
 
-    const query = new URLSearchParams();
-    if (from) query.append("from", from);
-    if (to)   query.append("to",   to);
-    if (date) query.append("date", date);
 
-    fetch(`/api/flights?${query.toString()}`)
-        .then(res => res.json())
-        .then(flights => {
-            const list = document.getElementById("flight-list");
-            list.innerHTML = "";
+
+<script type="module">
+    async function loadFlights() {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get("from");
+        const to   = params.get("to");
+        const date = params.get("date");
+
+        //from the url get the from,to,date parameters
+
+        document.getElementById("route-title").textContent = from + " → " + to;
+        //used text header of page telling user which flights are to be shown
+
+        const d = new Date(date);
+        document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+        //put the date string into a readable "day month" format ie "28 March"
+
+        try {
+            const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}`);
+            const flights  = await response.json();
+            const list     = document.getElementById("flight-list");
+
+            //gets flight data from an the database endpoint, passing three query parameters — from, to, and date
 
             if (flights.length === 0) {
                 list.innerHTML = "<p>No flights found for this route.</p>";
                 return;
             }
+            // if no flight matches are found then simply write a message saying that
 
             flights.forEach(flight => {
-                const hours   = Math.floor(flight.length);
-                const minutes = Math.round((flight.length % 1) * 60);
+                const hours = Math.trunc(flight.length);
+                const decimal = flight.length - hours;
+                const minutes = Math.round(decimal * 60);
+            // math alg to calc duration of flight in hrs and mins done for ease of user but also for filtering and sorting
 
                 list.insertAdjacentHTML("beforeend", `
-                    <div class="flight-card">
+                <div class="flight-card">
+                <!-- each result is split into 3 parts the left middle and right section -->
+
+                    <!-- the left section holds the logo and details button -->
+                    <div class="flight-left">
+                    <!-- logo and details button -->
+                    <div class="airline-block">
                         <img src="/styles/Images/Logo.png" class="flight-logo">
-                        <div class="flight-details">
-                            <div class="time-block">
-                                <h2>${flight.departureTime}</h2>
-                                <span>${flight.departureAirport}</span>
-                            </div>
-                            <div class="duration-line">
-                                <small>Direct</small>
-                                <hr>
-                                <small>${hours}h ${minutes}m</small>
-                            </div>
-                            <div class="time-block">
-                                <h2>${flight.arrivalTime}</h2>
-                                <span>${flight.arrivalAirport}</span>
-                            </div>
-                            <div class="price-block">
-                                <small>Economy from</small>
-                                <div class="price">£${flight.price.toFixed(2)}</div>
-                            </div>
+                        <button class="details-btn">Details</button>
+                    </div>
+                    <!-- the middle section houses the timings and airport details -->
+                    <div class="time-section">
+                        <div class="time-block">
+                            <h2>${flight.departureTime}</h2>
+                            <span>${flight.departureAirport}</span>
                         </div>
-                    </div>`);
+
+                        <!-- puts the num of stops and flight len in small with line between the two -->
+                        <div class="duration">
+                            <small>Direct</small>
+                            <div class="line"></div>
+                            <small>${hours}h ${minutes}m</small>
+                        </div>
+
+                        <!-- arrival time and airport -->
+                        <div class="time-block">
+                            <h2>${flight.arrivalTime}</h2>
+                            <span>${flight.arrivalAirport}</span>
+                        </div>
+                    </div>
+                </div>
+                    <!-- pricing options-->
+                    <div class="flight-prices">
+                        <div class="price-box">
+                            <span>Economy</span>
+                            <strong>£${flight.price.toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Premium Economy</span>
+                            <strong>£${(flight.price * 1.6).toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Business</span>
+                            <strong>£${(flight.price * 3.5).toFixed(0)}</strong>
+                        </div>
+                    </div>
+
+                </div>
+                `);
             });
-        })
-        .catch(() => {
+
+            //catch block is for error handling ie if anything goes wrong then the catchj block runs
+
+        } catch {
             document.getElementById("flight-list").innerHTML =
                 "<p>Failed to load flights. Please try again.</p>";
-        });
+        }
+    }
+    loadFlights();
+
+
+
 </script>
 
 
