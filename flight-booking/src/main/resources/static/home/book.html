@@ -119,7 +119,10 @@
                     <!-- logo and details button -->
                     <div class="airline-block">
                         <img src="/styles/Images/Logo.png" class="flight-logo">
-                        <button class="details-btn">Details</button>
+                        <div class="buttons">
+                            <button class="details-btn">Details</button>
+                            <button class="Book_Now-btn">Book Now</button>
+                        </div>
                     </div>
                     <!-- the middle section houses the timings and airport details -->
                     <div class="time-section">
@@ -162,6 +165,33 @@
 
                 </div>
                 `);
+                // get all three price boxes and the book button
+                const priceBoxes = list.querySelectorAll(".price-box");
+                const bookBtn = list.querySelector(".Book_Now-btn");
+
+                // loop through each price box
+                for (let i = 0; i < priceBoxes.length; i++) {
+
+                    // add a click listener to each box
+                    priceBoxes[i].addEventListener("click", function() {
+
+                        // remove selected from all boxes first
+                        for (let j = 0; j < priceBoxes.length; j++) {
+                            priceBoxes[j].classList.remove("selected");
+                        }
+
+                        // highlight the box that was clicked
+                        this.classList.add("selected");
+
+                        // enable the book button
+                        bookBtn.disabled = false;
+                        bookBtn.classList.add("active");
+                        bookBtn.addEventListener("click", () => {
+                            window.location.href = "booking-personal.html";
+                        });
+
+                    });
+                }
             });
 
             //catch block is for error handling ie if anything goes wrong then the catchj block runs

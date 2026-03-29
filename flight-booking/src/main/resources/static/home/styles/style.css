@@ -373,7 +373,6 @@ body {
     width: 100%;
     display: block;
     margin: 40px auto;
-    border-radius: 20px;
     cursor: pointer;
 }
 
@@ -532,6 +531,7 @@ body {
 
 /* --- HEADER & FILTERS --- */
 
+
 .results-top {
     width: 90%;
     margin: 0 auto;
@@ -639,17 +639,14 @@ body {
 
 /* makes a button for showing details */
 .details-btn {
-    background: white;
-    border: 1px solid #007bff;
-    color: #007bff;
-    margin-top: 90px;
-    /* makes a gap between the logo */
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    /* makes the button clickable and adds a hover animation */
+    background: #f1f5f9;
+    color: black;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
     cursor: pointer;
-    transition: 0.2s;
+    margin-top: 90px;
 }
 /* changes col when hover over */
 .details-btn:hover {
@@ -657,6 +654,27 @@ body {
     color: white;
 }
 
+.Book_Now-btn {
+    background: #132e8e;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 90px;
+    /* changes col when hover over */
+}
+.Book_Now-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.btn-group {
+    display: flex;
+    gap: 40px;
+    margin-top: 90px;
+}
 
 /* section which houses the times ie dep arrival and length */
 .time-section {
@@ -718,6 +736,13 @@ body {
     border-radius: 8px;
     text-align: center;
     min-width: 100px;
+    cursor: pointer;
+
+}
+
+.price-box:hover {
+    background: #007bff;
+    color: white;
 }
 
 .price-box span {
@@ -731,5 +756,107 @@ body {
     font-size: 16px;
 }
 
+.price-box.selected {
+    border: 2px solid #007bff;
+}
 
 
+/* Booking page 1 */
+
+
+/* main card container */
+.booking_page_1 {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width:80%;
+    position: relative;
+    margin: 60px auto;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* type of passenger heading */
+.booking_page_1 h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #1a2b4a;
+}
+
+/* age 16+ text */
+.age-label {
+    color: #666;
+    font-size: 13px;
+    margin: 4px 0 24px;
+}
+
+
+/* wrapper for each box */
+.user_input_box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* field label e.g. "First names" */
+.user_input_box label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2b4a;
+    margin-bottom: 4px;
+}
+
+/* bold text showing what each box is menat to include */
+.user_input_box small {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+/*  style for all inputs and selects */
+.user_input_box input,
+.user_input_box select {
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
+    appearance: none;
+    background: #fff;
+}
+
+/* adds the arrow to selects */
+.user_input_box select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+/* row that for DD MM YYYY boxes side by side */
+.dob-row {
+    display: flex;
+    gap: 12px;
+}
+
+/* label above dob input */
+.dob-field {
+    display: flex;
+    flex-direction: column;
+}
+
+/* DD MM YYYY label */
+.dob-field small {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+/* the number input box */
+.dob-field input {
+    width: 80px;
+    padding: 14px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+}
