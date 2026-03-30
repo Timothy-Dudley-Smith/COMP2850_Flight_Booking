@@ -1,6 +1,6 @@
 package com.flightsystem.model
 
-import org.jetbrains.exposed.sql.Table
+
 
 import java.time.LocalDateTime
 private const val VARCHAR_LENGTH = 255
@@ -48,10 +48,6 @@ open class User(
         return candidateHash == passwordHash
     }
 
-    fun getPasswordHash(): String {
-        return passwordHash
-    }
-
     fun getSalt(): String {
         return salt
     }
@@ -59,20 +55,24 @@ open class User(
     fun addBooking(booking: Booking) {
         bookings.add(booking)
 
-        loyaltyPoints += (booking.totalPrice / POINTS_PER_UNIT_SPENT).toInt()
+        loyaltyPoints += calculatePoints(booking.totalPrice)
     }
 
     fun removeBooking(booking: Booking) {
         if (bookings.remove(booking)) {
-            loyaltyPoints -= (booking.totalPrice / POINTS_PER_UNIT_SPENT).toInt()
+            loyaltyPoints -= calculatePoints(booking.totalPrice)
             if (loyaltyPoints < 0) {
                 loyaltyPoints = 0
             }
         }
     }
 
+    private fun calculatePoints(price: Double): Int {
+        return (price / POINTS_PER_UNIT_SPENT).toInt()
+    }
+
     fun getBookings(): List<Booking> {
-        return bookings
+        return bookings.toList()
     }
 
     fun getLoyaltyPoints(): Int = loyaltyPoints
@@ -99,7 +99,7 @@ open class User(
 
     fun recordLoginFailure() {
         failedLoginAttempts++
-        if (failedLoginAttempts >=MAX_FAILED_ATTEMPTS ) {
+        if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS ) {
             accountLocked = true
             lockedAt = LocalDateTime.now()
         }
@@ -127,12 +127,3 @@ open class User(
 
 }
 
-object Users : Table() {
-    val userId = integer("user_id").autoIncrement()
-    val name = varchar("user_name", VARCHAR_LENGTH)
-    val email = varchar("email", VARCHAR_LENGTH)
-    val passwordHash = varchar("passwordHash", VARCHAR_LENGTH)
-    val salt = varchar("salt", VARCHAR_LENGTH)
-
-    override val primaryKey = PrimaryKey(userId)
-}
