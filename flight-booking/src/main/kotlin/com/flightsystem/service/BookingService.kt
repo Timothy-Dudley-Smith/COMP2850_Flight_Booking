@@ -4,7 +4,7 @@ import com.flightsystem.model.*
 
 class BookingService {
     // booking storage list
-    private val bookings = mutableListOf<Booking>()
+    // private val bookings = mutableListOf<Booking>()
 
     fun calculateTotalPrice(flight: Flight, seats: List<Seat>): Double {
         return flight.price * seats.size
@@ -21,6 +21,7 @@ class BookingService {
     }
 
     // create booking, use validateSeats()
+    /* to solve merge
     fun createBooking(
         bookingID: String,
         user: User,
@@ -36,6 +37,7 @@ class BookingService {
         for (seat in requestedSeats) {
             seat.isAvailable = false
         }
+    
 
 
         val booking = Booking(
@@ -48,12 +50,15 @@ class BookingService {
         bookings.add(booking)
         return booking 
     }
+    */
 
+    /* 
     fun cancelBooking(booking: Booking) {
         for(seat in booking.seatsBooked) {
             seat.isAvailable = true
         }
     }
+    */
 
     // return a list of all seats that are still available 
     fun getAvailableSeats(flight: Flight): List<Seat> {
@@ -68,6 +73,7 @@ class BookingService {
     }
 
     // return a booking that matches the provided booking Id
+    /* temp 
     fun getBookingDetails(bookingID: String): Booking? {
         for (booking in bookings) {
             if (booking.bookingId == bookingID) {
@@ -76,6 +82,7 @@ class BookingService {
         }
         return null
     }
+    
 
     // return a list of all bookings 
     fun getAllBookings(): List<Booking> {
@@ -93,6 +100,7 @@ class BookingService {
         }
         return userBookings
     }
+    */
 
     // temporarily hold seat so it can't be booked by others
     fun holdSeat(seat: Seat): Boolean {
@@ -109,6 +117,7 @@ class BookingService {
     }
 
     // calc total price based on seat class
+    /* temp comment this out - trying something 
     fun calculatePriceByClass(flight: Flight, seats: List<Seat>): Double {
         var totalPrice = 0.0
 
@@ -122,10 +131,12 @@ class BookingService {
         }
         return totalPrice
     }
+    */
 
     // update the seats assigned to an existing booking
+    /* temp 
     fun updateBookingSeats(
-        booking: Boking,
+        booking: Booking,
         newSeats: List<Seat>
     ): Boolean {
         //check if new seats are available
@@ -143,8 +154,9 @@ class BookingService {
             seat.isAvailable = false
         }
         //update the booking with the new seats
-        booking.seatBooked.clear()
+        booking.seatsBooked.clear()
         booking.seatsBooked.addAll(newSeats)
         return true
     }
+    */
 }

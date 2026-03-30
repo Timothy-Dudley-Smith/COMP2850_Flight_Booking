@@ -1,54 +1,596 @@
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    background-color: #f2f2f2;
 }
 
-main {
-    padding: 5px 20px;
+/*Sets main font and grey background for whole page*/
+
+
+
+/* ----------------------------- */
+/* HEADER */
+/* ----------------------------- */
+
+.header{
+    background: white;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.home {
-    align-items: center;
-}
+/*Add's a white background for the header, which is kept fixed even when scrolling*/
 
-.centre {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.search-card {
-    padding: 12px 20px;
-    gap: 20px;
-}
+
+/* ----------------------------- */
+/* NAVBAR */
+/* ----------------------------- */
+
 
 .top-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
-    border-bottom: 1px solid #ddd;
-
-    position: sticky;
-    top: 0;
-    z-index: 1000;
     background: white;
+    padding: 10px 40px;
+    
 }
 
-.left-nav,
+/*Makes a navbar adds spacing between the elements*/
+
+
+/* -----------------------------  */
+/* CENTER NAVIGATION- MAIN LINKS) */
+/* -----------------------------  */
+
+.center-nav{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 60px;
+}
+
+/*main menu links*/
+
+.center-nav a{
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}
+
+/* Styling for center navigation links */
+
+
+/* -----------------------------  */
+/* LEFT NAVIGATION- LOGO STUFF */
+/* -----------------------------  */
+
+
+.left-nav{
+    display: flex;
+    align-items: center;
+    gap: 45px;
+    flex-wrap: nowrap;
+
+}
+
+/* Container holding logo + SA images */
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Logo wrapper  + Space between logos*/
+
+
+.Airline_Logo{
+    height: 100px;
+    display: block;
+}
+
+/* Main airline logo */
+
+
+.Star_Alliance{
+    height: 24px;
+    opacity: 0.8; /* faded reduce emphasis */
+}
+
+/* Star Alliance Logo */
+
+
+/* -----------------------------  */
+/* RIGHT NAVIGATION- LOGIN & LANG */
+/* -----------------------------  */
+
+
 .right-nav {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    gap: 40px;
+    font-size: 14px;
 }
 
+/* Container for language + login */
+
+
+.lang{
+    color: #555;
+}
+/* Language text col */
+
+
+
+/* -----------------------------  */
+/* GENERAL NAVIGATION- STYLING */
+/* -----------------------------  */
 
 .top-nav a {
-  text-decoration: none;
-  color: #005a54;
-  font-weight: 600;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: border-color 0.2s ease;
+    text-decoration: none;
+    color: #011;       
+    font-weight: 500;
+
 }
 
 .top-nav a:hover {
-  text-decoration: underline;
+    border-bottom: 2px solid #00a1de;
+}
+
+/* for links insidee navbar */
+/* USED GPT 5.3 FOR ASSISTANCE WITH THE HOVER EFFECT*/
+
+
+
+/* -----------------------------  */
+/* Airoplane Banner IMAGE */
+/* -----------------------------  */
+
+.Airoplane_Banner {
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.Banner-plane {
+    width: 100%;
+    height: 350px;
+    object-fit: cover; /* stops image distortion */
+}
+
+
+/* -----------------------------  */
+/* SEARCH BOX */
+/* -----------------------------  */
+
+
+.search-card {
+
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* position  search box overlapping the banner and centers it horizontally */
+
+
+    padding: 25px;
+    background: white;
+    border-radius: 8px;
+
+    /*internal spacing, white background and rounded corners */
+
+
+
+    width: 100%;
+    max-width: 1000px;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+
+    /*shadow to lift the card off the page*/
+}
+
+/* ============================= */
+/* BOOKING TABS */
+/* ============================= */
+
+.booking-tabs {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.tab input {
+    accent-color: #4c4bb7; /* nice purple like Qatar */
+}
+
+/* ============================= */
+/* FLIGHT SEARCH BAR */
+/* ============================= */
+
+.flight-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/*light grey background for iside search box, rounded edges*/
+
+
+/* Inputs */
+.flight-bar input,
+.flight-bar select {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    padding: 10px;
+    flex: 1;
+    outline: none;
+}
+
+/*removes default styles*/
+
+.flight-bar input:not(:last-child),
+.flight-bar select {
+    border-right: 1px solid #ddd;
+}
+
+/*adds divider lines between fields*/
+
+
+/* USED GPT 5.3 FOR ASSISTANCE WITH THE styling of this*/
+
+/* Button */
+.search-btn {
+    background: #132e8e; 
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/*gives search button colour + rounded shape*/
+
+
+.search-btn:hover {
+    background: #220d0d;
+}
+
+/*darker colour on hover*/
+
+/* -----------------------------  */
+/* FORM */
+/* -----------------------------  */
+
+
+.flight-search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.flight-search-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/*spacing, border and rounded corners*/
+
+
+.flight-search-form button {
+    padding: 10px 18px;
+    background: #005a54;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*gives search button colour and spacing*/
+
+.flight-search-form button:hover {
+    background: #004742;
+}
+
+/*gives darker shade on hover for interaction */
+
+
+/* -----------------------------  */
+/* Itinery Section */
+/* -----------------------------  */
+
+.experience {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+
+    margin-top: 80px;
+}
+
+/*centers everything + adds space from section above*/
+
+
+
+.experience-grid {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+/*makes a row for the buttons/pics with spacing between*/
+
+.experience-card {
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 260px;
+}
+
+ /*makes pics clickable*/
+
+.experience-card img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+/*image fills card*/
+
+
+.experience-card span {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+/*text under image*/
+
+/* -----------------------------  */
+/* Manage Account Section */
+/* -----------------------------  */
+
+.promo-banner img{
+    width: 100%;
+    display: block;
+    margin: 40px auto;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/*full width image with spacing*/
+/*rounded corners and clickable*/
+
+
+
+
+/* -----------------------------  */
+/* Blue Box For Loyatly Section Backround*/
+/* -----------------------------  */
+
+
+.blue-box{
+    background-color: #1e3a5f;
+    color: white;
+    padding: 60px 20px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+}
+
+/*blue background section*/
+
+.blue-box h1{
+    font-weight: 400;
+    font-size: 28px;
+}
+
+/*smaller heading*/
+
+
+.blue-box h2{
+    font-weight: 300;
+    font-size: 70px;
+}
+
+/*big main heading*/
+
+
+.card-promo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/*puts card image + text side by side*/
+
+.card-image img{
+    width: 500px;
+    display: block;
+    margin: 0px auto;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/*image size + rounded corners*/
+
+.card-text{
+    max-width: 550px;
+    text-align: left;
+}
+
+/*text width + aligns left*/
+
+.card-text h2{
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+/*heading styling*/
+
+.card-text p{
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/*paragraph spacing*/
+
+.card-text h3{
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+/*subheading spacing*/
+
+.small-text{
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/*faded text*/
+
+.apply-link{
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+/*link styled underlined text*/
+
+.apply-link:hover{
+    text-decoration: underline;
+}
+
+/*underline on hover*/
+
+
+.white-box{
+    background-color: #fafafa;
+    padding: 120px 20px;
+    margin: 1px auto;
+
+}
+
+/*white under blue box to add footer of website later*/
+
+
+/* --- LAYOUT CONTAINERS --- */
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/*allows for the results to be displayed in a scroll down manner*/
+
+
+
+/* --- FLIGHT CARDS --- */
+
+.flight-card {
+
+    background: rgb(249, 249, 249);
+    width: 90%;
+    margin: 0 auto; 
+    border-radius: 10px;
+    padding: 20px;      
+    min-height: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+
+
+.flight-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+}
+
+/* --- HEADER & FILTERS --- */
+
+.results-top {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+.results-header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.results-header h1 {
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+/* --- CUSTOM SELECTS --- */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 14px 50px 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #cfd6e0;
+    background: #f7f9fc;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.dropdown select {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.dropdown select:focus {
+    outline: none;
+    border-color: #2a4b8d;
+}
+
+.dropdown select {
+    padding-left: 25px;
+}
+
+.filter label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.sort label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
 }

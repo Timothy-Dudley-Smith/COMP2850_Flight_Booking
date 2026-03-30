@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Results</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/styles/Images/Logo.png" class="Airline_Logo">
+                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- main nav bar at top -->
+
+
+
+<section class="results-top">
+    <div class="filter">
+        <label>Filter by:</label>
+        <div class="dropdown">
+            <select>
+                <option>All flights</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="results-header">
+        <h1 id="route-title"></h1>
+        <p id="route-date"></p>
+    </div>
+
+    <div class="sort">
+        <label>Sort by:</label>
+        <div class="dropdown">
+            <select>
+                <option>Recommended</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+
+<script>
+   let params = new URLSearchParams(window.location.search);
+
+    let from = params.get("from");
+    let to = params.get("to");
+    let date = params.get("date");
+
+    document.getElementById("route-title").textContent =
+        (from) + " → " + (to);
+
+    if (date !== null) {
+        const dateObject = new Date(date);
+
+        document.getElementById("route-date").textContent =
+            dateObject.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long"
+            });
+    }
+</script>
+
+
+
+
+
+<section class="results-wrapper">
+    <div class="results-list">        
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-card">
+            <img src="/styles/Images/Logo.png" class="flight-logo">
+            <div class="flight-details">
+                <div class="time-block">
+                    <h2>10:30</h2>
+                    <span>LHR</span>
+                </div>
+                <div class="duration-line">
+                    <small>Direct</small>
+                    <hr>
+                    <small>3h 45m</small>
+                </div>
+                <div class="time-block">
+                    <h2>14:15</h2>
+                    <span>IST</span>
+                </div>
+                <div class="price-block">
+                    <small>Economy from</small>
+                    <div class="price">£184</div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+</section>
+
+
+
+</body>
+</html>
