@@ -1,6 +1,9 @@
 package com.flightsystem.model
+
 import org.jetbrains.exposed.sql.Table
+
 import java.time.LocalDateTime
+private const val VARCHAR_LENGTH = 255
 
 open class User(
     val userId: String,
@@ -18,6 +21,7 @@ open class User(
     private var lockedAt: LocalDateTime? = null
     private var failedLoginAttempts: Int = 0
 
+
     private var seatPreference = "ANY"
 
     companion object {
@@ -25,6 +29,7 @@ open class User(
         private const val MAX_FAILED_ATTEMPTS = 5
         private const val LOCKOUT_MINUTES = 30L
         private const val POINTS_PER_UNIT_SPENT = 10
+
     }
 
     fun updateDetails(newName: String, newEmail: String) {
@@ -54,12 +59,12 @@ open class User(
     fun addBooking(booking: Booking) {
         bookings.add(booking)
 
-        loyaltyPoints += (booking.totalPrice / 10).toInt()
+        loyaltyPoints += (booking.totalPrice / POINTS_PER_UNIT_SPENT).toInt()
     }
 
-    fun removeBooking(booking: Booking {
+    fun removeBooking(booking: Booking) {
         if (bookings.remove(booking)) {
-            loyaltyPoints -= calculatePoints(booking.totalPrice)
+            loyaltyPoints -= (booking.totalPrice / POINTS_PER_UNIT_SPENT).toInt()
             if (loyaltyPoints < 0) {
                 loyaltyPoints = 0
             }
@@ -96,6 +101,7 @@ open class User(
         failedLoginAttempts++
         if (failedLoginAttempts >=MAX_FAILED_ATTEMPTS ) {
             accountLocked = true
+            lockedAt = LocalDateTime.now()
         }
     }
 
