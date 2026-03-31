@@ -10,9 +10,14 @@ data class Booking(
     val flightId: String,
 )
 
+data class BookingDetails(
+    val booking: Booking, 
+    val seats: List<String> 
+)
+
 object Bookings: Table() {
     val bookingId = integer("bookingId").autoIncrement()
-    val user = reference("userId", Users.userId)
+    val userId = reference("userId", Users.userId)
     val flightId = reference("flight", Flights.flightId)
 
     override val primaryKey = PrimaryKey(bookingId)
