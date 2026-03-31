@@ -48,6 +48,16 @@ fun Application.configureRouting() {
                 File("src/main/resources/static/home/book.html")
             )
         }
+
+        get("/booking-personal") {
+            call.respondFile(
+                File("src/main/resources/static/home/booking-personal.html")
+            )
+        }
+
+
+
+
         get("/api/airports") {                          //get airport data for the drop-down search menu
             val airportData = transaction {
                 Airports.selectAll().orderBy(Airports.country).map { row ->
@@ -68,6 +78,7 @@ fun Application.configureRouting() {
             val from = call.request.queryParameters["from"]
             val to   = call.request.queryParameters["to"]
             val date = call.request.queryParameters["date"]
+            val passengers = call.request.queryParameters["passengers"]
 
             //read user input from the URL so API can filter flights
 

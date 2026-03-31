@@ -78,6 +78,8 @@
         const from = params.get("from");
         const to   = params.get("to");
         const date = params.get("date");
+        const passengers = params.get("passengers");
+
 
         //from the url get the from,to,date parameters
 
@@ -92,7 +94,7 @@
         //put the date string into a readable "day month" format ie "28 March"
 
         try {
-            const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}`);
+            const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}&passengers=${passengers}`);
             const flights  = await response.json();
             const list     = document.getElementById("flight-list");
 
@@ -187,7 +189,11 @@
                         bookBtn.disabled = false;
                         bookBtn.classList.add("active");
                         bookBtn.addEventListener("click", () => {
-                            window.location.href = "booking-personal.html";
+                            const selectedBox = list.querySelector(".price-box.selected");
+                            const cabin = selectedBox.querySelector("span").textContent;
+                            const price = selectedBox.querySelector("strong").textContent;
+
+                            window.location.href = `booking-personal.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}`;
                         });
 
                     });
