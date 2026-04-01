@@ -2,7 +2,7 @@ package com.flightsystem.model
 
 import java.time.LocalDateTime
 
-import com.flightsystem.model.Bookings.bookingId
+import com.flightsystem.model.Bookings.bookingID
 import org.jetbrains.exposed.sql.Table
 
 
@@ -34,6 +34,32 @@ data class Payment(
 
     fun setStatusFailed() {
         status = PaymentStatus.FAILED
+    }
+
+    fun setRefunded() {
+        status = PaymentStatus.REFUNDED
+        refundedAt = LocalDateTime.now()
+    }
+
+    fun isRefundable(): Boolean = status == PaymentStatus.SUCCESS
+
+    fun isPending(): Boolean = status == PaymentStatus.PENDING
+
+    fun isSuccessful(): Boolean = status == PaymentStatus.SUCCESS
+
+    fun getSummary(): String {
+        return """
+            --- Payment Summary ---
+            Payment ID:   $paymentId
+            Booking ID:   $bookingId
+            Amount:       £${"%.2f".format(amount)}
+            Card:         **** **** **** $cardLastFour
+            Cardholder:   $cardHolderName
+            Status:       $status
+            Date:         ${timestamp}
+            ${if (refundedAt != null) "Refunded at: $refundedAt" else ""}
+        """.trimIndent()
+            
     }
 
 
