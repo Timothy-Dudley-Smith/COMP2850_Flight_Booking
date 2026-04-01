@@ -1,21 +1,21 @@
-package.com.flightsystem.model
+package com.flightsystem.model
 
 class Manager(
     userId: String,
     name: String,
     email: String,
-    passwordHash: String
+    passwordHash: String,
     salt: String
 ) : User(userId, name, email, passwordHash, salt) {
 
     fun resetuserPassword(user: User, newPasswordHash: String, newSalt: String) {
         user.updatePassword(newPasswordHash, newSalt)
-        println("Password reset for user: $user{user.userId}")
+        println("Password reset for user: ${user.userId}")
     }
 
     fun unlockuserAccount(user: User) {
-        user.unlockuserAccount()
-        println("Account locked for user: ${user.userId}")
+        user.unlockAccount()
+        println("Account unlocked for user: ${user.userId}")
     }
 
     fun viewBookings(bookings: List<Booking>) {
@@ -51,7 +51,7 @@ class Manager(
 
     }
 
-    fun cancelBooking(booking: Booking, bookings: MutableList<Booking>) {
+    fun cancelBooking(booking: Booking, user: User, bookings: MutableList<Booking>) {
         booking.cancel()
         user.removeBooking(booking)
         bookings.remove(booking)
@@ -64,7 +64,7 @@ class Manager(
         val cancelled = bookings.count {it.status == BookingStatus.CANCELLED}
 
         val revenue = bookings
-            .filter {it.status == BookungStatus.CONFIRMED}
+            .filter {it.status == BookingStatus.CONFIRMED}
             .sumOf {it.totalPrice}
 
         return """
@@ -72,7 +72,7 @@ class Manager(
             Total bookings:     $total
             Confirmed:      $confirmed
             Cancelled:      $cancelled
-            Total Revenue: $${"%.2f.format(revenue)}
+            Total Revenue: $${"%.2f".format(revenue)}
 
             """.trimIndent()          
     }
