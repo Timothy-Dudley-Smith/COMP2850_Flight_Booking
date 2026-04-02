@@ -536,7 +536,8 @@ body {
     width: 90%;
     margin: 0 auto;
     display: grid;
-    align-items: center;
+    grid-template-columns: 200px 1fr 200px;
+     align-items: center;
     padding: 10px 40px;
 }
 
@@ -564,27 +565,24 @@ body {
     border: 1px solid #cfd6e0;
     background: #f7f9fc;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.dropdown select {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    max-width: 200px;
     transition: 0.2s;
 }
+
+
 
 .dropdown select:focus {
     outline: none;
     border-color: #2a4b8d;
 }
 
-.dropdown select {
-    padding-left: 25px;
-}
 
 .filter label {
     display: block;
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
 }
 
 .sort label {
@@ -592,6 +590,8 @@ body {
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
+
 }
 
 /* Flight Result Page */
@@ -762,6 +762,25 @@ body {
 
 /* Booking page 1 */
 
+.flights-overview {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.flights-overview h1 {
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.flights-overview-header {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    padding: 10px 40px;
+}
+
 
 /* main card container */
 .booking_page_1 {
@@ -827,6 +846,7 @@ body {
 /* adds the arrow to selects */
 .user_input_box select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    /* Used GPT 5 FOR THIS*/
     background-repeat: no-repeat;
     background-position: right 16px center;
 }
@@ -858,4 +878,171 @@ body {
     border-radius: 8px;
     font-size: 15px;
     text-align: center;
+}
+
+
+/* seatmap page*/
+
+
+/* adds map on page */
+.seat-page {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* page heading saying to select seat positioned in center */
+.seat-page h2 {
+    text-align: center;
+    color: #1a2b4a;
+    margin-bottom: 24px;
+}
+
+/* grid that makes the A B C gap D E F labels above the seat rows */
+.col-labels {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat column, 40px for the middle aisle/row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* ensures respoonsive design */
+}
+
+/* font styling for the lettors showing the cols */
+.col-label {
+    text-align: center;
+    font-size: 13px;
+    color: grey;
+    font-weight: 600;
+}
+
+
+/* 12 rows of 7 columns grid in line with the column letters */
+.seat-row {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat, 40px for row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* responsive design again */
+    align-items: center;
+}
+
+
+
+/* font styling for the numbers showing the cols */
+.row-num {
+    text-align: center;
+    font-size: 12px;
+    color: grey;
+}
+
+
+/* seats*/
+
+.seat {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    /* rounded corners to represent each seat */
+    border: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+/* taken seats are grey and not clickable */
+.seat.taken {
+    background: dimgrey;
+    cursor: not-allowed;
+}
+
+/* available seats are green and clickable */
+.seat.available {
+    background: darkgreen;
+}
+
+
+.seat.available:hover {
+    transform: scale(1.1);
+    /* makes the seat a bit bigger when hovered */
+    opacity: 0.85;
+    /* changes colour when highlited by dimmin it a bit */
+}
+
+/* selected seats are blue */
+.seat.selected {
+    background: dodgerblue;
+}
+
+/* exit row  striped red, not clickable */
+.seat.exit-seat {
+    background: darkred;
+    cursor: not-allowed;
+}
+/* key explaining what each colour means  */
+
+.key {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* wraps onto a second line on for thin screens */
+}
+
+
+/* colour + label side by side */
+.key-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: lightslategrey;
+}
+
+/* small coloured box next to label */
+.key-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+}
+
+
+/* colour of the box for the key */
+.key-box.taken { background: dimgrey; }
+.key-box.available { background: darkgreen; }
+.key-box.selected { background: dodgerblue; }
+.key-box.exit { background: darkred; }
+
+/* shows which seat is picked */
+.selected-label {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: dimgrey;
+}
+
+/* greyed out by default */
+.continue-btn {
+    width: 80%;
+    padding: 12px;
+    background: dimgrey;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin: 1% auto;
+}
+
+/* turns dark blue when a seat is selected */
+.continue-btn.active {
+    background: #1a2b4a;
+    cursor: pointer;
 }

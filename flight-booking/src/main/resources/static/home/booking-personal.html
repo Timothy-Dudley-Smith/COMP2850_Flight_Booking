@@ -32,9 +32,9 @@
     </nav>
 </header>
 
-<section class="results-top">
+<section class="flights-overview-header">
 
-    <div class="results-header">
+    <div class="flights-overview">
         <h1 id="route-title"></h1>
         <p id="route-date"></p>
     </div>
@@ -138,8 +138,10 @@
             </div>
         `);
     }
+    container.insertAdjacentHTML("beforeend", `
+        <button class="continue-btn" onclick="window.location.href='seatmap.html'">Continue</button>
+    `);
 </script>
-<button class="Book_Now-btn" onclick="window.location.href='seatmap.html'">Book Now</button>
 
 
 
