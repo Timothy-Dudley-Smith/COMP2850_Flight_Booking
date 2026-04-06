@@ -33,7 +33,9 @@ fun Application.configureDatabases() {
             Seats,
             Bookings,
             Payments,
-            BookingSeats
+            BookingSeats,
+            PriceHolds,
+            PriceHoldSeats
         )
     }
 }
