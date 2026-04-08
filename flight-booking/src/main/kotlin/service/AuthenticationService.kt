@@ -2,7 +2,7 @@
 package com.flightsystem.service
 
 
-import com.flightsystem.model.EncryptionService
+import com.flightsystem.service.EncryptionService
 import com.flightsystem.model.Manager
 import com.flightsystem.model.User
 import java.time.LocalDateTime
@@ -13,7 +13,7 @@ class AuthenticationService(
     private val sessionTimeout: Long = 30L
 ) {
 
-
+    private val users: MutableList<User> = mutableListOf()
     private val activeSessions: MutableMap<String, SessionData> = mutableMapOf()
 
     companion object {
@@ -24,8 +24,8 @@ class AuthenticationService(
 
     private data class SessionData(
         val userId: String,
-        val isManager, Boolean,
-        val lastActivity: LocalDateTime.now()
+        val isManager: Boolean,
+        val lastActivity: LocalDateTime = LocalDateTime.now()
     )
 
 
@@ -39,8 +39,12 @@ class AuthenticationService(
         if (password.length < MIN_PASSWORD_LENGTH)
             return Result.failure(IllegalArgumentException("Password must be at least $MIN_PASSWORD_LENGTH characters"))
 
-        if (userRepository.findByEmail(email) != null)
-            return Result.failure(IllegalArgumentException("An account with this email already exists"))
+        if (findByEmail(email) != null) {
+            return Result.failure(
+                IllegalArgumentException("An account with this email already exists")
+            )
+
+        }
 
         val salt = EncryptionService.generateSalt()
         val passwordHash = EncryptionService.hashPassword(password, salt)
@@ -48,15 +52,100 @@ class AuthenticationService(
         val user = User(
             userId = UUID.randomUUID().toString(),
             name = name,
-            email = email.
+            email = email,
             passwordHash = passwordHash,
             salt = salt
 
         )
 
-        userRepository.save(user)
+        users.add(user)
         return Result.success(user)
 
+    }
+
+    fun registerManager(
+        name: String,
+        email: String,
+        rawPassword: String
+    ): Result<Manager> {
+        if (name.isBlank()) {
+            return Result.failure(IllegalArgumentException("Name cannot be left blank"))
+        }
+
+        if (!EMAIL_REGEX.matches(email)) {
+            return Result.failure(IllegalArgumentException("Email cannot be left blank"))
+        }
+
+        if (rawPassword.length < 8) {
+            return Result.failure(IllegalArgumentException("Password must be at least 8 characters"))
+        }
+
+        if (users.any {it.email.equals(email, ignoreCase = true) }) {
+            return Result.failure(IllegalArgumentException("An account with this email already exists"))
+        }
+
+        val salt = EncryptionService.generateSalt()
+        val passwordHash = EncryptionService.hashPassword(rawPassword, salt)
+
+        val manager = Manager(
+            userId = UUID.randomUUID().toString(),
+            name = name,
+            email = email,
+            passwordHash = passwordHash,
+            salt = salt
+        )
+
+        users.add(manager)
+        return Result.success(manager)
+    }
+
+    fun login(
+        email: String,
+        rawPassword: String
+    ): Result<User> {
+        val user = users.find {it.email.equals(email, ignoreCase = true) }
+            ?: return Result.failure(IllegalArgumentException("User not found"))
+
+        if (user.isLocked()) {
+            return Result.failure(IllegalStateException("Account is locked. Try again"))
+        }
+
+        val candidateHash = EncryptionService.hashPassword(rawPassword, user.getSalt())
+
+        return if (user.verifyPassword(candidateHash)) {
+            user.recordLoginSuccess()
+            Result.success(user)
+        } else {
+            user.recordLoginFailure()
+            Result.failure(IllegalArgumentException("Invalid email or password"))
+        }
+    }
+
+    fun resetPassword(
+        user: User,
+        newRawPassword: String
+    ): Result<Unit> {
+        if (newRawPassword.length < 8) {
+            return Result.failure(IllegalArgumentException("Password must be at least 8 characters"))
+        }
+
+        val newSalt = EncryptionService.generateSalt()
+        val newHash = EncryptionService.hashPassword(newRawPassword, newSalt)
+
+        user.updatePassword(newHash, newSalt)
+        return Result.success(Unit)
+    }
+
+    fun findByEmail(email: String): User? {
+        return users.find {it.email.equals(email, ignoreCase = true) }
+    }
+
+    fun findById(userId: String): User? {
+        return users.find {it.userId == userId }
+    }
+
+    fun getAllUsers(): List<User> {
+        return users.toList()
     }
 }
 

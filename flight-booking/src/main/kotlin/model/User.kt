@@ -3,7 +3,7 @@ package com.flightsystem.model
 
 
 import java.time.LocalDateTime
-private const val VARCHAR_LENGTH = 255
+
 
 open class User(
     val userId: String,
