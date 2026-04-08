@@ -2,7 +2,6 @@ package com.flightsystem.model
 
 import java.time.LocalDateTime
 
-import com.flightsystem.model.Bookings.bookingID
 import org.jetbrains.exposed.sql.Table
 
 
@@ -19,16 +18,16 @@ data class Payment(
     val bookingID: String,
     val userID: String,
     val amount: Double,
-    val lastfourdigits: String, number
+    val lastFourDigits: String,
     val cardHolderName: String,
-    val status: PaymentStatus = PaymentStatus.PENDING,
+    var status: PaymentStatus = PaymentStatus.PENDING,
     val timestamp: LocalDateTime = LocalDateTime.now(),
-    val refundedAt: LocalDateTime? = null
+    var refundedAt: LocalDateTime? = null
 ) {
 
 
 
-    fun setstatusSuccess() {
+    fun setStatusSuccess() {
         status = PaymentStatus.SUCCESS
     }
 
@@ -50,13 +49,13 @@ data class Payment(
     fun getSummary(): String {
         return """
             --- Payment Summary ---
-            Payment ID:   $paymentId
-            Booking ID:   $bookingId
+            Payment ID:   $paymentID
+            Booking ID:   $bookingID
             Amount:       £${"%.2f".format(amount)}
-            Card:         **** **** **** $cardLastFour
+            Card:         **** **** **** $lastFourDigits
             Cardholder:   $cardHolderName
             Status:       $status
-            Date:         ${timestamp}
+            Date:         $timestamp
             ${if (refundedAt != null) "Refunded at: $refundedAt" else ""}
         """.trimIndent()
             
@@ -67,10 +66,15 @@ data class Payment(
 }
 
 object Payments : Table() {
-    val paymentId = integer("paymentId").autoIncrement()
-    val bookingId = reference("bookingId", Bookings.bookingId)
+    val paymentID = varchar("paymentID", 50)
+    val bookingID = varchar("bookingID", 50)
+    val userID = varchar("userID", 50)
     val amount = double("amount")
-    val status = bool("status")
+    val lastFourDigits = varchar("lastFourDigits", 4)
+    val cardHolderName = varchar("cardHolderName", 100)
+    val status = varchar("status", 20)
+    val timestamp = varchar("timestamp", 50)
+    val refundedAt = varchar("refundedAt", 50).nullable()
 
-    override val primaryKey = PrimaryKey(paymentId)
+    override val primaryKey = PrimaryKey(paymentID)
 }

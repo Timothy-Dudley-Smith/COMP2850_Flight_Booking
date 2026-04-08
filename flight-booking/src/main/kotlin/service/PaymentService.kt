@@ -1,7 +1,6 @@
-package com.flightsystem.model
+package com.flightsystem.service
 
 import com.flightsystem.model.Payment
-import com.flightsystem.model.PaymentStatus
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -27,18 +26,26 @@ class PaymentService {
     ): Result<Payment> {
 
 
-        val validationResult = validateCard(cardNumber, cardHolderName, expiryMonth, expiryYear, cvv)
+        val validationResult = validateCard(
+            cardNumber,
+            cardHolderName,
+            expiryMonth,
+            expiryYear,
+            cvv
+        )
 
-        if (validationResult.isFailure) return validationResult
+        if (validationResult.isFailure) {
+            return Result.failure(validationResult.exceptionOrNull()!!)
+        }
 
-        val lastfourDigits = cardNumber.takeLast(4)
+        val lastFourDigits = cardNumber.replace(" ", "").takeLast(4)
 
         val payment = Payment(
             paymentID = UUID.randomUUID().toString(),
             bookingID = bookingID,
-                    userID = userID,
+            userID = userID,
             amount = amount,
-            lastfourDigits = lastfourDigits,
+            lastFourDigits = lastFourDigits,
             cardHolderName = cardHolderName
         )
 
@@ -49,7 +56,7 @@ class PaymentService {
             payments.add(payment)
             Result.success(payment)
         } else {
-            payment.markFailed()
+            payment.setStatusFailed()
             payments.add(payment)
             Result.failure(IllegalStateException("Payment declined. Ensure card details are correct. "))
         }
@@ -77,7 +84,7 @@ class PaymentService {
     }
 
     fun getPaymentuser(userID: String): List<Payment> {
-        return payments.filter {it.bookingID == bookingID }
+        return payments.filter {it.userID == userID }
     }
 
     fun getPaymentid(paymentID: String): Payment? {
@@ -90,7 +97,7 @@ class PaymentService {
         expiryMonth: Int,
         expiryYear: Int,
         cvv: String
-    ): Result<Payment> {
+    ): Result<Unit> {
 
 
         val digitsOnly = cardNumber.replace(" ", "")
@@ -116,9 +123,7 @@ class PaymentService {
         if (cvv.length !in 3..4 || !cvv.all {it.isDigit() })
             return Result.failure(IllegalArgumentException("Invalid CVV"))
 
-        return Result.success(
-            Payment("", "", "", 0.0, "", "")
-        )
+        return Result.success(Unit)
 
 
     }
