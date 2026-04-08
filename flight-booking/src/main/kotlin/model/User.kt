@@ -39,7 +39,7 @@ open class User(
         email = newEmail
     }
 
-    protected fun updatePassword(newPasswordHash: String, newSalt: String) {
+    fun updatePassword(newPasswordHash: String, newSalt: String) {
         passwordHash = newPasswordHash
         salt = newSalt
     }

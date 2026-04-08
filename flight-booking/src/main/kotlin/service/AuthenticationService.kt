@@ -1,5 +1,6 @@
-"""
+
 package com.flightsystem.service
+
 
 import com.flightsystem.model.EncryptionService
 import com.flightsystem.model.Manager
@@ -9,7 +10,6 @@ import java.util.UUID
 
 
 class AuthenticationService(
-    private val userRepository: UserRepository,
     private val sessionTimeout: Long = 30L
 ) {
 
@@ -59,3 +59,4 @@ class AuthenticationService(
 
     }
 }
+

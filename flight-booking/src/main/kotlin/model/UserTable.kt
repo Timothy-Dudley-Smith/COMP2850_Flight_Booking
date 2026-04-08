@@ -1,4 +1,5 @@
 package com.flightsystem.model
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.Table
 
 private const val VARCHAR_LENGTH = 255
@@ -11,7 +12,7 @@ object Users : Table() {
     val salt = varchar("salt", VARCHAR_LENGTH)
     val loyaltyPoints = integer("loyalty_points").default(0)
     val seatPreference = varchar("seat_preference", 10).default("ANY")
-    val accountLocked = bool("account_locked").default(false)
+    val accountLocked = bool("account_locked")
     val failedLoginAttempts = integer("failed_login_attempts").default(0)
     val lockedAt = varchar("locked_at", VARCHAR_LENGTH).nullable()
     val lastLogin = varchar("last_login", VARCHAR_LENGTH).nullable()
