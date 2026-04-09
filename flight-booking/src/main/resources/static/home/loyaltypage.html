@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Seats</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Flight Results</title>
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/seats.css">
 </head>
 <body>
 
@@ -14,25 +12,167 @@
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/styles/Images/Logo.png" class="Airline_Logo">
-                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/home/styles/Images/Logo.png" class="Airline_Logo">
+                <img src="/home/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
             </div>
         </div>
+
         <div class="center-nav">
             <a href="/">Home</a>
             <a href="/recommendations">Recommendations</a>
             <a href="/book">Book</a>
             <a href="/manage">Manage</a>
         </div>
+
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
             <a href="/log_in">Log In</a>
         </div>
     </nav>
 </header>
-<button class="continue-btn active" onclick="window.location.href='payment.html'">Continue</button>
+
+<section class="flights-overview-header">
+
+    <div class="flights-overview">
+        <h1 id="route-title"></h1>
+        <p id="route-date"></p>
+    </div>
 
 
+</section>
+
+<div class="wrap">
+    <div>
+
+        <div class="card">
+            <div class="lt">
+                <div class="av">JD</div>
+                <div><div class="mn">James Davidson</div><div class="mt">Gold Member</div></div>
+                <div class="pts">32,450<small>Avios points</small></div>
+            </div>
+            <div class="perks">
+                <div class="pk"><span class="bg bf">Free</span><strong>Seat selection</strong><p id="ext-seat">Loading…</p></div>
+                <div class="pk"><span class="bg bd">30% off</span><strong>In-flight meals</strong><p>Discount applied below</p></div>
+                <div class="pk"><span class="bg bf">Free</span><strong>Wi-fi</strong><p>Full-flight included</p></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="sh">Baggage</div>
+            <label class="row"><input type="radio" name="bag"><div class="rl"><div class="rn">No hold bag</div><div class="rs">Cabin only</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="bag" checked data-price="32" data-label="1 × 23kg bag"><div class="rl"><div class="rn">1 × 23 kg</div><div class="rs">Most popular</div></div><div class="rp">£32</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="58" data-label="2 × 23kg bags"><div class="rl"><div class="rn">2 × 23 kg</div><div class="rs">Long trips</div></div><div class="rp">£58</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="45" data-label="1 × 32kg bag"><div class="rl"><div class="rn">1 × 32 kg</div><div class="rs">Heavy items</div></div><div class="rp">£45</div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Meals <span class="gs">30% Gold discount</span></div>
+            <label class="row"><input type="radio" name="meal"><div class="rl"><div class="rn">No meal</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="meal" checked data-price="8.40" data-label="Classic hot meal"><div class="rl"><div class="rn">Classic hot meal</div><div class="rs">Chicken, pasta or veg</div></div><div class="rp"><s>£12</s><span class="gld">£8.40</span></div></label>
+            <label class="row"><input type="radio" name="meal" data-price="15.40" data-label="Premium dine set"><div class="rl"><div class="rn">Premium dine</div><div class="rs">3-course + wine</div></div><div class="rp"><s>£22</s><span class="gld">£15.40</span></div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Insurance</div>
+            <label class="row"><input type="radio" name="ins"><div class="rl"><div class="rn">No insurance</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="ins" checked data-price="14.99" data-label="Standard insurance"><div class="rl"><div class="rn">Standard cover</div><div class="rs">Cancellation, delays, lost bags</div></div><div class="rp">£14.99</div></label>
+            <label class="row"><input type="radio" name="ins" data-price="28.50" data-label="Premium insurance"><div class="rl"><div class="rn">Premium cover</div><div class="rs">Medical + adventure sports</div></div><div class="rp">£28.50</div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Extras</div>
+            <label class="row"><input type="checkbox" checked data-price="8" data-label="Priority boarding"><div class="rl"><div class="rn">Priority boarding</div><div class="rs">Board first</div></div><div class="rp">£8</div></label>
+            <label class="row"><input type="checkbox" data-price="35" data-label="Lounge access"><div class="rl"><div class="rn">Airport lounge</div><div class="rs">LHR & JFK</div></div><div class="rp">£35</div></label>
+            <label class="row"><input type="checkbox" data-price="12" data-label="Fast-track security"><div class="rl"><div class="rn">Fast-track security</div></div><div class="rp">£12</div></label>
+            <label class="row"><input type="checkbox" data-price="89" data-label="Premium Economy upgrade"><div class="rl"><div class="rn">Upgrade to Premium Economy</div></div><div class="rp">£89</div></label>
+        </div>
+
+    </div>
+
+    <div class="sum">
+        <div class="sh2">Your order</div>
+        <div class="sb">
+            <div class="sr"><span id="sum-seat">Seat —</span><span class="sf">Free</span></div>
+            <div class="sr"><span>Wi-fi</span><span class="sf">Free</span></div>
+            <div class="sr"><span id="sum-cabin">Economy fare</span><span id="sum-base">£0.00</span></div>
+            <div id="lines"></div>
+            <hr class="sdiv">
+            <div class="st"><span class="stl">Total</span><span class="sta" id="tot">£0.00</span></div>
+        </div>
+        <div class="sf2">
+            <button class="btn">Continue to payment →</button>
+            <button class="btnb">← Back to seats</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ── Results page params ──────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get("from");
+    const to = params.get("to");
+    const date = params.get("date");
+    const passengers = parseInt(params.get("passengers"));
+    document.getElementById("route-title").textContent = from + " → " + to;
+
+
+    const d = new Date(date);
+    document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long"
+    });
+    const cabin = params.get('cabin');
+    // cabin class selected by user
+    const price = parseFloat(params.get('price').replace('£', ''));
+    // base fare price
+    const seat  = params.get('seat');
+    // seat information
+    document.getElementById('ext-seat').textContent  = 'Seat ' + seat + ' reserved';
+    document.getElementById('sum-seat').textContent  = 'Seat ' + seat;
+    document.getElementById('sum-cabin').textContent = cabin + ' fare';
+    document.getElementById('sum-base').textContent  = '£' + price.toFixed(2);
+
+
+    // ── Total calculation ─────────────────────────────────────────────────────────
+    function updateTotal() {
+
+        let extras = 0;
+        let extraLines = '';
+
+        // Loop through all checked inputs that have a price
+        const checkedInputs = document.querySelectorAll('input:checked[data-price]');
+
+        for (let i = 0; i < checkedInputs.length; i++) {
+
+            const input = checkedInputs[i];
+            const inputPrice = parseFloat(input.dataset.price);
+            const inputLabel = input.dataset.label;
+
+            // Add to extras total
+            extras += inputPrice;
+
+            // Build the order summary line
+            extraLines += '<div class="sr">' +
+                '<span>' + inputLabel + '</span>' +
+                '<b>£' + inputPrice.toFixed(2) + '</b>' +
+                '</div>';
+        }
+
+        // Update the order summary
+        document.getElementById('lines').innerHTML = extraLines;
+        document.getElementById('tot').textContent = '£' + (price + extras).toFixed(2);
+    }
+
+    // Run on every input change
+    const allInputs = document.querySelectorAll('input');
+
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].addEventListener('change', updateTotal);
+    }
+
+    // Run once on page load to show defaults
+    updateTotal();
+</script>
 
 </body>
 </html>

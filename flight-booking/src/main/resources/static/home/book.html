@@ -193,7 +193,7 @@
                             const cabin = selectedBox.querySelector("span").textContent;
                             const price = selectedBox.querySelector("strong").textContent;
 
-                            window.location.href = `booking-personal.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}`;
+                            window.location.href = `booking-personal.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flight.id ?? ""}`;
                         });
 
                     });

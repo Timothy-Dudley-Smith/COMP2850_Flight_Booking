@@ -42,6 +42,9 @@ fun Application.configureRouting() {
 
         staticResources("/", "static/home")
         staticResources("/log_in", "static/log_in")
+        staticResources("/", "static/home")
+        staticResources("/log_in", "static/log_in")
+        staticResources("/home", "static/home")
 
         get("/book") {
             call.respondFile(

@@ -126,9 +126,7 @@
             const seatButton = document.createElement('button');
 
 
-            // ================================
             // SET SEAT TYPE
-            // ================================
 
             if (seatStatus === 't') {
                 seatButton.className = 'seat taken';
@@ -141,9 +139,7 @@
             }
 
 
-            // ================================
             // ADD CLICK EVENT (ONLY AVAILABLE)
-            // ================================
 
             if (seatStatus === 'a') {
 
@@ -183,9 +179,7 @@
     }
 
 
-    // ================================
     // UPDATE UI
-    // ================================
 
     function updateUI() {
 
@@ -225,22 +219,23 @@
     // find the continue button from the page
     const continueButton = document.getElementById('continue-btn');
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromParam       = urlParams.get('from')
+    const toParam         = urlParams.get('to')
+    const dateParam       = urlParams.get('date')
+    const passengersParam = urlParams.get('passengers')
+    const cabinParam      = urlParams.get('cabin')
+    const priceParam      = urlParams.get('price')
+
     continueButton.addEventListener('click', function () {
 
         if (selectedSeat === null) {
             return;
         }
 
-        // Save seat
-        // Step 1: name for storage
-        const key = 'selectedSeat';
-        // Step 2: value to store
-        const value = selectedSeat;
-        // Step 3: save it
-        sessionStorage.setItem(key, value);
+        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}`;
 
-        // Go to next page
-        window.location.href = 'loyaltypage.html.';
+        window.location.href = next;
     });
 
 </script>

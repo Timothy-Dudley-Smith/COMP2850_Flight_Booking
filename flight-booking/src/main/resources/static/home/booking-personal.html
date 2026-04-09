@@ -138,8 +138,12 @@
             </div>
         `);
     }
+    const cabin = params.get("cabin") ?? "Economy";
+    const price = params.get("price") ?? "0";
+    const flightId = params.get("flightId") ?? "";
+
     container.insertAdjacentHTML("beforeend", `
-        <button class="continue-btn" onclick="window.location.href='seatmap.html'">Continue</button>
+    <button class="continue-btn" onclick="window.location.href='seatmap.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}'">Continue</button>
     `);
 </script>
 
