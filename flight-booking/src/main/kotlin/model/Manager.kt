@@ -65,7 +65,7 @@ class Manager(
 
         val revenue = bookings
             .filter {it.status == BookingStatus.CONFIRMED}
-            .sumOf {it.totalPrice}
+            .sumOf {it.totalPrice.toDouble()}
 
         return """
             --- Manager Report ---
