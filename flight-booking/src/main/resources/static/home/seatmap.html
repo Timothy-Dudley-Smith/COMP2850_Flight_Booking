@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Seats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/seats.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/styles/Images/Logo.png" class="Airline_Logo">
+                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<div class="seat-page">
+    <h2>Select Your Seat</h2>
+
+    <!-- column letters A B C | gap | D E F -->
+    <div class="col-labels">
+        <div class="col-label">A</div>
+        <div class="col-label">B</div>
+        <div class="col-label">C</div>
+        <div class="col-label"></div>
+        <div class="col-label">D</div>
+        <div class="col-label">E</div>
+        <div class="col-label">F</div>
+    </div>
+
+    <!-- JS fills this with rows -->
+    <div id="seat-map"></div>
+
+    <!-- colour key -->
+    <div class="key">
+        <div class="key-item"><div class="key-box taken"></div>Taken</div>
+        <div class="key-item"><div class="key-box available"></div>Available</div>
+        <div class="key-item"><div class="key-box selected"></div>Selected</div>
+        <div class="key-item"><div class="key-box exit"></div>Exit row</div>
+    </div>
+
+    <!-- shows selected seat e.g. "Selected: Seat 4A" -->
+    <p class="selected-label" id="selected-label">No seat selected</p>
+
+    <!-- greyed out until a seat is picked -->
+    <button class="continue-btn" id="continue-btn">Continue</button>
+</div>
+
+
+
+
+
+
+<script>
+
+    // t = taken |  a = available | x = exit row
+    const rows = [
+        { num: 1, seats: ['t','t','t','t','t','t'] },
+        { num: 2, seats: ['t','a','t','t','a','t'] },
+        { num: 3, seats: ['t','t','a','a','t','t'] },
+        { num: 4, seats: ['a','t','t','t','t','a'] },
+        { num: 5, seats: ['t','a','t','t','a','t'] },
+        { num: 6, seats: ['t','t','t','t','t','t'] },
+        { num: 7, seats: ['a','t','t','t','t','a'] },
+        { num: 8, seats: ['t','t','t','t','t','t'] },
+        { num: 9, seats: ['x','x','x','x','x','x'] },
+        { num: 10, seats: ['t','a','t','t','a','t'] },
+        { num: 11, seats: ['t','t','t','t','t','t'] },
+        { num: 12, seats: ['a','t','t','t','t','a'] }
+    ];
+
+
+    // letters to label the col
+    const columns = ['A','B','C','D','E','F'];
+    // used to store the selected seat number
+    let selectedSeat = null;
+    // Get seat map container
+    const seatMap = document.getElementById('seat-map');
+
+    // CREATE SEAT MAP//
+
+    const TOTAL_ROWS = 12;
+    for (let rowIndex = 0; rowIndex < TOTAL_ROWS; rowIndex++) {
+
+        const currentRow = rows[rowIndex];
+
+        // Create a row container
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'seat-row';
+
+        // Loop through each seat in the row
+        const SEATS_PER_ROW = 6;
+        for (let seatIndex = 0; seatIndex < SEATS_PER_ROW; seatIndex++) {
+
+            const seatStatus = currentRow.seats[seatIndex];
+
+            // Add row number in the middle
+            if (seatIndex === 3) {
+                const rowNumber = document.createElement('div');
+                rowNumber.className = 'row-num';
+                rowNumber.textContent = currentRow.num;
+                rowDiv.append(rowNumber);
+            }
+
+            // Create seat ID (e.g. 4A)
+            const seatId = currentRow.num + columns[seatIndex];
+
+            // Create seat button
+            const seatButton = document.createElement('button');
+
+
+            // SET SEAT TYPE
+
+            if (seatStatus === 't') {
+                seatButton.className = 'seat taken';
+            }
+            else if (seatStatus === 'x') {
+                seatButton.className = 'seat exit-seat';
+            }
+            else {
+                seatButton.className = 'seat available';
+            }
+
+
+            // ADD CLICK EVENT (ONLY AVAILABLE)
+
+            if (seatStatus === 'a') {
+
+                seatButton.addEventListener('click', function () {
+
+                    // Remove previous selection
+                    // Step 1: get the whole page
+                    const page = document;
+                    // Step 2: find selected seats
+                    const selectedSeats = page.querySelectorAll('.seat.selected');
+
+                    for (let i = 0; i < selectedSeats.length; i++) {
+                        selectedSeats[i].classList.remove('selected');
+                        selectedSeats[i].classList.add('available');
+                    }
+
+                    // Check if same seat clicked again
+                    if (selectedSeat === seatId) {
+                        selectedSeat = null;
+                    }
+                    else {
+                        seatButton.classList.remove('available');
+                        seatButton.classList.add('selected');
+                        selectedSeat = seatId;
+                    }
+
+                    updateUI();
+                });
+            }
+
+            // Add seat to row
+            rowDiv.append(seatButton);
+        }
+
+        // Add row to map
+        seatMap.append(rowDiv);
+    }
+
+
+    // UPDATE UI
+
+    function updateUI() {
+
+        // Step 1: get the label element from the page
+        const labelElement = document.getElementById('selected-label');
+
+        // Step 2: get the continue button from the page
+        const continueButton = document.getElementById('continue-btn');
+
+
+        // Step 3: check if a seat has been selected
+        if (selectedSeat !== null) {
+
+            // show the selected seat
+            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
+
+            // make the button active
+            continueButton.classList.add('active');
+
+        } else {
+
+            // show no seat selected
+            labelElement.textContent = 'No seat selected';
+
+            // remove active style from button
+            continueButton.classList.remove('active');
+        }
+    }
+
+
+    // ================================
+    // CONTINUE BUTTON
+    // ================================
+
+
+
+    // find the continue button from the page
+    const continueButton = document.getElementById('continue-btn');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromParam       = urlParams.get('from')
+    const toParam         = urlParams.get('to')
+    const dateParam       = urlParams.get('date')
+    const passengersParam = urlParams.get('passengers')
+    const cabinParam      = urlParams.get('cabin')
+    const priceParam      = urlParams.get('price')
+
+    continueButton.addEventListener('click', function () {
+
+        if (selectedSeat === null) {
+            return;
+        }
+
+        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}`;
+
+        window.location.href = next;
+    });
+
+</script>
+
+</body>
+</html>

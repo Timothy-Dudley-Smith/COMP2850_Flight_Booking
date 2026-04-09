@@ -34,7 +34,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background: white;
-    padding: 10px 40px;
+    padding: 10px clamp(15px, 5vw, 40px);
     
 }
 
@@ -50,7 +50,10 @@ body {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 60px;
+    gap: clamp(15px, 4vw, 60px);
+    white-space: nowrap;
+    /* keeps links in one line */
+    min-width: 0;
 }
 
 /*main menu links*/
@@ -72,7 +75,7 @@ body {
 .left-nav{
     display: flex;
     align-items: center;
-    gap: 45px;
+    gap: clamp(15px, 3vw, 45px);
     flex-wrap: nowrap;
 
 }
@@ -89,7 +92,7 @@ body {
 
 
 .Airline_Logo{
-    height: 100px;
+    height: clamp(20px, 8vw, 100px);
     display: block;
 }
 
@@ -97,8 +100,15 @@ body {
 
 
 .Star_Alliance{
-    height: 24px;
+    height: clamp(2px, 8vw, 24px);
     opacity: 0.8; /* faded reduce emphasis */
+}
+
+/* Hide on small screens */
+@media (max-width: 1000px) {
+    .Star_Alliance {
+        display: none;
+    }
 }
 
 /* Star Alliance Logo */
@@ -112,7 +122,7 @@ body {
 .right-nav {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: clamp(15px, 3vw, 40px);
     font-size: 14px;
 }
 
@@ -121,6 +131,7 @@ body {
 
 .lang{
     color: #555;
+    font-size: clamp(8px, 1.3vw, 16px);
 }
 /* Language text col */
 
@@ -137,6 +148,7 @@ body {
     text-decoration: none;
     color: #011;       
     font-weight: 500;
+    font-size: clamp(12px, 1.3vw, 16px);
 
 }
 
@@ -536,8 +548,8 @@ body {
     width: 90%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 250px 1fr 250px;
-    align-items: center;
+    grid-template-columns: 200px 1fr 200px;
+     align-items: center;
     padding: 10px 40px;
 }
 
@@ -565,27 +577,24 @@ body {
     border: 1px solid #cfd6e0;
     background: #f7f9fc;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.dropdown select {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    max-width: 200px;
     transition: 0.2s;
 }
+
+
 
 .dropdown select:focus {
     outline: none;
     border-color: #2a4b8d;
 }
 
-.dropdown select {
-    padding-left: 25px;
-}
 
 .filter label {
     display: block;
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
 }
 
 .sort label {
@@ -593,6 +602,8 @@ body {
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
+
 }
 
 /* Flight Result Page */
@@ -763,6 +774,25 @@ body {
 
 /* Booking page 1 */
 
+.flights-overview {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.flights-overview h1 {
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.flights-overview-header {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    padding: 10px 40px;
+}
+
 
 /* main card container */
 .booking_page_1 {
@@ -771,7 +801,7 @@ body {
     padding: 24px;
     width:80%;
     position: relative;
-    margin: 60px auto;
+    margin: 7px auto;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -828,6 +858,7 @@ body {
 /* adds the arrow to selects */
 .user_input_box select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    /* Used GPT 5 FOR THIS*/
     background-repeat: no-repeat;
     background-position: right 16px center;
 }
@@ -859,4 +890,506 @@ body {
     border-radius: 8px;
     font-size: 15px;
     text-align: center;
+}
+
+
+/* seatmap page*/
+
+
+/* adds map on page */
+.seat-page {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* page heading saying to select seat positioned in center */
+.seat-page h2 {
+    text-align: center;
+    color: #1a2b4a;
+    margin-bottom: 24px;
+}
+
+/* grid that makes the A B C gap D E F labels above the seat rows */
+.col-labels {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat column, 40px for the middle aisle/row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* ensures respoonsive design */
+}
+
+/* font styling for the lettors showing the cols */
+.col-label {
+    text-align: center;
+    font-size: 13px;
+    color: grey;
+    font-weight: 600;
+}
+
+
+/* 12 rows of 7 columns grid in line with the column letters */
+.seat-row {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat, 40px for row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* responsive design again */
+    align-items: center;
+}
+
+
+
+/* font styling for the numbers showing the cols */
+.row-num {
+    text-align: center;
+    font-size: 12px;
+    color: grey;
+}
+
+
+/* seats*/
+
+.seat {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    /* rounded corners to represent each seat */
+    border: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+/* taken seats are grey and not clickable */
+.seat.taken {
+    background: dimgrey;
+    cursor: not-allowed;
+}
+
+/* available seats are green and clickable */
+.seat.available {
+    background: darkgreen;
+}
+
+
+.seat.available:hover {
+    transform: scale(1.1);
+    /* makes the seat a bit bigger when hovered */
+    opacity: 0.85;
+    /* changes colour when highlited by dimmin it a bit */
+}
+
+/* selected seats are blue */
+.seat.selected {
+    background: dodgerblue;
+}
+
+/* exit row  striped red, not clickable */
+.seat.exit-seat {
+    background: darkred;
+    cursor: not-allowed;
+}
+/* key explaining what each colour means  */
+
+.key {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* wraps onto a second line on for thin screens */
+}
+
+
+/* colour + label side by side */
+.key-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: lightslategrey;
+}
+
+/* small coloured box next to label */
+.key-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+}
+
+
+/* colour of the box for the key */
+.key-box.taken { background: dimgrey; }
+.key-box.available { background: darkgreen; }
+.key-box.selected { background: dodgerblue; }
+.key-box.exit { background: darkred; }
+
+/* shows which seat is picked */
+.selected-label {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: dimgrey;
+}
+
+/* greyed out by default */
+.continue-btn {
+    width: 80%;
+    padding: 12px;
+    background: dimgrey;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin: 1% auto;
+}
+
+/* turns dark blue when a seat is selected */
+.continue-btn.active {
+    background: #1a2b4a;
+    cursor: pointer;
+}
+
+
+
+
+/* ----------------------------- */
+/* EXTRAS PAGE LAYOUT */
+/* ----------------------------- */
+
+.wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 16px;
+}
+
+/* ----------------------------- */
+/* MEMBER CARD - TOP BLUE BAR */
+/* ----------------------------- */
+
+.lt {
+    background: #1a2b4a;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* avatar circle with initials */
+.av {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #c8a830;
+    color: #1a2b4a;
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* member name */
+.mn {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* member tier eg Gold Member */
+.mt {
+    color: #c8a830;
+    font-size: 11px;
+}
+
+/* avios points pushed to right */
+.pts {
+    margin-left: auto;
+    color: #c8a830;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: right;
+}
+
+.pts small {
+    display: block;
+    color: #7a8caa;
+    font-size: 10px;
+}
+
+/* ----------------------------- */
+/* MEMBER PERKS ROW */
+/* ----------------------------- */
+
+.perks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* each perk box */
+.pk {
+    padding: 12px 14px;
+    border-right: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
+}
+
+.pk:last-child {
+    border-right: none;
+}
+
+.pk strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a2b4a;
+    margin: 4px 0 2px;
+}
+
+.pk p {
+    font-size: 11px;
+    color: #888;
+}
+
+/* badge eg Free or 30% off */
+.bg {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+/* green free badge */
+.bf {
+    background: #eaf5ee;
+    color: #1a7a42;
+    border: 1px solid #b8dfc8;
+}
+
+/* gold discount badge */
+.bd {
+    background: #fdf8ec;
+    color: #8a6200;
+    border: 1px solid #f0d880;
+}
+
+/* ----------------------------- */
+/* CARD SECTION HEADINGS */
+/* ----------------------------- */
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.sh {
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a2b4a;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* gold discount label in heading */
+.sh .gs {
+    font-size: 11px;
+    color: #c8a830;
+    font-weight: 400;
+    margin-left: auto;
+}
+
+/* ----------------------------- */
+/* RADIO / CHECKBOX ROWS */
+/* ----------------------------- */
+
+label.row {
+    padding: 11px 16px;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+label.row:last-child {
+    border-bottom: none;
+}
+
+label.row:hover {
+    background: #fafafa;
+}
+
+label.row input {
+    accent-color: #1a2b4a;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* label text wrapper */
+.rl {
+    flex: 1;
+}
+
+/* option name */
+.rn {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a2b4a;
+}
+
+/* option description */
+.rs {
+    font-size: 11px;
+    color: #888;
+    margin-top: 1px;
+}
+
+/* price on right */
+.rp {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a2b4a;
+    white-space: nowrap;
+}
+
+/* strikethrough original price */
+.rp s {
+    color: #bbb;
+    font-weight: 400;
+    font-size: 11px;
+    margin-right: 2px;
+}
+
+/* gold discounted price */
+.gld {
+    color: #c8a830;
+}
+
+/* ----------------------------- */
+/* ORDER SUMMARY SIDEBAR */
+/* ----------------------------- */
+
+/* sticky summary card */
+.sum {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    position: sticky;
+    top: 16px;
+}
+
+/* summary heading */
+.sh2 {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a2b4a;
+}
+
+/* summary body */
+.sb {
+    padding: 12px 16px;
+}
+
+/* each line in summary */
+.sr {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 7px;
+}
+
+/* free label in green */
+.sf {
+    color: #1a7a42;
+    font-weight: 500;
+}
+
+/* divider line */
+.sdiv {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 10px 0;
+}
+
+/* total row */
+.st {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.stl {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a2b4a;
+}
+
+/* big total price */
+.sta {
+    font-size: 22px;
+    font-weight: 300;
+    color: #1a2b4a;
+}
+
+/* ----------------------------- */
+/* SUMMARY BUTTONS */
+/* ----------------------------- */
+
+.sf2 {
+    padding: 12px 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* continue to payment button */
+.btn {
+    width: 100%;
+    background: #1a2b4a;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 11px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #0f1c36;
+}
+
+/* back button */
+.btnb {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 7px;
+    cursor: pointer;
 }

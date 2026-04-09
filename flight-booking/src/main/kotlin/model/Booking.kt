@@ -8,6 +8,7 @@ data class Booking(
     val bookingId: Int,
     val userId: Int,
     val flightId: String,
+    val totalPrice: Double
 )
 
 object Bookings: Table() {
