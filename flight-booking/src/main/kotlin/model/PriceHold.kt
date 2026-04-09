@@ -42,3 +42,8 @@ object PriceHoldSeats : Table() {
         foreignKey(holdId to PriceHolds.holdId, flightId to PriceHolds.flightId)
     }
 }
+
+data class PriceHoldDetails(
+    val hold: PriceHold,
+    val seats: List<String>
+)
