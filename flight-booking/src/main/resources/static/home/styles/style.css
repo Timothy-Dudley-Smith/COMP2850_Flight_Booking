@@ -373,7 +373,6 @@ body {
     width: 100%;
     display: block;
     margin: 40px auto;
-    border-radius: 20px;
     cursor: pointer;
 }
 
@@ -532,12 +531,13 @@ body {
 
 /* --- HEADER & FILTERS --- */
 
+
 .results-top {
     width: 90%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 250px 1fr 250px;
-    align-items: center;
+    grid-template-columns: 200px 1fr 200px;
+     align-items: center;
     padding: 10px 40px;
 }
 
@@ -565,27 +565,24 @@ body {
     border: 1px solid #cfd6e0;
     background: #f7f9fc;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.dropdown select {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    max-width: 200px;
     transition: 0.2s;
 }
+
+
 
 .dropdown select:focus {
     outline: none;
     border-color: #2a4b8d;
 }
 
-.dropdown select {
-    padding-left: 25px;
-}
 
 .filter label {
     display: block;
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
 }
 
 .sort label {
@@ -593,4 +590,459 @@ body {
     margin-bottom: 6px;
     font-size: 14px;
     color: #555;
+
+
+}
+
+/* Flight Result Page */
+
+
+/* containor for each result  */
+.flight-card {
+    display: flex;
+    justify-content: space-between;
+    /* pushes prices to far right to space out all the information*/
+    /* Used Claude 4.6 To figure how to do this */
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* styling and spacing etc */
+}
+
+/* left side of each result ie logo and button */
+.flight-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* space between logo and times */
+    flex: 1;
+}
+
+/* puts the logo above the details button */
+.airline-block {
+    display: flex;
+    flex-direction: column;
+    /* makes a col so logo goes on top and button on bottom */
+    align-items: center;
+    gap: 8px;
+}
+
+/* airline logo*/
+
+.flight-logo {
+    width: 120px;
+}
+
+/* makes a button for showing details */
+.details-btn {
+    background: #f1f5f9;
+    color: black;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 90px;
+}
+/* changes col when hover over */
+.details-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.Book_Now-btn {
+    background: #132e8e;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 90px;
+    /* changes col when hover over */
+}
+.Book_Now-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.btn-group {
+    display: flex;
+    gap: 40px;
+    margin-top: 90px;
+}
+
+/* section which houses the times ie dep arrival and length */
+.time-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    /* makes space between the times */
+    justify-content: center;
+    /* puts the times and text in middle of the block  */
+    flex: 1;
+}
+
+/* makes the times bold and big */
+.time-section h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* makes the airport small and descreet by changing col */
+.time-section span {
+    font-size: 12px;
+    color: #666;
+}
+
+.time-block {
+    text-align: center;
+}
+
+/*direct label and line and length*/
+.duration {
+    display: flex;
+    flex-direction: column; /* makes a col where top is num of stops then line then length */
+    align-items: center;
+    width: 120px;
+}
+
+
+/*line between num of stops and len*/
+.duration .line {
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+    margin: 3px 0;
+}
+
+/* right side which has prices */
+.flight-prices {
+    display: flex;
+    gap: 15px;
+    /* mspace between each option of class */
+}
+
+
+/* box for the different flight options */
+.price-box {
+    background: #f1f5f9;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 100px;
+    cursor: pointer;
+
+}
+
+.price-box:hover {
+    background: #007bff;
+    color: white;
+}
+
+.price-box span {
+    display: block;
+    font-size: 12px;
+    color: #555;
+}
+
+/* size for price in bold */
+.price-box strong {
+    font-size: 16px;
+}
+
+.price-box.selected {
+    border: 2px solid #007bff;
+}
+
+
+/* Booking page 1 */
+
+.flights-overview {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.flights-overview h1 {
+    font-size: 42px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.flights-overview-header {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+
+/* main card container */
+.booking_page_1 {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width:80%;
+    position: relative;
+    margin: 7px auto;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* type of passenger heading */
+.booking_page_1 h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #1a2b4a;
+}
+
+/* age 16+ text */
+.age-label {
+    color: #666;
+    font-size: 13px;
+    margin: 4px 0 24px;
+}
+
+
+/* wrapper for each box */
+.user_input_box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* field label e.g. "First names" */
+.user_input_box label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2b4a;
+    margin-bottom: 4px;
+}
+
+/* bold text showing what each box is menat to include */
+.user_input_box small {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+/*  style for all inputs and selects */
+.user_input_box input,
+.user_input_box select {
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
+    appearance: none;
+    background: #fff;
+}
+
+/* adds the arrow to selects */
+.user_input_box select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    /* Used GPT 5 FOR THIS*/
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+/* row that for DD MM YYYY boxes side by side */
+.dob-row {
+    display: flex;
+    gap: 12px;
+}
+
+/* label above dob input */
+.dob-field {
+    display: flex;
+    flex-direction: column;
+}
+
+/* DD MM YYYY label */
+.dob-field small {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+/* the number input box */
+.dob-field input {
+    width: 80px;
+    padding: 14px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+/* seatmap page*/
+
+
+/* adds map on page */
+.seat-page {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* page heading saying to select seat positioned in center */
+.seat-page h2 {
+    text-align: center;
+    color: #1a2b4a;
+    margin-bottom: 24px;
+}
+
+/* grid that makes the A B C gap D E F labels above the seat rows */
+.col-labels {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat column, 40px for the middle aisle/row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* ensures respoonsive design */
+}
+
+/* font styling for the lettors showing the cols */
+.col-label {
+    text-align: center;
+    font-size: 13px;
+    color: grey;
+    font-weight: 600;
+}
+
+
+/* 12 rows of 7 columns grid in line with the column letters */
+.seat-row {
+    display: grid;
+    grid-template-columns: 36px 36px 36px 40px 36px 36px 36px;
+    /* 36px per seat, 40px for row-number column */
+    gap: 6px;
+    margin: 0 auto 6px;
+    width: fit-content;
+    /* responsive design again */
+    align-items: center;
+}
+
+
+
+/* font styling for the numbers showing the cols */
+.row-num {
+    text-align: center;
+    font-size: 12px;
+    color: grey;
+}
+
+
+/* seats*/
+
+.seat {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    /* rounded corners to represent each seat */
+    border: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+/* taken seats are grey and not clickable */
+.seat.taken {
+    background: dimgrey;
+    cursor: not-allowed;
+}
+
+/* available seats are green and clickable */
+.seat.available {
+    background: darkgreen;
+}
+
+
+.seat.available:hover {
+    transform: scale(1.1);
+    /* makes the seat a bit bigger when hovered */
+    opacity: 0.85;
+    /* changes colour when highlited by dimmin it a bit */
+}
+
+/* selected seats are blue */
+.seat.selected {
+    background: dodgerblue;
+}
+
+/* exit row  striped red, not clickable */
+.seat.exit-seat {
+    background: darkred;
+    cursor: not-allowed;
+}
+/* key explaining what each colour means  */
+
+.key {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* wraps onto a second line on for thin screens */
+}
+
+
+/* colour + label side by side */
+.key-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: lightslategrey;
+}
+
+/* small coloured box next to label */
+.key-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+}
+
+
+/* colour of the box for the key */
+.key-box.taken { background: dimgrey; }
+.key-box.available { background: darkgreen; }
+.key-box.selected { background: dodgerblue; }
+.key-box.exit { background: darkred; }
+
+/* shows which seat is picked */
+.selected-label {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: dimgrey;
+}
+
+/* greyed out by default */
+.continue-btn {
+    width: 80%;
+    padding: 12px;
+    background: dimgrey;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin: 1% auto;
+}
+
+/* turns dark blue when a seat is selected */
+.continue-btn.active {
+    background: #1a2b4a;
+    cursor: pointer;
 }

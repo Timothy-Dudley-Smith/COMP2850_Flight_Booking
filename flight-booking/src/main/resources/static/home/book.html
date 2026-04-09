@@ -63,190 +63,155 @@
 </section>
 
 
-<script>
-   let params = new URLSearchParams(window.location.search);
-
-    let from = params.get("from");
-    let to = params.get("to");
-    let date = params.get("date");
-
-    document.getElementById("route-title").textContent =
-        (from) + " → " + (to);
-
-    if (date !== null) {
-        const dateObject = new Date(date);
-
-        document.getElementById("route-date").textContent =
-            dateObject.toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long"
-            });
-    }
-</script>
-
-
-
-
-
 <section class="results-wrapper">
-    <div class="results-list">        
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-        <div class="flight-card">
-            <img src="/styles/Images/Logo.png" class="flight-logo">
-            <div class="flight-details">
-                <div class="time-block">
-                    <h2>10:30</h2>
-                    <span>LHR</span>
-                </div>
-                <div class="duration-line">
-                    <small>Direct</small>
-                    <hr>
-                    <small>3h 45m</small>
-                </div>
-                <div class="time-block">
-                    <h2>14:15</h2>
-                    <span>IST</span>
-                </div>
-                <div class="price-block">
-                    <small>Economy from</small>
-                    <div class="price">£184</div>
-                </div>
-            </div>
-        </div>
-
-        </div>
+    <div class="results-list" id="flight-list">
+    </div>
 </section>
+
+
+
+
+
+<script type="module">
+    async function loadFlights() {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get("from");
+        const to   = params.get("to");
+        const date = params.get("date");
+        const passengers = params.get("passengers");
+
+
+        //from the url get the from,to,date parameters
+
+        document.getElementById("route-title").textContent = from + " → " + to;
+        //used text header of page telling user which flights are to be shown
+
+        const d = new Date(date);
+        document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+        //put the date string into a readable "day month" format ie "28 March"
+
+        try {
+            const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}&passengers=${passengers}`);
+            const flights  = await response.json();
+            const list     = document.getElementById("flight-list");
+
+            //gets flight data from an the database endpoint, passing three query parameters — from, to, and date
+
+            if (flights.length === 0) {
+                list.innerHTML = "<p>No flights found for this route.</p>";
+                return;
+            }
+            // if no flight matches are found then simply write a message saying that
+
+            flights.forEach(flight => {
+                const hours = Math.trunc(flight.length);
+                const decimal = flight.length - hours;
+                const minutes = Math.round(decimal * 60);
+            // math alg to calc duration of flight in hrs and mins done for ease of user but also for filtering and sorting
+
+                list.insertAdjacentHTML("beforeend", `
+                <div class="flight-card">
+                <!-- each result is split into 3 parts the left middle and right section -->
+
+                    <!-- the left section holds the logo and details button -->
+                    <div class="flight-left">
+                    <!-- logo and details button -->
+                    <div class="airline-block">
+                        <img src="/styles/Images/Logo.png" class="flight-logo">
+                        <div class="buttons">
+                            <button class="details-btn">Details</button>
+                            <button class="Book_Now-btn">Book Now</button>
+                        </div>
+                    </div>
+                    <!-- the middle section houses the timings and airport details -->
+                    <div class="time-section">
+                        <div class="time-block">
+                            <h2>${flight.departureTime}</h2>
+                            <span>${flight.departureAirport}</span>
+                        </div>
+
+                        <!-- puts the num of stops and flight len in small with line between the two -->
+                        <div class="duration">
+                            <small>Direct</small>
+                            <div class="line"></div>
+                            <small>${hours}h ${minutes}m</small>
+                        </div>
+
+                        <!-- arrival time and airport -->
+                        <div class="time-block">
+                            <h2>${flight.arrivalTime}</h2>
+                            <span>${flight.arrivalAirport}</span>
+                        </div>
+                    </div>
+                </div>
+                    <!-- pricing options-->
+                    <div class="flight-prices">
+                        <div class="price-box">
+                            <span>Economy</span>
+                            <strong>£${flight.price.toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Premium Economy</span>
+                            <strong>£${(flight.price * 1.6).toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Business</span>
+                            <strong>£${(flight.price * 3.5).toFixed(0)}</strong>
+                        </div>
+                    </div>
+
+                </div>
+                `);
+                // get all three price boxes and the book button
+                const priceBoxes = list.querySelectorAll(".price-box");
+                const bookBtn = list.querySelector(".Book_Now-btn");
+
+                // loop through each price box
+                for (let i = 0; i < priceBoxes.length; i++) {
+
+                    // add a click listener to each box
+                    priceBoxes[i].addEventListener("click", function() {
+
+                        // remove selected from all boxes first
+                        for (let j = 0; j < priceBoxes.length; j++) {
+                            priceBoxes[j].classList.remove("selected");
+                        }
+
+                        // highlight the box that was clicked
+                        this.classList.add("selected");
+
+                        // enable the book button
+                        bookBtn.disabled = false;
+                        bookBtn.classList.add("active");
+                        bookBtn.addEventListener("click", () => {
+                            const selectedBox = list.querySelector(".price-box.selected");
+                            const cabin = selectedBox.querySelector("span").textContent;
+                            const price = selectedBox.querySelector("strong").textContent;
+
+                            window.location.href = `booking-personal.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}`;
+                        });
+
+                    });
+                }
+            });
+
+            //catch block is for error handling ie if anything goes wrong then the catchj block runs
+
+        } catch {
+            document.getElementById("flight-list").innerHTML =
+                "<p>Failed to load flights. Please try again.</p>";
+        }
+    }
+    loadFlights();
+
+
+
+</script>
 
 
 

@@ -1,4 +1,4 @@
-package com.flightsystem.model
+package com.flightsystem.service
 
 
 import java.security.MessageDigest

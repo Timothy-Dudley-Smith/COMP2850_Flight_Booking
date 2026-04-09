@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Results</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/styles/Images/Logo.png" class="Airline_Logo">
+                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<section class="flights-overview-header">
+
+    <div class="flights-overview">
+        <h1 id="route-title"></h1>
+        <p id="route-date"></p>
+    </div>
+
+
+</section>
+
+<div id="passenger-forms"></div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get("from");
+    const to = params.get("to");
+    const date = params.get("date");
+    const passengers = parseInt(params.get("passengers"));
+
+    document.getElementById("route-title").textContent = from + " → " + to;
+    //used text header of page telling user which flights are to be shown
+
+    const d = new Date(date);
+    document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long"
+    });
+
+    const container = document.getElementById("passenger-forms");
+
+    for (let i = 1; i <= passengers; i++) {
+        container.insertAdjacentHTML("beforeend", `
+            <div class="booking_page_1">
+                <h2>Adult ${i}</h2>
+                <p class="age-label">Age 16+</p>
+
+                <div class="user_input_box">
+                    <label>Title</label>
+                    <select>
+                        <option value="" disabled selected>Select title</option>
+                        <!-- option for user to click there title with placholder text -->
+                        <option>Mr</option>
+                        <option>Mrs</option>
+                        <option>Miss</option>
+                        <option>Ms</option>
+                        <option>Dr</option>
+                    </select>
+                </div>
+
+
+                <div class="user_input_box">
+                    <label>First names</label>
+                    <small>As shown on document</small>
+                    <input type="text">
+                </div>
+                <!-- user input toi enter there first name-->
+
+
+                <div class="user_input_box">
+                    <label>Last name</label>
+                    <small>As shown on document</small>
+                    <input type="text">
+                </div>
+                <!-- user input toi enter there last name-->
+
+
+                <div class="user_input_box">
+                    <label>Gender</label>
+                    <small>As shown on document</small>
+                    <select>
+                        <option value="" disabled selected>Select gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <!-- option for user to click there gender with placholder text -->
+
+
+                <div class="user_input_box">
+                    <!-- used claud sonnet 4.6 to sort fotmatting only -->
+                    <!-- allows user to enter dob -->
+                    <label>Date of birth</label>
+                    <div class="dob-row">
+
+                        <div class="dob-field">
+                            <small>DD</small>
+                            <input type="number" min="1" max="31">
+                        </div>
+
+                        <div class="dob-field">
+                            <small>MM</small>
+                            <input type="number" min="1" max="12">
+                        </div>
+
+                        <div class="dob-field">
+                            <small>YYYY</small>
+                            <input type="number" min="1900" max="2099">
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+    container.insertAdjacentHTML("beforeend", `
+        <button class="continue-btn" onclick="window.location.href='seatmap.html'">Continue</button>
+    `);
+</script>
+
+
+
+
+
+
