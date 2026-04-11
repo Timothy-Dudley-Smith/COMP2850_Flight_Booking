@@ -2,6 +2,7 @@
     "use strict";
 
     const flightsEndpoint = "/api/manager/flights";
+    const createFlightEndpoint = "/api/manager/flight_view";
     const message = document.getElementById("manager-message");
     const form = document.getElementById("add-flight-form");
     const tableBody = document.getElementById("upcoming-flights-body");
@@ -57,10 +58,10 @@
             const row = document.createElement("tr");
 
             appendCell(row, flight.flightId ?? "Not available");
-            appendCell(row, flight.from ?? "Not available");
-            appendCell(row, flight.to ?? "Not available");
+            appendCell(row, flight.departureAirport ?? "Not available");
+            appendCell(row, flight.arrivalAirport ?? "Not available");
             appendCell(row, flight.date ?? "Not available");
-            appendCell(row, flight.time ?? "Not available");
+            appendCell(row, flight.departureTime ?? "Not available");
             appendCell(row, flight.arrivalTime ?? "Not available");
             appendCell(row, flight.length != null ? String(flight.length) : "Not available");
             appendCell(row, formatPrice(flight.price));
@@ -103,10 +104,53 @@
         }
     }
 
+    function buildFlightPayload(formElement) {
+        const formData = new FormData(formElement);
+
+        return {
+            flightId: (formData.get("flightId") ?? "").toString().trim(),
+            departureAirport: (formData.get("departureAirport") ?? "").toString().trim(),
+            arrivalAirport: (formData.get("arrivalAirport") ?? "").toString().trim(),
+            date: (formData.get("date") ?? "").toString(),
+            departureTime: (formData.get("departureTime") ?? "").toString(),
+            arrivalTime: (formData.get("arrivalTime") ?? "").toString(),
+            length: Number(formData.get("length")),
+            price: Number(formData.get("price"))
+        };
+    }
+
+    async function submitFlight(formElement) {
+        const payload = buildFlightPayload(formElement);
+
+        setMessage("Submitting flight...", "info");
+
+        const response = await fetch(createFlightEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        formElement.reset();
+        setMessage("Flight submitted successfully.", "success");
+        await loadFlights();
+    }
+
     if (form) {
-        form.addEventListener("submit", (event) => {
+        form.addEventListener("submit", async (event) => {
             event.preventDefault();
-            setMessage("Add flight is not connected yet. Build the POST route next.", "info");
+
+            try {
+                await submitFlight(form);
+            } catch (error) {
+                setMessage("Failed to submit flight.", "error");
+                console.error(error);
+            }
         });
     }
 

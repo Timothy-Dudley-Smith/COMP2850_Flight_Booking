@@ -3,6 +3,7 @@ package com.example.com
 import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 // imports the flight info
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -41,10 +42,24 @@ data class FlightResponse(
 @Serializable
 data class UpcomingFlightData(
     val flightId: String,
-    val from: String,
-    val to: String,
+    val departureAirport: String,
+    val arrivalAirport: String,
+    val price: Double,
     val date: String,
-    val time: String,
+    val departureTime: String,
+    val arrivalTime: String,
+    val length: Double
+)
+
+@Serializable
+data class InsertFlightData(
+    val flightId: String,
+    val departureAirport: String,
+    val arrivalAirport: String,
+    val date: String,
+    val departureTime: String,
+    val arrivalTime: String,
+    val length: Double,
     val price: Double
 )
 
@@ -168,11 +183,14 @@ fun Application.configureRouting() {
                     .orderBy(Flights.date to SortOrder.ASC, Flights.departureTime to SortOrder.ASC).map { row ->
                     UpcomingFlightData (
                         flightId = row[Flights.flightId],
-                        from = row[Flights.departureAirport],
-                        to = row[Flights.arrivalAirport],
+                        departureAirport = row[Flights.departureAirport],
+                        arrivalAirport = row[Flights.arrivalAirport],
                         date = row[Flights.date],
-                        time = row[Flights.departureTime],
-                        price = row[Flights.price]
+                        departureTime = row[Flights.departureTime],
+                        arrivalTime = row[Flights.arrivalTime],
+                        price = row[Flights.price],
+                        length = row[Flights.length]
+
                         //TODO:
                         //Add quantity of tickets sold / still available
                     )
@@ -185,6 +203,27 @@ fun Application.configureRouting() {
             call.respondFile(File("src/main/resources/static/manager/flight_view/flight_view.html"))
         }
 
+        post("/api/manager/flight_view") {
+            val request = call.receive<InsertFlightData>()
+
+            //TODO:
+            //validate flights attempted to be inserted
+
+
+            transaction {
+                Flights.insert {
+                    it[flightId] = request.flightId
+                    it[departureAirport] = request.departureAirport
+                    it[arrivalAirport] = request.arrivalAirport
+                    it[date] = request.date.toString()
+                    it[departureTime] = request.departureTime
+                    it[arrivalTime] = request.arrivalTime
+                    it[length] = request.length
+                    it[price] = request.price
+                }
+            }
+            call.respond(HttpStatusCode.Created)
+        }
     }
 
 }

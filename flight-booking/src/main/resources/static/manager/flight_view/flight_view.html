@@ -20,7 +20,7 @@
 
     <section aria-labelledby="add-flight-heading">
         <h2 id="add-flight-heading">Add Flight</h2>
-        <form id="add-flight-form">
+        <form id="add-flight-form" method="post" action="/api/manager/flight_view">
             <div>
                 <label for="flight-id">Flight ID</label>
                 <input id="flight-id" name="flightId" type="text" required>
@@ -71,8 +71,8 @@
             <thead>
             <tr>
                 <th scope="col">Flight ID</th>
-                <th scope="col">From</th>
-                <th scope="col">To</th>
+                <th scope="col">Departure Airport</th>
+                <th scope="col">Arrival Airport</th>
                 <th scope="col">Date</th>
                 <th scope="col">Departure Time</th>
                 <th scope="col">Arrival Time</th>
