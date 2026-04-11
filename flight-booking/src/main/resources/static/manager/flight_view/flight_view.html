@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Flight View</title>
+    <link rel="stylesheet" href="/manager/flight_view/styles/flight_view.css">
+</head>
+<body>
+<header>
+    <h1>Manager Flight View</h1>
+    <p>View, add, and remove upcoming flights.</p>
+</header>
+
+<main>
+    <section aria-labelledby="manager-message-heading">
+        <h2 id="manager-message-heading">Messages</h2>
+        <p id="manager-message" role="status">No messages.</p>
+    </section>
+
+    <section aria-labelledby="add-flight-heading">
+        <h2 id="add-flight-heading">Add Flight</h2>
+        <form id="add-flight-form">
+            <div>
+                <label for="flight-id">Flight ID</label>
+                <input id="flight-id" name="flightId" type="text" required>
+            </div>
+
+            <div>
+                <label for="departure-airport">Departure Airport</label>
+                <input id="departure-airport" name="departureAirport" type="text" required>
+            </div>
+
+            <div>
+                <label for="arrival-airport">Arrival Airport</label>
+                <input id="arrival-airport" name="arrivalAirport" type="text" required>
+            </div>
+
+            <div>
+                <label for="flight-date">Date</label>
+                <input id="flight-date" name="date" type="date" required>
+            </div>
+
+            <div>
+                <label for="departure-time">Departure Time</label>
+                <input id="departure-time" name="departureTime" type="time" required>
+            </div>
+
+            <div>
+                <label for="arrival-time">Arrival Time</label>
+                <input id="arrival-time" name="arrivalTime" type="time" required>
+            </div>
+
+            <div>
+                <label for="flight-length">Length (hours)</label>
+                <input id="flight-length" name="length" type="number" step="0.1" min="0" required>
+            </div>
+
+            <div>
+                <label for="flight-price">Price</label>
+                <input id="flight-price" name="price" type="number" step="0.01" min="0" required>
+            </div>
+
+            <button type="submit">Add Flight</button>
+        </form>
+    </section>
+
+    <section aria-labelledby="upcoming-flights-heading">
+        <h2 id="upcoming-flights-heading">Upcoming Flights</h2>
+        <table id="upcoming-flights-table">
+            <thead>
+            <tr>
+                <th scope="col">Flight ID</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Departure Time</th>
+                <th scope="col">Arrival Time</th>
+                <th scope="col">Length</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="upcoming-flights-body">
+            <tr>
+                <td colspan="9">No flights loaded.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<script src="/manager/flight_view/scripts/flight_view.js"></script>
+</body>
+</html>

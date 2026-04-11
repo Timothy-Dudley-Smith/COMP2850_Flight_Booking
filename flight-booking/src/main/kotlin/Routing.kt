@@ -59,6 +59,7 @@ fun Application.configureRouting() {
         staticResources("/", "static/home")
         staticResources("/log_in", "static/log_in")
         staticResources("/home", "static/home")
+        staticResources("/manager/flight_view", "static/manager/flight_view")
 
         get("/book") {
             call.respondFile(
@@ -178,6 +179,10 @@ fun Application.configureRouting() {
                 }
             }
             call.respond(upcomingFlightData)
+        }
+
+        get("/manager/flight_view") {
+            call.respondFile(File("src/main/resources/static/manager/flight_view/flight_view.html"))
         }
 
     }
