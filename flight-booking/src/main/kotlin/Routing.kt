@@ -19,9 +19,12 @@ import org.jetbrains.exposed.sql.*
 import io.ktor.http.*
 import io.ktor.server.http.content.*
 import org.h2.api.H2Type.row
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 import java.io.File
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Serializable
 data class FlightResponse(
@@ -34,6 +37,17 @@ data class FlightResponse(
     val arrivalTime: String,
     val length: Double
 )
+
+@Serializable
+data class UpcomingFlightData(
+    val flightId: String,
+    val from: String,
+    val to: String,
+    val date: String,
+    val time: String,
+    val price: Double
+)
+
 
 
 
@@ -143,6 +157,27 @@ fun Application.configureRouting() {
                 // removes all the rejected flights
             }
             call.respond(flightData)
+        }
+
+        get("/api/manager/flights") {
+            //TODO:
+            //Add manager only access - requires manager log-in key.
+            val upcomingFlightData = transaction {
+                Flights.selectAll().where { Flights.date greaterEq LocalDate.now().toString() }
+                    .orderBy(Flights.date to SortOrder.ASC, Flights.departureTime to SortOrder.ASC).map { row ->
+                    UpcomingFlightData (
+                        flightId = row[Flights.flightId],
+                        from = row[Flights.departureAirport],
+                        to = row[Flights.arrivalAirport],
+                        date = row[Flights.date],
+                        time = row[Flights.departureTime],
+                        price = row[Flights.price]
+                        //TODO:
+                        //Add quantity of tickets sold / still available
+                    )
+                }
+            }
+            call.respond(upcomingFlightData)
         }
 
     }
