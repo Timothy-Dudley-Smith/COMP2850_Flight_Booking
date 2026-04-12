@@ -19,7 +19,7 @@ class CheckoutService(
         val holdDetails = priceHoldService.getHoldDetails(holdId)
             ?: return PaymentResponse(
                 success = false,
-                message = "Invalid hold ID or hold is not found"
+                message = "Invalid hold ID or hold not found",
                 paymentId = null,
                 bookingId = null
             )
@@ -84,7 +84,7 @@ class CheckoutService(
 
         val paymentResult = paymentService.processPayment(
             bookingID = "HOLD-$holdId",
-            userID = hold.userId.toString(),
+            userID = hold.userId,
             amount = finalAmount,
             cardNumber = request.cardNumber,
             cardHolderName = request.cardholderName,
@@ -108,7 +108,22 @@ class CheckoutService(
             loyaltyService.redeemPoints(hold.userId, pointsToRedeem)
         }
 
+        val booking = priceHoldService.confirmHoldToBooking(holdId)
+            ?: return PaymentResponse(
+                success = false,
+                message = "Payment succeeded but booking creation failed",
+                paymentId = payment.paymentID,
+                bookingId = null
+            )
 
+        val pointsEarned = finalAmount.toInt()
+        loyaltyService.addPoints(hold.userId, pointsEarned)
 
+        return PaymentResponse(
+            success = true,
+            message = "Payment successful and booking confirmed",
+            paymentId = payment.paymentID,
+            bookingId = booking.bookingId
+        )
     }
 }

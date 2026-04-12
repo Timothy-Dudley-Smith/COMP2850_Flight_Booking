@@ -1,4 +1,4 @@
-package.com.flightsystem.model
+package com.flightsystem.model
 import kotlinx.serialization.Serializable
 
 @Serializable

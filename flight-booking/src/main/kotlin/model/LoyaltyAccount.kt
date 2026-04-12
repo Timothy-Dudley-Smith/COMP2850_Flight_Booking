@@ -14,7 +14,7 @@ object LoyaltyAccounts : Table() {
     val loyaltyPoints = integer("loyaltyPoints")
 
     // each user can only have 1 loyalty account
-    override val primaryKey = primaryKey(userId)
+    override val primaryKey = PrimaryKey(userId)
 }
 
 

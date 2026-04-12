@@ -16,7 +16,7 @@ class PaymentService {
 
     fun processPayment(
         bookingID: String,
-        userID: String,
+        userID: Int,
         amount: Double,
         cardNumber: String,
         cardHolderName: String,
@@ -83,7 +83,7 @@ class PaymentService {
 
     }
 
-    fun getPaymentuser(userID: String): List<Payment> {
+    fun getPaymentuser(userID: Int): List<Payment> {
         return payments.filter {it.userID == userID }
     }
 

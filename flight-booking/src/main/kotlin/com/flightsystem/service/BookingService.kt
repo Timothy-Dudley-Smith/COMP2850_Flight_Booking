@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
@@ -28,7 +28,7 @@ class BookingService {
             require(seatNumbers.isNotEmpty()) {
                 "At least one must be selected"
             }
-            val seatsFromDb = Seats.select {
+            val seatsFromDb = Seats.selectAll().where {
                 (Seats.flightId eq flightId) and
                 (Seats.seatNumber inList seatNumbers)
             }.toList()
@@ -45,10 +45,12 @@ class BookingService {
             }
             
             // insert new row in bookings table
-            val newBookingId = Bookings.insertAndGetId {
+            val inserted = Bookings.insert {
                 it[Bookings.userId] = userId
                 it[Bookings.flightId] = flightId
-            }.value
+            }
+
+            val newBookingId = inserted[Bookings.bookingId]
 
             // link booking to each selected seat
             for (seatNumber in seatNumbers) {
@@ -144,7 +146,7 @@ class BookingService {
     // return a list of all seats that are still available 
     fun getAvailableSeats(flightId: String): List<Seat> {
         return transaction {
-            Seats.select {
+            Seats.selectAll().where {
                 (Seats.flightId eq flightId) and (Seats.isAvailable eq true)
             }.map {
                 Seat(
@@ -229,7 +231,7 @@ class BookingService {
             val flightId = currentSeats.first()[BookingSeats.flightId]
             val oldSeatNumbers = currentSeats.map { it[BookingSeats.seatNumber]}
             // load new seats from db
-            val newSeatsFromDb = Seats.select {
+            val newSeatsFromDb = Seats.selectAll().where {
                 (Seats.flightId eq flightId) and (Seats.seatNumber inList newSeatNumbers)
             }.toList()
             // validate new seats exist

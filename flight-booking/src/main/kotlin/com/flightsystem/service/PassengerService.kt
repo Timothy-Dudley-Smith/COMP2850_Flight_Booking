@@ -1,7 +1,7 @@
 package com.flightsystem.service
 
 import com.flightsystem.model.*
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -25,12 +25,14 @@ class PassengerService {
 
             // insert each passenger row and return the created passenger objects 
             val createdPassengers = passengers.map { passengerInput ->
-                val newPassengerId = Passengers.insertAndGetId {
+                val inserted = Passengers.insert {
                     it[Passengers.bookingId] = bookingId
                     it[Passengers.name] = passengerInput.name
                     it[Passengers.email] = passengerInput.email
                     it[Passengers.passportNumber] = passengerInput.passportNumber
-                }.value
+                }
+
+                val newPassengerId = inserted[Passengers.passengerId]
 
                 Passenger(
                     passengerId = newPassengerId,

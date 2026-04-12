@@ -2,8 +2,7 @@ package com.flightsystem.service
 
 import com.flightsystem.model.*
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.insert 
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
@@ -24,7 +23,7 @@ class PriceHoldService {
             require(seatNumbers.isNotEmpty()) {
                 "At least 1 seat must be selected" 
             }
-            val seatsFromDb = Seats.select {
+            val seatsFromDb = Seats.selectAll().where {
                 (Seats.flightId eq flightId) and
                 (Seats.seatNumber inList seatNumbers)
             }.toList()
@@ -36,7 +35,7 @@ class PriceHoldService {
                 throw IllegalArgumentException("One or more selected seats aren't available") // all selected seats have to be available before creating the hold
             }
             // load flight data from DB so total price is calcd from stored flight price
-            val flightRow = Flights.select {
+            val flightRow = Flights.selectAll().where {
                 Flights.flightId eq flightId 
             }.singleOrNull()
             if (flightRow == null) {
@@ -45,12 +44,13 @@ class PriceHoldService {
             val basePrice = flightRow[Flights.price]
             val totalPrice = basePrice * seatNumbers.size
             val expiryTime = LocalDateTime.now().plusMinutes(15).toString() // set hold to expire in 15 mins 
-            val newHoldId = PriceHolds.insertAndGetId {
+            val inserted = PriceHolds.insert {
                 it[PriceHolds.userId] = userId
                 it[PriceHolds.flightId] = flightId
                 it[PriceHolds.expiryTime] = expiryTime
                 it[PriceHolds.totalPrice] = totalPrice
-            }.value
+            }
+            val newHoldId = inserted[PriceHolds.holdId]
             for (seatNumber in seatNumbers) {
                 PriceHoldSeats.insert {
                     it[PriceHoldSeats.holdId] = newHoldId
@@ -178,10 +178,12 @@ class PriceHoldService {
             }
 
             // create the main booking row using the user and flight from the hold
-            val newBookingId = Bookings.insertAndGetId {
+            val inserted = Bookings.insert {
                 it[Bookings.userId] = userId
                 it[Bookings.flightId] = flightId
-            }.value
+            }
+
+            val newBookingId = inserted[Bookings.bookingId]
 
             // copy each held seat into the booking seat join table
             for (heldSeat in heldSeats) {

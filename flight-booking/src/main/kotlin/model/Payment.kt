@@ -16,7 +16,7 @@ enum class PaymentStatus {
 data class Payment(
     val paymentID: String,
     val bookingID: String,
-    val userID: String,
+    val userID: Int,
     val amount: Double,
     val lastFourDigits: String,
     val cardHolderName: String,
@@ -68,7 +68,7 @@ data class Payment(
 object Payments : Table() {
     val paymentID = varchar("paymentID", 50)
     val bookingID = varchar("bookingID", 50)
-    val userID = varchar("userID", 50)
+    val userID = reference("userID", Users.userId)
     val amount = double("amount")
     val lastFourDigits = varchar("lastFourDigits", 4)
     val cardHolderName = varchar("cardHolderName", 100)

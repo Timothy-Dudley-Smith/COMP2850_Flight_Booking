@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 
 open class User(
-    val userId: String,
+    val userId: Int,
     var name: String,
     var email: String,
     private var passwordHash: String,
@@ -18,15 +18,13 @@ open class User(
     private var accountLocked: Boolean = false
     private var lockedAt: LocalDateTime? = null
     private var failedLoginAttempts: Int = 0
-
-
     private var seatPreference = "ANY"
 
     companion object {
         private val EMAIL_REGEX = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
         private const val MAX_FAILED_ATTEMPTS = 5
         private const val LOCKOUT_MINUTES = 30L
-        private const val POINTS_PER_UNIT_SPENT = 10
+
 
     }
 
@@ -48,38 +46,6 @@ open class User(
 
     fun getSalt(): String {
         return salt
-    }
-
-    fun addBooking(booking: Booking) {
-        bookings.add(booking)
-
-        loyaltyPoints += calculatePoints(booking.totalPrice)
-    }
-
-    fun removeBooking(booking: Booking) {
-        if (bookings.remove(booking)) {
-            loyaltyPoints -= calculatePoints(booking.totalPrice)
-            if (loyaltyPoints < 0) {
-                loyaltyPoints = 0
-            }
-        }
-    }
-
-    private fun calculatePoints(price: Double): Int {
-        return (price / POINTS_PER_UNIT_SPENT).toInt()
-    }
-
-    fun getBookings(): List<Booking> {
-        return bookings.toList()
-    }
-
-    fun getLoyaltyPoints(): Int = loyaltyPoints
-
-    fun redeemPoints(points: Int): Boolean {
-        return if (points <= loyaltyPoints) {
-            loyaltyPoints -= points
-            true
-        } else false
     }
 
     fun setSeatPreference(preference: String) {
