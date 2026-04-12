@@ -3,12 +3,12 @@ package com.flightsystem.service
 
 
 import com.flightsystem.service.EncryptionService
-//import com.flightsystem.model.Manager
+import com.flightsystem.model.Manager
 import com.flightsystem.model.User
 import java.time.LocalDateTime
 import java.util.UUID
 
-/*
+
 class AuthenticationService(
     private val sessionTimeout: Long = 30L
 ) {
@@ -149,5 +149,5 @@ class AuthenticationService(
     }
 }
 
-*/
+
 

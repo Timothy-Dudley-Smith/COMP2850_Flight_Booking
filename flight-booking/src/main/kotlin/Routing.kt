@@ -3,6 +3,16 @@ package com.example.com
 import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
+import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.PaymentRequest
+import com.flightsystem.service.CheckoutService
+import com.flightsystem.service.LoyaltyService
+import com.flightsystem.service.PaymentService
+import com.flightsystem.service.PriceHoldService
+
+
+
+
 // imports the flight info
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -140,6 +150,37 @@ fun Application.configureRouting() {
                 // removes all the rejected flights
             }
             call.respond(flightData)
+        }
+
+        post("/checkout") {
+            val request = call.receive<CheckoutRequest>()
+
+            val checkoutService = CheckoutService(
+                priceHoldService = PriceHoldService(),
+                paymentService = PaymentService(),
+                loyaltyService = LoyaltyService()
+            )
+
+            val paymentRequest = PaymentRequest(
+                cardholderName = request.cardholderName,
+                cardNumber = request.cardNumber,
+                expiryMonth = request.expiryMonth,
+                expiryYear = request.expiryYear,
+                cvv = request.cvv,
+                billingAddress = request.billingAddress
+            )
+
+            val response = checkoutService.checkout(
+                holdId = request.holdId,
+                request = paymentRequest,
+                pointsToRedeem = request.pointsToRedeem
+            )
+
+            if (response.success) {
+                call.respond(HttpStatusCode.OK, response)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, response)
+            }
         }
 
     }

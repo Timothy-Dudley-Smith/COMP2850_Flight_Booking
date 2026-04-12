@@ -12,9 +12,7 @@ open class User(
     private var passwordHash: String,
     private var salt: String
 ) {
-    private val bookings: MutableList<Booking> = mutableListOf()
 
-    private var loyaltyPoints: Int = 0
 
     private var lastLogin: LocalDateTime? = null
     private var accountLocked: Boolean = false
