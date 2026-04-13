@@ -1,0 +1,53 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 24px;
+    line-height: 1.5;
+}
+
+main {
+    display: grid;
+    gap: 24px;
+}
+
+section {
+    border: 1px solid #cccccc;
+    padding: 16px;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+form div {
+    display: grid;
+    gap: 4px;
+}
+
+input,
+button {
+    font: inherit;
+    padding: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #cccccc;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#manager-message[data-state="error"] {
+    color: #b00020;
+}
+
+#manager-message[data-state="success"] {
+    color: #0a6c2f;
+}
