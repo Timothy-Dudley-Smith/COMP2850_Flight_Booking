@@ -75,7 +75,7 @@ open class User(
     }
 
     fun isLocked(): Boolean {
-        if (accountLocked && lockedAt != null) {
+        if (accountLocked && lockedAt != "00:00") {
             if (LocalDateTime.now().isAfter(LocalDateTime.parse(lockedAt)!!.plusMinutes(LOCKOUT_MINUTES))) {
                 unlockAccount()
             }

@@ -281,7 +281,7 @@ fun Application.configureRouting() {
                     it[flightId] = request.flightId
                     it[departureAirport] = request.departureAirport
                     it[arrivalAirport] = request.arrivalAirport
-                    it[date] = request.date.toString()
+                    it[date] = request.date
                     it[departureTime] = request.departureTime
                     it[arrivalTime] = request.arrivalTime
                     it[length] = request.length
