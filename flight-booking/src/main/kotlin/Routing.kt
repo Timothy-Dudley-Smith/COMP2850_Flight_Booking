@@ -10,6 +10,10 @@ import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
+import com.flightsystem.model.Manager 
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.request.receive
+import io.ktor.server.routing.post
 
 
 
@@ -84,9 +88,27 @@ data class RegisterRequest(
     val dateOfBirth: String?
 )
 
+@Serializable
+data class LoginRequest(
+    val email: String,
+    val password: String
+)
 
+@Serializable
+data class LoginResponse(
+    val userId: Int,
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val role: String
+)
 
+@Serializable
+data class ErrorResponse(
+    val error: String
+)
 
+@Serializable
 data class CreateBookingRequest(
     val userId: Int,
     val flightId: String,
@@ -330,6 +352,32 @@ fun Application.configureRouting() {
                 call.respond(HttpStatusCode.OK, response)
             } else {
                 call.respond(HttpStatusCode.BadRequest, response)
+            }
+        }
+        
+        post("/api/auth/login") {
+            val request = call.receive<LoginRequest>()
+            val authenticationService = AuthenticationService()
+            val result = authenticationService.login(request.email, request.password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER"
+                    )
+                )
+            } else { 
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("Invalid email or password")
+                )
             }
         }
 
