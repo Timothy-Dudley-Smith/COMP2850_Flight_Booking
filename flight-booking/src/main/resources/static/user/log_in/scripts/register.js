@@ -85,13 +85,14 @@
             if (!response.ok) {
                 let errorMessage = "Unable to create your account.";
 
-                try {
-                    const responseBody = await response.json();
-                    errorMessage = responseBody.message ?? responseBody.error ?? errorMessage;
-                } catch (_error) {
-                    const text = await response.text();
-                    if (text) {
-                        errorMessage = text;
+                const rawBody = await response.text();
+
+                if (rawBody) {
+                    try {
+                        const responseBody = JSON.parse(rawBody);
+                        errorMessage = responseBody.message ?? responseBody.error ?? errorMessage;
+                    } catch {
+                        errorMessage = rawBody;
                     }
                 }
 

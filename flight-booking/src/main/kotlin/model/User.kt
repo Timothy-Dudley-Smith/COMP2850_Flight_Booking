@@ -1,9 +1,9 @@
 package com.flightsystem.model
 
-
-
 import java.time.LocalDateTime
+import kotlinx.serialization.Serializable
 
+@Serializable
 
 open class User(
     val userId: Int,
@@ -16,9 +16,9 @@ open class User(
 ) {
 
 
-    private var lastLogin: LocalDateTime? = null
+    private var lastLogin: String = "00:00"
     private var accountLocked: Boolean = false
-    private var lockedAt: LocalDateTime? = null
+    private var lockedAt: String = "00:00"
     private var failedLoginAttempts: Int = 0
     private var seatPreference = "ANY"
 
@@ -62,21 +62,21 @@ open class User(
     fun recordLoginSuccess() {
         failedLoginAttempts = 0
         accountLocked = false
-        lockedAt = null
-        lastLogin = LocalDateTime.now()
+        lockedAt = "00:00"
+        lastLogin = LocalDateTime.now().toString()
     }
 
     fun recordLoginFailure() {
         failedLoginAttempts++
         if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS ) {
             accountLocked = true
-            lockedAt = LocalDateTime.now()
+            lockedAt = LocalDateTime.now().toString()
         }
     }
 
     fun isLocked(): Boolean {
-        if (accountLocked && lockedAt != null) {
-            if (LocalDateTime.now().isAfter(lockedAt!!.plusMinutes(LOCKOUT_MINUTES))) {
+        if (accountLocked && lockedAt != "00:00") {
+            if (LocalDateTime.now().isAfter(LocalDateTime.parse(lockedAt)!!.plusMinutes(LOCKOUT_MINUTES))) {
                 unlockAccount()
             }
         }
@@ -87,10 +87,10 @@ open class User(
     fun unlockAccount() {
         accountLocked = false
         failedLoginAttempts = 0
-        lockedAt = null
+        lockedAt = "00:00"
     }
 
-    fun getLastLogin(): LocalDateTime? = lastLogin
+    fun getLastLogin(): LocalDateTime = LocalDateTime.parse(lastLogin)
 
 
 
