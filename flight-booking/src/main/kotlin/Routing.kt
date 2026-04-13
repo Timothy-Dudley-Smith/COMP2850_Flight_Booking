@@ -126,6 +126,10 @@ fun Application.configureRouting() {
                     val arrival = row[Flights.arrivalAirport]
                     val flightDate = row[Flights.date]
 
+
+
+
+
                     //pull data from the database row into simple variable for comparison
 
                     var match = true
@@ -146,8 +150,8 @@ fun Application.configureRouting() {
                     // if the user inputted an arrival airport remove results with different arrival airports
 
 
-                    if (date != null) {
-                        if (flightDate != date) {
+                    if (date != "" ) {
+                        if (flightDate != date){
                             match = false
                         }
                     }
