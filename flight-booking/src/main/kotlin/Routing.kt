@@ -1,7 +1,7 @@
 package com.example.com
 
-import com.flightsystem.model.*
-import com.flightsystem.service.BookingService
+import com.flightsystem.model.Airport
+import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
 import com.flightsystem.model.PaymentRequest
@@ -16,17 +16,18 @@ import com.flightsystem.service.PriceHoldService
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 // imports the flight info
 import io.ktor.http.*
-//import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.Serializable
 
 import io.ktor.server.application.*
-//import io.ktor.server.pebble.*
+import io.ktor.server.pebble.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-//import io.pebbletemplates.pebble.loader.ClasspathLoader
+import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
+import io.ktor.http.*
 import io.ktor.server.http.content.*
 import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
@@ -35,6 +36,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 import java.io.File
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Serializable
 data class FlightResponse(
@@ -90,6 +92,9 @@ fun Application.configureRouting() {
         staticResources("/log_in", "static/log_in")
         staticResources("/home", "static/home")
         staticResources("/manager/flight_view", "static/manager/flight_view")
+        staticResources("/manager/home", "static/manager/home" )
+        staticResources("/manager/support", "static/manager/support")
+        staticResources("/manager/edit_bookings", "static/manager/edit_bookings")
 
         get("/book") {
             call.respondFile(
@@ -174,6 +179,10 @@ fun Application.configureRouting() {
                     val arrival = row[Flights.arrivalAirport]
                     val flightDate = row[Flights.date]
 
+
+
+
+
                     //pull data from the database row into simple variable for comparison
 
                     var match = true
@@ -194,8 +203,8 @@ fun Application.configureRouting() {
                     // if the user inputted an arrival airport remove results with different arrival airports
 
 
-                    if (date != null) {
-                        if (flightDate != date) {
+                    if (date != "" ) {
+                        if (flightDate != date){
                             match = false
                         }
                     }
@@ -220,7 +229,7 @@ fun Application.configureRouting() {
                         //lables flight as non matching (reject)
                     }
 
-                }.filterNotNull()
+                }
                 // removes all the rejected flights
             }
             call.respond(flightData)
@@ -278,6 +287,11 @@ fun Application.configureRouting() {
             }
             call.respond(HttpStatusCode.Created)
         }
+
+        get("/manager") {
+            call.respondFile(File("src/main/resources/static/manager/home/manager_home.html"))
+        }
+
         post("/checkout") {
             val request = call.receive<CheckoutRequest>()
 

@@ -208,7 +208,8 @@ class PriceHoldService {
             Booking(
                 bookingId = newBookingId,
                 userId = userId,
-                flightId = flightId
+                flightId = flightId,
+                totalPrice = 10.0
             )
         }
     }

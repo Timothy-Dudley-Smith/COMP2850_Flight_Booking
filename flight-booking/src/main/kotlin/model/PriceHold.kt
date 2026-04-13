@@ -35,11 +35,15 @@ object PriceHoldSeats : Table() {
     val flightId = reference("flightId", Flights.flightId)
     val seatNumber = varchar("seatNumber", VARCHAR_LENGTH)
     override val primaryKey = PrimaryKey(flightId, holdId, seatNumber) // prevent duplicate seats for the same hold
+    /*
     init {
         foreignKey(flightId, seatNumber, target = Seats.primaryKey)
         
     }
+     */
 }
+
+
 
 data class PriceHoldDetails(
     val hold: PriceHold,

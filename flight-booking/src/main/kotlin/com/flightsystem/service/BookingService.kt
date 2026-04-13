@@ -71,7 +71,8 @@ class BookingService {
             Booking(
                 bookingId = newBookingId,
                 userId = userId,
-                flightId = flightId
+                flightId = flightId,
+                totalPrice = 10.0
             )
         }
     }
@@ -126,7 +127,8 @@ class BookingService {
             val booking = Booking(
                 bookingId = bookingRow[Bookings.bookingId],
                 userId = bookingRow[Bookings.userId],
-                flightId = bookingRow[Bookings.flightId]
+                flightId = bookingRow[Bookings.flightId],
+                totalPrice = 10.0
             )
             // load linked seats
             val bookedSeats = BookingSeats.selectAll().where {
@@ -171,7 +173,8 @@ class BookingService {
                 Booking(
                     bookingId = row[Bookings.bookingId],
                     userId = row[Bookings.userId],
-                    flightId = row[Bookings.flightId]
+                    flightId = row[Bookings.flightId],
+                    totalPrice = 10.0
                 )
             }
         }
