@@ -1,14 +1,17 @@
 package com.flightsystem.model
 
 import com.flightsystem.service.BookingService
+import java.time.LocalDate
 
 class Manager(
     userId: Int,
-    name: String,
+    firstName: String,
+    lastName: String,
+    dateOfBirth: String,
     email: String,
     passwordHash: String,
     salt: String
-) : User(userId, name, email, passwordHash, salt) {
+) : User(userId, firstName, lastName, dateOfBirth, email, passwordHash, salt) {
 
     fun resetuserPassword(user: User, newPasswordHash: String, newSalt: String) {
         user.updatePassword(newPasswordHash, newSalt)

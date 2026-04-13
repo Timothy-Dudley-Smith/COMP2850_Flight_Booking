@@ -6,7 +6,9 @@ private const val VARIABLE_LENGTH = 128
 
 object Users : Table() {
     val userId = integer("user_id").autoIncrement()
-    val name = varchar("user_name", VARIABLE_LENGTH)
+    val firstName = varchar("first_name", VARIABLE_LENGTH)
+    val lastName = varchar("last_name", VARIABLE_LENGTH)
+    val dateOfBirth = varchar("date_of_birth", VARIABLE_LENGTH)
     val email = varchar("email", VARIABLE_LENGTH).uniqueIndex()
     val passwordHash = varchar("passwordHash", VARIABLE_LENGTH)
     val salt = varchar("salt", VARIABLE_LENGTH)

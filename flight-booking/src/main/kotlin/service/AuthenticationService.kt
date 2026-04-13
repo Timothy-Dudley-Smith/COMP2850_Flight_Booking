@@ -15,7 +15,6 @@ import java.time.LocalDateTime
 
 
 
-
 class AuthenticationService(
     private val sessionTimeout: Long = 30L
 ) {
@@ -37,9 +36,18 @@ class AuthenticationService(
     )
 
 
-    fun register(name: String, email: String, password: String): Result<User> {
-        if (name.isBlank()) {
-            return Result.failure(IllegalArgumentException("Name can not be left blank"))
+    fun register(firstName: String, lastName: String, dateOfBirth: String email: String, password: String): Result<User> {
+        if (firstName.isBlank()) {
+            return Result.failure(IllegalArgumentException(" First Name can not be left blank"))
+
+        }
+
+        if (lastName.isBlank()) {
+            return Result.failure(IllegalArgumentException("Last name cannot be left blank"))
+        }
+
+        if (dateOfBirth.isBlank()) {
+            return Result.failure(IllegalArgumentException("Date of birth cannot be left blank"))
         }
         if (!EMAIL_REGEX.matches(email)) {
             return Result.failure(IllegalArgumentException("Invalid email format"))
@@ -64,7 +72,9 @@ class AuthenticationService(
             val passwordHash = EncryptionService.hashPassword(password, salt)
 
             val inserted = Users.insert {
-                it[Users.name] = name
+                it[Users.firstName] = firstName
+                it[Users.lastName] = lastName
+                it[Users.dateOfBirth] = dateOfBirth
                 it[Users.email] = email
                 it[Users.passwordHash] = passwordHash
                 it[Users.salt] = salt
@@ -83,7 +93,9 @@ class AuthenticationService(
             Result.success(
                 User(
                     userId = newUserId,
-                    name = name,
+                    firstName = firstName,
+                    lastName = lastName,
+                    dateOfBirth = dateOfBirth,
                     email = email,
                     passwordHash = passwordHash,
                     salt = salt
@@ -94,12 +106,22 @@ class AuthenticationService(
     }
 
     fun registerManager(
-        name: String,
+        firstName: String,
+        lastName: String,
+        dateOfBirth: String,
         email: String,
         rawPassword: String
     ): Result<Manager> {
-        if (name.isBlank()) {
-            return Result.failure(IllegalArgumentException("Name cannot be left blank"))
+        if (firstName.isBlank()) {
+            return Result.failure(IllegalArgumentException(" First Name cannot be left blank"))
+        }
+
+        if (lastName.isBlank()) {
+            return Result.failure(IllegalArgumentException(" Last Name cannot be left blank"))
+        }
+
+        if (dateOfBirth.isBlank()) {
+            return Result.failure(IllegalArgumentException(" Date of birth cannot be left blank"))
         }
 
         if (!EMAIL_REGEX.matches(email)) {
@@ -126,7 +148,9 @@ class AuthenticationService(
             val passwordHash = EncryptionService.hashPassword(rawPassword, salt)
 
             val inserted = Users.insert {
-                it[Users.name] = name
+                it[Users.firstName] = firstName
+                it[Users.lastName] = lastName
+                it[Users.dateOfBirth] = dateOfBirth
                 it[Users.email] = email
                 it[Users.passwordHash] = passwordHash
                 it[Users.salt] = salt
@@ -145,7 +169,9 @@ class AuthenticationService(
             Result.success(
                 Manager(
                     userId = newManagerId,
-                    name = name,
+                    firstName = firstName,
+                    lastName = lastName,
+                    dateOfBirth = dateOfBirth,
                     email = email,
                     passwordHash = passwordHash,
                     salt = salt
@@ -258,7 +284,9 @@ class AuthenticationService(
         return if (role == "MANAGER") {
             Manager(
                 userId = row[Users.userId],
-                name = row[Users.name],
+                firstName = row[Users.firstName],
+                lastName = row[Users.lastName],
+                dateOfBirth = row[Users.dateOfBirth],
                 email = row[Users.email],
                 passwordHash = row[Users.passwordHash],
                 salt = row[Users.salt]
@@ -266,7 +294,9 @@ class AuthenticationService(
         } else {
             User(
                 userId = row[Users.userId],
-                name = row[Users.name],
+                firstName = row[Users.firstName],
+                lastName = row[Users.lastName],
+                dateOfBirth = row[Users.dateOfBirth],
                 email = row[Users.email],
                 passwordHash = row[Users.passwordHash],
                 salt = row[Users.salt]

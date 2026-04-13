@@ -7,7 +7,9 @@ import java.time.LocalDateTime
 
 open class User(
     val userId: Int,
-    var name: String,
+    var firstName: String,
+    var lastName:  String,
+    var dateOfBirth: String,
     var email: String,
     private var passwordHash: String,
     private var salt: String
@@ -28,10 +30,13 @@ open class User(
 
     }
 
-    fun updateDetails(newName: String, newEmail: String) {
-        require(newName.isNotBlank()) {"Name cannot be empty"}
+    fun updateDetails(newFirstName: String, newLastName: String, newEmail: String) {
+        require(newFirstName.isNotBlank()) {"First Name cannot be empty"}
+        require(newLastName.isNotBlank()) {"Last Name cannot be empty"}
         require(EMAIL_REGEX.matches(newEmail)) {"Invalid email format"}
-        name = newName
+
+        firstName = newFirstName
+        lastName = newLastName
         email = newEmail
     }
 
