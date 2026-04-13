@@ -100,7 +100,16 @@ data class LoginResponse(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val role: String
+    val role: String,
+    val sessionId: String
+)
+
+@Serializable
+data class SessionCheckResponse(
+    val valid: Boolean,
+    val userId: Int? = null,
+    val email: String? = null,
+    val role: String? = null
 )
 
 @Serializable
@@ -116,6 +125,8 @@ data class CreateBookingRequest(
 )
 
 fun Application.configureRouting() {
+    val authenticationService = AuthenticationService()
+    
     routing {
 
         staticResources("/", "static/home")
@@ -268,8 +279,8 @@ fun Application.configureRouting() {
         }
 
         get ("/api/users")  {
-            val authservice = AuthenticationService()
-            val users = authservice.getAllUsers()
+            //val authservice = AuthenticationService()
+            val users = authenticationService.getAllUsers()
             call.respond(HttpStatusCode.OK, users)
         }
 
@@ -363,11 +374,12 @@ fun Application.configureRouting() {
         
         post("/api/auth/login") {
             val request = call.receive<LoginRequest>()
-            val authenticationService = AuthenticationService()
+            //val authenticationService = AuthenticationService()
             val result = authenticationService.login(request.email, request.password)
 
             if (result.isSuccess) {
                 val user = result.getOrThrow()
+                val sessionId = authenticationService.createSession(user)
 
                 call.respond(
                     HttpStatusCode.OK,
@@ -376,7 +388,8 @@ fun Application.configureRouting() {
                         firstName = user.firstName,
                         lastName = user.lastName,
                         email = user.email,
-                        role = if (user is Manager) "MANAGER" else "USER"
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
                     )
                 )
             } else { 
@@ -386,6 +399,90 @@ fun Application.configureRouting() {
                 )
             }
         }
+
+        // browser bar testing 
+        get("/api/auth/login-test") {
+            val email = call.request.queryParameters["email"]
+            val password = call.request.queryParameters["password"]
+
+            if (email.isNullOrBlank() || password.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("missing email or password")
+                )
+                return@get
+            }
+            val result = authenticationService.login(email, password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+                val sessionId = authenticationService.createSession(user)
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("invalid emaol or password")
+                )
+            }
+        }
+
+        // session check route
+        get("/api/auth/session") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Missing sessionId")
+                )
+                return@get
+            }
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    SessionCheckResponse(valid = false)
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.OK,
+                    SessionCheckResponse(
+                        valid = true,
+                        userId = user.userId,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER"
+                    ) 
+                )
+            }
+        }
+
+        // logout route 
+        post("/api/auth/logout") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Missing sessionId")
+                )
+                return@post
+            }
+            authenticationService.logout(sessionId)
+            call.respond(HttpStatusCode.OK, "Logged out successfully")
+        }
+
 
         post("/api/auth/register") {
             val request = call.receive<RegisterRequest>()
@@ -397,7 +494,7 @@ fun Application.configureRouting() {
             val dateOfBirth = request.dateOfBirth.toString()
 
 
-            val authenticationService = AuthenticationService()
+            //val authenticationService = AuthenticationService()
 
             val result = authenticationService.register(firstName, lastName, dateOfBirth, email, password)
 
