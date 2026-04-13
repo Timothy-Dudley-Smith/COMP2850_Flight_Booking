@@ -3,8 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="flight-booking" target="21" />
-      <module name="flight-booking.main" target="21" />
-      <module name="flight-booking.test" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>
