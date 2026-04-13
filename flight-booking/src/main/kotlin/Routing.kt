@@ -9,7 +9,7 @@ import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
-
+import com.flightsystem.model.LoginResponse
 
 // imports the flight info
 import io.ktor.http.*
@@ -267,8 +267,37 @@ fun Application.configureRouting() {
 
             //TODO:
             //Add ability to see historic flights
+
         }
 
+        get("/test-login") {
+            val authService = AuthenticationService()
+
+            val result = authService.login(
+                email = "george123@gmail.com",
+                rawPassword = "george123"
+            )
+
+            if (result.isSuccess) {
+                val user = result.getOrNull()!!
+                call.respond(
+                    LoginResponse(
+                        success = true,
+                        userId = user.userId,
+                        email = user.email
+                    )
+                )
+            } else {
+                call.respond(
+                    LoginResponse(
+                        success = false,
+                        userId = null,
+                        email = null,
+                        error = result.exceptionOrNull()?.message
+                    )
+                )
+            }
+        }
         post("/api/manager/flight_view") {
             val request = call.receive<InsertFlightData>()
 
