@@ -358,6 +358,30 @@ body {
 
 .login-btn:hover { background: #00a1de; }
 
+.login-btn:disabled {
+    background: #8ea0d6;
+    cursor: wait;
+}
+
+.form-message {
+    min-height: 20px;
+    margin: -8px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-message[data-state="error"] {
+    color: #b42318;
+}
+
+.form-message[data-state="success"] {
+    color: #12733b;
+}
+
+.form-message[data-state="info"] {
+    color: #1a2b4a;
+}
+
 /* ----------------------------- */
 /* DIVIDER */
 /* ----------------------------- */

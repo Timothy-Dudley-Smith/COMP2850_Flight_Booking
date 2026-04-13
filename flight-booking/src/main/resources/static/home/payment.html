@@ -140,8 +140,8 @@
     }
 
     document.getElementById("summary-route").textContent =
-        bookingData ? ${bookingData.from} → ${bookingData.to} :
-    (from && to ? ${from} → ${to} : "Not available");
+        bookingData ? `${bookingData.from} → ${bookingData.to}` :
+            (from && to ? `${from} → ${to}` : "Not available");
 
     document.getElementById("summary-date").textContent =
         bookingData ? new Date(bookingData.date).toLocaleDateString("en-GB") :

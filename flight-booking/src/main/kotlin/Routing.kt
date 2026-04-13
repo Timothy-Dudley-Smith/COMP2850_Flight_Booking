@@ -3,6 +3,16 @@ package com.example.com
 import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
+import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.PaymentRequest
+import com.flightsystem.service.CheckoutService
+import com.flightsystem.service.LoyaltyService
+import com.flightsystem.service.PaymentService
+import com.flightsystem.service.PriceHoldService
+
+
+
+
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 // imports the flight info
 import io.ktor.http.*
@@ -21,6 +31,7 @@ import io.ktor.http.*
 import io.ktor.server.http.content.*
 import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
+//import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
 
 import java.io.File
@@ -66,6 +77,12 @@ data class InsertFlightData(
 
 
 
+data class CreateBookingRequest(
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>
+)
+
 fun Application.configureRouting() {
     routing {
 
@@ -107,7 +124,40 @@ fun Application.configureRouting() {
             }
             call.respond(airportData)
         }
+        /*
+        get("/api/flights") {
+            val flights = transaction {
+                Flights.selectAll().map { row ->
+                    mapOf(
+                        "flightId" to row[Flights.flightId],
+                        "departureAirport" to row[Flights.departureAirport],
+                        "arrivalAirport" to row[Flights.arrivalAirport],
+                        "departureTime" to row[Flights.departureTime],
+                        "arrivalTime" to row[Flights.arrivalTime],
+                        "price" to row[Flights.price]
+                    )
+                }
+            }
+            call.respond(flights)
+        }
 
+        val bookingService = BookingService()
+
+        post("/api/bookings") {
+            val request = call.receive<CreateBookingRequest>()
+
+            try {
+                val booking = bookingService.createBooking(
+                    request.userId,
+                    request.flightId,
+                    request.seatNumbers
+                )
+                call.respond(HttpStatusCode.OK, booking)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, e.message ?: "Error")
+            }
+        }
+*/
 
 
         get("/api/flights") {
@@ -129,6 +179,10 @@ fun Application.configureRouting() {
                     val arrival = row[Flights.arrivalAirport]
                     val flightDate = row[Flights.date]
 
+
+
+
+
                     //pull data from the database row into simple variable for comparison
 
                     var match = true
@@ -149,8 +203,8 @@ fun Application.configureRouting() {
                     // if the user inputted an arrival airport remove results with different arrival airports
 
 
-                    if (date != null) {
-                        if (flightDate != date) {
+                    if (date != "" ) {
+                        if (flightDate != date){
                             match = false
                         }
                     }
@@ -169,7 +223,8 @@ fun Application.configureRouting() {
                             row[Flights.arrivalTime],
                             row[Flights.length]
                         )
-                    } else {
+                    }
+                    else {
                         null
                         //lables flight as non matching (reject)
                     }
@@ -236,6 +291,38 @@ fun Application.configureRouting() {
         get("/manager") {
             call.respondFile(File("src/main/resources/static/manager/home/manager_home.html"))
         }
+
+        post("/checkout") {
+            val request = call.receive<CheckoutRequest>()
+
+            val checkoutService = CheckoutService(
+                priceHoldService = PriceHoldService(),
+                paymentService = PaymentService(),
+                loyaltyService = LoyaltyService()
+            )
+
+            val paymentRequest = PaymentRequest(
+                cardholderName = request.cardholderName,
+                cardNumber = request.cardNumber,
+                expiryMonth = request.expiryMonth,
+                expiryYear = request.expiryYear,
+                cvv = request.cvv,
+                billingAddress = request.billingAddress
+            )
+
+            val response = checkoutService.checkout(
+                holdId = request.holdId,
+                request = paymentRequest,
+                pointsToRedeem = request.pointsToRedeem
+            )
+
+            if (response.success) {
+                call.respond(HttpStatusCode.OK, response)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, response)
+            }
+        }
+
     }
 
 }
