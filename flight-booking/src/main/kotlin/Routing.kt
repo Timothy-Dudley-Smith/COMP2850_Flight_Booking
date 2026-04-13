@@ -5,6 +5,7 @@ import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
 import com.flightsystem.model.PaymentRequest
+import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
@@ -72,6 +73,15 @@ data class InsertFlightData(
     val arrivalTime: String,
     val length: Double,
     val price: Double
+)
+
+@Serializable
+data class RegisterRequest(
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val password: String,
+    val dateOfBirth: String?
 )
 
 
@@ -323,6 +333,27 @@ fun Application.configureRouting() {
             }
         }
 
+        post("/api/auth/register") {
+            val request = call.receive<RegisterRequest>()
+
+            val firstName = request.firstName
+            val lastName = request.lastName
+            val email = request.email
+            val password = request.password
+            val dateOfBirth = request.dateOfBirth
+
+            val name = firstName + lastName
+
+            val authenticationService = AuthenticationService()
+
+            val result = authenticationService.register(name, email, password)
+
+            if (result.isSuccess) {
+                call.respond(HttpStatusCode.OK, "Account registered successfully.")
+            }
+        }
+
     }
 
 }
+
