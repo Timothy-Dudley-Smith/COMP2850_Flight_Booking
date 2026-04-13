@@ -119,11 +119,11 @@ fun Application.configureRouting() {
                 //TODO:
                 //Remove requirement for date in search
 
-                Flights.selectAll().map { row ->
+                Flights.selectAll().mapNotNull { row ->
 
 
                     val departure = row[Flights.departureAirport]
-                    val arrival   = row[Flights.arrivalAirport]
+                    val arrival = row[Flights.arrivalAirport]
                     val flightDate = row[Flights.date]
 
                     //pull data from the database row into simple variable for comparison
@@ -166,13 +166,12 @@ fun Application.configureRouting() {
                             row[Flights.arrivalTime],
                             row[Flights.length]
                         )
-                    }
-                    else {
+                    } else {
                         null
                         //lables flight as non matching (reject)
                     }
 
-                }.filterNotNull()
+                }
                 // removes all the rejected flights
             }
             call.respond(flightData)
