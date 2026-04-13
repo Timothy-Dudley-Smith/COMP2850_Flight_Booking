@@ -75,6 +75,9 @@ fun Application.configureRouting() {
         staticResources("/log_in", "static/log_in")
         staticResources("/home", "static/home")
         staticResources("/manager/flight_view", "static/manager/flight_view")
+        staticResources("/manager/home", "static/manager/home" )
+        staticResources("/manager/support", "static/manager/support")
+        staticResources("/manager/edit_bookings", "static/manager/edit_bookings")
 
         get("/book") {
             call.respondFile(
@@ -228,6 +231,10 @@ fun Application.configureRouting() {
                 }
             }
             call.respond(HttpStatusCode.Created)
+        }
+
+        get("/manager") {
+            call.respondFile(File("src/main/resources/static/manager/home/manager_home.html"))
         }
     }
 
