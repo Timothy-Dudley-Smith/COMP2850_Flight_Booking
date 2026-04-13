@@ -1,6 +1,5 @@
 package com.example.com
 
-import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
@@ -12,32 +11,21 @@ import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
 
 
-
-
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 // imports the flight info
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.Serializable
 
 import io.ktor.server.application.*
-import io.ktor.server.pebble.*
-import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
-import io.ktor.http.*
 import io.ktor.server.http.content.*
-import org.h2.api.H2Type.row
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
 //import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
 
 import java.io.File
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Serializable
 data class FlightResponse(
@@ -96,25 +84,24 @@ data class CreateBookingRequest(
 fun Application.configureRouting() {
     routing {
 
-        staticResources("/", "static/home")
-        staticResources("/log_in", "static/log_in")
-        staticResources("/", "static/home")
-        staticResources("/log_in", "static/log_in")
-        staticResources("/home", "static/home")
+        staticResources("/", "static/user/home")
+        staticResources("/log_in", "static/user/log_in")
+        staticResources("/home", "static/user/home")
         staticResources("/manager/flight_view", "static/manager/flight_view")
         staticResources("/manager/home", "static/manager/home" )
         staticResources("/manager/support", "static/manager/support")
         staticResources("/manager/edit_bookings", "static/manager/edit_bookings")
+        staticResources("/manager/bookings", "static/manager/bookings")
 
         get("/book") {
             call.respondFile(
-                File("src/main/resources/static/home/book.html")
+                File("src/main/resources/static/user/book/book.html")
             )
         }
 
         get("/booking-personal") {
             call.respondFile(
-                File("src/main/resources/static/home/booking-personal.html")
+                File("src/main/resources/static/user/book/booking-personal.html")
             )
         }
 
