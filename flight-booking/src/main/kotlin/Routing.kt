@@ -340,7 +340,7 @@ fun Application.configureRouting() {
             val lastName = request.lastName
             val email = request.email
             val password = request.password
-            val dateOfBirth = request.dateOfBirth
+            val dateOfBirth = request.dateOfBirth.toString()
 
 
             val authenticationService = AuthenticationService()

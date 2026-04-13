@@ -36,7 +36,7 @@ class AuthenticationService(
     )
 
 
-    fun register(firstName: String, lastName: String, dateOfBirth: String email: String, password: String): Result<User> {
+    fun register(firstName: String, lastName: String, dateOfBirth: String, email: String, password: String): Result<User> {
         if (firstName.isBlank()) {
             return Result.failure(IllegalArgumentException(" First Name can not be left blank"))
 
