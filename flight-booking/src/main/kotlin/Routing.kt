@@ -116,6 +116,9 @@ fun Application.configureRouting() {
             //read user input from the URL so API can filter flights
 
             val flightData = transaction {
+                //TODO:
+                //Remove requirement for date in search
+
                 Flights.selectAll().map { row ->
 
 
@@ -201,6 +204,9 @@ fun Application.configureRouting() {
 
         get("/manager/flight_view") {
             call.respondFile(File("src/main/resources/static/manager/flight_view/flight_view.html"))
+
+            //TODO:
+            //Add ability to see historic flights
         }
 
         post("/api/manager/flight_view") {

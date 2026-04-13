@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a02f1c7-e689-4c68-a40c-d01b5ed177be" name="Changes" comment="" />
+    <list default="true" id="2a02f1c7-e689-4c68-a40c-d01b5ed177be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flight-booking/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/flight-booking/database.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/booking-personal.html" beforeDir="false" afterPath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/booking-personal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/seatmap.html" beforeDir="false" afterPath="$PROJECT_DIR$/flight-booking/src/main/resources/static/home/seatmap.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,6 +109,7 @@
       <workItem from="1775585267304" duration="725000" />
       <workItem from="1775681629133" duration="8509000" />
       <workItem from="1775728407191" duration="10535000" />
+      <workItem from="1775989755510" duration="3093000" />
     </task>
     <servers />
   </component>
