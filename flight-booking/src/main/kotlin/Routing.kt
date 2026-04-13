@@ -232,6 +232,12 @@ fun Application.configureRouting() {
             call.respond(flightData)
         }
 
+        get ("/api/users")  {
+            val authservice = AuthenticationService()
+            val users = authservice.getAllUsers()
+            call.respond(HttpStatusCode.OK, users)
+        }
+
         get("/api/manager/flights") {
             //TODO:
             //Add manager only access - requires manager log-in key.
