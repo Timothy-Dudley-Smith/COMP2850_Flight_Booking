@@ -342,11 +342,10 @@ fun Application.configureRouting() {
             val password = request.password
             val dateOfBirth = request.dateOfBirth
 
-            val name = firstName + lastName
 
             val authenticationService = AuthenticationService()
 
-            val result = authenticationService.register(name, email, password)
+            val result = authenticationService.register(firstName, lastName, dateOfBirth, email, password)
 
             if (result.isSuccess) {
                 call.respond(HttpStatusCode.OK, "Account registered successfully.")
