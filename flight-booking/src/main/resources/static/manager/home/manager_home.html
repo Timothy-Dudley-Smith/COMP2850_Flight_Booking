@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Home</title>
+    <link rel="stylesheet" href="/manager/home/styles/manager_home.css">
+</head>
+<body>
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/home/styles/Images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/home/styles/Images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html" class="active">Home</a>
+            <a href="/manager/flight_view">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/support/support.html">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <img src="/home/styles/Images/Aeroplane_Banner.jpg" alt="Aircraft on runway" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-card">
+            <p class="eyebrow">Manager Home</p>
+            <h1>Keep flights, bookings, and support requests moving.</h1>
+            <p class="hero-copy">
+                Use the manager workspace to review upcoming services, update booking records,
+                and keep support actions organised throughout the day.
+            </p>
+
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Today</span>
+                    <strong id="today-label">Loading...</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Focus</span>
+                    <strong>Flight operations</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-actions" aria-labelledby="quick-actions-heading">
+        <div class="section-heading">
+            <h2 id="quick-actions-heading">Quick Actions</h2>
+            <p>Jump directly into the core manager tasks.</p>
+        </div>
+
+        <div class="action-grid">
+            <a class="action-card" href="/manager/flight_view">
+                <span class="card-tag">Flights</span>
+                <h3>Flight View</h3>
+                <p>Review upcoming flights, add new services, and remove outdated entries.</p>
+                <span class="card-link">Open flight management</span>
+            </a>
+
+            <a class="action-card" href="/manager/edit_bookings/edit_bookings.html">
+                <span class="card-tag">Bookings</span>
+                <h3>Edit Bookings</h3>
+                <p>Adjust booking details, monitor amendments, and manage customer changes.</p>
+                <span class="card-link">Open booking tools</span>
+            </a>
+
+            <a class="action-card" href="/manager/support/support.html">
+                <span class="card-tag">Support</span>
+                <h3>Support</h3>
+                <p>Track support queues, review cases, and coordinate service recovery tasks.</p>
+                <span class="card-link">Open support desk</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="overview" aria-labelledby="overview-heading">
+        <div class="section-heading">
+            <h2 id="overview-heading">Shift Overview</h2>
+            <p>A lightweight landing area that keeps the main routes visible at a glance.</p>
+        </div>
+
+        <div class="overview-grid">
+            <article class="overview-card">
+                <h3>Flight Changes</h3>
+                <p>Check departures, arrivals, timing updates, and operational adjustments.</p>
+            </article>
+
+            <article class="overview-card">
+                <h3>Booking Support</h3>
+                <p>Handle customer amendments and keep booking data consistent across the day.</p>
+            </article>
+
+            <article class="overview-card">
+                <h3>Team Notes</h3>
+                <p>Use this space as the entry point before moving into the detailed manager tools.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script src="/manager/home/scripts/manager_home.js"></script>
+</body>
+</html>
