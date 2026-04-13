@@ -32,7 +32,7 @@
 </header>
 
 <div class="seat-page">
-    <h2>Select Your Seat</h2>
+    <h2>Select Your Seats</h2>
 
     <!-- column letters A B C | gap | D E F -->
     <div class="col-labels">
@@ -86,26 +86,38 @@
         { num: 12, seats: ['a','t','t','t','t','a'] }
     ];
 
+    const urlParams     = new URLSearchParams(window.location.search);
+    const fromParam       = urlParams.get('from');
+    const toParam         = urlParams.get('to');
+    const dateParam       = urlParams.get('date');
+    const passengersParam = urlParams.get('passengers');
+    const cabinParam      = urlParams.get('cabin');
+    const priceParam      = urlParams.get('price');
+
+    // How many seats the user must pick
+    const requiredSeats = parseInt(passengersParam) || 1;
 
     // letters to label the col
     const columns = ['A','B','C','D','E','F'];
-    // used to store the selected seat number
-    let selectedSeat = null;
+
+    // Array to store all selected seat IDs
+    let selectedSeats = [];
+
     // Get seat map container
     const seatMap = document.getElementById('seat-map');
 
-    // CREATE SEAT MAP//
+    // UPDATE HEADING to show how many seats needed
+    document.querySelector('.seat-page h2').textContent =
+        `Select Your Seat${requiredSeats > 1 ? 's' : ''} (${requiredSeats} passenger${requiredSeats > 1 ? 's' : ''})`;
 
+    // CREATE SEAT MAP
     const TOTAL_ROWS = 12;
     for (let rowIndex = 0; rowIndex < TOTAL_ROWS; rowIndex++) {
 
         const currentRow = rows[rowIndex];
-
-        // Create a row container
         const rowDiv = document.createElement('div');
         rowDiv.className = 'seat-row';
 
-        // Loop through each seat in the row
         const SEATS_PER_ROW = 6;
         for (let seatIndex = 0; seatIndex < SEATS_PER_ROW; seatIndex++) {
 
@@ -119,121 +131,80 @@
                 rowDiv.append(rowNumber);
             }
 
-            // Create seat ID (e.g. 4A)
+            // Create seat ID e.g. "4A"
             const seatId = currentRow.num + columns[seatIndex];
-
-            // Create seat button
             const seatButton = document.createElement('button');
 
-
             // SET SEAT TYPE
-
             if (seatStatus === 't') {
                 seatButton.className = 'seat taken';
-            }
-            else if (seatStatus === 'x') {
+            } else if (seatStatus === 'x') {
                 seatButton.className = 'seat exit-seat';
-            }
-            else {
+            } else {
                 seatButton.className = 'seat available';
             }
 
-
-            // ADD CLICK EVENT (ONLY AVAILABLE)
-
+            // ADD CLICK EVENT (only for available seats)
             if (seatStatus === 'a') {
-
                 seatButton.addEventListener('click', function () {
 
-                    // Remove previous selection
-                    // Step 1: get the whole page
-                    const page = document;
-                    // Step 2: find selected seats
-                    const selectedSeats = page.querySelectorAll('.seat.selected');
+                    const alreadySelectedIndex = selectedSeats.indexOf(seatId);
 
-                    for (let i = 0; i < selectedSeats.length; i++) {
-                        selectedSeats[i].classList.remove('selected');
-                        selectedSeats[i].classList.add('available');
-                    }
-
-                    // Check if same seat clicked again
-                    if (selectedSeat === seatId) {
-                        selectedSeat = null;
-                    }
-                    else {
+                    if (alreadySelectedIndex !== -1) {
+                        // Clicking an already-selected seat deselects it
+                        selectedSeats.splice(alreadySelectedIndex, 1);
+                        seatButton.classList.remove('selected');
+                        seatButton.classList.add('available');
+                    } else {
+                        // Only allow selecting up to requiredSeats
+                        if (selectedSeats.length >= requiredSeats) {
+                            alert(`You can only select ${requiredSeats} seat${requiredSeats > 1 ? 's' : ''} for ${requiredSeats} passenger${requiredSeats > 1 ? 's' : ''}.`);
+                            return;
+                        }
+                        selectedSeats.push(seatId);
                         seatButton.classList.remove('available');
                         seatButton.classList.add('selected');
-                        selectedSeat = seatId;
                     }
 
                     updateUI();
                 });
             }
 
-            // Add seat to row
             rowDiv.append(seatButton);
         }
 
-        // Add row to map
         seatMap.append(rowDiv);
     }
 
 
     // UPDATE UI
-
     function updateUI() {
-
-        // Step 1: get the label element from the page
-        const labelElement = document.getElementById('selected-label');
-
-        // Step 2: get the continue button from the page
+        const labelElement  = document.getElementById('selected-label');
         const continueButton = document.getElementById('continue-btn');
 
-
-        // Step 3: check if a seat has been selected
-        if (selectedSeat !== null) {
-
-            // show the selected seat
-            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
-
-            // make the button active
-            continueButton.classList.add('active');
-
-        } else {
-
-            // show no seat selected
-            labelElement.textContent = 'No seat selected';
-
-            // remove active style from button
+        if (selectedSeats.length === 0) {
+            labelElement.textContent = 'No seats selected';
             continueButton.classList.remove('active');
+        } else if (selectedSeats.length < requiredSeats) {
+            labelElement.textContent = `Selected: ${selectedSeats.join(', ')} — pick ${requiredSeats - selectedSeats.length} more`;
+            continueButton.classList.remove('active');
+        } else {
+            labelElement.textContent = `Selected: ${selectedSeats.join(', ')}`;
+            continueButton.classList.add('active');
         }
     }
 
 
-    // ================================
     // CONTINUE BUTTON
-    // ================================
-
-
-
-    // find the continue button from the page
     const continueButton = document.getElementById('continue-btn');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromParam       = urlParams.get('from')
-    const toParam         = urlParams.get('to')
-    const dateParam       = urlParams.get('date')
-    const passengersParam = urlParams.get('passengers')
-    const cabinParam      = urlParams.get('cabin')
-    const priceParam      = urlParams.get('price')
 
     continueButton.addEventListener('click', function () {
 
-        if (selectedSeat === null) {
+        if (selectedSeats.length < requiredSeats) {
             return;
         }
 
-        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}`;
+        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeats.join(','))}`;
 
         window.location.href = next;
     });
