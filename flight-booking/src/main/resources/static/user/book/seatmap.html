@@ -6,7 +6,6 @@
     <title>Select Seats</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../home/styles/style.css">
-    <link rel="stylesheet" href="styles/seats.css">
 </head>
 <body>
 
@@ -33,6 +32,7 @@
 
 <div class="seat-page">
     <h2>Select Your Seats</h2>
+    <p class="selected-label" id="seat-help-label" style="margin-bottom: 20px;">Choose one seat for each passenger.</p>
 
     <!-- column letters A B C | gap | D E F -->
     <div class="col-labels">
@@ -69,6 +69,18 @@
 
 
 <script>
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
+    const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
+    document.querySelector(".seat-page h2").textContent = requiredSeats === 1
+        ? "Select Your Seat"
+        : `Select ${requiredSeats} Seats`;
+
+    if (bookingDraft?.from && bookingDraft?.to) {
+        const helpLabel = document.getElementById("seat-help-label");
+        helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
+    }
 
     // t = taken |  a = available | x = exit row
     const rows = [
@@ -89,8 +101,6 @@
 
     // letters to label the col
     const columns = ['A','B','C','D','E','F'];
-    // used to store the selected seat number
-    let selectedSeat = null;
     // Get seat map container
     const seatMap = document.getElementById('seat-map');
 
@@ -124,6 +134,7 @@
 
             // Create seat button
             const seatButton = document.createElement('button');
+            seatButton.dataset.seatId = seatId;
 
 
             // SET SEAT TYPE
@@ -142,28 +153,25 @@
             // ADD CLICK EVENT (ONLY AVAILABLE)
 
             if (seatStatus === 'a') {
+                if (selectedSeats.has(seatId)) {
+                    seatButton.classList.remove('available');
+                    seatButton.classList.add('selected');
+                }
 
                 seatButton.addEventListener('click', function () {
+                    if (selectedSeats.has(seatId)) {
+                        selectedSeats.delete(seatId);
+                        seatButton.classList.remove('selected');
+                        seatButton.classList.add('available');
+                    } else {
+                        if (selectedSeats.size >= requiredSeats) {
+                            updateUI();
+                            return;
+                        }
 
-                    // Remove previous selection
-                    // Step 1: get the whole page
-                    const page = document;
-                    // Step 2: find selected seats
-                    const selectedSeats = page.querySelectorAll('.seat.selected');
-
-                    for (let i = 0; i < selectedSeats.length; i++) {
-                        selectedSeats[i].classList.remove('selected');
-                        selectedSeats[i].classList.add('available');
-                    }
-
-                    // Check if same seat clicked again
-                    if (selectedSeat === seatId) {
-                        selectedSeat = null;
-                    }
-                    else {
+                        selectedSeats.add(seatId);
                         seatButton.classList.remove('available');
                         seatButton.classList.add('selected');
-                        selectedSeat = seatId;
                     }
 
                     updateUI();
@@ -191,18 +199,28 @@
 
 
         // Step 3: check if a seat has been selected
-        if (selectedSeat !== null) {
+        if (!bookingDraft) {
+            labelElement.textContent = 'Booking details are missing. Please go back and choose your flight again.';
+            continueButton.classList.remove('active');
+            return;
+        }
+
+        if (selectedSeats.size > 0) {
 
             // show the selected seat
-            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
+            const chosenSeats = Array.from(selectedSeats);
+            labelElement.textContent = 'Selected: ' + chosenSeats.join(', ');
 
-            // make the button active
-            continueButton.classList.add('active');
+            if (selectedSeats.size === requiredSeats) {
+                continueButton.classList.add('active');
+            } else {
+                continueButton.classList.remove('active');
+            }
 
         } else {
 
             // show no seat selected
-            labelElement.textContent = 'No seat selected';
+            labelElement.textContent = `Select ${requiredSeats} seat${requiredSeats === 1 ? '' : 's'} to continue`;
 
             // remove active style from button
             continueButton.classList.remove('active');
@@ -219,25 +237,18 @@
     // find the continue button from the page
     const continueButton = document.getElementById('continue-btn');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromParam       = urlParams.get('from')
-    const toParam         = urlParams.get('to')
-    const dateParam       = urlParams.get('date')
-    const passengersParam = urlParams.get('passengers')
-    const cabinParam      = urlParams.get('cabin')
-    const priceParam      = urlParams.get('price')
-
     continueButton.addEventListener('click', function () {
 
-        if (selectedSeat === null) {
+        if (!bookingDraft || selectedSeats.size !== requiredSeats) {
             return;
         }
 
-        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}`;
-
-        window.location.href = next;
+        bookingDraft.seatNumbers = Array.from(selectedSeats);
+        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+        window.location.href = "/loyaltypage";
     });
 
+    updateUI();
 </script>
 
 </body>

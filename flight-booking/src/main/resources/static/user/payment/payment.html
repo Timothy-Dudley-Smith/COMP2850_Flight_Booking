@@ -123,42 +123,76 @@
 </section>
 
 <script>
-    const params = new URLSearchParams(window.location.search);
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
 
-    const from = params.get("from");
-    const to = params.get("to");
-    const date = params.get("date");
-    const passengers = params.get("passengers");
+    function formatRouteDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
 
-    const selectedSeat = sessionStorage.getItem("selectedSeat");
-    const loyaltyChoice = sessionStorage.getItem("loyaltyChoice");
-    const bookingDataRaw = sessionStorage.getItem("bookingData");
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
 
-    let bookingData = null;
-    if (bookingDataRaw) {
-        bookingData = JSON.parse(bookingDataRaw);
+        return parsedDate.toLocaleDateString("en-GB");
+    }
+
+    function getPassengerSummary() {
+        if (!Array.isArray(bookingDraft?.passengers) || bookingDraft.passengers.length === 0) {
+            return "Not available";
+        }
+
+        return bookingDraft.passengers
+            .map((passenger) => `${passenger.firstName} ${passenger.lastName}`)
+            .join(", ");
+    }
+
+    function getAddOnSummary() {
+        if (!bookingDraft?.addOns) {
+            return "No extras selected";
+        }
+
+        const items = [];
+
+        if (bookingDraft.addOns.baggage) {
+            items.push(bookingDraft.addOns.baggage);
+        }
+
+        if (bookingDraft.addOns.meal) {
+            items.push(bookingDraft.addOns.meal);
+        }
+
+        if (bookingDraft.addOns.insurance) {
+            items.push(bookingDraft.addOns.insurance);
+        }
+
+        if (Array.isArray(bookingDraft.addOns.extras)) {
+            for (let i = 0; i < bookingDraft.addOns.extras.length; i++) {
+                items.push(bookingDraft.addOns.extras[i]);
+            }
+        }
+
+        return items.length > 0 ? items.join(", ") : "No extras selected";
     }
 
     document.getElementById("summary-route").textContent =
-        bookingData ? `${bookingData.from} → ${bookingData.to}` :
-            (from && to ? `${from} → ${to}` : "Not available");
+        bookingDraft ? `${bookingDraft.from} → ${bookingDraft.to}` : "Not available";
 
     document.getElementById("summary-date").textContent =
-        bookingData ? new Date(bookingData.date).toLocaleDateString("en-GB") :
-            (date ? new Date(date).toLocaleDateString("en-GB") : "Not available");
+        bookingDraft ? formatRouteDate(bookingDraft.date) : "Not available";
 
-    document.getElementById("summary-passengers").textContent =
-        bookingData ? bookingData.passengers :
-            (passengers ? passengers : "Not available");
+    document.getElementById("summary-passengers").textContent = getPassengerSummary();
 
     document.getElementById("summary-seat").textContent =
-        selectedSeat ? selectedSeat : "Not selected yet";
+        Array.isArray(bookingDraft?.seatNumbers) && bookingDraft.seatNumbers.length > 0
+            ? bookingDraft.seatNumbers.join(", ")
+            : "Not selected yet";
 
-    document.getElementById("summary-loyalty").textContent =
-        loyaltyChoice ? loyaltyChoice : "Not selected yet";
+    document.getElementById("summary-loyalty").textContent = getAddOnSummary();
 
-    document.getElementById("summary-total").textContent =
-        bookingData && bookingData.price ? bookingData.price : "To be confirmed";
+    document.getElementById("summary-total").textContent = "Calculated on the backend";
 
     document.getElementById("pay-btn").addEventListener("click", async function () {
 
@@ -202,32 +236,43 @@
             return;
         }
 
-        try {
-            const res = await fetch("/api/payment", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    cardholderName: name,
-                    cardNumber: number,
-                    expiryMonth: month,
-                    expiryYear: year,
-                    cvv: cvv,
-                    billingAddress: address
-                })
-            });
-
-            const result = await res.json();
-
-            if (result.success) {
-                message.textContent = "Payment successful.";
-                // window.location.href = "confirmation.html";
-            } else {
-                message.textContent = result.message;
-            }
-
-        } catch {
-            message.textContent = "Payment failed. Try again.";
+        if (!bookingDraft || !bookingDraft.flightId || !Array.isArray(bookingDraft.passengers) || bookingDraft.passengers.length === 0) {
+            message.textContent = "Booking details are incomplete. Please restart the booking flow.";
+            return;
         }
+
+        if (!Array.isArray(bookingDraft.seatNumbers) || bookingDraft.seatNumbers.length !== bookingDraft.passengers.length) {
+            message.textContent = "Choose one seat per passenger before checking out.";
+            return;
+        }
+
+        let userId = bookingDraft.userId ?? null;
+        if (userId === null) {
+            try {
+                const user = JSON.parse(sessionStorage.getItem("user") ?? "null");
+                userId = typeof user?.userId === "number" ? user.userId : null;
+            } catch {
+                userId = null;
+            }
+        }
+
+        const pendingBookingRequest = {
+            userId,
+            flightId: bookingDraft.flightId,
+            passengers: bookingDraft.passengers.map((passenger) => ({
+                firstName: passenger.firstName,
+                lastName: passenger.lastName,
+                passportNumber: passenger.passportNumber,
+                gender: passenger.gender,
+                dateOfBirth: passenger.dateOfBirth
+            })),
+            seatNumbers: bookingDraft.seatNumbers,
+            cabin: bookingDraft.cabin ?? "Economy",
+            addOns: bookingDraft.addOns ?? {}
+        };
+
+        sessionStorage.setItem("pendingBookingRequest", JSON.stringify(pendingBookingRequest));
+        message.textContent = "Payment details validated. The frontend booking payload is ready; the backend still needs to calculate the price and create the booking.";
     });
 </script>
 

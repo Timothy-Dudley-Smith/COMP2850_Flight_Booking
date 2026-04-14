@@ -73,6 +73,35 @@
 
 
 <script type="module">
+    function formatRouteDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+    }
+
+    function buildBookingUrl({ from, to, date, passengers, cabin, flightId }) {
+        const nextParams = new URLSearchParams({
+            from: from ?? "",
+            to: to ?? "",
+            date: date ?? "",
+            passengers: passengers ?? "1",
+            cabin: cabin ?? "Economy",
+            flightId: flightId ?? ""
+        });
+
+        return `/booking-personal?${nextParams.toString()}`;
+    }
+
     async function loadFlights() {
         const params = new URLSearchParams(window.location.search);
         const from = params.get("from");
@@ -86,11 +115,7 @@
         document.getElementById("route-title").textContent = from + " → " + to;
         //used text header of page telling user which flights are to be shown
 
-        const d = new Date(date);
-        document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long"
-        });
+        document.getElementById("route-date").textContent = formatRouteDate(date);
         //put the date string into a readable "day month" format ie "28 March"
 
         try {
@@ -167,9 +192,10 @@
 
                 </div>
                 `);
-                // get all three price boxes and the book button
-                const priceBoxes = list.querySelectorAll(".price-box");
-                const bookBtn = list.querySelector(".Book_Now-btn");
+                const flightCard = list.lastElementChild;
+                const priceBoxes = flightCard.querySelectorAll(".price-box");
+                const bookBtn = flightCard.querySelector(".Book_Now-btn");
+                bookBtn.disabled = true;
 
                 // loop through each price box
                 for (let i = 0; i < priceBoxes.length; i++) {
@@ -188,16 +214,30 @@
                         // enable the book button
                         bookBtn.disabled = false;
                         bookBtn.classList.add("active");
-                        bookBtn.addEventListener("click", () => {
-                            const selectedBox = list.querySelector(".price-box.selected");
-                            const cabin = selectedBox.querySelector("span").textContent;
-                            const price = selectedBox.querySelector("strong").textContent;
-
-                            window.location.href = `/booking-personal?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flight.flightId ?? ""}`;
-                        });
-
                     });
                 }
+
+                bookBtn.addEventListener("click", () => {
+                    const selectedBox = flightCard.querySelector(".price-box.selected");
+
+                    if (!selectedBox) {
+                        return;
+                    }
+
+                    const cabin = selectedBox.querySelector("span").textContent.trim();
+
+                    sessionStorage.removeItem("bookingDraft");
+                    sessionStorage.removeItem("pendingBookingRequest");
+
+                    window.location.href = buildBookingUrl({
+                        from,
+                        to,
+                        date,
+                        passengers,
+                        cabin,
+                        flightId: flight.flightId ?? ""
+                    });
+                });
             });
 
             //catch block is for error handling ie if anything goes wrong then the catchj block runs

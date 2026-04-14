@@ -102,6 +102,16 @@ data class CreateBookingRequest(
     val flightId: String,
     val passengers: List<Int>,
     val seatNumbers: List<String>,
+    val totalPrice: Double
+)
+
+@Serializable
+data class PassengerRequest(
+    val firstName: String,
+    val lastName: String,
+    val passportNumber: String,
+    val gender: String,
+    val dateOfBirth: String
 )
 
 fun Application.configureRouting() {
@@ -222,8 +232,8 @@ fun Application.configureRouting() {
         }
 
         get ("/api/users")  {
-            val authservice = AuthenticationService()
-            val users = authservice.getAllUsers()
+            val authenticationService = AuthenticationService()
+            val users = authenticationService.getAllUsers()
             call.respond(HttpStatusCode.OK, users)
         }
 
@@ -362,6 +372,7 @@ fun Application.configureRouting() {
 
         post("/api/bookings") {
             val request = call.receive<CreateBookingRequest>()
+
         }
 
     }

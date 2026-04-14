@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
@@ -12,8 +13,8 @@
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/home/styles/Images/Logo.png" class="Airline_Logo">
-                <img src="/home/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/styles/Images/Logo.png" class="Airline_Logo">
+                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
             </div>
         </div>
 
@@ -94,10 +95,10 @@
         <div class="sb">
             <div class="sr"><span id="sum-seat">Seat —</span><span class="sf">Free</span></div>
             <div class="sr"><span>Wi-fi</span><span class="sf">Free</span></div>
-            <div class="sr"><span id="sum-cabin">Economy fare</span><span id="sum-base">£0.00</span></div>
+            <div class="sr"><span id="sum-cabin">Economy fare</span><span id="sum-base">Calculated at checkout</span></div>
             <div id="lines"></div>
             <hr class="sdiv">
-            <div class="st"><span class="stl">Total</span><span class="sta" id="tot">£0.00</span></div>
+            <div class="st"><span class="stl">Total</span><span class="sta" id="tot">Calculated at checkout</span></div>
         </div>
         <div class="sf2">
             <button class="btn">Continue to payment →</button>
@@ -107,71 +108,160 @@
 </div>
 
 <script>
-    // ── Results page params ──────────────────────────────────────
-    const params = new URLSearchParams(window.location.search);
-    const from = params.get("from");
-    const to = params.get("to");
-    const date = params.get("date");
-    const passengers = parseInt(params.get("passengers"));
-    document.getElementById("route-title").textContent = from + " → " + to;
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    const continueButton = document.querySelector(".btn");
+    const backButton = document.querySelector(".btnb");
 
-
-    const d = new Date(date);
-    document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long"
-    });
-    const cabin = params.get('cabin');
-    // cabin class selected by user
-    const price = parseFloat(params.get('price').replace('£', ''));
-    // base fare price
-    const seat  = params.get('seat');
-    // seat information
-    document.getElementById('ext-seat').textContent  = 'Seat ' + seat + ' reserved';
-    document.getElementById('sum-seat').textContent  = 'Seat ' + seat;
-    document.getElementById('sum-cabin').textContent = cabin + ' fare';
-    document.getElementById('sum-base').textContent  = '£' + price.toFixed(2);
-
-
-    // ── Total calculation ─────────────────────────────────────────────────────────
-    function updateTotal() {
-
-        let extras = 0;
-        let extraLines = '';
-
-        // Loop through all checked inputs that have a price
-        const checkedInputs = document.querySelectorAll('input:checked[data-price]');
-
-        for (let i = 0; i < checkedInputs.length; i++) {
-
-            const input = checkedInputs[i];
-            const inputPrice = parseFloat(input.dataset.price);
-            const inputLabel = input.dataset.label;
-
-            // Add to extras total
-            extras += inputPrice;
-
-            // Build the order summary line
-            extraLines += '<div class="sr">' +
-                '<span>' + inputLabel + '</span>' +
-                '<b>£' + inputPrice.toFixed(2) + '</b>' +
-                '</div>';
+    function formatRouteDate(date) {
+        if (!date) {
+            return "From today onwards";
         }
 
-        // Update the order summary
-        document.getElementById('lines').innerHTML = extraLines;
-        document.getElementById('tot').textContent = '£' + (price + extras).toFixed(2);
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
     }
 
-    // Run on every input change
-    const allInputs = document.querySelectorAll('input');
+    function getSelectedOption(name) {
+        const input = document.querySelector(`input[name="${name}"]:checked`);
+        if (!input || !input.dataset.label) {
+            return null;
+        }
 
+        return input.dataset.label;
+    }
+
+    function getSelectedExtras() {
+        const extras = [];
+        const inputs = document.querySelectorAll('input[type="checkbox"]:checked[data-label]');
+
+        for (let i = 0; i < inputs.length; i++) {
+            extras.push(inputs[i].dataset.label);
+        }
+
+        return extras;
+    }
+
+    function saveSelections() {
+        if (!bookingDraft) {
+            return;
+        }
+
+        bookingDraft.addOns = {
+            baggage: getSelectedOption("bag"),
+            meal: getSelectedOption("meal"),
+            insurance: getSelectedOption("ins"),
+            extras: getSelectedExtras()
+        };
+
+        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+    }
+
+    function updateSelectionsSummary() {
+        const lines = document.getElementById("lines");
+        const selections = [];
+
+        if (bookingDraft?.addOns?.baggage) {
+            selections.push(bookingDraft.addOns.baggage);
+        }
+
+        if (bookingDraft?.addOns?.meal) {
+            selections.push(bookingDraft.addOns.meal);
+        }
+
+        if (bookingDraft?.addOns?.insurance) {
+            selections.push(bookingDraft.addOns.insurance);
+        }
+
+        if (Array.isArray(bookingDraft?.addOns?.extras)) {
+            for (let i = 0; i < bookingDraft.addOns.extras.length; i++) {
+                selections.push(bookingDraft.addOns.extras[i]);
+            }
+        }
+
+        lines.innerHTML = selections.map((selection) => `
+            <div class="sr">
+                <span>${selection}</span>
+                <b>Selected</b>
+            </div>
+        `).join("");
+    }
+
+    if (!bookingDraft) {
+        document.getElementById("route-title").textContent = "Booking details unavailable";
+        document.getElementById("route-date").textContent = "Return to your flight search and try again.";
+    } else {
+        const seatNumbers = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+        const seatLabel = seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected";
+
+        document.getElementById("route-title").textContent = `${bookingDraft.from} → ${bookingDraft.to}`;
+        document.getElementById("route-date").textContent = formatRouteDate(bookingDraft.date);
+        document.getElementById("ext-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel} reserved`;
+        document.getElementById("sum-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel}`;
+        document.getElementById("sum-cabin").textContent = `${bookingDraft.cabin ?? "Economy"} fare`;
+        document.getElementById("sum-base").textContent = "Calculated at checkout";
+        document.getElementById("tot").textContent = "Calculated at checkout";
+
+        const savedAddOns = bookingDraft.addOns ?? {};
+
+        if (savedAddOns.baggage) {
+            const bagOption = document.querySelector(`input[name="bag"][data-label="${savedAddOns.baggage}"]`);
+            if (bagOption) {
+                bagOption.checked = true;
+            }
+        }
+
+        if (savedAddOns.meal) {
+            const mealOption = document.querySelector(`input[name="meal"][data-label="${savedAddOns.meal}"]`);
+            if (mealOption) {
+                mealOption.checked = true;
+            }
+        }
+
+        if (savedAddOns.insurance) {
+            const insuranceOption = document.querySelector(`input[name="ins"][data-label="${savedAddOns.insurance}"]`);
+            if (insuranceOption) {
+                insuranceOption.checked = true;
+            }
+        }
+
+        if (Array.isArray(savedAddOns.extras)) {
+            for (let i = 0; i < savedAddOns.extras.length; i++) {
+                const extraOption = document.querySelector(`input[type="checkbox"][data-label="${savedAddOns.extras[i]}"]`);
+                if (extraOption) {
+                    extraOption.checked = true;
+                }
+            }
+        }
+    }
+
+    const allInputs = document.querySelectorAll("input");
     for (let i = 0; i < allInputs.length; i++) {
-        allInputs[i].addEventListener('change', updateTotal);
+        allInputs[i].addEventListener("change", () => {
+            saveSelections();
+            updateSelectionsSummary();
+        });
     }
 
-    // Run once on page load to show defaults
-    updateTotal();
+    continueButton.addEventListener("click", () => {
+        saveSelections();
+        window.location.href = "/payment";
+    });
+
+    backButton.addEventListener("click", () => {
+        saveSelections();
+        window.location.href = "/seatmap";
+    });
+
+    saveSelections();
+    updateSelectionsSummary();
 </script>
 
 </body>
