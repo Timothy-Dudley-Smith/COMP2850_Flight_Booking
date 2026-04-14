@@ -1,20 +1,29 @@
 package com.example.com
 
+import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.Manager
 import com.flightsystem.model.PaymentRequest
 import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
-import com.flightsystem.model.LoginResponse
 
+
+import io.ktor.server.request.receive
+import io.ktor.server.routing.post
+
+
+
+
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
-import com.flightsystem.model.Manager
-import io.ktor.http.HttpStatusCode
+
+
 import io.ktor.server.request.receive
 import io.ktor.server.routing.post
 import com.flightsystem.service.BookingService
@@ -23,19 +32,27 @@ import com.flightsystem.service.BookingService
 
 // imports the flight info
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.Serializable
 
 import io.ktor.server.application.*
+import io.ktor.server.pebble.*
+import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
+import io.ktor.http.*
 import io.ktor.server.http.content.*
+import org.h2.api.H2Type.row
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
 //import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
 
 import java.io.File
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Serializable
 data class FlightResponse(
@@ -79,8 +96,16 @@ data class RegisterRequest(
     val lastName: String,
     val email: String,
     val password: String,
-    val dateOfBirth: String?
+    val dateOfBirth: String
 )
+
+@Serializable
+data class RegisterResponse(
+    val success: Boolean,
+    val message: String
+)
+
+
 
 @Serializable
 data class LoginRequest(
@@ -90,17 +115,28 @@ data class LoginRequest(
 
 @Serializable
 data class LoginResponse(
+    val success: Boolean,
     val userId: Int,
     val firstName: String,
     val lastName: String,
     val email: String,
-    val role: String
+    val role: String,
+    val sessionId: String
+)
+
+@Serializable
+data class SessionCheckResponse(
+    val valid: Boolean,
+    val userId: Int? = null,
+    val email: String? = null,
+    val role: String? = null
 )
 
 @Serializable
 data class ErrorResponse(
     val error: String
 )
+
 
 @Serializable
 data class CreateBookingRequest(
@@ -109,9 +145,47 @@ data class CreateBookingRequest(
     val seatNumbers: List<String>
 )
 
+@Serializable
+data class CreateHoldRequest(
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>
+)
+
+@Serializable
+data class CreateHoldResponse(
+    val holdId: Int,
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>,
+    val totalPrice: Double,
+    val expiryTime: String
+)
+
 fun Application.configureRouting() {
+    val authenticationService = AuthenticationService()
+
     routing {
 
+        staticResources("/styles", "static/user/home/styles")
+        staticResources("/scripts", "static/user/home/scripts")
+
+        staticResources("/log_in/styles", "static/user/log_in/styles")
+        staticResources("/log_in/scripts", "static/user/log_in/scripts")
+
+        staticResources("/manager", "static/manager")
+
+        get("/") {
+            call.respondFile(File("src/main/resources/static/user/home/index.html"))
+        }
+
+        get("/log_in") {
+            call.respondFile(File("src/main/resources/static/user/log_in/index.html"))
+        }
+
+        get("/log_in/register.html") {
+            call.respondFile(File("src/main/resources/static/user/log_in/register.html"))
+        }
         val passengerService = PassengerService()
 
         staticResources("/", "static/user/home")
@@ -125,15 +199,11 @@ fun Application.configureRouting() {
         staticResources("/manager/bookings", "static/manager/bookings")
 
         get("/book") {
-            call.respondFile(
-                File("src/main/resources/static/user/book/book.html")
-            )
+            call.respondFile(File("src/main/resources/static/user/book/book.html"))
         }
 
         get("/booking-personal") {
-            call.respondFile(
-                File("src/main/resources/static/user/book/booking-personal.html")
-            )
+            call.respondFile(File("src/main/resources/static/user/book/booking-personal.html"))
         }
 
         get("/seatmap") {
@@ -258,8 +328,8 @@ fun Application.configureRouting() {
         }
 
         get ("/api/users")  {
-            val authenticationService = AuthenticationService()
             val users = authenticationService.getAllUsers()
+            val authenticationService = AuthenticationService()
             call.respond(HttpStatusCode.OK, users)
         }
 
@@ -280,20 +350,20 @@ fun Application.configureRouting() {
             val upcomingFlightData = transaction {
                 Flights.selectAll().where { Flights.date greaterEq LocalDate.now().toString() }
                     .orderBy(Flights.date to SortOrder.ASC, Flights.departureTime to SortOrder.ASC).map { row ->
-                    UpcomingFlightData (
-                        flightId = row[Flights.flightId],
-                        departureAirport = row[Flights.departureAirport],
-                        arrivalAirport = row[Flights.arrivalAirport],
-                        date = row[Flights.date],
-                        departureTime = row[Flights.departureTime],
-                        arrivalTime = row[Flights.arrivalTime],
-                        price = row[Flights.price],
-                        length = row[Flights.length]
+                        UpcomingFlightData (
+                            flightId = row[Flights.flightId],
+                            departureAirport = row[Flights.departureAirport],
+                            arrivalAirport = row[Flights.arrivalAirport],
+                            date = row[Flights.date],
+                            departureTime = row[Flights.departureTime],
+                            arrivalTime = row[Flights.arrivalTime],
+                            price = row[Flights.price],
+                            length = row[Flights.length]
 
-                        //TODO:
-                        //Add quantity of tickets sold / still available
-                    )
-                }
+                            //TODO:
+                            //Add quantity of tickets sold / still available
+                        )
+                    }
             }
             call.respond(upcomingFlightData)
         }
@@ -303,37 +373,8 @@ fun Application.configureRouting() {
 
             //TODO:
             //Add ability to see historic flights
-
         }
 
-        get("/test-login") {
-            val authService = AuthenticationService()
-
-            val result = authService.login(
-                email = "george123@gmail.com",
-                rawPassword = "george123"
-            )
-
-            if (result.isSuccess) {
-                val user = result.getOrNull()!!
-                call.respond(
-                    LoginResponse(
-                        success = true,
-                        userId = user.userId,
-                        email = user.email
-                    )
-                )
-            } else {
-                call.respond(
-                    LoginResponse(
-                        success = false,
-                        userId = null,
-                        email = null,
-                        error = result.exceptionOrNull()?.message
-                    )
-                )
-            }
-        }
         post("/api/manager/flight_view") {
             val request = call.receive<InsertFlightData>()
 
@@ -393,20 +434,142 @@ fun Application.configureRouting() {
 
         post("/api/auth/login") {
             val request = call.receive<LoginRequest>()
+            //val authenticationService = AuthenticationService()
+            val result = authenticationService.login(request.email, request.password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+                val sessionId = authenticationService.createSession(user)
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        success = true,
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("Invalid email or password")
+                )
+            }
+        }
+
+        // browser bar testing
+        get("/api/auth/login-test") {
+            val email = call.request.queryParameters["email"]
+            val password = call.request.queryParameters["password"]
+
+            if (email.isNullOrBlank() || password.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("missing email or password")
+                )
+                return@get
+            }
+            val result = authenticationService.login(email, password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+                val sessionId = authenticationService.createSession(user)
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        success = true,
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("invalid emaol or password")
+                )
+            }
+        }
+
+        // session check route
+        get("/api/auth/session") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Missing sessionId")
+                )
+                return@get
+            }
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    SessionCheckResponse(valid = false)
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.OK,
+                    SessionCheckResponse(
+                        valid = true,
+                        userId = user.userId,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER"
+                    )
+                )
+            }
+        }
+
+        // logout route
+        post("/api/auth/logout") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Missing sessionId")
+                )
+                return@post
+            }
+            authenticationService.logout(sessionId)
+            call.respond(HttpStatusCode.OK, RegisterResponse(
+                success = true,
+                message = "Successfully logged out"
+            ))
+        }
+
+
+        post("/api/auth/login") {
+            val request = call.receive<LoginRequest>()
             val authenticationService = AuthenticationService()
+
             val result = authenticationService.login(request.email, request.password)
 
             if (result.isSuccess) {
                 val user = result.getOrThrow()
 
+                val sessionId = authenticationService.createSession(user)
+
                 call.respond(
                     HttpStatusCode.OK,
                     LoginResponse(
+                        success = true,
                         userId = user.userId,
                         firstName = user.firstName,
                         lastName = user.lastName,
                         email = user.email,
-                        role = if (user is Manager) "MANAGER" else "USER"
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
                     )
                 )
             } else {
@@ -420,19 +583,29 @@ fun Application.configureRouting() {
         post("/api/auth/register") {
             val request = call.receive<RegisterRequest>()
 
-            val firstName = request.firstName
-            val lastName = request.lastName
-            val email = request.email
-            val password = request.password
-            val dateOfBirth = request.dateOfBirth.toString()
-
-
-            val authenticationService = AuthenticationService()
-
-            val result = authenticationService.register(firstName, lastName, dateOfBirth, email, password)
+            val result = authenticationService.register(
+                request.firstName,
+                request.lastName,
+                request.dateOfBirth,
+                request.email,
+                request.password
+            )
 
             if (result.isSuccess) {
-                call.respond(HttpStatusCode.OK, "Account registered successfully.")
+                call.respond(
+                    HttpStatusCode.OK,
+                    RegisterResponse(
+                        success = true,
+                        message = "Account registered successfully."
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse(
+                        result.exceptionOrNull()?.message ?: "Registration failed"
+                    )
+                )
             }
         }
 
@@ -448,12 +621,33 @@ fun Application.configureRouting() {
             call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
         }
 
-        get("/payment") {
+        get("/checkout") {
             call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
         }
 
         post("/api/holds") {
+            try {
 
+                val request = call.receive<CreateHoldRequest>()
+                val priceHoldService = PriceHoldService()
+
+                var userId = request.userId
+                var flightId = request.flightId
+                val seatNumbers = request.seatNumbers
+
+                val hold = priceHoldService.createHold(userId, flightId, seatNumbers)
+
+                val holdId = hold.holdId
+                userId = hold.userId
+                flightId = hold.flightId
+                val expiryTime = hold.expiryTime
+                val totalPrice = hold.totalPrice
+
+                val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
+                call.respond(HttpStatusCode.Created, holdResponse)
+            } catch (e: IllegalArgumentException) {
+                call.respond(HttpStatusCode.BadRequest, "IllegalArgumentException")
+            }
         }
     }
 

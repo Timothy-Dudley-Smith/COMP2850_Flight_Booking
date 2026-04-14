@@ -12,6 +12,7 @@ import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.LocalDateTime
+import java.util.UUID
 
 
 
@@ -32,7 +33,7 @@ class AuthenticationService(
     private data class SessionData(
         val userId: Int,
         val isManager: Boolean,
-        val lastActivity: LocalDateTime = LocalDateTime.now()
+        var lastActivity: LocalDateTime = LocalDateTime.now()
     )
 
 
@@ -236,6 +237,46 @@ class AuthenticationService(
 
     }
 
+    // create session
+    fun createSession(user: User): String {
+        val sessionId = UUID.randomUUID().toString()
+        activeSessions[sessionId] = SessionData(
+            userId = user.userId,
+            isManager = user is Manager,
+            lastActivity = LocalDateTime.now()
+        )
+        return sessionId
+    }
+
+    fun validateSession(sessionId: String): User? {
+        val session = activeSessions[sessionId] ?: return null
+        val expiryTime = session.lastActivity.plusMinutes(sessionTimeout)
+
+        if (LocalDateTime.now().isAfter(expiryTime)) {
+            activeSessions.remove(sessionId)
+            return null
+        }
+        session.lastActivity = LocalDateTime.now()
+        return findById(session.userId)
+    }
+
+    fun logout(sessionId: String) {
+        activeSessions.remove(sessionId)
+    }
+
+    fun isManagerSession(sessionId: String): Boolean {
+        val session = activeSessions[sessionId] ?: return false
+        val expiryTime = session.lastActivity.plusMinutes(sessionTimeout)
+
+        if (LocalDateTime.now().isAfter(expiryTime)) {
+            activeSessions.remove(sessionId)
+            return false
+        }
+        session.lastActivity = LocalDateTime.now()
+        return session.isManager
+    }
+
+    // end of session stuff
 
     fun resetPassword(user: User, newRawPassword: String): Result<Unit> {
         if (newRawPassword.length < MIN_PASSWORD_LENGTH) {

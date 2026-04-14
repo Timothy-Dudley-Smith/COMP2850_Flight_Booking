@@ -104,14 +104,16 @@
             <button class="btn">Continue to payment →</button>
             <button class="btnb">← Back to seats</button>
         </div>
+        <p id="handoff-message" style="margin-top: 12px; color: #c0392b; font-weight: 600; min-height: 24px;"></p>
     </div>
 </div>
 
 <script>
     const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
-    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    let bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
     const continueButton = document.querySelector(".btn");
     const backButton = document.querySelector(".btnb");
+    const handoffMessage = document.getElementById("handoff-message");
 
     function formatRouteDate(date) {
         if (!date) {
@@ -149,19 +151,81 @@
         return extras;
     }
 
+    function buildBookingHandoff(draft) {
+        return {
+            userId: draft.userId,
+            flightId: draft.flightId,
+            from: draft.from,
+            to: draft.to,
+            date: draft.date,
+            passengerCount: draft.passengerCount,
+            cabin: draft.cabin,
+            passengers: draft.passengers,
+            seatNumbers: draft.seatNumbers,
+            addOns: draft.addOns,
+            holdId: draft.holdId,
+            holdExpiryTime: draft.holdExpiryTime,
+            totalPrice: draft.totalPrice
+        };
+    }
+
     function saveSelections() {
         if (!bookingDraft) {
-            return;
+            return null;
         }
 
-        bookingDraft.addOns = {
+        const passengers = Array.isArray(bookingDraft.passengers) ? bookingDraft.passengers : [];
+        const seatNumbers = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+        const parsedTotalPrice = Number(bookingDraft.totalPrice);
+
+        bookingDraft = {
+            ...bookingDraft,
+            userId: typeof bookingDraft.userId === "number" ? bookingDraft.userId : null,
+            flightId: bookingDraft.flightId ?? "",
+            from: bookingDraft.from ?? "",
+            to: bookingDraft.to ?? "",
+            date: bookingDraft.date ?? "",
+            passengerCount: passengers.length > 0 ? passengers.length : Math.max(1, Number(bookingDraft.passengerCount ?? 1)),
+            cabin: bookingDraft.cabin ?? "Economy",
+            passengers,
+            seatNumbers,
             baggage: getSelectedOption("bag"),
             meal: getSelectedOption("meal"),
             insurance: getSelectedOption("ins"),
             extras: getSelectedExtras()
         };
 
+        bookingDraft.addOns = {
+            baggage: bookingDraft.baggage,
+            meal: bookingDraft.meal,
+            insurance: bookingDraft.insurance,
+            extras: bookingDraft.extras
+        };
+
+        delete bookingDraft.baggage;
+        delete bookingDraft.meal;
+        delete bookingDraft.insurance;
+        delete bookingDraft.extras;
+
+        bookingDraft.holdId = bookingDraft.holdId ?? null;
+        bookingDraft.holdExpiryTime = bookingDraft.holdExpiryTime ?? null;
+        bookingDraft.totalPrice = Number.isFinite(parsedTotalPrice) ? parsedTotalPrice : null;
+
         sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+        sessionStorage.setItem("pendingBookingRequest", JSON.stringify(buildBookingHandoff(bookingDraft)));
+
+        if (bookingDraft.holdId !== null || bookingDraft.holdExpiryTime || bookingDraft.totalPrice !== null) {
+            sessionStorage.setItem("holdData", JSON.stringify({
+                holdId: bookingDraft.holdId,
+                userId: bookingDraft.userId,
+                flightId: bookingDraft.flightId,
+                seatNumbers: bookingDraft.seatNumbers,
+                expiryTime: bookingDraft.holdExpiryTime,
+                totalPrice: bookingDraft.totalPrice
+            }));
+        }
+
+        return bookingDraft;
     }
 
     function updateSelectionsSummary() {
@@ -251,8 +315,47 @@
     }
 
     continueButton.addEventListener("click", () => {
-        saveSelections();
-        window.location.href = "/payment";
+        handoffMessage.textContent = "";
+
+        const updatedDraft = saveSelections();
+
+        if (!updatedDraft) {
+            handoffMessage.textContent = "Booking details are missing. Please restart your booking.";
+            return;
+        }
+
+        const missingItems = [];
+
+        if (typeof updatedDraft.userId !== "number") {
+            missingItems.push("a signed-in user");
+        }
+
+        if (!updatedDraft.flightId) {
+            missingItems.push("a selected flight");
+        }
+
+        if (!Array.isArray(updatedDraft.passengers) || updatedDraft.passengers.length === 0) {
+            missingItems.push("passenger details");
+        }
+
+        if (!Array.isArray(updatedDraft.seatNumbers) || updatedDraft.seatNumbers.length === 0) {
+            missingItems.push("selected seats");
+        }
+
+        if (updatedDraft.holdId === null || updatedDraft.holdId === undefined || updatedDraft.holdId === "") {
+            missingItems.push("a seat hold");
+        }
+
+        if (!updatedDraft.holdExpiryTime) {
+            missingItems.push("a hold expiry time");
+        }
+
+        if (missingItems.length > 0) {
+            handoffMessage.textContent = `Complete ${missingItems.join(", ")} before continuing to payment.`;
+            return;
+        }
+
+        window.location.href = "/checkout";
     });
 
     backButton.addEventListener("click", () => {

@@ -102,6 +102,22 @@
         return `/booking-personal?${nextParams.toString()}`;
     }
 
+    function clearBookingProgress() {
+        const bookingKeys = [
+            "bookingDraft",
+            "pendingBookingRequest",
+            "holdData",
+            "selectedSeat",
+            "bookingData",
+            "loyaltyChoice",
+            "passengerData"
+        ];
+
+        for (let i = 0; i < bookingKeys.length; i++) {
+            sessionStorage.removeItem(bookingKeys[i]);
+        }
+    }
+
     async function loadFlights() {
         const params = new URLSearchParams(window.location.search);
         const from = params.get("from");
@@ -226,8 +242,7 @@
 
                     const cabin = selectedBox.querySelector("span").textContent.trim();
 
-                    sessionStorage.removeItem("bookingDraft");
-                    sessionStorage.removeItem("pendingBookingRequest");
+                    clearBookingProgress();
 
                     window.location.href = buildBookingUrl({
                         from,

@@ -9,6 +9,7 @@
 </head>
 
 <script src="scripts/dropDown.js" defer></script>
+<script src="scripts/sessionHome.js" defer></script>
 
 <body>
 <header class="header">
@@ -28,7 +29,9 @@
 
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
