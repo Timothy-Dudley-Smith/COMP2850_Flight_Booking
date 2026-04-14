@@ -14,7 +14,7 @@ import com.flightsystem.model.LoginResponse
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
 import com.flightsystem.service.BookingService
-import com.flightsystem.service.BookingService
+
 
 
 // imports the flight info
@@ -260,7 +260,7 @@ fun Application.configureRouting() {
         post("/api/booking") {
             val request = call.receive<CreateBookingRequest>()
             val bookingService = BookingService()
-            val booking = bookingService(
+            val booking = bookingService.createBooking(
                 request.userId,
                 request.flightId,
                 request.seatNumbers
