@@ -9,7 +9,11 @@ import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
-import com.flightsystem.model.Manager 
+import com.flightsystem.model.LoginResponse
+
+import com.flightsystem.service.PassengerService
+import com.flightsystem.model.SavePassengersRequest
+import com.flightsystem.model.Manager
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.routing.post
@@ -100,26 +104,18 @@ data class ErrorResponse(
 data class CreateBookingRequest(
     val userId: Int,
     val flightId: String,
-    val passengers: List<Int>,
-    val seatNumbers: List<String>,
-    val totalPrice: Double
-)
-
-@Serializable
-data class PassengerRequest(
-    val firstName: String,
-    val lastName: String,
-    val passportNumber: String,
-    val gender: String,
-    val dateOfBirth: String
+    val seatNumbers: List<String>
 )
 
 fun Application.configureRouting() {
     routing {
 
+        val passengerService = PassengerService()
+
         staticResources("/", "static/user/home")
         staticResources("/log_in", "static/user/log_in")
         staticResources("/home", "static/user/home")
+        staticResources("/images", "static/Images")
         staticResources("/manager/flight_view", "static/manager/flight_view")
         staticResources("/manager/home", "static/manager/home" )
         staticResources("/manager/support", "static/manager/support")
@@ -237,6 +233,17 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK, users)
         }
 
+        post("/api/passengers") {
+            val request = call.receive<SavePassengersRequest>()
+
+            val savedPassengers = passengerService.addPassengersToBooking(
+                request.bookingId,
+                request.passengers
+            )
+
+            call.respond(HttpStatusCode.Created, savedPassengers)
+        }
+
         get("/api/manager/flights") {
             //TODO:
             //Add manager only access - requires manager log-in key.
@@ -266,8 +273,37 @@ fun Application.configureRouting() {
 
             //TODO:
             //Add ability to see historic flights
+
         }
 
+        get("/test-login") {
+            val authService = AuthenticationService()
+
+            val result = authService.login(
+                email = "george123@gmail.com",
+                rawPassword = "george123"
+            )
+
+            if (result.isSuccess) {
+                val user = result.getOrNull()!!
+                call.respond(
+                    LoginResponse(
+                        success = true,
+                        userId = user.userId,
+                        email = user.email
+                    )
+                )
+            } else {
+                call.respond(
+                    LoginResponse(
+                        success = false,
+                        userId = null,
+                        email = null,
+                        error = result.exceptionOrNull()?.message
+                    )
+                )
+            }
+        }
         post("/api/manager/flight_view") {
             val request = call.receive<InsertFlightData>()
 
@@ -324,7 +360,7 @@ fun Application.configureRouting() {
                 call.respond(HttpStatusCode.BadRequest, response)
             }
         }
-        
+
         post("/api/auth/login") {
             val request = call.receive<LoginRequest>()
             val authenticationService = AuthenticationService()
@@ -343,7 +379,7 @@ fun Application.configureRouting() {
                         role = if (user is Manager) "MANAGER" else "USER"
                     )
                 )
-            } else { 
+            } else {
                 call.respond(
                     HttpStatusCode.Unauthorized,
                     ErrorResponse("Invalid email or password")
@@ -372,9 +408,23 @@ fun Application.configureRouting() {
 
         post("/api/bookings") {
             val request = call.receive<CreateBookingRequest>()
-
         }
 
+        get("/seatmap") {
+            call.respondFile(File("src/main/resources/static/user/book/seatmap.html"))
+        }
+
+        get("/loyaltypage") {
+            call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
+        }
+
+        get("/payment") {
+            call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
+        }
+
+        post("/api/holds") {
+
+        }
     }
 
 }

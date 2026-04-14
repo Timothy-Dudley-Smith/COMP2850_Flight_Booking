@@ -27,8 +27,11 @@ class PassengerService {
             val createdPassengers = passengers.map { passengerInput ->
                 val inserted = Passengers.insert {
                     it[Passengers.bookingId] = bookingId
-                    it[Passengers.name] = passengerInput.name
-                    it[Passengers.email] = passengerInput.email
+                    it[Passengers.title] = passengerInput.title
+                    it[Passengers.firstName] = passengerInput.firstName
+                    it[Passengers.lastName] = passengerInput.lastName
+                    it[Passengers.gender] = passengerInput.gender
+                    it[Passengers.dateOfBirth] = passengerInput.dateOfBirth
                     it[Passengers.passportNumber] = passengerInput.passportNumber
                 }
 
@@ -37,8 +40,11 @@ class PassengerService {
                 Passenger(
                     passengerId = newPassengerId,
                     bookingId = bookingId,
-                    name = passengerInput.name,
-                    email = passengerInput.email,
+                    title = passengerInput.title,
+                    firstName = passengerInput.firstName,
+                    lastName = passengerInput.lastName,
+                    gender = passengerInput.gender,
+                    dateOfBirth = passengerInput.dateOfBirth,
                     passportNumber = passengerInput.passportNumber
                 )
             }
@@ -55,8 +61,11 @@ class PassengerService {
                 Passenger(
                     passengerId = row[Passengers.passengerId],
                     bookingId = row[Passengers.bookingId],
-                    name = row[Passengers.name],
-                    email = row[Passengers.email],
+                    title = row[Passengers.title],
+                    firstName = row[Passengers.firstName],
+                    lastName = row[Passengers.lastName],
+                    gender = row[Passengers.gender],
+                    dateOfBirth = row[Passengers.dateOfBirth],
                     passportNumber = row[Passengers.passportNumber]
                 )
             }
