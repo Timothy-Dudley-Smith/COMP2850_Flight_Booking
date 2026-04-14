@@ -2,10 +2,15 @@ package com.example.com
 
 import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
+import com.flightsystem.model.Bookings
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.Layovers
 import com.flightsystem.model.Manager
 import com.flightsystem.model.PaymentRequest
+import com.flightsystem.model.PriceHold
+import com.flightsystem.model.PriceHoldSeats
+import com.flightsystem.model.PriceHolds
 import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
@@ -22,6 +27,7 @@ import io.ktor.server.routing.post
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
+import com.flightsystem.model.Seats
 
 
 import io.ktor.server.request.receive
@@ -46,6 +52,7 @@ import org.jetbrains.exposed.sql.*
 import io.ktor.http.*
 import io.ktor.server.http.content.*
 import org.h2.api.H2Type.row
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
 //import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -383,6 +390,32 @@ fun Application.configureRouting() {
                 }
             }
             call.respond(HttpStatusCode.Created)
+        }
+
+        delete("/api/manager/flights/{flightId}") {
+            val flightId = call.parameters["flightId"]
+
+            if (flightId.isNullOrBlank()) {
+                call.respond(HttpStatusCode.BadRequest, "flightId required")
+                return@delete
+            }
+            val emptyBookingData = transaction {
+                Bookings.selectAll().where { Bookings.flightId eq flightId }.count() > 0
+            }
+
+            if (emptyBookingData) {
+                call.respond(HttpStatusCode.BadRequest, "flight has existing bookings.")
+            } else {
+                transaction {
+                    PriceHoldSeats.deleteWhere { PriceHoldSeats.flightId eq flightId }
+                    PriceHolds.deleteWhere { PriceHolds.flightId eq flightId }
+                    Seats.deleteWhere { Seats.flightId eq flightId }
+                    Layovers.deleteWhere { Layovers.flightId eq flightId }
+                    Flights.deleteWhere { Flights.flightId eq flightId }
+                }
+
+                call.respond(HttpStatusCode.OK, "Flights successfully deleted.")
+            }
         }
 
         get("/manager") {

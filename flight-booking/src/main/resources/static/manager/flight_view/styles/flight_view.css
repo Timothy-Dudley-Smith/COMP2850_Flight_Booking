@@ -219,6 +219,33 @@ section h2 {
     white-space: nowrap;
 }
 
+#upcoming-flights-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.remove-flight-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    background: #a0200e;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.remove-flight-button:hover {
+    background: #7d180a;
+}
+
+.remove-flight-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
 /*small bold uppercase column headings*/
 
 #upcoming-flights-table td {
@@ -275,7 +302,6 @@ section h2 {
     background: #a0200e;
     color: white;
 }
-
 
 
 

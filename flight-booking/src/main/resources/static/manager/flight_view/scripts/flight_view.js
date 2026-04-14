@@ -3,6 +3,7 @@
 
     const flightsEndpoint = "/api/manager/flights";
     const createFlightEndpoint = "/api/manager/flight_view";
+    const deleteFlightEndpoint = (flightId) => `/api/manager/flights/${encodeURIComponent(flightId)}`;
     const message = document.getElementById("manager-message");
     const form = document.getElementById("add-flight-form");
     const tableBody = document.getElementById("upcoming-flights-body");
@@ -13,7 +14,7 @@
         }
 
         message.textContent = text;
-        message.dataset.state = state;
+        message.className = state && state !== "info" ? state : "";
     }
 
     function formatPrice(value) {
@@ -40,6 +41,55 @@
         const cell = document.createElement("td");
         cell.textContent = text;
         row.appendChild(cell);
+    }
+
+    async function readResponseMessage(response, fallbackMessage) {
+        const rawBody = await response.text();
+
+        if (!rawBody) {
+            return fallbackMessage;
+        }
+
+        try {
+            const parsed = JSON.parse(rawBody);
+            return parsed.message ?? parsed.error ?? rawBody;
+        } catch {
+            return rawBody;
+        }
+    }
+
+    async function removeFlight(flightId, buttonElement) {
+        if (!flightId) {
+            setMessage("Flight ID is missing, so this flight cannot be removed.", "error");
+            return;
+        }
+
+        const confirmed = window.confirm(`Remove flight ${flightId}?`);
+        if (!confirmed) {
+            return;
+        }
+
+        buttonElement.disabled = true;
+        setMessage(`Removing flight ${flightId}...`, "info");
+
+        try {
+            const response = await fetch(deleteFlightEndpoint(flightId), {
+                method: "DELETE"
+            });
+
+            if (!response.ok) {
+                const errorMessage = await readResponseMessage(response, "Failed to remove flight.");
+                throw new Error(errorMessage);
+            }
+
+            const successMessage = await readResponseMessage(response, "Flight removed successfully.");
+            setMessage(successMessage, "success");
+            await loadFlights();
+        } catch (error) {
+            setMessage(error.message || "Failed to remove flight.", "error");
+            buttonElement.disabled = false;
+            console.error(error);
+        }
     }
 
     function renderFlights(flights) {
@@ -69,8 +119,11 @@
             const actionCell = document.createElement("td");
             const removeButton = document.createElement("button");
             removeButton.type = "button";
-            removeButton.disabled = true;
             removeButton.textContent = "Remove";
+            removeButton.className = "remove-flight-button";
+            removeButton.addEventListener("click", () => {
+                removeFlight(flight.flightId, removeButton);
+            });
             actionCell.appendChild(removeButton);
             row.appendChild(actionCell);
 
