@@ -6,7 +6,9 @@ import com.flightsystem.model.Flights.departureAirport
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import java.awt.print.Book
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BookingSeat(
     val bookingId: Int,
     val flightId: String,
