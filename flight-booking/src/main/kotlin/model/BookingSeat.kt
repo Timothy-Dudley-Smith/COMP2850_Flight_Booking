@@ -17,7 +17,6 @@ data class BookingSeat(
 
 object BookingSeats : Table() {
     val bookingId = reference("bookingId", Bookings.bookingId)
-    val passengerId = reference("passengerId", Passengers.passengerId).autoIncrement()
     val flightId = reference("flightId", Flights.flightId)
     val seatNumber = varchar("seatNumber", VARCHAR_LENGTH)
 

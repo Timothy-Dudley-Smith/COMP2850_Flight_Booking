@@ -315,18 +315,6 @@ fun Application.configureRouting() {
             call.respond(seats)
         }
 
-        // booking routing 2
-        post("/api/booking") {
-            val request = call.receive<CreateBookingRequest>()
-            val bookingService = BookingService()
-            val booking = bookingService.createBooking(
-                request.userId,
-                request.flightId,
-                request.seatNumbers
-            )
-            call.respond(HttpStatusCode.Created, booking)
-        }
-
         get ("/api/users")  {
             val users = authenticationService.getAllUsers()
             val authenticationService = AuthenticationService()
@@ -609,13 +597,6 @@ fun Application.configureRouting() {
             }
         }
 
-        post("/api/bookings") {
-            val request = call.receive<CreateBookingRequest>()
-        }
-
-        get("/seatmap") {
-            call.respondFile(File("src/main/resources/static/user/book/seatmap.html"))
-        }
 
         get("/loyaltypage") {
             call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
@@ -645,8 +626,8 @@ fun Application.configureRouting() {
 
                 val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
                 call.respond(HttpStatusCode.Created, holdResponse)
-            } catch (e: IllegalArgumentException) {
-                call.respond(HttpStatusCode.BadRequest, "IllegalArgumentException")
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Error while creating hold")
             }
         }
     }

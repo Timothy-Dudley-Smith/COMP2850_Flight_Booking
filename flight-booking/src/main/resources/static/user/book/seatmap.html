@@ -71,16 +71,24 @@
 
 <script>
     const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
-    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    let bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    const seatMap = document.getElementById("seat-map");
+    const continueButton = document.getElementById("continue-btn");
+    const selectedLabel = document.getElementById("selected-label");
+    const helpLabel = document.getElementById("seat-help-label");
+    const holdMessage = document.getElementById("hold-message");
+    const columns = ["A", "B", "C", "D", "E", "F"];
+    const exitRows = new Set([9]);
+    const totalRows = 12;
     const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
     const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
+    const availableSeats = new Set();
+
     document.querySelector(".seat-page h2").textContent = requiredSeats === 1
         ? "Select Your Seat"
         : `Select ${requiredSeats} Seats`;
-    const holdMessage = document.getElementById("hold-message");
 
     if (bookingDraft?.from && bookingDraft?.to) {
-        const helpLabel = document.getElementById("seat-help-label");
         helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
     }
 
@@ -97,151 +105,200 @@
         }
     }
 
-    // t = taken |  a = available | x = exit row
-    const rows = [
-        { num: 1, seats: ['t','t','t','t','t','t'] },
-        { num: 2, seats: ['t','a','t','t','a','t'] },
-        { num: 3, seats: ['t','t','a','a','t','t'] },
-        { num: 4, seats: ['a','t','t','t','t','a'] },
-        { num: 5, seats: ['t','a','t','t','a','t'] },
-        { num: 6, seats: ['t','t','t','t','t','t'] },
-        { num: 7, seats: ['a','t','t','t','t','a'] },
-        { num: 8, seats: ['t','t','t','t','t','t'] },
-        { num: 9, seats: ['x','x','x','x','x','x'] },
-        { num: 10, seats: ['t','a','t','t','a','t'] },
-        { num: 11, seats: ['t','t','t','t','t','t'] },
-        { num: 12, seats: ['a','t','t','t','t','a'] }
-    ];
+    function normalizeSeatNumbers(seatNumbers) {
+        return [...new Set(seatNumbers)].sort();
+    }
 
+    function seatListsMatch(left, right) {
+        const normalizedLeft = normalizeSeatNumbers(left);
+        const normalizedRight = normalizeSeatNumbers(right);
 
-    // letters to label the col
-    const columns = ['A','B','C','D','E','F'];
-    const EXIT_ROWS = [9];
-    let selectedSeat = null;
-    const seatMap = document.getElementById('seat-map');
+        if (normalizedLeft.length !== normalizedRight.length) {
+            return false;
+        }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromParam       = urlParams.get('from');
-    const toParam         = urlParams.get('to');
-    const dateParam       = urlParams.get('date');
-    const passengersParam = urlParams.get('passengers');
-    const cabinParam      = urlParams.get('cabin');
-    const priceParam      = urlParams.get('price');
-    const flightId        = urlParams.get('flightId');
+        for (let i = 0; i < normalizedLeft.length; i++) {
+            if (normalizedLeft[i] !== normalizedRight[i]) {
+                return false;
+            }
+        }
 
-    // Fetch real seat data from backend
-    async function loadSeats() {
-        const response = await fetch(`/api/seats?flightId=${flightId}`);
-        const seats = await response.json();
+        return true;
+    }
 
-        // Build a lookup: seatNumber -> isAvailable
-        const seatLookup = {};
-        seats.forEach(s => { seatLookup[s.seatNumber] = s.isAvailable; });
+    function persistBookingDraft() {
+        if (!bookingDraft) {
+            return;
+        }
 
-        for (let rowNum = 1; rowNum <= 12; rowNum++) {
-            const rowDiv = document.createElement('div');
-            rowDiv.className = 'seat-row';
+        bookingDraft.seatNumbers = normalizeSeatNumbers(Array.from(selectedSeats));
+        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
 
-            for (let seatIndex = 0; seatIndex < 6; seatIndex++) {
+        if (bookingDraft.seatNumbers.length > 0) {
+            sessionStorage.setItem("selectedSeat", bookingDraft.seatNumbers.join(", "));
+        } else {
+            sessionStorage.removeItem("selectedSeat");
+        }
+    }
+
+    function clearStoredHoldIfSelectionChanged() {
+        if (!bookingDraft) {
+            return;
+        }
+
+        const currentSelection = Array.from(selectedSeats);
+        const storedSelection = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+
+        if (seatListsMatch(currentSelection, storedSelection)) {
+            return;
+        }
+
+        bookingDraft.holdId = null;
+        bookingDraft.holdExpiryTime = null;
+        bookingDraft.totalPrice = null;
+        sessionStorage.removeItem("holdData");
+        persistBookingDraft();
+    }
+
+    function renderSeatMap() {
+        seatMap.innerHTML = "";
+
+        for (let rowNumber = 1; rowNumber <= totalRows; rowNumber++) {
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "seat-row";
+
+            for (let seatIndex = 0; seatIndex < columns.length; seatIndex++) {
                 if (seatIndex === 3) {
-                    const rowNumber = document.createElement('div');
-                    rowNumber.className = 'row-num';
-                    rowNumber.textContent = rowNum;
-                    rowDiv.append(rowNumber);
+                    const rowLabel = document.createElement("div");
+                    rowLabel.className = "row-num";
+                    rowLabel.textContent = rowNumber;
+                    rowDiv.append(rowLabel);
                 }
 
-                const seatId = rowNum + columns[seatIndex];
-                const isExitRow = EXIT_ROWS.includes(rowNum);
-                const isAvailable = seatLookup[seatId] === true;
+                const seatId = `${rowNumber}${columns[seatIndex]}`;
+                const seatButton = document.createElement("button");
+                seatButton.dataset.seatId = seatId;
 
-                const seatButton = document.createElement('button');
+                if (exitRows.has(rowNumber)) {
+                    seatButton.className = "seat exit-seat";
+                    rowDiv.append(seatButton);
+                    continue;
+                }
 
-                if (isExitRow) {
-                    seatButton.className = 'seat exit-seat';
-                } else if (!isAvailable) {
-                    seatButton.className = 'seat taken';
+                const isSelected = selectedSeats.has(seatId);
+                const isAvailable = availableSeats.has(seatId);
+
+                if (isSelected) {
+                    seatButton.className = "seat selected";
+                } else if (isAvailable) {
+                    seatButton.className = "seat available";
                 } else {
-                    seatButton.className = 'seat available';
-                    seatButton.addEventListener('click', function () {
-                        document.querySelectorAll('.seat.selected').forEach(s => {
-                            s.classList.remove('selected');
-                            s.classList.add('available');
-                        });
-                        if (selectedSeat === seatId) {
-                            selectedSeat = null;
+                    seatButton.className = "seat taken";
+                }
+
+                if (isSelected || isAvailable) {
+                    seatButton.addEventListener("click", () => {
+                        holdMessage.textContent = "";
+
+                        if (selectedSeats.has(seatId)) {
+                            selectedSeats.delete(seatId);
                         } else {
-                            seatButton.classList.remove('available');
-                            seatButton.classList.add('selected');
-                            selectedSeat = seatId;
+                            if (selectedSeats.size >= requiredSeats) {
+                                updateUI();
+                                return;
+                            }
+
+                            selectedSeats.add(seatId);
                         }
+
+                        clearStoredHoldIfSelectionChanged();
+                        renderSeatMap();
                         updateUI();
                     });
                 }
 
                 rowDiv.append(seatButton);
             }
+
             seatMap.append(rowDiv);
         }
     }
 
     function updateUI() {
-        const labelElement = document.getElementById('selected-label');
-        const continueButton = document.getElementById('continue-btn');
-        if (selectedSeat !== null) {
-            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
-            continueButton.classList.add('active');
+        if (!bookingDraft || !bookingDraft.flightId) {
+            selectedLabel.textContent = "Booking details are missing. Please restart your booking.";
+            continueButton.classList.remove("active");
+            continueButton.disabled = true;
+            return;
+        }
+
+        const chosenSeats = normalizeSeatNumbers(Array.from(selectedSeats));
+
+        if (chosenSeats.length > 0) {
+            selectedLabel.textContent = `Selected: ${chosenSeats.join(", ")}`;
         } else {
-            labelElement.textContent = 'No seat selected';
-            continueButton.classList.remove('active');
+            selectedLabel.textContent = `Select ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} to continue`;
+        }
+
+        const selectionComplete = chosenSeats.length === requiredSeats;
+        continueButton.classList.toggle("active", selectionComplete);
+        continueButton.disabled = !selectionComplete;
+    }
+
+    async function loadSeats() {
+        if (!bookingDraft || !bookingDraft.flightId) {
+            holdMessage.textContent = "Choose a flight first, then return to seat selection.";
+            updateUI();
+            return;
+        }
+
+        holdMessage.textContent = "";
+
+        try {
+            const response = await fetch(`/api/seats?flightId=${encodeURIComponent(bookingDraft.flightId)}`);
+
+            if (!response.ok) {
+                throw new Error("Unable to load seats");
+            }
+
+            const seats = await response.json();
+            availableSeats.clear();
+
+            for (let i = 0; i < seats.length; i++) {
+                if (seats[i].isAvailable) {
+                    availableSeats.add(seats[i].seatNumber);
+                }
+            }
+
+            renderSeatMap();
+            updateUI();
+        } catch {
+            holdMessage.textContent = "Unable to load seats right now. Please try again.";
+            updateUI();
         }
     }
 
-    document.getElementById('continue-btn').addEventListener('click', async function () {
-        if (selectedSeat === null) return;
-
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const userId = user?.userId;
-
-        // 1. Create the booking
-        const bookingRes = await fetch('/api/bookings', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: userId,
-                flightId: flightId,
-                seatNumbers: [selectedSeat]
-            })
-        });
-
-        if (!bookingRes.ok) {
-            alert('Failed to book seat. Please try again.');
-    // find the continue button from the page
-    const continueButton = document.getElementById('continue-btn');
-
-    continueButton.addEventListener('click', async function () {
-
+    continueButton.addEventListener("click", async () => {
         if (!bookingDraft || selectedSeats.size !== requiredSeats) {
             return;
         }
 
-        const booking = await bookingRes.json();
-
-        // 2. Save passengers linked to the new bookingId
-        const passengerData = JSON.parse(sessionStorage.getItem('passengerData') || '[]');
-        if (passengerData.length > 0) {
-            await fetch('/api/passengers', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    bookingId: booking.bookingId,
-                    passengers: passengerData
-                })
-            });
-        }
         const userId = getLoggedInUserId();
-
         if (userId === null) {
             holdMessage.textContent = "Log in before continuing so your seats can be held.";
+            return;
+        }
+
+        const seatNumbers = normalizeSeatNumbers(Array.from(selectedSeats));
+
+        if (
+            bookingDraft.holdId &&
+            bookingDraft.holdExpiryTime &&
+            seatListsMatch(seatNumbers, bookingDraft.seatNumbers ?? [])
+        ) {
+            bookingDraft.userId = userId;
+            persistBookingDraft();
+            window.location.href = "/loyaltypage";
             return;
         }
 
@@ -249,7 +306,6 @@
         continueButton.disabled = true;
 
         try {
-            const seatNumbers = Array.from(selectedSeats);
             const response = await fetch("/api/holds", {
                 method: "POST",
                 headers: {
@@ -281,9 +337,7 @@
             bookingDraft.holdId = result?.holdId ?? null;
             bookingDraft.holdExpiryTime = result?.expiryTime ?? null;
             bookingDraft.totalPrice = result?.totalPrice ?? null;
-
-            sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-            sessionStorage.setItem("selectedSeat", seatNumbers.join(", "));
+            persistBookingDraft();
 
             if (result) {
                 sessionStorage.setItem("holdData", JSON.stringify(result));
@@ -293,12 +347,8 @@
         } catch {
             holdMessage.textContent = "Unable to hold the selected seats right now. Please try again.";
         } finally {
-            continueButton.disabled = false;
+            updateUI();
         }
-    });
-
-        // 3. Navigate to next page
-        window.location.href = `/loyalty?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}&bookingId=${booking.bookingId}`;
     });
 
     loadSeats();

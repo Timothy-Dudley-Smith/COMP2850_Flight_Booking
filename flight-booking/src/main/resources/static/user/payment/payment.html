@@ -109,7 +109,7 @@
             </div>
 
             <div class="user_input_box">
-                <label>Loyalty</label>
+                <label>Add-ons</label>
                 <p id="summary-loyalty">Not selected yet</p>
             </div>
 
@@ -123,38 +123,116 @@
 </section>
 
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const from = params.get("from");
-    const to = params.get("to");
-    const date = params.get("date");
-    const passengers = params.get("passengers");
-
-    const selectedSeat = sessionStorage.getItem("selectedSeat");
-    const loyaltyChoice = sessionStorage.getItem("loyaltyChoice");
-    const bookingDataRaw = sessionStorage.getItem("bookingData");
+    const pendingBookingRequestRaw = sessionStorage.getItem("pendingBookingRequest");
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
     let bookingData = null;
-    if (bookingDataRaw) {
-        bookingData = JSON.parse(bookingDataRaw);
+    const message = document.getElementById("payment-message");
+    const payButton = document.getElementById("pay-btn");
+
+    try {
+        bookingData = pendingBookingRequestRaw
+            ? JSON.parse(pendingBookingRequestRaw)
+            : (bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null);
+    } catch {
+        bookingData = null;
     }
 
-    document.getElementById("summary-route").textContent = bookingData ? `${bookingData.from} → ${bookingData.to}` : (from && to ? `${from} → ${to}` : "Not available");
-    document.getElementById("summary-date").textContent = bookingData ? new Date(bookingData.date).toLocaleDateString("en-GB") : (date ? new Date(date).toLocaleDateString("en-GB") : "Not available");
-    document.getElementById("summary-passengers").textContent = bookingData ? bookingData.passengers : (passengers ? passengers : "Not available");
-    document.getElementById("summary-seat").textContent = selectedSeat ? selectedSeat : "Not selected yet";
-    document.getElementById("summary-loyalty").textContent = loyaltyChoice ? loyaltyChoice : "Not selected yet";
-    document.getElementById("summary-total").textContent = bookingData && bookingData.price ? bookingData.price : "To be confirmed";
+    function formatDisplayDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
 
-    document.getElementById("pay-btn").addEventListener("click", async function () {
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB");
+    }
+
+    function formatCurrency(amount) {
+        if (typeof amount !== "number" || !Number.isFinite(amount)) {
+            return "To be confirmed";
+        }
+
+        return `£${amount.toFixed(2)}`;
+    }
+
+    function getPassengerSummary(data) {
+        const passengerList = Array.isArray(data?.passengers) ? data.passengers : [];
+
+        if (passengerList.length > 0) {
+            return `${passengerList.length} passenger${passengerList.length === 1 ? "" : "s"}`;
+        }
+
+        const count = Number(data?.passengerCount);
+        if (Number.isFinite(count) && count > 0) {
+            return `${count} passenger${count === 1 ? "" : "s"}`;
+        }
+
+        return "Not available";
+    }
+
+    function getSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.seatNumbers) ? data.seatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    function getAddOnSummary(data) {
+        const addOns = data?.addOns;
+
+        if (!addOns) {
+            return "No add-ons selected";
+        }
+
+        const selections = [];
+
+        if (addOns.baggage) {
+            selections.push(addOns.baggage);
+        }
+
+        if (addOns.meal) {
+            selections.push(addOns.meal);
+        }
+
+        if (addOns.insurance) {
+            selections.push(addOns.insurance);
+        }
+
+        if (Array.isArray(addOns.extras)) {
+            for (let i = 0; i < addOns.extras.length; i++) {
+                selections.push(addOns.extras[i]);
+            }
+        }
+
+        return selections.length > 0 ? selections.join(", ") : "No add-ons selected";
+    }
+
+    document.getElementById("summary-route").textContent = bookingData?.from && bookingData?.to
+        ? `${bookingData.from} → ${bookingData.to}`
+        : "Not available";
+    document.getElementById("summary-date").textContent = formatDisplayDate(bookingData?.date);
+    document.getElementById("summary-passengers").textContent = getPassengerSummary(bookingData);
+    document.getElementById("summary-seat").textContent = getSeatSummary(bookingData);
+    document.getElementById("summary-loyalty").textContent = getAddOnSummary(bookingData);
+    document.getElementById("summary-total").textContent = formatCurrency(Number(bookingData?.totalPrice));
+
+    if (!bookingData?.holdId) {
+        message.textContent = "Your booking hold is missing. Return to seat selection and try again.";
+        payButton.disabled = true;
+    }
+
+    payButton.addEventListener("click", async function () {
         const name = document.getElementById("cardholder-name").value.trim();
         const number = document.getElementById("card-number").value.trim();
         const month = parseInt(document.getElementById("expiry-month").value);
         const year = parseInt(document.getElementById("expiry-year").value);
         const cvv = document.getElementById("cvv").value.trim();
         const address = document.getElementById("billing-address").value.trim();
-        const message = document.getElementById("payment-message");
 
         message.textContent = "";
 
+        if (!bookingData?.holdId) { message.textContent = "Your booking hold is missing. Return to seat selection and try again."; return; }
         if (name === "") { message.textContent = "Enter cardholder name."; return; }
         if (!/^\d{16}$/.test(number)) { message.textContent = "Card number must be 16 digits."; return; }
         if (!/^\d{3,4}$/.test(cvv)) { message.textContent = "Invalid CVV."; return; }
@@ -163,40 +241,43 @@
         if (address === "") { message.textContent = "Enter billing address."; return; }
 
         try {
-            const res = await fetch("/api/payment", {
+            payButton.disabled = true;
+
+            const res = await fetch("/checkout", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
+                    holdId: bookingData.holdId,
                     cardholderName: name,
                     cardNumber: number,
                     expiryMonth: month,
                     expiryYear: year,
                     cvv: cvv,
-                    billingAddress: address
+                    billingAddress: address,
+                    pointsToRedeem: 0
                 })
             });
 
-            const result = await res.json();
+            const text = await res.text();
+            let result = null;
 
-            if (result.success) {
-                message.textContent = "Payment successful.";
-                if (result.bookingId) {
-                    const passengerData = JSON.parse(sessionStorage.getItem('passengerData') || '[]');
-                    await fetch('/api/passengers', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            bookingId: result.bookingId,
-                            passengers: passengerData
-                        })
-                    });
-                }
-                // window.location.href = "confirmation.html";
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch {
+                result = null;
+            }
+
+            if (!res.ok || !result?.success) {
+                message.textContent = result?.message ?? text ?? "Payment failed. Try again.";
+                return;
             } else {
-                message.textContent = result.message;
+                message.textContent = result.message ?? "Payment successful.";
+                sessionStorage.setItem("latestCheckoutResponse", JSON.stringify(result));
             }
         } catch {
             message.textContent = "Payment failed. Try again.";
+        } finally {
+            payButton.disabled = false;
         }
     });
 </script>
