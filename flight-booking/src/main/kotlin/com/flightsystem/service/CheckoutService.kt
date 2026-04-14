@@ -3,16 +3,21 @@ package com.flightsystem.service
 import com.flightsystem.model.PaymentRequest
 import com.flightsystem.model.PaymentResponse
 import java.time.LocalDateTime
+import com.flightsystem.model.PassengerInput
+import com.flightsystem.service.PassengerService
+
 
 class CheckoutService(
     private val priceHoldService: PriceHoldService,
     private val paymentService: PaymentService,
-    private val loyaltyService: LoyaltyService
+    private val loyaltyService: LoyaltyService,
+    private val passengerService: PassengerService,
 ) {
 
     fun checkout(
         holdId: Int,
         request: PaymentRequest,
+        passengers: List<PassengerInput>,
         pointsToRedeem: Int = 0
     ): PaymentResponse {
 
@@ -114,6 +119,11 @@ class CheckoutService(
                 message = "Payment succeeded but booking creation failed",
                 paymentId = payment.paymentID,
                 bookingId = null
+            )
+
+            passengerService.addPassengersToBooking(
+                booking.bookingId,
+                passengers
             )
 
         val pointsEarned = finalAmount.toInt()

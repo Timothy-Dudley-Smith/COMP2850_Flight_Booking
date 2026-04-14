@@ -14,6 +14,7 @@ import com.flightsystem.model.LoginResponse
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
 import com.flightsystem.service.BookingService
+import com.flightsystem.model.PassengerInput
 
 
 
@@ -257,7 +258,7 @@ fun Application.configureRouting() {
         }
 
         // booking routing 2
-        post("/api/booking") {
+        post("/api/bookings") {
             val request = call.receive<CreateBookingRequest>()
             val bookingService = BookingService()
             val booking = bookingService.createBooking(
@@ -377,7 +378,8 @@ fun Application.configureRouting() {
             val checkoutService = CheckoutService(
                 priceHoldService = PriceHoldService(),
                 paymentService = PaymentService(),
-                loyaltyService = LoyaltyService()
+                loyaltyService = LoyaltyService(),
+                passengerService = PassengerService()
             )
 
             val paymentRequest = PaymentRequest(
@@ -392,6 +394,7 @@ fun Application.configureRouting() {
             val response = checkoutService.checkout(
                 holdId = request.holdId,
                 request = paymentRequest,
+                passengers = request.passengers,
                 pointsToRedeem = request.pointsToRedeem
             )
 

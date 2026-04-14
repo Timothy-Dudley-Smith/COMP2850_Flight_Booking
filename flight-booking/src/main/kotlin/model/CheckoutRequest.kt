@@ -10,6 +10,6 @@ data class CheckoutRequest (
     val expiryYear: Int,
     val cvv: String,
     val billingAddress: String,
-    val pointsToRedeem: Int = 0
-
+    val pointsToRedeem: Int = 0,
+    val passengers: List<PassengerInput>
 )
