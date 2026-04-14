@@ -129,9 +129,11 @@
     const date = params.get("date");
     const passengers = params.get("passengers");
 
+    const holdId = sessionStorage.getItem("holdId");
     const selectedSeat = sessionStorage.getItem("selectedSeat");
     const loyaltyChoice = sessionStorage.getItem("loyaltyChoice");
     const bookingDataRaw = sessionStorage.getItem("bookingData");
+
     let bookingData = null;
     if (bookingDataRaw) {
         bookingData = JSON.parse(bookingDataRaw);
@@ -155,6 +157,11 @@
 
         message.textContent = "";
 
+        if (!holdId) {
+            message.textContent =  "No active hold found. Please return to booking.";
+            return;
+        }
+
         if (name === "") { message.textContent = "Enter cardholder name."; return; }
         if (!/^\d{16}$/.test(number)) { message.textContent = "Card number must be 16 digits."; return; }
         if (!/^\d{3,4}$/.test(cvv)) { message.textContent = "Invalid CVV."; return; }
@@ -163,37 +170,36 @@
         if (address === "") { message.textContent = "Enter billing address."; return; }
 
         try {
-            const res = await fetch("/api/payment", {
+            const res = await fetch("/checkout", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
+                    holdId: Number(holdId),
                     cardholderName: name,
                     cardNumber: number,
                     expiryMonth: month,
                     expiryYear: year,
                     cvv: cvv,
-                    billingAddress: address
+                    billingAddress: address,
+                    pointsToRedeem: 0
                 })
             });
 
             const result = await res.json();
 
             if (result.success) {
-                message.textContent = "Payment successful.";
-                if (result.bookingId) {
-                    const passengerData = JSON.parse(sessionStorage.getItem('passengerData') || '[]');
-                    await fetch('/api/passengers', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            bookingId: result.bookingId,
-                            passengers: passengerData
-                        })
-                    });
-                }
-                // window.location.href = "confirmation.html";
+                sessionStorage.setItem("bookingId", result.bookingId);
+                sessionStorage.setItem("paymentId", result.paymentId);
+
+                message.textContent = "Payment successful.  Redirecting...";
+
+                window.setTimeout(() => {
+                    window.location.href = "/confirmation.html";
+                }, 800);
+
             } else {
                 message.textContent = result.message;
+
             }
         } catch {
             message.textContent = "Payment failed. Try again.";

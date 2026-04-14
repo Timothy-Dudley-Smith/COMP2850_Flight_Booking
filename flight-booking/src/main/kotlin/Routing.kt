@@ -184,6 +184,11 @@ fun Application.configureRouting() {
         get("/log_in/register.html") {
             call.respondFile(File("src/main/resources/static/user/log_in/register.html"))
         }
+
+        get("/confirmation.html") {
+            call.respondFile(File("src/main/resources/static/user/book/confirmation.html"))
+        }
+
         val passengerService = PassengerService()
 
         staticResources("/", "static/user/home")
