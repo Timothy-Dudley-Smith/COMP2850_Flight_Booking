@@ -69,186 +69,129 @@
 
 
 <script>
-    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
-    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
-    const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
-    const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
-    document.querySelector(".seat-page h2").textContent = requiredSeats === 1
-        ? "Select Your Seat"
-        : `Select ${requiredSeats} Seats`;
-
-    if (bookingDraft?.from && bookingDraft?.to) {
-        const helpLabel = document.getElementById("seat-help-label");
-        helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
-    }
-
-    // t = taken |  a = available | x = exit row
-    const rows = [
-        { num: 1, seats: ['t','t','t','t','t','t'] },
-        { num: 2, seats: ['t','a','t','t','a','t'] },
-        { num: 3, seats: ['t','t','a','a','t','t'] },
-        { num: 4, seats: ['a','t','t','t','t','a'] },
-        { num: 5, seats: ['t','a','t','t','a','t'] },
-        { num: 6, seats: ['t','t','t','t','t','t'] },
-        { num: 7, seats: ['a','t','t','t','t','a'] },
-        { num: 8, seats: ['t','t','t','t','t','t'] },
-        { num: 9, seats: ['x','x','x','x','x','x'] },
-        { num: 10, seats: ['t','a','t','t','a','t'] },
-        { num: 11, seats: ['t','t','t','t','t','t'] },
-        { num: 12, seats: ['a','t','t','t','t','a'] }
-    ];
-
-
-    // letters to label the col
     const columns = ['A','B','C','D','E','F'];
-    // Get seat map container
+    const EXIT_ROWS = [9];
+    let selectedSeat = null;
     const seatMap = document.getElementById('seat-map');
 
-    // CREATE SEAT MAP//
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromParam       = urlParams.get('from');
+    const toParam         = urlParams.get('to');
+    const dateParam       = urlParams.get('date');
+    const passengersParam = urlParams.get('passengers');
+    const cabinParam      = urlParams.get('cabin');
+    const priceParam      = urlParams.get('price');
+    const flightId        = urlParams.get('flightId');
 
-    const TOTAL_ROWS = 12;
-    for (let rowIndex = 0; rowIndex < TOTAL_ROWS; rowIndex++) {
+    // Fetch real seat data from backend
+    async function loadSeats() {
+        const response = await fetch(`/api/seats?flightId=${flightId}`);
+        const seats = await response.json();
 
-        const currentRow = rows[rowIndex];
+        // Build a lookup: seatNumber -> isAvailable
+        const seatLookup = {};
+        seats.forEach(s => { seatLookup[s.seatNumber] = s.isAvailable; });
 
-        // Create a row container
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'seat-row';
+        for (let rowNum = 1; rowNum <= 12; rowNum++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
 
-        // Loop through each seat in the row
-        const SEATS_PER_ROW = 6;
-        for (let seatIndex = 0; seatIndex < SEATS_PER_ROW; seatIndex++) {
-
-            const seatStatus = currentRow.seats[seatIndex];
-
-            // Add row number in the middle
-            if (seatIndex === 3) {
-                const rowNumber = document.createElement('div');
-                rowNumber.className = 'row-num';
-                rowNumber.textContent = currentRow.num;
-                rowDiv.append(rowNumber);
-            }
-
-            // Create seat ID (e.g. 4A)
-            const seatId = currentRow.num + columns[seatIndex];
-
-            // Create seat button
-            const seatButton = document.createElement('button');
-            seatButton.dataset.seatId = seatId;
-
-
-            // SET SEAT TYPE
-
-            if (seatStatus === 't') {
-                seatButton.className = 'seat taken';
-            }
-            else if (seatStatus === 'x') {
-                seatButton.className = 'seat exit-seat';
-            }
-            else {
-                seatButton.className = 'seat available';
-            }
-
-
-            // ADD CLICK EVENT (ONLY AVAILABLE)
-
-            if (seatStatus === 'a') {
-                if (selectedSeats.has(seatId)) {
-                    seatButton.classList.remove('available');
-                    seatButton.classList.add('selected');
+            for (let seatIndex = 0; seatIndex < 6; seatIndex++) {
+                if (seatIndex === 3) {
+                    const rowNumber = document.createElement('div');
+                    rowNumber.className = 'row-num';
+                    rowNumber.textContent = rowNum;
+                    rowDiv.append(rowNumber);
                 }
 
-                seatButton.addEventListener('click', function () {
-                    if (selectedSeats.has(seatId)) {
-                        selectedSeats.delete(seatId);
-                        seatButton.classList.remove('selected');
-                        seatButton.classList.add('available');
-                    } else {
-                        if (selectedSeats.size >= requiredSeats) {
-                            updateUI();
-                            return;
+                const seatId = rowNum + columns[seatIndex];
+                const isExitRow = EXIT_ROWS.includes(rowNum);
+                const isAvailable = seatLookup[seatId] === true;
+
+                const seatButton = document.createElement('button');
+
+                if (isExitRow) {
+                    seatButton.className = 'seat exit-seat';
+                } else if (!isAvailable) {
+                    seatButton.className = 'seat taken';
+                } else {
+                    seatButton.className = 'seat available';
+                    seatButton.addEventListener('click', function () {
+                        document.querySelectorAll('.seat.selected').forEach(s => {
+                            s.classList.remove('selected');
+                            s.classList.add('available');
+                        });
+                        if (selectedSeat === seatId) {
+                            selectedSeat = null;
+                        } else {
+                            seatButton.classList.remove('available');
+                            seatButton.classList.add('selected');
+                            selectedSeat = seatId;
                         }
+                        updateUI();
+                    });
+                }
 
-                        selectedSeats.add(seatId);
-                        seatButton.classList.remove('available');
-                        seatButton.classList.add('selected');
-                    }
-
-                    updateUI();
-                });
+                rowDiv.append(seatButton);
             }
-
-            // Add seat to row
-            rowDiv.append(seatButton);
+            seatMap.append(rowDiv);
         }
-
-        // Add row to map
-        seatMap.append(rowDiv);
     }
-
-
-    // UPDATE UI
 
     function updateUI() {
-
-        // Step 1: get the label element from the page
         const labelElement = document.getElementById('selected-label');
-
-        // Step 2: get the continue button from the page
         const continueButton = document.getElementById('continue-btn');
-
-
-        // Step 3: check if a seat has been selected
-        if (!bookingDraft) {
-            labelElement.textContent = 'Booking details are missing. Please go back and choose your flight again.';
-            continueButton.classList.remove('active');
-            return;
-        }
-
-        if (selectedSeats.size > 0) {
-
-            // show the selected seat
-            const chosenSeats = Array.from(selectedSeats);
-            labelElement.textContent = 'Selected: ' + chosenSeats.join(', ');
-
-            if (selectedSeats.size === requiredSeats) {
-                continueButton.classList.add('active');
-            } else {
-                continueButton.classList.remove('active');
-            }
-
+        if (selectedSeat !== null) {
+            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
+            continueButton.classList.add('active');
         } else {
-
-            // show no seat selected
-            labelElement.textContent = `Select ${requiredSeats} seat${requiredSeats === 1 ? '' : 's'} to continue`;
-
-            // remove active style from button
+            labelElement.textContent = 'No seat selected';
             continueButton.classList.remove('active');
         }
     }
 
+    document.getElementById('continue-btn').addEventListener('click', async function () {
+        if (selectedSeat === null) return;
 
-    // ================================
-    // CONTINUE BUTTON
-    // ================================
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const userId = user?.userId;
 
+        // 1. Create the booking
+        const bookingRes = await fetch('/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: userId,
+                flightId: flightId,
+                seatNumbers: [selectedSeat]
+            })
+        });
 
-
-    // find the continue button from the page
-    const continueButton = document.getElementById('continue-btn');
-
-    continueButton.addEventListener('click', function () {
-
-        if (!bookingDraft || selectedSeats.size !== requiredSeats) {
+        if (!bookingRes.ok) {
+            alert('Failed to book seat. Please try again.');
             return;
         }
 
-        bookingDraft.seatNumbers = Array.from(selectedSeats);
-        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-        window.location.href = "/loyaltypage";
+        const booking = await bookingRes.json();
+
+        // 2. Save passengers linked to the new bookingId
+        const passengerData = JSON.parse(sessionStorage.getItem('passengerData') || '[]');
+        if (passengerData.length > 0) {
+            await fetch('/api/passengers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    bookingId: booking.bookingId,
+                    passengers: passengerData
+                })
+            });
+        }
+
+        // 3. Navigate to next page
+        window.location.href = `/loyalty?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}&bookingId=${booking.bookingId}`;
     });
 
-    updateUI();
+    loadSeats();
 </script>
 
 </body>

@@ -178,7 +178,9 @@
         }
 
         sessionStorage.setItem('passengerData', JSON.stringify(passengerData));
-        window.location.href = `seatmap.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}`;
+        window.location.href = `/seatmap?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}`;
+
+
     }
 </script>
 
