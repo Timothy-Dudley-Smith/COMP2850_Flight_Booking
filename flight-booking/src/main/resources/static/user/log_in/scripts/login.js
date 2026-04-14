@@ -6,6 +6,13 @@
     const form = document.getElementById("email-form");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
+    const message = document.getElementById("login-message");
+
+    function setMessage(text, state) {
+        if (!message) return;
+        message.textContent = text;
+        message.dataset.state = state;
+    }
 
     if (!form) {
         return;
@@ -18,7 +25,7 @@
         const password = passwordInput?.value ?? "";
 
         if (!email || !password) {
-            alert("Please enter your email and password.");
+            setMessage("Please enter your email and password.", "error");
             return;
         }
 
@@ -31,19 +38,36 @@
                 body: JSON.stringify({ email, password })
             });
 
-            const text = await response.text();
-            let data;
-            try { data = JSON.parse(text); } catch (_) {}
+            const rawBody = await response.text();
+            let data = {};
 
-            if (!response.ok) {
-                throw new Error(data?.message ?? data?.error ?? text ?? "Unable to sign in.");
+            if (rawBody) {
+                try {
+                    data = JSON.parse(rawBody);
+                } catch {
+                    throw new Error(rawBody);
+                }
             }
 
-            sessionStorage.setItem("user", JSON.stringify(data));
-            window.location.href = "/";
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || data.message || "Unable to sign in.");
+            }
+
+            sessionStorage.setItem("sessionId", data.sessionId);
+            sessionStorage.setItem("userId", data.userId);
+            sessionStorage.setItem("userEmail", data.email);
+            sessionStorage.setItem("firstName", data.firstName);
+            sessionStorage.setItem("lastName", data.lastName);
+            sessionStorage.setItem("role", data.role);
+
+            setMessage("Login successful. Redirecting...", "success");
+
+            window.setTimeout(() => {
+                window.location.href = "/";
+            }, 800);
 
         } catch (error) {
-            alert(error.message || "Unable to sign in.");
+            setMessage(error.message || "Unable to sign in.", "error");
         }
     });
 })();
