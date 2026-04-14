@@ -100,7 +100,8 @@ data class ErrorResponse(
 data class CreateBookingRequest(
     val userId: Int,
     val flightId: String,
-    val seatNumbers: List<String>
+    val passengers: List<Int>,
+    val seatNumbers: List<String>,
 )
 
 fun Application.configureRouting() {
@@ -143,40 +144,6 @@ fun Application.configureRouting() {
             }
             call.respond(airportData)
         }
-        /*
-        get("/api/flights") {
-            val flights = transaction {
-                Flights.selectAll().map { row ->
-                    mapOf(
-                        "flightId" to row[Flights.flightId],
-                        "departureAirport" to row[Flights.departureAirport],
-                        "arrivalAirport" to row[Flights.arrivalAirport],
-                        "departureTime" to row[Flights.departureTime],
-                        "arrivalTime" to row[Flights.arrivalTime],
-                        "price" to row[Flights.price]
-                    )
-                }
-            }
-            call.respond(flights)
-        }
-
-        val bookingService = BookingService()
-
-        post("/api/bookings") {
-            val request = call.receive<CreateBookingRequest>()
-
-            try {
-                val booking = bookingService.createBooking(
-                    request.userId,
-                    request.flightId,
-                    request.seatNumbers
-                )
-                call.respond(HttpStatusCode.OK, booking)
-            } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, e.message ?: "Error")
-            }
-        }
-*/
 
 
         get("/api/flights") {
@@ -393,8 +360,10 @@ fun Application.configureRouting() {
             }
         }
 
+        post("/api/bookings") {
+            val request = call.receive<CreateBookingRequest>()
+        }
+
     }
 
 }
-
-//test comment
