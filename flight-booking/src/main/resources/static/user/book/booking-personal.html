@@ -43,24 +43,42 @@
 </section>
 
 <div id="passenger-forms"></div>
+<p id="booking-message" style="max-width: 960px; margin: 16px auto 0; padding: 0 20px; color: #c0392b; font-weight: 600;"></p>
 
 <script>
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from");
     const to = params.get("to");
-    const date = params.get("date");
-    const passengers = parseInt(params.get("passengers"));
+    const date = params.get("date") ?? "";
+    const passengers = Math.max(1, parseInt(params.get("passengers") ?? "1", 10));
+    const cabin = params.get("cabin") ?? "Economy";
+    const price = params.get("price") ?? "0";
+    const flightId = params.get("flightId") ?? "";
 
     document.getElementById("route-title").textContent = from + " → " + to;
     //used text header of page telling user which flights are to be shown
 
-    const d = new Date(date);
-    document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long"
-    });
+    if (date) {
+        const d = new Date(date);
+        document.getElementById("route-date").textContent = d.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+    } else {
+        document.getElementById("route-date").textContent = "From today onwards";
+    }
 
     const container = document.getElementById("passenger-forms");
+    const message = document.getElementById("booking-message");
+
+    function getLoggedInUserId() {
+        try {
+            const user = JSON.parse(sessionStorage.getItem("user") ?? "null");
+            return typeof user?.userId === "number" ? user.userId : null;
+        } catch {
+            return null;
+        }
+    }
 
     for (let i = 1; i <= passengers; i++) {
         container.insertAdjacentHTML("beforeend", `
@@ -146,9 +164,6 @@
             </div>
         `);
     }
-    const cabin = params.get("cabin") ?? "Economy";
-    const price = params.get("price") ?? "0";
-    const flightId = params.get("flightId") ?? "";
 
     container.insertAdjacentHTML("beforeend", `
         <button class="continue-btn" onclick="collectAndContinue()">Continue</button>
@@ -167,18 +182,50 @@
             const month = String(inputs[4].value).padStart(2, '0');
             const year = inputs[5].value;
 
+            if (
+                !selects[0].value ||
+                !inputs[0].value.trim() ||
+                !inputs[1].value.trim() ||
+                !inputs[2].value.trim() ||
+                !selects[1].value ||
+                !inputs[3].value ||
+                !inputs[4].value ||
+                !inputs[5].value
+            ) {
+                message.textContent = `Complete all details for passenger ${i + 1} before continuing.`;
+                return;
+            }
+
             passengerData.push({
                 title: selects[0].value,
-                firstName: inputs[0].value,
-                lastName: inputs[1].value,
-                passportNumber: inputs[2].value,
+                firstName: inputs[0].value.trim(),
+                lastName: inputs[1].value.trim(),
+                passportNumber: inputs[2].value.trim(),
                 gender: selects[1].value,
                 dateOfBirth: `${year}-${month}-${day}`
             });
         }
 
+        message.textContent = "";
+
         sessionStorage.setItem('passengerData', JSON.stringify(passengerData));
-        window.location.href = `seatmap.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}`;
+
+        const bookingDraft = {
+            userId: getLoggedInUserId(),
+            flightId,
+            from,
+            to,
+            date,
+            passengerCount: passengers,
+            cabin,
+            price,
+            passengers: passengerData,
+            seatNumbers: [],
+            addOns: {}
+        };
+
+        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+        window.location.href = "/seatmap";
     }
 </script>
 

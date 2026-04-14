@@ -58,6 +58,7 @@
 
     <!-- shows selected seat e.g. "Selected: Seat 4A" -->
     <p class="selected-label" id="selected-label">No seat selected</p>
+    <p class="selected-label" id="hold-message" style="color: #c0392b; min-height: 24px;"></p>
 
     <!-- greyed out until a seat is picked -->
     <button class="continue-btn" id="continue-btn">Continue</button>
@@ -76,10 +77,24 @@
     document.querySelector(".seat-page h2").textContent = requiredSeats === 1
         ? "Select Your Seat"
         : `Select ${requiredSeats} Seats`;
+    const holdMessage = document.getElementById("hold-message");
 
     if (bookingDraft?.from && bookingDraft?.to) {
         const helpLabel = document.getElementById("seat-help-label");
         helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
+    }
+
+    function getLoggedInUserId() {
+        if (typeof bookingDraft?.userId === "number") {
+            return bookingDraft.userId;
+        }
+
+        try {
+            const user = JSON.parse(sessionStorage.getItem("user") ?? "null");
+            return typeof user?.userId === "number" ? user.userId : null;
+        } catch {
+            return null;
+        }
     }
 
     // t = taken |  a = available | x = exit row
@@ -237,15 +252,69 @@
     // find the continue button from the page
     const continueButton = document.getElementById('continue-btn');
 
-    continueButton.addEventListener('click', function () {
+    continueButton.addEventListener('click', async function () {
 
         if (!bookingDraft || selectedSeats.size !== requiredSeats) {
             return;
         }
 
-        bookingDraft.seatNumbers = Array.from(selectedSeats);
-        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-        window.location.href = "/loyaltypage";
+        const userId = getLoggedInUserId();
+
+        if (userId === null) {
+            holdMessage.textContent = "Log in before continuing so your seats can be held.";
+            return;
+        }
+
+        holdMessage.textContent = "";
+        continueButton.disabled = true;
+
+        try {
+            const seatNumbers = Array.from(selectedSeats);
+            const response = await fetch("/api/holds", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId,
+                    flightId: bookingDraft.flightId,
+                    seatNumbers
+                })
+            });
+
+            const text = await response.text();
+            let result = null;
+
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch {
+                result = null;
+            }
+
+            if (!response.ok) {
+                holdMessage.textContent = result?.error ?? text ?? "Unable to hold the selected seats.";
+                return;
+            }
+
+            bookingDraft.userId = userId;
+            bookingDraft.seatNumbers = seatNumbers;
+            bookingDraft.holdId = result?.holdId ?? null;
+            bookingDraft.holdExpiryTime = result?.expiryTime ?? null;
+            bookingDraft.totalPrice = result?.totalPrice ?? null;
+
+            sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+            sessionStorage.setItem("selectedSeat", seatNumbers.join(", "));
+
+            if (result) {
+                sessionStorage.setItem("holdData", JSON.stringify(result));
+            }
+
+            window.location.href = "/loyaltypage";
+        } catch {
+            holdMessage.textContent = "Unable to hold the selected seats right now. Please try again.";
+        } finally {
+            continueButton.disabled = false;
+        }
     });
 
     updateUI();

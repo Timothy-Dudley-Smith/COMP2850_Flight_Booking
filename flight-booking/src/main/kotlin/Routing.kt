@@ -107,6 +107,23 @@ data class CreateBookingRequest(
     val seatNumbers: List<String>
 )
 
+@Serializable
+data class CreateHoldRequest(
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>
+)
+
+@Serializable
+data class CreateHoldResponse(
+    val holdId: Int,
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>,
+    val totalPrice: Double,
+    val expiryTime: String
+)
+
 fun Application.configureRouting() {
     routing {
 
@@ -418,12 +435,33 @@ fun Application.configureRouting() {
             call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
         }
 
-        get("/payment") {
+        get("/checkout") {
             call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
         }
 
         post("/api/holds") {
+            try {
 
+                val request = call.receive<CreateHoldRequest>()
+                val priceHoldService = PriceHoldService()
+
+                var userId = request.userId
+                var flightId = request.flightId
+                val seatNumbers = request.seatNumbers
+
+                val hold = priceHoldService.createHold(userId, flightId, seatNumbers)
+
+                val holdId = hold.holdId
+                userId = hold.userId
+                flightId = hold.flightId
+                val expiryTime = hold.expiryTime.toString()
+                val totalPrice = hold.totalPrice
+
+                val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
+                call.respond(HttpStatusCode.Created, holdResponse)
+            } catch (e: IllegalArgumentException) {
+                call.respond(HttpStatusCode.BadRequest, "IllegalArgumentException")
+            }
         }
     }
 
