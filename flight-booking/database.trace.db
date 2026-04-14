@@ -155,3 +155,35 @@ SELECT "code","name","city","country" FROM AIRPORTS ORDER BY "code" LIMIT 5 [421
 	at org.h2.tools.Shell.execute(Shell.java:474)
 	at org.h2.tools.Shell.runTool(Shell.java:158)
 	at org.h2.tools.Shell.main(Shell.java:80)
+2026-04-14 11:53:45.711468+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "FLIGHTID" not found; SQL statement:
+MERGE INTO FLIGHTS KEY(FLIGHTID) (FLIGHTID, DATE, DEPARTUREAIRPORT, ARRIVALAIRPORT, DEPARTURETIME, ARRIVALTIME, LENGTH, PRICE) VALUES ('BA117-2026-03-16','2026-03-16','LHR','JFK','08:30','11:15',6.7500000000,689.00) [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:786)
+	at org.h2.command.Parser.parseColumn(Parser.java:1171)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1156)
+	at org.h2.command.Parser.parseMergeInto(Parser.java:1439)
+	at org.h2.command.Parser.parseMerge(Parser.java:1422)
+	at org.h2.command.Parser.parsePrepared(Parser.java:703)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:556)
+	at org.h2.command.Parser.prepare(Parser.java:452)
+	at org.h2.engine.SessionLocal.prepare(SessionLocal.java:593)
+	at org.h2.engine.SessionLocal.prepare(SessionLocal.java:575)
+	at org.h2.command.dml.RunScriptCommand.execute(RunScriptCommand.java:115)
+	at org.h2.command.dml.RunScriptCommand.update(RunScriptCommand.java:71)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
+	at org.h2.command.Command.executeUpdate(Command.java:304)
+	at org.h2.command.Command.executeUpdate(Command.java:248)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.tools.Shell.execute(Shell.java:474)
+	at org.h2.tools.Shell.runTool(Shell.java:158)
+	at org.h2.tools.Shell.main(Shell.java:80)
+2026-04-14 11:54:11.652833+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MERGE INTO FLIGHTS KEY(""flightId"") ([*]""flightId"",""date"",""departureAirport"",""arrivalAirport"",""departureTime"",""arrivalTime"",""length"",PRICE)\000aVALUES ('TEST-1','2026-04-14','LHR','JFK','08:30','11:15',6.75,689.00)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+MERGE INTO FLIGHTS KEY("flightId") ("flightId","date","departureAirport","arrivalAirport","departureTime","arrivalTime","length",PRICE)
+VALUES ('TEST-1','2026-04-14','LHR','JFK','08:30','11:15',6.75,689.00) [42001-232]

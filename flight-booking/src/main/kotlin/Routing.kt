@@ -13,6 +13,10 @@ import com.flightsystem.model.LoginResponse
 
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
+import com.flightsystem.model.Manager
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.request.receive
+import io.ktor.server.routing.post
 
 
 // imports the flight info
@@ -76,9 +80,27 @@ data class RegisterRequest(
     val dateOfBirth: String?
 )
 
+@Serializable
+data class LoginRequest(
+    val email: String,
+    val password: String
+)
 
+@Serializable
+data class LoginResponse(
+    val userId: Int,
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val role: String
+)
 
+@Serializable
+data class ErrorResponse(
+    val error: String
+)
 
+@Serializable
 data class CreateBookingRequest(
     val userId: Int,
     val flightId: String,
@@ -89,7 +111,7 @@ fun Application.configureRouting() {
     routing {
 
         val passengerService = PassengerService()
-        
+
         staticResources("/", "static/user/home")
         staticResources("/log_in", "static/user/log_in")
         staticResources("/home", "static/user/home")
@@ -127,40 +149,6 @@ fun Application.configureRouting() {
             }
             call.respond(airportData)
         }
-        /*
-        get("/api/flights") {
-            val flights = transaction {
-                Flights.selectAll().map { row ->
-                    mapOf(
-                        "flightId" to row[Flights.flightId],
-                        "departureAirport" to row[Flights.departureAirport],
-                        "arrivalAirport" to row[Flights.arrivalAirport],
-                        "departureTime" to row[Flights.departureTime],
-                        "arrivalTime" to row[Flights.arrivalTime],
-                        "price" to row[Flights.price]
-                    )
-                }
-            }
-            call.respond(flights)
-        }
-
-        val bookingService = BookingService()
-
-        post("/api/bookings") {
-            val request = call.receive<CreateBookingRequest>()
-
-            try {
-                val booking = bookingService.createBooking(
-                    request.userId,
-                    request.flightId,
-                    request.seatNumbers
-                )
-                call.respond(HttpStatusCode.OK, booking)
-            } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, e.message ?: "Error")
-            }
-        }
-*/
 
 
         get("/api/flights") {
@@ -372,6 +360,32 @@ fun Application.configureRouting() {
             }
         }
 
+        post("/api/auth/login") {
+            val request = call.receive<LoginRequest>()
+            val authenticationService = AuthenticationService()
+            val result = authenticationService.login(request.email, request.password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER"
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("Invalid email or password")
+                )
+            }
+        }
+
         post("/api/auth/register") {
             val request = call.receive<RegisterRequest>()
 
@@ -391,7 +405,10 @@ fun Application.configureRouting() {
             }
         }
 
+        post("/api/bookings") {
+            val request = call.receive<CreateBookingRequest>()
+        }
+
     }
 
 }
-
