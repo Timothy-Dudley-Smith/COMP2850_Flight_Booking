@@ -59,6 +59,9 @@
             sessionStorage.setItem("firstName", data.firstName);
             sessionStorage.setItem("lastName", data.lastName);
             sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("user", JSON.stringify({ userId: Number(data.userId) }));  // ← add this
+
+
 
             setMessage("Login successful. Redirecting...", "success");
 

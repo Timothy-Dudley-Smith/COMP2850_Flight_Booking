@@ -225,7 +225,7 @@
         };
 
         sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-        window.location.href = "/seatmap";
+        window.location.href = "/seatmap?flightId=" + encodeURIComponent(flightId);
     }
 </script>
 

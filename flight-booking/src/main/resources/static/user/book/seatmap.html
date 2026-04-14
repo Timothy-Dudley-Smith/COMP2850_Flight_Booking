@@ -265,9 +265,7 @@
             availableSeats.clear();
 
             for (let i = 0; i < seats.length; i++) {
-                if (seats[i].isAvailable) {
-                    availableSeats.add(seats[i].seatNumber);
-                }
+                availableSeats.add(seats[i].seatNumber);
             }
 
             renderSeatMap();
