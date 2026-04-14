@@ -151,12 +151,38 @@
     const flightId = params.get("flightId") ?? "";
 
     container.insertAdjacentHTML("beforeend", `
-    <button class="continue-btn" onclick="window.location.href='seatmap.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}'">Continue</button>
+        <button class="continue-btn" onclick="collectAndContinue()">Continue</button>
     `);
+
+    function collectAndContinue() {
+        const forms = document.querySelectorAll('.booking_page_1');
+        const passengerData = [];
+
+        for (let i = 0; i < forms.length; i++) {
+            const form = forms[i];
+            const selects = form.querySelectorAll('select');
+            const inputs = form.querySelectorAll('input');
+
+            const day = String(inputs[3].value).padStart(2, '0');
+            const month = String(inputs[4].value).padStart(2, '0');
+            const year = inputs[5].value;
+
+            passengerData.push({
+                title: selects[0].value,
+                firstName: inputs[0].value,
+                lastName: inputs[1].value,
+                passportNumber: inputs[2].value,
+                gender: selects[1].value,
+                dateOfBirth: `${year}-${month}-${day}`
+            });
+        }
+
+        sessionStorage.setItem('passengerData', JSON.stringify(passengerData));
+        window.location.href = `seatmap.html?from=${from}&to=${to}&date=${date}&passengers=${passengers}&cabin=${encodeURIComponent(cabin)}&price=${price}&flightId=${flightId}`;
+    }
 </script>
 
-
-
-
+</body>
+</html>
 
 
