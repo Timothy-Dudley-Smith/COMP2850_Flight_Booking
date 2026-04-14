@@ -3,7 +3,9 @@ package com.flightsystem.model
 import com.flightsystem.model.Airports.code
 import com.flightsystem.model.Users.userId
 import org.jetbrains.exposed.sql.Table
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Booking(
     val bookingId: Int,
     val userId: Int,
@@ -11,6 +13,7 @@ data class Booking(
     val totalPrice: Double
 )
 
+@Serializable
 data class BookingDetails(
     val booking: Booking, 
     val seats: List<String> 

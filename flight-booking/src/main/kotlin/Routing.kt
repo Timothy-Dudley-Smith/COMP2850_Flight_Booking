@@ -17,6 +17,8 @@ import com.flightsystem.model.Manager
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.routing.post
+import com.flightsystem.service.BookingService
+
 
 
 // imports the flight info
@@ -134,6 +136,12 @@ fun Application.configureRouting() {
             )
         }
 
+        get("/seatmap") {
+            call.respondFile(
+                File("src/main/resources/static/user/book/seatmap.html")
+            )
+        }
+
 
 
 
@@ -225,6 +233,28 @@ fun Application.configureRouting() {
                 // removes all the rejected flights
             }
             call.respond(flightData)
+        }
+
+        // seat routing
+        get("/api/seats") {
+            val flightId = call.request.queryParameters["flightId"]
+                ?: return@get call.respond(HttpStatusCode.BadRequest, "flightId required")
+
+            val bookingService = BookingService()
+            val seats = bookingService.getAvailableSeats(flightId)
+            call.respond(seats)
+        }
+
+        // booking routing 2
+        post("/api/booking") {
+            val request = call.receive<CreateBookingRequest>()
+            val bookingService = BookingService()
+            val booking = bookingService.createBooking(
+                request.userId,
+                request.flightId,
+                request.seatNumbers
+            )
+            call.respond(HttpStatusCode.Created, booking)
         }
 
         get ("/api/users")  {
