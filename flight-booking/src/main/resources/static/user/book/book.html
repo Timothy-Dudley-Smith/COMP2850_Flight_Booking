@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Results</title>
+    <link rel="stylesheet" href="../home/styles/style.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- main nav bar at top -->
+
+
+
+<section class="results-top">
+    <div class="filter">
+        <label>Filter by:</label>
+        <div class="dropdown">
+            <select>
+                <option>All flights</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="results-header">
+        <h1 id="route-title"></h1>
+        <p id="route-date"></p>
+    </div>
+
+    <div class="sort">
+        <label>Sort by:</label>
+        <div class="dropdown">
+            <select>
+                <option>Recommended</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+
+<section class="results-wrapper">
+    <div class="results-list" id="flight-list">
+    </div>
+</section>
+
+
+
+
+
+<script type="module">
+    function formatRouteDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+    }
+
+    function buildBookingUrl({ from, to, date, passengers, cabin, flightId }) {
+        const nextParams = new URLSearchParams({
+            from: from ?? "",
+            to: to ?? "",
+            date: date ?? "",
+            passengers: passengers ?? "1",
+            cabin: cabin ?? "Economy",
+            flightId: flightId ?? ""
+        });
+
+        return `/booking-personal?${nextParams.toString()}`;
+    }
+
+    function clearBookingProgress() {
+        const bookingKeys = [
+            "bookingDraft",
+            "pendingBookingRequest",
+            "holdData",
+            "selectedSeat",
+            "bookingData",
+            "loyaltyChoice",
+            "passengerData"
+        ];
+
+        for (let i = 0; i < bookingKeys.length; i++) {
+            sessionStorage.removeItem(bookingKeys[i]);
+        }
+    }
+
+    async function loadFlights() {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get("from");
+        const to   = params.get("to");
+        const date = params.get("date");
+        const passengers = params.get("passengers");
+
+
+        //from the url get the from,to,date parameters
+
+        document.getElementById("route-title").textContent = from + " → " + to;
+        //used text header of page telling user which flights are to be shown
+
+        document.getElementById("route-date").textContent = formatRouteDate(date);
+        //put the date string into a readable "day month" format ie "28 March"
+
+        try {
+            const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}&passengers=${passengers}`);
+            const flights  = await response.json();
+            const list     = document.getElementById("flight-list");
+
+            //gets flight data from an the database endpoint, passing three query parameters — from, to, and date
+
+            if (flights.length === 0) {
+                list.innerHTML = "<p>No flights found for this route.</p>";
+                return;
+            }
+            // if no flight matches are found then simply write a message saying that
+
+            flights.forEach(flight => {
+                const hours = Math.trunc(flight.length);
+                const decimal = flight.length - hours;
+                const minutes = Math.round(decimal * 60);
+            // math alg to calc duration of flight in hrs and mins done for ease of user but also for filtering and sorting
+
+                list.insertAdjacentHTML("beforeend", `
+                <div class="flight-card">
+                <!-- each result is split into 3 parts the left middle and right section -->
+
+                    <!-- the left section holds the logo and details button -->
+                    <div class="flight-left">
+                    <!-- logo and details button -->
+                    <div class="airline-block">
+                        <img src="/images/Logo.png" class="flight-logo">
+                        <div class="buttons">
+                            <button class="details-btn">Details</button>
+                            <button class="Book_Now-btn">Book Now</button>
+                        </div>
+                    </div>
+                    <!-- the middle section houses the timings and airport details -->
+                    <div class="time-section">
+                        <div class="time-block">
+                            <h2>${flight.departureTime}</h2>
+                            <span>${flight.departureAirport}</span>
+                        </div>
+
+                        <!-- puts the num of stops and flight len in small with line between the two -->
+                        <div class="duration">
+                            <small>Direct</small>
+                            <div class="line"></div>
+                            <small>${hours}h ${minutes}m</small>
+                        </div>
+
+                        <!-- arrival time and airport -->
+                        <div class="time-block">
+                            <h2>${flight.arrivalTime}</h2>
+                            <span>${flight.arrivalAirport}</span>
+                        </div>
+                    </div>
+                </div>
+                    <!-- pricing options-->
+                    <div class="flight-prices">
+                        <div class="price-box">
+                            <span>Economy</span>
+                            <strong>£${flight.price.toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Premium Economy</span>
+                            <strong>£${(flight.price * 1.6).toFixed(0)}</strong>
+                        </div>
+
+                        <div class="price-box">
+                            <span>Business</span>
+                            <strong>£${(flight.price * 3.5).toFixed(0)}</strong>
+                        </div>
+                    </div>
+
+                </div>
+                `);
+                const flightCard = list.lastElementChild;
+                const priceBoxes = flightCard.querySelectorAll(".price-box");
+                const bookBtn = flightCard.querySelector(".Book_Now-btn");
+                bookBtn.disabled = true;
+
+                // loop through each price box
+                for (let i = 0; i < priceBoxes.length; i++) {
+
+                    // add a click listener to each box
+                    priceBoxes[i].addEventListener("click", function() {
+
+                        // remove selected from all boxes first
+                        for (let j = 0; j < priceBoxes.length; j++) {
+                            priceBoxes[j].classList.remove("selected");
+                        }
+
+                        // highlight the box that was clicked
+                        this.classList.add("selected");
+
+                        // enable the book button
+                        bookBtn.disabled = false;
+                        bookBtn.classList.add("active");
+                    });
+                }
+
+                bookBtn.addEventListener("click", () => {
+                    const selectedBox = flightCard.querySelector(".price-box.selected");
+
+                    if (!selectedBox) {
+                        return;
+                    }
+
+                    const cabin = selectedBox.querySelector("span").textContent.trim();
+
+                    clearBookingProgress();
+
+                    window.location.href = buildBookingUrl({
+                        from,
+                        to,
+                        date,
+                        passengers,
+                        cabin,
+                        flightId: flight.flightId ?? ""
+                    });
+                });
+            });
+
+            //catch block is for error handling ie if anything goes wrong then the catchj block runs
+
+        } catch {
+            document.getElementById("flight-list").innerHTML =
+                "<p>Failed to load flights. Please try again.</p>";
+        }
+    }
+    loadFlights();
+
+
+
+</script>
+
+
+
+</body>
+</html>

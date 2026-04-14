@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Results</title>
+    <link rel="stylesheet" href="../home/styles/style.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<section class="flights-overview-header">
+
+    <div class="flights-overview">
+        <h1 id="route-title"></h1>
+        <p id="route-date"></p>
+    </div>
+
+
+</section>
+
+<div class="wrap">
+    <div>
+
+        <div class="card">
+            <div class="lt">
+                <div class="av">JD</div>
+                <div><div class="mn">James Davidson</div><div class="mt">Gold Member</div></div>
+                <div class="pts">32,450<small>Avios points</small></div>
+            </div>
+            <div class="perks">
+                <div class="pk"><span class="bg bf">Free</span><strong>Seat selection</strong><p id="ext-seat">Loading…</p></div>
+                <div class="pk"><span class="bg bd">30% off</span><strong>In-flight meals</strong><p>Discount applied below</p></div>
+                <div class="pk"><span class="bg bf">Free</span><strong>Wi-fi</strong><p>Full-flight included</p></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="sh">Baggage</div>
+            <label class="row"><input type="radio" name="bag"><div class="rl"><div class="rn">No hold bag</div><div class="rs">Cabin only</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="bag" checked data-price="32" data-label="1 × 23kg bag"><div class="rl"><div class="rn">1 × 23 kg</div><div class="rs">Most popular</div></div><div class="rp">£32</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="58" data-label="2 × 23kg bags"><div class="rl"><div class="rn">2 × 23 kg</div><div class="rs">Long trips</div></div><div class="rp">£58</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="45" data-label="1 × 32kg bag"><div class="rl"><div class="rn">1 × 32 kg</div><div class="rs">Heavy items</div></div><div class="rp">£45</div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Meals <span class="gs">30% Gold discount</span></div>
+            <label class="row"><input type="radio" name="meal"><div class="rl"><div class="rn">No meal</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="meal" checked data-price="8.40" data-label="Classic hot meal"><div class="rl"><div class="rn">Classic hot meal</div><div class="rs">Chicken, pasta or veg</div></div><div class="rp"><s>£12</s><span class="gld">£8.40</span></div></label>
+            <label class="row"><input type="radio" name="meal" data-price="15.40" data-label="Premium dine set"><div class="rl"><div class="rn">Premium dine</div><div class="rs">3-course + wine</div></div><div class="rp"><s>£22</s><span class="gld">£15.40</span></div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Insurance</div>
+            <label class="row"><input type="radio" name="ins"><div class="rl"><div class="rn">No insurance</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="ins" checked data-price="14.99" data-label="Standard insurance"><div class="rl"><div class="rn">Standard cover</div><div class="rs">Cancellation, delays, lost bags</div></div><div class="rp">£14.99</div></label>
+            <label class="row"><input type="radio" name="ins" data-price="28.50" data-label="Premium insurance"><div class="rl"><div class="rn">Premium cover</div><div class="rs">Medical + adventure sports</div></div><div class="rp">£28.50</div></label>
+        </div>
+
+        <div class="card">
+            <div class="sh">Extras</div>
+            <label class="row"><input type="checkbox" checked data-price="8" data-label="Priority boarding"><div class="rl"><div class="rn">Priority boarding</div><div class="rs">Board first</div></div><div class="rp">£8</div></label>
+            <label class="row"><input type="checkbox" data-price="35" data-label="Lounge access"><div class="rl"><div class="rn">Airport lounge</div><div class="rs">LHR & JFK</div></div><div class="rp">£35</div></label>
+            <label class="row"><input type="checkbox" data-price="12" data-label="Fast-track security"><div class="rl"><div class="rn">Fast-track security</div></div><div class="rp">£12</div></label>
+            <label class="row"><input type="checkbox" data-price="89" data-label="Premium Economy upgrade"><div class="rl"><div class="rn">Upgrade to Premium Economy</div></div><div class="rp">£89</div></label>
+        </div>
+
+    </div>
+
+    <div class="sum">
+        <div class="sh2">Your order</div>
+        <div class="sb">
+            <div class="sr"><span id="sum-seat">Seat —</span><span class="sf">Free</span></div>
+            <div class="sr"><span>Wi-fi</span><span class="sf">Free</span></div>
+            <div class="sr"><span id="sum-cabin">Economy fare</span><span id="sum-base">Calculated at checkout</span></div>
+            <div id="lines"></div>
+            <hr class="sdiv">
+            <div class="st"><span class="stl">Total</span><span class="sta" id="tot">Calculated at checkout</span></div>
+        </div>
+        <div class="sf2">
+            <button class="btn">Continue to payment →</button>
+            <button class="btnb">← Back to seats</button>
+        </div>
+        <p id="handoff-message" style="margin-top: 12px; color: #c0392b; font-weight: 600; min-height: 24px;"></p>
+    </div>
+</div>
+
+<script>
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    let bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    const continueButton = document.querySelector(".btn");
+    const backButton = document.querySelector(".btnb");
+    const handoffMessage = document.getElementById("handoff-message");
+
+    function formatRouteDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long"
+        });
+    }
+
+    function getSelectedOption(name) {
+        const input = document.querySelector(`input[name="${name}"]:checked`);
+        if (!input || !input.dataset.label) {
+            return null;
+        }
+
+        return input.dataset.label;
+    }
+
+    function getSelectedExtras() {
+        const extras = [];
+        const inputs = document.querySelectorAll('input[type="checkbox"]:checked[data-label]');
+
+        for (let i = 0; i < inputs.length; i++) {
+            extras.push(inputs[i].dataset.label);
+        }
+
+        return extras;
+    }
+
+    function buildBookingHandoff(draft) {
+        return {
+            userId: draft.userId,
+            flightId: draft.flightId,
+            from: draft.from,
+            to: draft.to,
+            date: draft.date,
+            passengerCount: draft.passengerCount,
+            cabin: draft.cabin,
+            passengers: draft.passengers,
+            seatNumbers: draft.seatNumbers,
+            addOns: draft.addOns,
+            holdId: draft.holdId,
+            holdExpiryTime: draft.holdExpiryTime,
+            totalPrice: draft.totalPrice
+        };
+    }
+
+    function saveSelections() {
+        if (!bookingDraft) {
+            return null;
+        }
+
+        const passengers = Array.isArray(bookingDraft.passengers) ? bookingDraft.passengers : [];
+        const seatNumbers = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+        const parsedTotalPrice = Number(bookingDraft.totalPrice);
+
+        bookingDraft = {
+            ...bookingDraft,
+            userId: typeof bookingDraft.userId === "number" ? bookingDraft.userId : null,
+            flightId: bookingDraft.flightId ?? "",
+            from: bookingDraft.from ?? "",
+            to: bookingDraft.to ?? "",
+            date: bookingDraft.date ?? "",
+            passengerCount: passengers.length > 0 ? passengers.length : Math.max(1, Number(bookingDraft.passengerCount ?? 1)),
+            cabin: bookingDraft.cabin ?? "Economy",
+            passengers,
+            seatNumbers,
+            baggage: getSelectedOption("bag"),
+            meal: getSelectedOption("meal"),
+            insurance: getSelectedOption("ins"),
+            extras: getSelectedExtras()
+        };
+
+        bookingDraft.addOns = {
+            baggage: bookingDraft.baggage,
+            meal: bookingDraft.meal,
+            insurance: bookingDraft.insurance,
+            extras: bookingDraft.extras
+        };
+
+        delete bookingDraft.baggage;
+        delete bookingDraft.meal;
+        delete bookingDraft.insurance;
+        delete bookingDraft.extras;
+
+        bookingDraft.holdId = bookingDraft.holdId ?? null;
+        bookingDraft.holdExpiryTime = bookingDraft.holdExpiryTime ?? null;
+        bookingDraft.totalPrice = Number.isFinite(parsedTotalPrice) ? parsedTotalPrice : null;
+
+        sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+        sessionStorage.setItem("pendingBookingRequest", JSON.stringify(buildBookingHandoff(bookingDraft)));
+
+        if (bookingDraft.holdId !== null || bookingDraft.holdExpiryTime || bookingDraft.totalPrice !== null) {
+            sessionStorage.setItem("holdData", JSON.stringify({
+                holdId: bookingDraft.holdId,
+                userId: bookingDraft.userId,
+                flightId: bookingDraft.flightId,
+                seatNumbers: bookingDraft.seatNumbers,
+                expiryTime: bookingDraft.holdExpiryTime,
+                totalPrice: bookingDraft.totalPrice
+            }));
+        }
+
+        return bookingDraft;
+    }
+
+    function updateSelectionsSummary() {
+        const lines = document.getElementById("lines");
+        const selections = [];
+
+        if (bookingDraft?.addOns?.baggage) {
+            selections.push(bookingDraft.addOns.baggage);
+        }
+
+        if (bookingDraft?.addOns?.meal) {
+            selections.push(bookingDraft.addOns.meal);
+        }
+
+        if (bookingDraft?.addOns?.insurance) {
+            selections.push(bookingDraft.addOns.insurance);
+        }
+
+        if (Array.isArray(bookingDraft?.addOns?.extras)) {
+            for (let i = 0; i < bookingDraft.addOns.extras.length; i++) {
+                selections.push(bookingDraft.addOns.extras[i]);
+            }
+        }
+
+        lines.innerHTML = selections.map((selection) => `
+            <div class="sr">
+                <span>${selection}</span>
+                <b>Selected</b>
+            </div>
+        `).join("");
+    }
+
+    if (!bookingDraft) {
+        document.getElementById("route-title").textContent = "Booking details unavailable";
+        document.getElementById("route-date").textContent = "Return to your flight search and try again.";
+    } else {
+        const seatNumbers = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+        const seatLabel = seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected";
+
+        document.getElementById("route-title").textContent = `${bookingDraft.from} → ${bookingDraft.to}`;
+        document.getElementById("route-date").textContent = formatRouteDate(bookingDraft.date);
+        document.getElementById("ext-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel} reserved`;
+        document.getElementById("sum-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel}`;
+        document.getElementById("sum-cabin").textContent = `${bookingDraft.cabin ?? "Economy"} fare`;
+        document.getElementById("sum-base").textContent = "Calculated at checkout";
+        document.getElementById("tot").textContent = "Calculated at checkout";
+
+        const savedAddOns = bookingDraft.addOns ?? {};
+
+        if (savedAddOns.baggage) {
+            const bagOption = document.querySelector(`input[name="bag"][data-label="${savedAddOns.baggage}"]`);
+            if (bagOption) {
+                bagOption.checked = true;
+            }
+        }
+
+        if (savedAddOns.meal) {
+            const mealOption = document.querySelector(`input[name="meal"][data-label="${savedAddOns.meal}"]`);
+            if (mealOption) {
+                mealOption.checked = true;
+            }
+        }
+
+        if (savedAddOns.insurance) {
+            const insuranceOption = document.querySelector(`input[name="ins"][data-label="${savedAddOns.insurance}"]`);
+            if (insuranceOption) {
+                insuranceOption.checked = true;
+            }
+        }
+
+        if (Array.isArray(savedAddOns.extras)) {
+            for (let i = 0; i < savedAddOns.extras.length; i++) {
+                const extraOption = document.querySelector(`input[type="checkbox"][data-label="${savedAddOns.extras[i]}"]`);
+                if (extraOption) {
+                    extraOption.checked = true;
+                }
+            }
+        }
+    }
+
+    const allInputs = document.querySelectorAll("input");
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].addEventListener("change", () => {
+            saveSelections();
+            updateSelectionsSummary();
+        });
+    }
+
+    continueButton.addEventListener("click", () => {
+        handoffMessage.textContent = "";
+
+        const updatedDraft = saveSelections();
+
+        if (!updatedDraft) {
+            handoffMessage.textContent = "Booking details are missing. Please restart your booking.";
+            return;
+        }
+
+        const missingItems = [];
+
+        if (typeof updatedDraft.userId !== "number") {
+            missingItems.push("a signed-in user");
+        }
+
+        if (!updatedDraft.flightId) {
+            missingItems.push("a selected flight");
+        }
+
+        if (!Array.isArray(updatedDraft.passengers) || updatedDraft.passengers.length === 0) {
+            missingItems.push("passenger details");
+        }
+
+        if (!Array.isArray(updatedDraft.seatNumbers) || updatedDraft.seatNumbers.length === 0) {
+            missingItems.push("selected seats");
+        }
+
+        if (updatedDraft.holdId === null || updatedDraft.holdId === undefined || updatedDraft.holdId === "") {
+            missingItems.push("a seat hold");
+        }
+
+        if (!updatedDraft.holdExpiryTime) {
+            missingItems.push("a hold expiry time");
+        }
+
+        if (missingItems.length > 0) {
+            handoffMessage.textContent = `Complete ${missingItems.join(", ")} before continuing to payment.`;
+            return;
+        }
+
+        window.location.href = "/checkout";
+    });
+
+    backButton.addEventListener("click", () => {
+        saveSelections();
+        window.location.href = "/seatmap";
+    });
+
+    saveSelections();
+    updateSelectionsSummary();
+</script>
+
+</body>
+</html>

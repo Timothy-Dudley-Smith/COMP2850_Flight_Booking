@@ -1,0 +1,434 @@
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/*Sets main font and grey background for whole page*/
+
+
+
+/* ----------------------------- */
+/* HEADER */
+/* ----------------------------- */
+
+.header{
+    background: white;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/*Add's a white background for the header, which is kept fixed even when scrolling*/
+
+
+
+/* ----------------------------- */
+/* NAVBAR */
+/* ----------------------------- */
+
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px clamp(15px, 5vw, 40px);
+
+}
+
+/*Makes a navbar adds spacing between the elements*/
+
+
+/* -----------------------------  */
+/* CENTER NAVIGATION- MAIN LINKS) */
+/* -----------------------------  */
+
+.center-nav{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(15px, 4vw, 60px);
+    white-space: nowrap;
+    /* keeps links in one line */
+    min-width: 0;
+}
+
+/*main menu links*/
+
+.center-nav a{
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}
+
+/* Styling for center navigation links */
+
+
+/* -----------------------------  */
+/* LEFT NAVIGATION- LOGO STUFF */
+/* -----------------------------  */
+
+
+.left-nav{
+    display: flex;
+    align-items: center;
+    gap: clamp(15px, 3vw, 45px);
+    flex-wrap: nowrap;
+
+}
+
+/* Container holding logo + SA images */
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Logo wrapper  + Space between logos*/
+
+
+.Airline_Logo{
+    height: clamp(20px, 8vw, 100px);
+    display: block;
+}
+
+/* Main airline logo */
+
+
+.Star_Alliance{
+    height: clamp(2px, 8vw, 24px);
+    opacity: 0.8; /* faded reduce emphasis */
+}
+
+/* Hide on small screens */
+@media (max-width: 1000px) {
+    .Star_Alliance {
+        display: none;
+    }
+}
+
+/* Star Alliance Logo */
+
+
+/* -----------------------------  */
+/* RIGHT NAVIGATION- LOGIN & LANG */
+/* -----------------------------  */
+
+
+.right-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(15px, 3vw, 40px);
+    font-size: 14px;
+}
+
+/* Container for language + login */
+
+
+.lang{
+    color: #555;
+    font-size: clamp(8px, 1.3vw, 16px);
+}
+/* Language text col */
+
+
+
+/* -----------------------------  */
+/* GENERAL NAVIGATION- STYLING */
+/* -----------------------------  */
+
+.top-nav a {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: border-color 0.2s ease;
+    text-decoration: none;
+    color: #011;
+    font-weight: 500;
+    font-size: clamp(12px, 1.3vw, 16px);
+
+}
+
+.top-nav a:hover {
+    border-bottom: 2px solid #00a1de;
+}
+
+/* for links insidee navbar */
+/* USED GPT 5.3 FOR ASSISTANCE WITH THE HOVER EFFECT*/
+
+
+/* ----------------------------- */
+/* LOGIN PAGE LAYOUT */
+/* ----------------------------- */
+
+.login-page {
+    min-height: calc(100vh - 62px);
+    background: #f2f2f2;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* ----------------------------- */
+/* LOGIN CARD */
+/* ----------------------------- */
+
+.login-card {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.login-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2b4a;
+    margin: 0 0 4px;
+}
+
+.login-header p {
+    color: #888;
+    font-size: 13px;
+    margin: 0 0 24px;
+}
+
+/* ----------------------------- */
+/* TABS */
+/* ----------------------------- */
+
+.login-tabs {
+    display: flex;
+    margin-bottom: 28px;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.login-tab {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-tab.active {
+    color: #132e8e;
+    border-bottom: 2px solid #132e8e;
+}
+
+.login-tab:hover:not(.active) {
+    color: #333;
+}
+
+/* ----------------------------- */
+/* FORM */
+/* ----------------------------- */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-form.hidden {
+    display: none;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a2b4a;
+}
+
+.form-group small {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 2px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    transition: border-color 0.2s ease;
+    outline: none;
+    appearance: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #132e8e;
+}
+
+.password-wrap {
+    position: relative;
+}
+
+.password-wrap input {
+    padding-right: 70px;
+}
+
+.show-pass {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #132e8e;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.show-pass:hover { color: #00a1de; }
+
+/* ----------------------------- */
+/* FORM OPTIONS ROW */
+/* ----------------------------- */
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+    cursor: pointer;
+}
+
+.remember-me input { accent-color: #132e8e; }
+
+.forgot-link {
+    color: #132e8e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-link:hover { text-decoration: underline; }
+
+/* ----------------------------- */
+/* SIGN IN BUTTON */
+/* ----------------------------- */
+
+.login-btn {
+    background: #132e8e;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s ease;
+    margin-top: 4px;
+    width: 100%;
+}
+
+.login-btn:hover { background: #00a1de; }
+
+.login-btn:disabled {
+    background: #8ea0d6;
+    cursor: wait;
+}
+
+.form-message {
+    min-height: 20px;
+    margin: -8px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-message[data-state="error"] {
+    color: #b42318;
+}
+
+.form-message[data-state="success"] {
+    color: #12733b;
+}
+
+.form-message[data-state="info"] {
+    color: #1a2b4a;
+}
+
+/* ----------------------------- */
+/* DIVIDER */
+/* ----------------------------- */
+
+.divider {
+    display: flex;
+    align-items: center;
+    color: #bbb;
+    font-size: 13px;
+    margin: 20px 0 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e8e8e8;
+}
+
+.divider span { padding: 0 12px; }
+
+/* ----------------------------- */
+/* REGISTER PROMPT */
+/* ----------------------------- */
+
+.register-prompt {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.register-prompt a {
+    color: #132e8e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-prompt a:hover { text-decoration: underline; }
+
+/* ----------------------------- */
+/* RESPONSIVE */
+/* ----------------------------- */
+
+@media (max-width: 600px) {
+    .login-card {
+        width: 100%;
+        padding: 28px 20px;
+    }
+}

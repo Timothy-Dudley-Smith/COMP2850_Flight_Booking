@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/log_in/styles/style.css">
+    <script src="/log_in/scripts/register.js" defer></script>
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<main class="login-page">
+
+    <div class="login-card">
+
+        <div class="login-header">
+            <h1>Create an account</h1>
+            <p>Sign up to manage your bookings and miles</p>
+        </div>
+
+        <form class="login-form" id="register-form" novalidate>
+            <div class="form-group">
+                <label for="first-name">First name</label>
+                <input type="text" id="first-name" name="firstName" placeholder="John" autocomplete="given-name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last name</label>
+                <input type="text" id="last-name" name="lastName" placeholder="Smith" autocomplete="family-name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                    <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
+                    <button type="button" class="show-pass" onclick="togglePassword()">Show</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of birth</label>
+                    <input type="date" id="dob" name="dateOfBirth" autocomplete="bday">
+                </div>
+
+            </div>
+            <p id="register-message" class="form-message" role="status" aria-live="polite"></p>
+            <button type="submit" class="login-btn">Create Account</button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <div class="register-prompt">
+            Already have an account? <a href="/log_in">Sign in</a>
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById('password');
+        const btn = document.querySelector('.show-pass');
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = 'Hide';
+        } else {
+            input.type = 'password';
+            btn.textContent = 'Show';
+        }
+    }
+</script>
+
+</body>
+</html>

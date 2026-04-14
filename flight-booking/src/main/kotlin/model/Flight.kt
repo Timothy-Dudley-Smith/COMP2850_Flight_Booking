@@ -12,7 +12,8 @@ data class Flight(
     val arrivalTime: String,
     val length: Double,
     val seats: List<Seat>,
-    val layovers: List<Layover> = emptyList()
+    val layovers: List<Layover> = emptyList(),
+    val price: Double
 )
 
 object Flights : Table() {

@@ -1,0 +1,308 @@
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/*Sets main font and grey background for whole page*/
+
+
+
+/* ----------------------------- */
+/* HEADER */
+/* ----------------------------- */
+
+header {
+    background: #1a2b4a;
+    color: white;
+    padding: 30px clamp(20px, 5vw, 60px);
+    border-bottom: 3px solid #00a1de;
+}
+
+/*dark navy header with blue accent underline*/
+
+header h1 {
+    margin: 0 0 6px 0;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 500;
+}
+
+/*main page title*/
+
+header p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/*subtitle below title, slightly faded*/
+
+
+
+/* ----------------------------- */
+/* MAIN CONTENT AREA */
+/* ----------------------------- */
+
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 clamp(15px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/*centred content with consistent horizontal padding*/
+
+
+
+/* ----------------------------- */
+/* SECTION CARDS */
+/* ----------------------------- */
+
+section {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    overflow: hidden;
+}
+
+/*white card with rounded corners and subtle border*/
+
+section h2 {
+    padding: 14px 18px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a2b4a;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/*section heading inside card, matches .sh style*/
+
+
+
+/* ----------------------------- */
+/* MESSAGES SECTION */
+/* ----------------------------- */
+
+#manager-message {
+    padding: 14px 18px;
+    margin: 0;
+    font-size: 13px;
+    color: #888;
+}
+
+/*default greyed-out message text*/
+
+#manager-message.success {
+    color: #1a7a42;
+    background: #eaf5ee;
+    border-left: 3px solid #1a7a42;
+    padding-left: 15px;
+}
+
+/*green styling for success messages*/
+
+#manager-message.error {
+    color: #a0200e;
+    background: #fdf0ee;
+    border-left: 3px solid #a0200e;
+    padding-left: 15px;
+}
+
+/*red styling for error messages*/
+
+
+
+/* ----------------------------- */
+/* ADD FLIGHT FORM */
+/* ----------------------------- */
+
+#add-flight-form {
+    padding: 20px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/*form uses flex wrap so fields sit side by side where space allows*/
+
+#add-flight-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1 1 180px;
+    /* each field grows but has a min width */
+}
+
+#add-flight-form label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #1a2b4a;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/*small uppercase label above each field*/
+
+#add-flight-form input {
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+/*input field styling*/
+
+#add-flight-form input:focus {
+    border-color: #132e8e;
+}
+
+/*blue border on focus to match brand colour*/
+
+#add-flight-form button[type="submit"] {
+    align-self: flex-end;
+    padding: 10px 24px;
+    background: #132e8e;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex: 0 0 auto;
+    /* button does not stretch with flex */
+}
+
+/*submit button uses same pill shape and navy colour as .search-btn*/
+
+#add-flight-form button[type="submit"]:hover {
+    background: #0f1c36;
+}
+
+/*darker shade on hover*/
+
+
+
+/* ----------------------------- */
+/* UPCOMING FLIGHTS TABLE */
+/* ----------------------------- */
+
+#upcoming-flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+/*full width table, removes default cell gaps*/
+
+#upcoming-flights-table thead tr {
+    background: #f7f8fa;
+    border-bottom: 2px solid #e4e4e4;
+}
+
+/*light grey header row*/
+
+#upcoming-flights-table th {
+    padding: 11px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1a2b4a;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+#upcoming-flights-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.remove-flight-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    background: #a0200e;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.remove-flight-button:hover {
+    background: #7d180a;
+}
+
+.remove-flight-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/*small bold uppercase column headings*/
+
+#upcoming-flights-table td {
+    padding: 12px 14px;
+    color: #333;
+    border-bottom: 1px solid #f5f5f5;
+    white-space: nowrap;
+}
+
+/*table cell spacing and light row dividers*/
+
+#upcoming-flights-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/*removes bottom border on last row*/
+
+#upcoming-flights-table tbody tr:hover {
+    background: #fafafa;
+}
+
+/*subtle hover highlight on rows*/
+
+#upcoming-flights-body td[colspan] {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    padding: 24px;
+}
+
+/*styles the empty state message*/
+
+
+
+/* ----------------------------- */
+/* TABLE ACTION BUTTONS */
+/* ----------------------------- */
+
+.remove-btn {
+    padding: 6px 14px;
+    background: none;
+    border: 1px solid #a0200e;
+    color: #a0200e;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/*outlined red remove button*/
+
+.remove-btn:hover {
+    background: #a0200e;
+    color: white;
+}
+
+
+
+
