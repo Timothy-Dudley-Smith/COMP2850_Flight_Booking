@@ -11,6 +11,10 @@ import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
 import com.flightsystem.model.LoginResponse
 
+import com.flightsystem.service.PassengerService
+import com.flightsystem.model.SavePassengersRequest
+
+
 // imports the flight info
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
@@ -84,6 +88,8 @@ data class CreateBookingRequest(
 fun Application.configureRouting() {
     routing {
 
+        val passengerService = PassengerService()
+        
         staticResources("/", "static/user/home")
         staticResources("/log_in", "static/user/log_in")
         staticResources("/home", "static/user/home")
@@ -236,6 +242,17 @@ fun Application.configureRouting() {
             val authservice = AuthenticationService()
             val users = authservice.getAllUsers()
             call.respond(HttpStatusCode.OK, users)
+        }
+
+        post("/api/passengers") {
+            val request = call.receive<SavePassengersRequest>()
+
+            val savedPassengers = passengerService.addPassengersToBooking(
+                request.bookingId,
+                request.passengers
+            )
+
+            call.respond(HttpStatusCode.Created, savedPassengers)
         }
 
         get("/api/manager/flights") {
