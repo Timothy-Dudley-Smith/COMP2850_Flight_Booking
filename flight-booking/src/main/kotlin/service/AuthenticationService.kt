@@ -276,6 +276,7 @@ class AuthenticationService(
         return session.isManager
     }
 
+    // end of session stuff 
 
     fun resetPassword(user: User, newRawPassword: String): Result<Unit> {
         if (newRawPassword.length < MIN_PASSWORD_LENGTH) {
