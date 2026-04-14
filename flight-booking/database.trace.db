@@ -1,0 +1,189 @@
+2026-04-13 15:35:42.706757+01:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:344)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:291)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:273)
+	at org.h2.tools.Shell.runTool(Shell.java:146)
+	at org.h2.tools.Shell.main(Shell.java:80)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 18 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 12 more
+2026-04-13 15:39:31.614181+01:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:344)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:291)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:273)
+	at org.h2.tools.Shell.runTool(Shell.java:146)
+	at org.h2.tools.Shell.main(Shell.java:80)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 18 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/timd-s/IdeaProjects/COMP2850_Flight_Booking/flight-booking/database.mv.db [2.3.232/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 12 more
+2026-04-13 15:39:31.696731+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MERGE INTO AIRPORTS KEY(CODE) VALUES\000a('LHR','London Heathrow Airport','London','United Kingdom'),\000a('LGW','London Gatwick Airport','London','United Kingdom'),\000a('LCY','London City Airport','London','United Kingdom'),\000a('STN','London Stansted Airport','London','United Kingdom'),\000a('LTN','London Luton Airport','London','United Kingdom'),\000a('MAN','Manchester Airport','Manchester','United Kingdom'),\000a('BHX','Birmingham Airport','Birmingham','United Kingdom'),\000a('EDI','Edinburgh Airport','Edinburgh','United Kingdom'),\000a('GLA','Glasgow Airport','Glasgow','United Kingdom'),\000a('BRS','Bristol Airport','Bristol','United Kingdom'),\000a('DUB','Dublin Airport','Dublin','Ireland'),\000a('ORK','Cork Airport','Cork','Ireland'),\000a('CDG','Charles de Gaulle Airport','Paris','France'),\000a('ORY','Orly Airport','Paris','France'),\000a('NCE','Nice Cote d\\'Azur Airport','Nice','France'),\000a('AMS','Amsterdam Airport Schiphol','Amsterdam','Netherlands'),\000a('BRU','Brussels Airport','Brussels','Belgium'),\000a('FRA','Frankfurt Airport','Frankfurt','Germany'),\000a('MUC','Munich Airport','Munich','Germany'),\000a('BER','Berlin Brandenburg Airport','Berlin','Germany'),\000a('MAD','Adolfo Suarez Madrid-Barajas Airport','Madrid','Spain'),\000a('BCN','Barcelona-El Prat Airport','Barcelona','Spain'),\000a('LIS','Humberto Delgado Airport','Lisbon','Portugal'),\000a('OPO','Francisco Sa Carneiro Airport','Porto','Portugal'),\000a('FCO','Leonardo da Vinci Fiumicino Airport','Rome','Italy'),\000a('MXP','Milan Malpensa Airport','Milan','Italy'),\000a('ZRH','Zurich Airport','Zurich','Switzerland'),\000a('VIE','Vienna International Airport','Vienna','Austria'),\000a('PRG','Vaclav Havel Airport Prague','Prague','Czech Republic'),\000a('CPH','Copenhagen Airport','Copenhagen','Denmark'),\000a('ARN','Stockholm Arlanda Airport','Stockholm','Sweden'),\000a('OSL','Oslo Airport','Oslo','Norway'),\000a('HEL','Helsinki Airport','Helsinki','Finland'),\000a('WAW','Warsaw Chopin Airport','Warsaw','Poland'),\000a('ATH','Athens International Airport','Athens','Greece'),\000a('IST','Istanbul Airport','Istanbul','Turkey'),\000a('DXB','Dubai International Airport','Dubai','United Arab Emirates'),\000a('DOH','Hamad International Airport','Doha','Qatar'),\000a('JFK','John F. Kennedy International Airport','New York','United States'),\000a('EWR','Newark Liberty International Airport','Newark','United States'),\000a('BOS','Boston Logan International Airport','Boston','United States'),\000a('ORD','O[*]\\'Hare International Airport','Chicago','United States'),\000a('ATL','Hartsfield-Jackson Atlanta International Airport','Atlanta','United States'),\000a('MIA','Miami International Airport','Miami','United States'),\000a('LAX','Los Angeles International Airport','Los Angeles','United States'),\000a('SFO','San Francisco International Airport','San Francisco','United States'),\000a('SEA','Seattle-Tacoma International Airport','Seattle','United States'),\000a('YYZ','Toronto Pearson International Airport','Toronto','Canada'),\000a('YVR','Vancouver International Airport','Vancouver','Canada'),\000a('SIN','Singapore Changi Airport','Singapore','Singapore')"; SQL statement:
+MERGE INTO AIRPORTS KEY(CODE) VALUES
+('LHR','London Heathrow Airport','London','United Kingdom'),
+('LGW','London Gatwick Airport','London','United Kingdom'),
+('LCY','London City Airport','London','United Kingdom'),
+('STN','London Stansted Airport','London','United Kingdom'),
+('LTN','London Luton Airport','London','United Kingdom'),
+('MAN','Manchester Airport','Manchester','United Kingdom'),
+('BHX','Birmingham Airport','Birmingham','United Kingdom'),
+('EDI','Edinburgh Airport','Edinburgh','United Kingdom'),
+('GLA','Glasgow Airport','Glasgow','United Kingdom'),
+('BRS','Bristol Airport','Bristol','United Kingdom'),
+('DUB','Dublin Airport','Dublin','Ireland'),
+('ORK','Cork Airport','Cork','Ireland'),
+('CDG','Charles de Gaulle Airport','Paris','France'),
+('ORY','Orly Airport','Paris','France'),
+('NCE','Nice Cote d\'Azur Airport','Nice','France'),
+('AMS','Amsterdam Airport Schiphol','Amsterdam','Netherlands'),
+('BRU','Brussels Airport','Brussels','Belgium'),
+('FRA','Frankfurt Airport','Frankfurt','Germany'),
+('MUC','Munich Airport','Munich','Germany'),
+('BER','Berlin Brandenburg Airport','Berlin','Germany'),
+('MAD','Adolfo Suarez Madrid-Barajas Airport','Madrid','Spain'),
+('BCN','Barcelona-El Prat Airport','Barcelona','Spain'),
+('LIS','Humberto Delgado Airport','Lisbon','Portugal'),
+('OPO','Francisco Sa Carneiro Airport','Porto','Portugal'),
+('FCO','Leonardo da Vinci Fiumicino Airport','Rome','Italy'),
+('MXP','Milan Malpensa Airport','Milan','Italy'),
+('ZRH','Zurich Airport','Zurich','Switzerland'),
+('VIE','Vienna International Airport','Vienna','Austria'),
+('PRG','Vaclav Havel Airport Prague','Prague','Czech Republic'),
+('CPH','Copenhagen Airport','Copenhagen','Denmark'),
+('ARN','Stockholm Arlanda Airport','Stockholm','Sweden'),
+('OSL','Oslo Airport','Oslo','Norway'),
+('HEL','Helsinki Airport','Helsinki','Finland'),
+('WAW','Warsaw Chopin Airport','Warsaw','Poland'),
+('ATH','Athens International Airport','Athens','Greece'),
+('IST','Istanbul Airport','Istanbul','Turkey'),
+('DXB','Dubai International Airport','Dubai','United Arab Emirates'),
+('DOH','Hamad International Airport','Doha','Qatar'),
+('JFK','John F. Kennedy International Airport','New York','United States'),
+('EWR','Newark Liberty International Airport','Newark','United States'),
+('BOS','Boston Logan International Airport','Boston','United States'),
+('ORD','O\'Hare International Airport','Chicago','United States'),
+('ATL','Hartsfield-Jackson Atlanta International Airport','Atlanta','United States'),
+('MIA','Miami International Airport','Miami','United States'),
+('LAX','Los Angeles International Airport','Los Angeles','United States'),
+('SFO','San Francisco International Airport','San Francisco','United States'),
+('SEA','Seattle-Tacoma International Airport','Seattle','United States'),
+('YYZ','Toronto Pearson International Airport','Toronto','Canada'),
+('YVR','Vancouver International Airport','Vancouver','Canada'),
+('SIN','Singapore Changi Airport','Singapore','Singapore') [42000-232]
+2026-04-13 15:40:03.750354+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "NAME" not found; SQL statement:
+SELECT code,name,city,country FROM AIRPORTS ORDER BY code LIMIT 5 [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:244)
+	at org.h2.expression.ExpressionColumn.optimizeOther(ExpressionColumn.java:226)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:213)
+	at org.h2.command.query.Select.prepareExpressions(Select.java:1228)
+	at org.h2.command.query.Query.prepare(Query.java:232)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.tools.Shell.execute(Shell.java:474)
+	at org.h2.tools.Shell.runTool(Shell.java:158)
+	at org.h2.tools.Shell.main(Shell.java:80)
+2026-04-13 15:40:11.059292+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "code" not found; SQL statement:
+SELECT "code","name","city","country" FROM AIRPORTS ORDER BY "code" LIMIT 5 [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:244)
+	at org.h2.expression.ExpressionColumn.optimizeOther(ExpressionColumn.java:226)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:213)
+	at org.h2.command.query.Select.prepareExpressions(Select.java:1228)
+	at org.h2.command.query.Query.prepare(Query.java:232)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.tools.Shell.execute(Shell.java:474)
+	at org.h2.tools.Shell.runTool(Shell.java:158)
+	at org.h2.tools.Shell.main(Shell.java:80)
+2026-04-14 11:53:45.711468+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "FLIGHTID" not found; SQL statement:
+MERGE INTO FLIGHTS KEY(FLIGHTID) (FLIGHTID, DATE, DEPARTUREAIRPORT, ARRIVALAIRPORT, DEPARTURETIME, ARRIVALTIME, LENGTH, PRICE) VALUES ('BA117-2026-03-16','2026-03-16','LHR','JFK','08:30','11:15',6.7500000000,689.00) [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:786)
+	at org.h2.command.Parser.parseColumn(Parser.java:1171)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1156)
+	at org.h2.command.Parser.parseMergeInto(Parser.java:1439)
+	at org.h2.command.Parser.parseMerge(Parser.java:1422)
+	at org.h2.command.Parser.parsePrepared(Parser.java:703)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:556)
+	at org.h2.command.Parser.prepare(Parser.java:452)
+	at org.h2.engine.SessionLocal.prepare(SessionLocal.java:593)
+	at org.h2.engine.SessionLocal.prepare(SessionLocal.java:575)
+	at org.h2.command.dml.RunScriptCommand.execute(RunScriptCommand.java:115)
+	at org.h2.command.dml.RunScriptCommand.update(RunScriptCommand.java:71)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
+	at org.h2.command.Command.executeUpdate(Command.java:304)
+	at org.h2.command.Command.executeUpdate(Command.java:248)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.tools.Shell.execute(Shell.java:474)
+	at org.h2.tools.Shell.runTool(Shell.java:158)
+	at org.h2.tools.Shell.main(Shell.java:80)
+2026-04-14 11:54:11.652833+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MERGE INTO FLIGHTS KEY(""flightId"") ([*]""flightId"",""date"",""departureAirport"",""arrivalAirport"",""departureTime"",""arrivalTime"",""length"",PRICE)\000aVALUES ('TEST-1','2026-04-14','LHR','JFK','08:30','11:15',6.75,689.00)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+MERGE INTO FLIGHTS KEY("flightId") ("flightId","date","departureAirport","arrivalAirport","departureTime","arrivalTime","length",PRICE)
+VALUES ('TEST-1','2026-04-14','LHR','JFK','08:30','11:15',6.75,689.00) [42001-232]

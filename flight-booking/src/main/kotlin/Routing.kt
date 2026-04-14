@@ -4,14 +4,15 @@ import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.Manager
 import com.flightsystem.model.PaymentRequest
 import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
-import com.flightsystem.model.Manager
-import io.ktor.http.HttpStatusCode
+
+
 import io.ktor.server.request.receive
 import io.ktor.server.routing.post
 
@@ -19,6 +20,14 @@ import io.ktor.server.routing.post
 
 
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+import com.flightsystem.service.PassengerService
+import com.flightsystem.model.SavePassengersRequest
+
+
+import io.ktor.server.request.receive
+import io.ktor.server.routing.post
+
+
 // imports the flight info
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -126,11 +135,29 @@ data class ErrorResponse(
     val error: String
 )
 
+
 @Serializable
 data class CreateBookingRequest(
     val userId: Int,
     val flightId: String,
     val seatNumbers: List<String>
+)
+
+@Serializable
+data class CreateHoldRequest(
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>
+)
+
+@Serializable
+data class CreateHoldResponse(
+    val holdId: Int,
+    val userId: Int,
+    val flightId: String,
+    val seatNumbers: List<String>,
+    val totalPrice: Double,
+    val expiryTime: String
 )
 
 fun Application.configureRouting() {
@@ -157,6 +184,17 @@ fun Application.configureRouting() {
         get("/log_in/register.html") {
             call.respondFile(File("src/main/resources/static/user/log_in/register.html"))
         }
+        val passengerService = PassengerService()
+
+        staticResources("/", "static/user/home")
+        staticResources("/log_in", "static/user/log_in")
+        staticResources("/home", "static/user/home")
+        staticResources("/images", "static/Images")
+        staticResources("/manager/flight_view", "static/manager/flight_view")
+        staticResources("/manager/home", "static/manager/home" )
+        staticResources("/manager/support", "static/manager/support")
+        staticResources("/manager/edit_bookings", "static/manager/edit_bookings")
+        staticResources("/manager/bookings", "static/manager/bookings")
 
         get("/book") {
             call.respondFile(File("src/main/resources/static/user/book/book.html"))
@@ -182,40 +220,6 @@ fun Application.configureRouting() {
             }
             call.respond(airportData)
         }
-        /*
-        get("/api/flights") {
-            val flights = transaction {
-                Flights.selectAll().map { row ->
-                    mapOf(
-                        "flightId" to row[Flights.flightId],
-                        "departureAirport" to row[Flights.departureAirport],
-                        "arrivalAirport" to row[Flights.arrivalAirport],
-                        "departureTime" to row[Flights.departureTime],
-                        "arrivalTime" to row[Flights.arrivalTime],
-                        "price" to row[Flights.price]
-                    )
-                }
-            }
-            call.respond(flights)
-        }
-
-        val bookingService = BookingService()
-
-        post("/api/bookings") {
-            val request = call.receive<CreateBookingRequest>()
-
-            try {
-                val booking = bookingService.createBooking(
-                    request.userId,
-                    request.flightId,
-                    request.seatNumbers
-                )
-                call.respond(HttpStatusCode.OK, booking)
-            } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, e.message ?: "Error")
-            }
-        }
-*/
 
 
         get("/api/flights") {
@@ -294,9 +298,20 @@ fun Application.configureRouting() {
         }
 
         get ("/api/users")  {
-            //val authservice = AuthenticationService()
             val users = authenticationService.getAllUsers()
+            val authenticationService = AuthenticationService()
             call.respond(HttpStatusCode.OK, users)
+        }
+
+        post("/api/passengers") {
+            val request = call.receive<SavePassengersRequest>()
+
+            val savedPassengers = passengerService.addPassengersToBooking(
+                request.bookingId,
+                request.passengers
+            )
+
+            call.respond(HttpStatusCode.Created, savedPassengers)
         }
 
         get("/api/manager/flights") {
@@ -504,6 +519,37 @@ fun Application.configureRouting() {
         }
 
 
+        post("/api/auth/login") {
+            val request = call.receive<LoginRequest>()
+            val authenticationService = AuthenticationService()
+
+            val result = authenticationService.login(request.email, request.password)
+
+            if (result.isSuccess) {
+                val user = result.getOrThrow()
+
+                val sessionId = authenticationService.createSession(user)
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(
+                        success = true,
+                        userId = user.userId,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        email = user.email,
+                        role = if (user is Manager) "MANAGER" else "USER",
+                        sessionId = sessionId
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse("Invalid email or password")
+                )
+            }
+        }
+
         post("/api/auth/register") {
             val request = call.receive<RegisterRequest>()
 
@@ -533,7 +579,46 @@ fun Application.configureRouting() {
             }
         }
 
+        post("/api/bookings") {
+            val request = call.receive<CreateBookingRequest>()
+        }
+
+        get("/seatmap") {
+            call.respondFile(File("src/main/resources/static/user/book/seatmap.html"))
+        }
+
+        get("/loyaltypage") {
+            call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
+        }
+
+        get("/checkout") {
+            call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
+        }
+
+        post("/api/holds") {
+            try {
+
+                val request = call.receive<CreateHoldRequest>()
+                val priceHoldService = PriceHoldService()
+
+                var userId = request.userId
+                var flightId = request.flightId
+                val seatNumbers = request.seatNumbers
+
+                val hold = priceHoldService.createHold(userId, flightId, seatNumbers)
+
+                val holdId = hold.holdId
+                userId = hold.userId
+                flightId = hold.flightId
+                val expiryTime = hold.expiryTime.toString()
+                val totalPrice = hold.totalPrice
+
+                val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
+                call.respond(HttpStatusCode.Created, holdResponse)
+            } catch (e: IllegalArgumentException) {
+                call.respond(HttpStatusCode.BadRequest, "IllegalArgumentException")
+            }
+        }
     }
 
 }
-

@@ -6,7 +6,6 @@
     <title>Select Seats</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../home/styles/style.css">
-    <link rel="stylesheet" href="styles/seats.css">
 </head>
 <body>
 
@@ -14,8 +13,8 @@
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/styles/Images/Logo.png" class="Airline_Logo">
-                <img src="/styles/Images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
             </div>
         </div>
         <div class="center-nav">
@@ -33,6 +32,7 @@
 
 <div class="seat-page">
     <h2>Select Your Seats</h2>
+    <p class="selected-label" id="seat-help-label" style="margin-bottom: 20px;">Choose one seat for each passenger.</p>
 
     <!-- column letters A B C | gap | D E F -->
     <div class="col-labels">
@@ -58,6 +58,7 @@
 
     <!-- shows selected seat e.g. "Selected: Seat 4A" -->
     <p class="selected-label" id="selected-label">No seat selected</p>
+    <p class="selected-label" id="hold-message" style="color: #c0392b; min-height: 24px;"></p>
 
     <!-- greyed out until a seat is picked -->
     <button class="continue-btn" id="continue-btn">Continue</button>
@@ -69,6 +70,32 @@
 
 
 <script>
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
+    const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
+    const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
+    document.querySelector(".seat-page h2").textContent = requiredSeats === 1
+        ? "Select Your Seat"
+        : `Select ${requiredSeats} Seats`;
+    const holdMessage = document.getElementById("hold-message");
+
+    if (bookingDraft?.from && bookingDraft?.to) {
+        const helpLabel = document.getElementById("seat-help-label");
+        helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
+    }
+
+    function getLoggedInUserId() {
+        if (typeof bookingDraft?.userId === "number") {
+            return bookingDraft.userId;
+        }
+
+        try {
+            const user = JSON.parse(sessionStorage.getItem("user") ?? "null");
+            return typeof user?.userId === "number" ? user.userId : null;
+        } catch {
+            return null;
+        }
+    }
 
     // t = taken |  a = available | x = exit row
     const rows = [
@@ -89,8 +116,6 @@
 
     // letters to label the col
     const columns = ['A','B','C','D','E','F'];
-    // used to store the selected seat number
-    let selectedSeat = null;
     // Get seat map container
     const seatMap = document.getElementById('seat-map');
 
@@ -124,6 +149,7 @@
 
             // Create seat button
             const seatButton = document.createElement('button');
+            seatButton.dataset.seatId = seatId;
 
 
             // SET SEAT TYPE
@@ -142,28 +168,25 @@
             // ADD CLICK EVENT (ONLY AVAILABLE)
 
             if (seatStatus === 'a') {
+                if (selectedSeats.has(seatId)) {
+                    seatButton.classList.remove('available');
+                    seatButton.classList.add('selected');
+                }
 
                 seatButton.addEventListener('click', function () {
+                    if (selectedSeats.has(seatId)) {
+                        selectedSeats.delete(seatId);
+                        seatButton.classList.remove('selected');
+                        seatButton.classList.add('available');
+                    } else {
+                        if (selectedSeats.size >= requiredSeats) {
+                            updateUI();
+                            return;
+                        }
 
-                    // Remove previous selection
-                    // Step 1: get the whole page
-                    const page = document;
-                    // Step 2: find selected seats
-                    const selectedSeats = page.querySelectorAll('.seat.selected');
-
-                    for (let i = 0; i < selectedSeats.length; i++) {
-                        selectedSeats[i].classList.remove('selected');
-                        selectedSeats[i].classList.add('available');
-                    }
-
-                    // Check if same seat clicked again
-                    if (selectedSeat === seatId) {
-                        selectedSeat = null;
-                    }
-                    else {
+                        selectedSeats.add(seatId);
                         seatButton.classList.remove('available');
                         seatButton.classList.add('selected');
-                        selectedSeat = seatId;
                     }
 
                     updateUI();
@@ -191,18 +214,28 @@
 
 
         // Step 3: check if a seat has been selected
-        if (selectedSeat !== null) {
+        if (!bookingDraft) {
+            labelElement.textContent = 'Booking details are missing. Please go back and choose your flight again.';
+            continueButton.classList.remove('active');
+            return;
+        }
+
+        if (selectedSeats.size > 0) {
 
             // show the selected seat
-            labelElement.textContent = 'Selected: Seat ' + selectedSeat;
+            const chosenSeats = Array.from(selectedSeats);
+            labelElement.textContent = 'Selected: ' + chosenSeats.join(', ');
 
-            // make the button active
-            continueButton.classList.add('active');
+            if (selectedSeats.size === requiredSeats) {
+                continueButton.classList.add('active');
+            } else {
+                continueButton.classList.remove('active');
+            }
 
         } else {
 
             // show no seat selected
-            labelElement.textContent = 'No seat selected';
+            labelElement.textContent = `Select ${requiredSeats} seat${requiredSeats === 1 ? '' : 's'} to continue`;
 
             // remove active style from button
             continueButton.classList.remove('active');
@@ -219,25 +252,72 @@
     // find the continue button from the page
     const continueButton = document.getElementById('continue-btn');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromParam       = urlParams.get('from')
-    const toParam         = urlParams.get('to')
-    const dateParam       = urlParams.get('date')
-    const passengersParam = urlParams.get('passengers')
-    const cabinParam      = urlParams.get('cabin')
-    const priceParam      = urlParams.get('price')
+    continueButton.addEventListener('click', async function () {
 
-    continueButton.addEventListener('click', function () {
-
-        if (selectedSeat === null) {
+        if (!bookingDraft || selectedSeats.size !== requiredSeats) {
             return;
         }
 
-        const next = `loyaltypage.html?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}`;
+        const userId = getLoggedInUserId();
 
-        window.location.href = next;
+        if (userId === null) {
+            holdMessage.textContent = "Log in before continuing so your seats can be held.";
+            return;
+        }
+
+        holdMessage.textContent = "";
+        continueButton.disabled = true;
+
+        try {
+            const seatNumbers = Array.from(selectedSeats);
+            const response = await fetch("/api/holds", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId,
+                    flightId: bookingDraft.flightId,
+                    seatNumbers
+                })
+            });
+
+            const text = await response.text();
+            let result = null;
+
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch {
+                result = null;
+            }
+
+            if (!response.ok) {
+                holdMessage.textContent = result?.error ?? text ?? "Unable to hold the selected seats.";
+                return;
+            }
+
+            bookingDraft.userId = userId;
+            bookingDraft.seatNumbers = seatNumbers;
+            bookingDraft.holdId = result?.holdId ?? null;
+            bookingDraft.holdExpiryTime = result?.expiryTime ?? null;
+            bookingDraft.totalPrice = result?.totalPrice ?? null;
+
+            sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+            sessionStorage.setItem("selectedSeat", seatNumbers.join(", "));
+
+            if (result) {
+                sessionStorage.setItem("holdData", JSON.stringify(result));
+            }
+
+            window.location.href = "/loyaltypage";
+        } catch {
+            holdMessage.textContent = "Unable to hold the selected seats right now. Please try again.";
+        } finally {
+            continueButton.disabled = false;
+        }
     });
 
+    updateUI();
 </script>
 
 </body>
