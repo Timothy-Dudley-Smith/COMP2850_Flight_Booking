@@ -2,10 +2,15 @@ package com.example.com
 
 import com.flightsystem.model.Airport
 import com.flightsystem.model.Airports
+import com.flightsystem.model.Bookings
 import com.flightsystem.model.Flights
 import com.flightsystem.model.CheckoutRequest
+import com.flightsystem.model.Layovers
 import com.flightsystem.model.Manager
 import com.flightsystem.model.PaymentRequest
+import com.flightsystem.model.PriceHold
+import com.flightsystem.model.PriceHoldSeats
+import com.flightsystem.model.PriceHolds
 import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
@@ -22,12 +27,13 @@ import io.ktor.server.routing.post
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
-import com.flightsystem.service.BookingService
-import com.flightsystem.service.BookingService
+import com.flightsystem.model.Seats
 
 
 import io.ktor.server.request.receive
 import io.ktor.server.routing.post
+import com.flightsystem.service.BookingService
+
 
 
 // imports the flight info
@@ -46,6 +52,7 @@ import org.jetbrains.exposed.sql.*
 import io.ktor.http.*
 import io.ktor.server.http.content.*
 import org.h2.api.H2Type.row
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greaterEq
 //import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -199,7 +206,7 @@ fun Application.configureRouting() {
         staticResources("/home", "static/user/home")
         staticResources("/images", "static/Images")
         staticResources("/manager/flight_view", "static/manager/flight_view")
-        staticResources("/manager/home", "static/manager/home" )
+        staticResources("/manager/home", "static/manager/home")
         staticResources("/manager/support", "static/manager/support")
         staticResources("/manager/edit_bookings", "static/manager/edit_bookings")
         staticResources("/manager/bookings", "static/manager/bookings")
@@ -238,7 +245,7 @@ fun Application.configureRouting() {
 
         get("/api/flights") {
             val from = call.request.queryParameters["from"]
-            val to   = call.request.queryParameters["to"]
+            val to = call.request.queryParameters["to"]
             val date = call.request.queryParameters["date"]
             val passengers = call.request.queryParameters["passengers"]
 
@@ -254,9 +261,6 @@ fun Application.configureRouting() {
                     val departure = row[Flights.departureAirport]
                     val arrival = row[Flights.arrivalAirport]
                     val flightDate = row[Flights.date]
-
-
-
 
 
                     //pull data from the database row into simple variable for comparison
@@ -279,8 +283,8 @@ fun Application.configureRouting() {
                     // if the user inputted an arrival airport remove results with different arrival airports
 
 
-                    if (date != "" ) {
-                        if (flightDate != date){
+                    if (date != "") {
+                        if (flightDate != date) {
                             match = false
                         }
                     }
@@ -299,8 +303,7 @@ fun Application.configureRouting() {
                             row[Flights.arrivalTime],
                             row[Flights.length]
                         )
-                    }
-                    else {
+                    } else {
                         null
                         //lables flight as non matching (reject)
                     }
@@ -321,19 +324,7 @@ fun Application.configureRouting() {
             call.respond(seats)
         }
 
-        // booking routing 2
-        post("/api/booking") {
-            val request = call.receive<CreateBookingRequest>()
-            val bookingService = BookingService()
-            val booking = bookingService(
-                request.userId,
-                request.flightId,
-                request.seatNumbers
-            )
-            call.respond(HttpStatusCode.Created, booking)
-        }
-
-        get ("/api/users")  {
+        get("/api/users") {
             val users = authenticationService.getAllUsers()
             val authenticationService = AuthenticationService()
             call.respond(HttpStatusCode.OK, users)
@@ -356,7 +347,7 @@ fun Application.configureRouting() {
             val upcomingFlightData = transaction {
                 Flights.selectAll().where { Flights.date greaterEq LocalDate.now().toString() }
                     .orderBy(Flights.date to SortOrder.ASC, Flights.departureTime to SortOrder.ASC).map { row ->
-                        UpcomingFlightData (
+                        UpcomingFlightData(
                             flightId = row[Flights.flightId],
                             departureAirport = row[Flights.departureAirport],
                             arrivalAirport = row[Flights.arrivalAirport],
@@ -401,6 +392,32 @@ fun Application.configureRouting() {
                 }
             }
             call.respond(HttpStatusCode.Created)
+        }
+
+        delete("/api/manager/flights/{flightId}") {
+            val flightId = call.parameters["flightId"]
+
+            if (flightId.isNullOrBlank()) {
+                call.respond(HttpStatusCode.BadRequest, "flightId required")
+                return@delete
+            }
+            val emptyBookingData = transaction {
+                Bookings.selectAll().where { Bookings.flightId eq flightId }.count() > 0
+            }
+
+            if (emptyBookingData) {
+                call.respond(HttpStatusCode.BadRequest, "flight has existing bookings.")
+            } else {
+                transaction {
+                    PriceHoldSeats.deleteWhere { PriceHoldSeats.flightId eq flightId }
+                    PriceHolds.deleteWhere { PriceHolds.flightId eq flightId }
+                    Seats.deleteWhere { Seats.flightId eq flightId }
+                    Layovers.deleteWhere { Layovers.flightId eq flightId }
+                    Flights.deleteWhere { Flights.flightId eq flightId }
+                }
+
+                call.respond(HttpStatusCode.OK, "Flights successfully deleted.")
+            }
         }
 
         get("/manager") {
@@ -548,10 +565,12 @@ fun Application.configureRouting() {
                 return@post
             }
             authenticationService.logout(sessionId)
-            call.respond(HttpStatusCode.OK, RegisterResponse(
-                success = true,
-                message = "Successfully logged out"
-            ))
+            call.respond(
+                HttpStatusCode.OK, RegisterResponse(
+                    success = true,
+                    message = "Successfully logged out"
+                )
+            )
         }
 
 
@@ -615,13 +634,6 @@ fun Application.configureRouting() {
             }
         }
 
-        post("/api/bookings") {
-            val request = call.receive<CreateBookingRequest>()
-        }
-
-        get("/seatmap") {
-            call.respondFile(File("src/main/resources/static/user/book/seatmap.html"))
-        }
 
         get("/loyaltypage") {
             call.respondFile(File("src/main/resources/static/user/loyalty/loyaltypage.html"))
@@ -646,14 +658,15 @@ fun Application.configureRouting() {
                 val holdId = hold.holdId
                 userId = hold.userId
                 flightId = hold.flightId
-                val expiryTime = hold.expiryTime.toString()
+                val expiryTime = hold.expiryTime
                 val totalPrice = hold.totalPrice
 
                 val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
                 call.respond(HttpStatusCode.Created, holdResponse)
-            } catch (e: IllegalArgumentException) {
-                call.respond(HttpStatusCode.BadRequest, "IllegalArgumentException")
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Error while creating hold")
             }
         }
     }
+}
 
