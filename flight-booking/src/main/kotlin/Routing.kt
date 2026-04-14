@@ -22,6 +22,8 @@ import io.ktor.server.routing.post
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 import com.flightsystem.service.PassengerService
 import com.flightsystem.model.SavePassengersRequest
+import com.flightsystem.service.BookingService
+import com.flightsystem.service.BookingService
 
 
 import io.ktor.server.request.receive
@@ -136,6 +138,7 @@ data class ErrorResponse(
 )
 
 
+
 @Serializable
 data class CreateBookingRequest(
     val userId: Int,
@@ -207,6 +210,12 @@ fun Application.configureRouting() {
 
         get("/booking-personal") {
             call.respondFile(File("src/main/resources/static/user/book/booking-personal.html"))
+        }
+
+        get("/seatmap") {
+            call.respondFile(
+                File("src/main/resources/static/user/book/seatmap.html")
+            )
         }
 
 
@@ -302,6 +311,28 @@ fun Application.configureRouting() {
             call.respond(flightData)
         }
 
+        // seat routing
+        get("/api/seats") {
+            val flightId = call.request.queryParameters["flightId"]
+                ?: return@get call.respond(HttpStatusCode.BadRequest, "flightId required")
+
+            val bookingService = BookingService()
+            val seats = bookingService.getAvailableSeats(flightId)
+            call.respond(seats)
+        }
+
+        // booking routing 2
+        post("/api/booking") {
+            val request = call.receive<CreateBookingRequest>()
+            val bookingService = BookingService()
+            val booking = bookingService(
+                request.userId,
+                request.flightId,
+                request.seatNumbers
+            )
+            call.respond(HttpStatusCode.Created, booking)
+        }
+
         get ("/api/users")  {
             val users = authenticationService.getAllUsers()
             val authenticationService = AuthenticationService()
@@ -362,7 +393,7 @@ fun Application.configureRouting() {
                     it[flightId] = request.flightId
                     it[departureAirport] = request.departureAirport
                     it[arrivalAirport] = request.arrivalAirport
-                    it[date] = request.date.toString()
+                    it[date] = request.date
                     it[departureTime] = request.departureTime
                     it[arrivalTime] = request.arrivalTime
                     it[length] = request.length
@@ -626,4 +657,3 @@ fun Application.configureRouting() {
         }
     }
 
-}
