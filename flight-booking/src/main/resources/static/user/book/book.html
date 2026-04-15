@@ -27,7 +27,9 @@
 
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
@@ -73,6 +75,43 @@
 
 
 <script type="module">
+    const sessionId = sessionStorage.getItem("sessionId");
+    const firstName = sessionStorage.getItem("firstName");
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
+
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
     function formatRouteDate(date) {
         if (!date) {
             return "From today onwards";

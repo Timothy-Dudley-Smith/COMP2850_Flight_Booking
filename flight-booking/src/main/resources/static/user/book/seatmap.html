@@ -25,7 +25,9 @@
         </div>
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
@@ -83,6 +85,47 @@
     const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
     const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
     const availableSeats = new Set();
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const firstName = sessionStorage.getItem("firstName");
+
+    const loggedInUserId = getLoggedInUserId();
+    const isSignedIn = !!sessionId && typeof loggedInUserId == "number"
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
+
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
 
     document.querySelector(".seat-page h2").textContent = requiredSeats === 1
         ? "Select Your Seat"
@@ -281,11 +324,6 @@
             return;
         }
 
-        const userId = getLoggedInUserId();
-        if (userId === null) {
-            holdMessage.textContent = "Log in before continuing so your seats can be held.";
-            return;
-        }
 
         const seatNumbers = normalizeSeatNumbers(Array.from(selectedSeats));
 
@@ -310,7 +348,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    userId,
+                    userId: isSignedIn ? loggedInUserId : null,
                     flightId: bookingDraft.flightId,
                     seatNumbers
                 })
@@ -330,7 +368,7 @@
                 return;
             }
 
-            bookingDraft.userId = userId;
+            bookingDraft.userId = isSignedIn ? loggedInUserId: null;
             bookingDraft.seatNumbers = seatNumbers;
             bookingDraft.holdId = result?.holdId ?? null;
             bookingDraft.holdExpiryTime = result?.expiryTime ?? null;

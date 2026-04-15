@@ -27,7 +27,9 @@
 
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
@@ -47,14 +49,30 @@
 
         <div class="card">
             <div class="lt">
-                <div class="av">JD</div>
-                <div><div class="mn">James Davidson</div><div class="mt">Gold Member</div></div>
-                <div class="pts">32,450<small>Avios points</small></div>
+                <div class="av" id="account-initials">--</div>
+                <div>
+                    <div class="mn" id="account-name" style="display:block; color:white; font-size:18px; font-weight:600;">Guest</div>
+                    <div class="mt" id="account-tier"></div>
+                </div>
+                <div class="pts" id="account-points"></div>
             </div>
+
             <div class="perks">
-                <div class="pk"><span class="bg bf">Free</span><strong>Seat selection</strong><p id="ext-seat">Loading…</p></div>
-                <div class="pk"><span class="bg bd">30% off</span><strong>In-flight meals</strong><p>Discount applied below</p></div>
-                <div class="pk"><span class="bg bf">Free</span><strong>Wi-fi</strong><p>Full-flight included</p></div>
+                <div class="pk">
+                    <span class="bg bf" id="seat-perk-badge">Free</span>
+                    <strong>Seat selection</strong>
+                    <p id="ext-seat">Loading…</p>
+                </div>
+                <div class="pk">
+                    <span class="bg bd">30% off</span>
+                    <strong>In-flight meals</strong>
+                    <p>Discount applied below</p>
+                </div>
+                <div class="pk">
+                    <span class="bg bf" id="wifi-perk-badge">Free</span>
+                    <strong>Wi-fi</strong>
+                    <p id="wifi-perk-text">Full-flight included</p>
+                </div>
             </div>
         </div>
 
@@ -67,10 +85,10 @@
         </div>
 
         <div class="card">
-            <div class="sh">Meals <span class="gs">30% Gold discount</span></div>
+            <div class="sh">Meals <span class="gs" id="meal-discount-label">30% Gold discount</span></div>
             <label class="row"><input type="radio" name="meal"><div class="rl"><div class="rn">No meal</div></div><div class="rp">—</div></label>
-            <label class="row"><input type="radio" name="meal" checked data-price="8.40" data-label="Classic hot meal"><div class="rl"><div class="rn">Classic hot meal</div><div class="rs">Chicken, pasta or veg</div></div><div class="rp"><s>£12</s><span class="gld">£8.40</span></div></label>
-            <label class="row"><input type="radio" name="meal" data-price="15.40" data-label="Premium dine set"><div class="rl"><div class="rn">Premium dine</div><div class="rs">3-course + wine</div></div><div class="rp"><s>£22</s><span class="gld">£15.40</span></div></label>
+            <label class="row"><input type="radio" name="meal" checked data-price="8.40" data-label="Classic hot meal"><div class="rl"><div class="rn">Classic hot meal</div><div class="rs">Chicken, pasta or veg</div></div><div class="rp" id="classic-meal-price-display"><s>£12</s><span class="gld">£8.40</span></div></label>
+            <label class="row"><input type="radio" name="meal" data-price="15.40" data-label="Premium dine set"><div class="rl"><div class="rn">Premium dine</div><div class="rs">3-course + wine</div></div><div class="rp" id="premium-meal-price-display"><s>£22</s><span class="gld">£15.40</span></div></label>
         </div>
 
         <div class="card">
@@ -114,6 +132,271 @@
     const continueButton = document.querySelector(".btn");
     const backButton = document.querySelector(".btnb");
     const handoffMessage = document.getElementById("handoff-message");
+
+    function getPassengerOneName() {
+        if (!bookingDraft || !Array.isArray(bookingDraft.passengers) || bookingDraft.passengers.length === 0) {
+            return "Guest";
+        }
+
+        const passengerOne = bookingDraft.passengers[0];
+        const first = passengerOne.firstName || "";
+        const last = passengerOne.lastName || "";
+        return `${first} ${last}`.trim() || "Guest";
+    }
+
+    function getInitials(name) {
+        if (!name) return "--";
+
+        const parts = name.trim().split(/\s+/);
+        if (parts.length === 1) {
+            return parts[0].slice(0, 2).toUpperCase();
+        }
+
+        return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase();
+    }
+
+    function applyPricingDisplayMode() {
+        const seatPerkBadge = document.getElementById("seat-perk-badge");
+        const mealDiscountLabel = document.getElementById("meal-discount-label");
+        const wifiPerkBadge = document.getElementById("wifi-perk-badge");
+        const wifiPerkText = document.getElementById("wifi-perk-text");
+
+        const classicMealInput = document.querySelector('input[name="meal"][data-label="Classic hot meal"]');
+        const premiumMealInput = document.querySelector('input[name="meal"][data-label="Premium dine set"]');
+
+        const classicMealPriceDisplay = document.getElementById("classic-meal-price-display");
+        const premiumMealPriceDisplay = document.getElementById("premium-meal-price-display");
+
+        if (isSignedIn) {
+            if (seatPerkBadge) {
+                seatPerkBadge.textContent = "Free";
+            }
+
+            if (wifiPerkBadge) {
+                wifiPerkBadge.textContent = "Free";
+            }
+
+            if (wifiPerkText) {
+                wifiPerkText.textContent = "Full-flight included";
+            }
+
+            if (mealDiscountLabel) {
+                mealDiscountLabel.textContent = "30% Gold discount";
+            }
+
+            if (classicMealInput) {
+                classicMealInput.dataset.price = String(CLASSIC_MEAL_MEMBER_PRICE);
+            }
+
+            if (premiumMealInput) {
+                premiumMealInput.dataset.price = String(PREMIUM_MEAL_MEMBER_PRICE);
+            }
+
+            if (classicMealPriceDisplay) {
+                classicMealPriceDisplay.innerHTML = `<s>£${CLASSIC_MEAL_FULL_PRICE}</s><span class="gld">£${CLASSIC_MEAL_MEMBER_PRICE.toFixed(2)}</span>`;
+            }
+
+            if (premiumMealPriceDisplay) {
+                premiumMealPriceDisplay.innerHTML = `<s>£${PREMIUM_MEAL_FULL_PRICE}</s><span class="gld">£${PREMIUM_MEAL_MEMBER_PRICE.toFixed(2)}</span>`;
+            }
+        } else {
+            if (seatPerkBadge) {
+                seatPerkBadge.textContent = `£${GUEST_SEAT_PRICE}`;
+            }
+
+            if (wifiPerkBadge) {
+                wifiPerkBadge.textContent = `£${GUEST_WIFI_PRICE.toFixed(2)}`;
+            }
+
+            if (wifiPerkText) {
+                wifiPerkText.textContent = "Charged for guests";
+            }
+
+            if (mealDiscountLabel) {
+                mealDiscountLabel.textContent = "";
+            }
+
+            if (classicMealInput) {
+                classicMealInput.dataset.price = String(CLASSIC_MEAL_FULL_PRICE);
+            }
+
+            if (premiumMealInput) {
+                premiumMealInput.dataset.price = String(PREMIUM_MEAL_FULL_PRICE);
+            }
+
+            if (classicMealPriceDisplay) {
+                classicMealPriceDisplay.innerHTML = `£${CLASSIC_MEAL_FULL_PRICE.toFixed(2)}`;
+            }
+
+            if (premiumMealPriceDisplay) {
+                premiumMealPriceDisplay.innerHTML = `£${PREMIUM_MEAL_FULL_PRICE.toFixed(2)}`;
+            }
+        }
+    }
+
+    function getSelectedRadioPrice(name) {
+        const input = document.querySelector(`input[name="${name}"]:checked`);
+        if (!input || !input.dataset.price) {
+            return 0;
+        }
+
+        return Number(input.dataset.price) || 0;
+    }
+
+    function getCheckedExtrasTotal() {
+        const inputs = document.querySelectorAll('input[type="checkbox"]:checked[data-price]');
+        let total = 0;
+
+        for (let i = 0; i < inputs.length; i++) {
+            total += Number(inputs[i].dataset.price) || 0;
+        }
+
+        return total;
+    }
+
+    function calculateLiveTotal() {
+        const baseFare = Number(bookingDraft?.totalPrice) || 0;
+        const baggagePrice = getSelectedRadioPrice("bag");
+        const mealPrice = getSelectedRadioPrice("meal");
+        const insurancePrice = getSelectedRadioPrice("ins");
+        const extrasPrice = getCheckedExtrasTotal();
+
+        const seatPrice = isSignedIn ? MEMBER_SEAT_PRICE : GUEST_SEAT_PRICE;
+        const wifiPrice = isSignedIn ? MEMBER_WIFI_PRICE : GUEST_WIFI_PRICE;
+
+        return baseFare + baggagePrice + mealPrice + insurancePrice + extrasPrice + seatPrice + wifiPrice;
+    }
+
+    function updateLiveTotalDisplay() {
+        const total = calculateLiveTotal();
+        const baseFare = Number(bookingDraft?.totalPrice) || 0;
+
+        const sumBaseEl = document.getElementById("sum-base");
+        const totalEl = document.getElementById("tot");
+
+        if (sumBaseEl) {
+            sumBaseEl.textContent = `£${baseFare.toFixed(2)}`;
+        }
+
+        if (totalEl) {
+            totalEl.textContent = `£${total.toFixed(2)}`;
+        }
+
+        if (bookingDraft) {
+            bookingDraft.totalPrice = total;
+            sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
+        }
+    }
+
+    const accountNameEl = document.getElementById("account-name");
+    const accountTierEl = document.getElementById("account-tier");
+    const accountPointsEl = document.getElementById("account-points");
+    const accountInitialsEl = document.getElementById("account-initials");
+
+    async function populateAccountCard() {
+        if (isSignedIn) {
+            try {
+                const res = await fetch(`/api/account-summary?userId=${encodeURIComponent(userId)}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || "Failed to load account summary");
+                }
+
+                const fullName =
+                    `${data.firstName ?? firstName ?? ""} ${data.lastName ?? lastName ?? ""}`.trim();
+
+                if (accountNameEl) {
+                    accountNameEl.textContent = fullName || "Member";
+                }
+
+                if (accountTierEl) {
+                    accountTierEl.textContent = `${data.membershipTier} • ${data.membershipNumber}`;
+                }
+
+                if (accountPointsEl) {
+                    accountPointsEl.innerHTML = `${data.loyaltyPoints.toLocaleString()}<small>Avios points</small>`;
+                }
+
+                if (accountInitialsEl) {
+                    accountInitialsEl.textContent = getInitials(fullName);
+                }
+
+            } catch {
+                const fallbackName = `${firstName ?? ""} ${lastName ?? ""}`.trim();
+
+                accountNameEl.textContent = fallbackName || "Member";
+                accountTierEl.textContent = "Member";
+                accountPointsEl.textContent = "";
+                accountInitialsEl.textContent = getInitials(fallbackName);
+            }
+        } else {
+            const passengerName = getPassengerOneName();
+
+            accountNameEl.textContent = passengerName;
+            accountTierEl.textContent = "";
+            accountPointsEl.textContent = "";
+            accountInitialsEl.textContent = getInitials(passengerName);
+        }
+    }
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const userId = sessionStorage.getItem("userId");
+    const firstName = sessionStorage.getItem("firstName");
+    const lastName = sessionStorage.getItem("lastName");
+
+
+    const isSignedIn = !!sessionId && !!userId;
+
+    const MEMBER_SEAT_PRICE = 0;
+    const GUEST_SEAT_PRICE = 20;
+
+    const MEMBER_WIFI_PRICE = 0;
+    const GUEST_WIFI_PRICE = 8.99;
+
+    const CLASSIC_MEAL_FULL_PRICE = 12;
+    const CLASSIC_MEAL_MEMBER_PRICE = 8.40;
+
+    const PREMIUM_MEAL_FULL_PRICE = 22;
+    const PREMIUM_MEAL_MEMBER_PRICE = 15.40;
+
+
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
+
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
+
 
     function formatRouteDate(date) {
         if (!date) {
@@ -311,6 +594,7 @@
         allInputs[i].addEventListener("change", () => {
             saveSelections();
             updateSelectionsSummary();
+            updateLiveTotalDisplay();
         });
     }
 
@@ -362,9 +646,11 @@
         saveSelections();
         window.location.href = "/seatmap";
     });
-
+    populateAccountCard();
+    applyPricingDisplayMode();
     saveSelections();
     updateSelectionsSummary();
+    updateLiveTotalDisplay()
 </script>
 
 </body>

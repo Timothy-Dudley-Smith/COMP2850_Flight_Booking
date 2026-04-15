@@ -162,6 +162,18 @@ data class CreateHoldResponse(
     val expiryTime: String
 )
 
+
+@Serializable
+data class AccountSummary (
+    val userId: Int,
+    val firstName: String,
+    val lastName: String,
+    val membershipNumber: String,
+    val membershipTier: String,
+    val loyaltyPoints: Int
+)
+
+
 fun Application.configureRouting() {
     val authenticationService = AuthenticationService()
 
@@ -227,6 +239,51 @@ fun Application.configureRouting() {
                 }
             }
             call.respond(airportData)
+        }
+
+        get("/api/account-summary") {
+            val userIdParam = call.request.queryParameters["userId"]
+
+            if (userIdParam.isNullOrBlank()) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Missing userId")
+                )
+                return@get
+            }
+
+            val userId = userIdParam.toIntOrNull()
+            if (userId == null) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    ErrorResponse("Invalid userId")
+                )
+                return@get
+            }
+
+            val user = authenticationService.findById(userId)
+            if (user == null) {
+                call.respond(
+                    HttpStatusCode.NotFound,
+                    ErrorResponse("User not found")
+                )
+                return@get
+            }
+
+            val loyaltyAccount = LoyaltyService().getLoyaltyAccount(userId)
+            val points = loyaltyAccount?.loyaltyPoints ?: 0
+
+            call.respond(
+                HttpStatusCode.OK,
+                AccountSummary(
+                    userId = user.userId,
+                    firstName = user.firstName,
+                    lastName = user.lastName,
+                    membershipNumber = "BA-${user.userId}",
+                    membershipTier = "Member",
+                    loyaltyPoints = points
+                )
+            )
         }
 
 
