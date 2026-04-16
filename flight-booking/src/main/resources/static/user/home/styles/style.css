@@ -895,6 +895,16 @@ body {
 
 /* seatmap page*/
 
+.cabin-section-header {
+    width: fit-content;
+    margin: 18px auto 8px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #eef3f8;
+    color: #1a2b4a;
+    font-size: 14px;
+    font-weight: 600;
+}
 
 /* adds map on page */
 .seat-page {
@@ -974,9 +984,24 @@ body {
     cursor: not-allowed;
 }
 
-/* available seats are green and clickable */
-.seat.available {
+/* available seats are gold, teal or dark green and clickable */
+.seat.business-zone.available {
+    background-color: gold;
+    color: #1a1a1a;
+}
+
+.seat.premium-zone.available {
+    background: teal;
+}
+
+.seat.economy-zone.available {
     background: darkgreen;
+}
+
+.seat.wrong-cabin {
+    background: #b7b7b7 !important;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 
@@ -1027,10 +1052,13 @@ body {
 
 
 /* colour of the box for the key */
+.key-box.business { background: gold; }
+.key-box.premium { background: teal; }
+.key-box.economy { background:darkgreen; }
 .key-box.taken { background: dimgrey; }
-.key-box.available { background: darkgreen; }
 .key-box.selected { background: dodgerblue; }
 .key-box.exit { background: darkred; }
+.key-box.wrong-cabin { background: #b7b7b7; }
 
 /* shows which seat is picked */
 .selected-label {

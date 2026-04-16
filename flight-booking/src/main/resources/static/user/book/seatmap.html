@@ -50,6 +50,9 @@
 
     <!-- colour key -->
     <div class="key">
+        <div class="key-item><div class="key-box business"></div>Business</div>
+        <div class="key-item><div class="key-box premium"></div>Premium Economy</div>
+        <div class="key-item><div class="key-box economy"></div>Economy</div>
         <div class="key-item"><div class="key-box taken"></div>Taken</div>
         <div class="key-item"><div class="key-box available"></div>Available</div>
         <div class="key-item"><div class="key-box selected"></div>Selected</div>
@@ -80,6 +83,58 @@
     const columns = ["A", "B", "C", "D", "E", "F"];
     const exitRows = new Set([9]);
     const totalRows = 12;
+    
+    // cabin row ranges
+    const businessRows = new Set([1, 2]);
+    const premiumRows = new Set([3, 4, 5]);
+    const economyRows = new Set([6, 7, 8, 9, 10, 11, 12]);
+
+    function normaliseCabinClass(cabinClass) {
+        const value = cabinClass?.toLowerCase().trim();
+
+        if (value === "business") {
+            return "business"
+        }
+        if (value === "premium" || value === "premium economy" || value === "premium-economy") {
+            return "premium";
+        }
+        if (value === "economy") {
+            return "economy";
+        }
+        return null;
+    }
+
+    const selectedCabin = normaliseCabinClass(bookingDraft?.cabin);
+
+    console.log("bookingDraft:", bookingDraft);
+    console.log("selectedCabin:", selectedCabin);
+
+    function getCabinByRow(rowNumber) {
+        if (businessRows.has(rowNumber)) {
+            return "business";
+        }
+        if (premiumRows.has(rowNumber)) {
+            return "premium";
+        }
+        if (economyRows.has(rowNumber)) {
+            return "economy"
+        }
+        return null;
+    }
+
+    function getCabinLabel(cabin) {
+        if (cabin === "business") {
+            return "Business Class";
+        }
+        if (cabin === "premium") {
+            return "Premium Economy";
+        }
+        if (cabin === "economy") {
+            return "Economy";
+        }
+        return "";
+    }
+
     const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
     const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
     const availableSeats = new Set();
@@ -164,6 +219,15 @@
         seatMap.innerHTML = "";
 
         for (let rowNumber = 1; rowNumber <= totalRows; rowNumber++) {
+            const cabin = getCabinByRow(rowNumber);
+
+            if (rowNumber === 1 || rowNumber === 3 || rowNumber === 6) {
+                const sectionHeader = document.createElement("div");
+                sectionHeader.className = "cabin-section-header";
+                sectionHeader.textContent = getCabinLabel(cabin);
+                seatMap.append(sectionHeader);
+            }
+
             const rowDiv = document.createElement("div");
             rowDiv.className = "seat-row";
 
@@ -196,7 +260,22 @@
                     seatButton.className = "seat taken";
                 }
 
-                if (isSelected || isAvailable) {
+                if (cabin === "business") {
+                    seatButton.classList.add("business-zone");
+                } else if (cabin === "premium") {
+                    seatButton.classList.add("premium-zone");
+                } else if (cabin === "economy") {
+                    seatButton.classList.add("economy-zone")
+                }
+
+                const isWrongCabin = selectedCabin && cabin !== selectedCabin;
+
+                if (isWrongCabin) {
+                    seatButton.classList.add("wrong-cabin");
+                    seatButton.disabled = true;
+                }
+
+                if ((isSelected || isAvailable) && !isWrongCabin) {
                     seatButton.addEventListener("click", () => {
                         holdMessage.textContent = "";
 
