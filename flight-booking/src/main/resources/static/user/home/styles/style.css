@@ -895,6 +895,41 @@ body {
 
 /* seatmap page*/
 
+.cabin-section-header {
+    margin: 20px 0 10px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #333;
+    padding-left: 10px;
+    border-left: 4px solid #888;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.seat.business-zone.available {
+    background-color: goldenrod;
+}
+
+.seat.premium-zone.available {
+    background-color: teal;
+}
+
+.seat.economy-zone.available {
+    background-color: darkgreen;
+}
+
+.seat.wrong-cabin {
+    opacity: 0.4;
+    filter: grayscale(70%);
+    cursor: not-allowed;
+}
+
+.key-box.wrong-cabin {
+    opacity: 0.4;
+    filter: grayscale(70%);
+    cursor: not-allowed;
+}
 
 /* adds map on page */
 .seat-page {

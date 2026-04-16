@@ -54,6 +54,7 @@
         <div class="key-item"><div class="key-box available"></div>Available</div>
         <div class="key-item"><div class="key-box selected"></div>Selected</div>
         <div class="key-item"><div class="key-box exit"></div>Exit row</div>
+        <div class="key-item"><div class="key-box wrong-cabin"></div>Wrong cabin</div>
     </div>
 
     <!-- shows selected seat e.g. "Selected: Seat 4A" -->
@@ -82,6 +83,23 @@
     if (bookingDraft?.from && bookingDraft?.to) {
         const helpLabel = document.getElementById("seat-help-label");
         helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
+    }
+
+    // add cabin row defs 
+    const BUSINESS_ROWS = [1, 2];
+    const PREMIUM_ECONOMY_ROWS = [3, 4, 5];
+    const ECONOMY_ROWS = [6, 7, 8, 9, 10, 11, 12];
+
+    function getCabinClass(rowNumber) {
+        if (BUSINESS_ROWS.includes(rowNumber)) return "business";
+        if (PREMIUM_ECONOMY_ROWS.includes(rowNumber)) return "premium";
+        return "economy";
+    }
+
+    function getCabinLabel(rowNumber) {
+        if (BUSINESS_ROWS.includes(rowNumber)) return "Business class";
+        if (PREMIUM_ECONOMY_ROWS.includes(rowNumber)) return "Premium economy";
+        return "Economy";
     }
 
     function getLoggedInUserId() {
@@ -127,18 +145,34 @@
     const passengersParam = urlParams.get('passengers');
     const cabinParam      = urlParams.get('cabin');
     const priceParam      = urlParams.get('price');
-    const flightId        = urlParams.get('flightId');
+    const flightId = urlParams.get('flightId') || bookingDraft?.flightId;
 
+    if (!flightId) {
+        console.error("No flightId found in URL or bookingDraft");
+    }
+    
     // Fetch real seat data from backend
     async function loadSeats() {
-        const response = await fetch(`/api/seats?flightId=${flightId}`);
-        const seats = await response.json();
+    console.log("loadSeats started");
+
+    const response = await fetch(`/api/seats?flightId=${flightId}`);
+    console.log("fetch finished", response);
+
+    const seats = await response.json();
+    console.log("seats data", seats);
 
         // Build a lookup: seatNumber -> isAvailable
         const seatLookup = {};
         seats.forEach(s => { seatLookup[s.seatNumber] = s.isAvailable; });
 
         for (let rowNum = 1; rowNum <= 12; rowNum++) {
+            if (rowNum === 1 || rowNum ===3 || rowNum === 6) {
+                const sectionHeader = document.createElement("div");
+                sectionHeader.className = 'cabin-section-header';
+                sectionHeader.textContent = getCabinLabel(rowNum);
+                seatMap.append(sectionHeader);
+            }
+            
             const rowDiv = document.createElement('div');
             rowDiv.className = 'seat-row';
 
@@ -156,12 +190,24 @@
 
                 const seatButton = document.createElement('button');
 
-                if (isExitRow) {
-                    seatButton.className = 'seat exit-seat';
-                } else if (!isAvailable) {
-                    seatButton.className = 'seat taken';
+                seatButton.classList.add('seat');
+
+                const cabinClass = getCabinClass(rowNum);
+
+                if (cabinClass === "business") {
+                    seatButton.classList.add('business-zone');
+                } else if (cabinClass === "premium"){
+                    seatButton.classList.add('premium-zone');
                 } else {
-                    seatButton.className = 'seat available';
+                    seatButton.classList.add('economy-zone');
+                }
+
+                if (isExitRow) {
+                    seatButton.classList.add('exit-seat');
+                } else if (!isAvailable) {
+                    seatButton.classList.add('taken');
+                } else {
+                    seatButton.classList.add('available');
                     seatButton.addEventListener('click', function () {
                         document.querySelectorAll('.seat.selected').forEach(s => {
                             s.classList.remove('selected');
@@ -196,6 +242,7 @@
         }
     }
 
+    /*
     document.getElementById('continue-btn').addEventListener('click', async function () {
         if (selectedSeat === null) return;
 
@@ -299,6 +346,11 @@
 
         // 3. Navigate to next page
         window.location.href = `/loyalty?from=${encodeURIComponent(fromParam)}&to=${encodeURIComponent(toParam)}&date=${encodeURIComponent(dateParam)}&passengers=${passengersParam}&cabin=${encodeURIComponent(cabinParam)}&price=${priceParam}&seat=${encodeURIComponent(selectedSeat)}&bookingId=${booking.bookingId}`;
+    });
+*/
+    document.getElementById("continue-btn").addEventListener('click', function () {
+        if (selectedSeat === null) return;
+        console.log("Continue clicked with seat", selectedSeat);
     });
 
     loadSeats();
