@@ -1393,3 +1393,20 @@ label.row input {
     margin-top: 7px;
     cursor: pointer;
 }
+
+
+* booking confirmation page */
+
+.booking-confirmation { max-width:700px; width:100%; margin:40px auto; padding:0 20px; box-sizing:border-box; }
+
+/* greeting */
+#greeting { font:600 1.2rem/1 sans-serif; margin-bottom:16px; }
+
+/* booking id */
+#booking-id-line { margin-bottom:8px; }
+
+/* email */
+#email-line { margin-bottom:24px; }
+
+/* return home btn  */
+.booking-confirmation .continue-btn { display:inline-block; text-decoration:none; width:auto; padding:12px 24px; background:#1a2b4a; color:white; border-radius:30px; }e-btn { display:inline-block; text-decoration:none; width:auto; padding:12px 24px; background:#1a2b4a; border-radius:30px; }

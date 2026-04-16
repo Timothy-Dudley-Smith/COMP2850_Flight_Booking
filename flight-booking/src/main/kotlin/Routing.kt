@@ -606,6 +606,10 @@ fun Application.configureRouting() {
             call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
         }
 
+        get("/confirmation") {
+            call.respondFile(File("src/main/resources/static/user/payment/confirmation.html"))
+        }
+
         post("/api/holds") {
             try {
 

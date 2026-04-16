@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <link rel="stylesheet" href="../home/styles/style.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- page heading -->
+<section class="flights-overview-header">
+    <div class="flights-overview">
+        <h1>Booking Confirmed</h1>
+    </div>
+</section>
+
+<!-- confirmation card -->
+<div class="booking-confirmation">
+    <div class="booking_page_1">
+        <!-- populated via js -->
+        <p id="greeting"></p>
+        <p id="booking-id-line"></p>
+        <p id="email-line"></p>
+        <!-- return home -->
+        <a href="/" class="continue-btn">return to home</a>
+    </div>
+</div>
+
+<script>
+    let checkout = null;
+    let user = null;
+
+    try { checkout = JSON.parse(sessionStorage.getItem("latestCheckoutResponse")); } catch {}
+    try { user = JSON.parse(sessionStorage.getItem("user")); } catch {}
+
+    const firstName = sessionStorage.getItem("firstName") ?? "there";
+    const email = sessionStorage.getItem("userEmail") ?? null;
+    const bookingId = checkout?.bookingId ?? null;
+
+    document.getElementById("greeting").textContent =
+        `Hello ${firstName}, your booking is confirmed!`;
+
+    document.getElementById("booking-id-line").textContent =
+        bookingId ? `Your booking ID is: ${bookingId}` : "Booking ID not available.";
+
+    document.getElementById("email-line").textContent =
+        email ? `We've sent a booking confirmation to ${email}` : "";
+</script>
+
+</body>
+</html>

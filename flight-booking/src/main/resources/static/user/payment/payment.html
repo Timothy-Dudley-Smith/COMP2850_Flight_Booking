@@ -271,8 +271,8 @@
                 message.textContent = result?.message ?? text ?? "Payment failed. Try again.";
                 return;
             } else {
-                message.textContent = result.message ?? "Payment successful.";
                 sessionStorage.setItem("latestCheckoutResponse", JSON.stringify(result));
+                window.location.href = "/confirmation";
             }
         } catch {
             message.textContent = "Payment failed. Try again.";
