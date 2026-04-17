@@ -224,6 +224,10 @@ fun Application.configureRouting() {
             )
         }
 
+        get("/payment") {
+            call.respondFile(File("src/main/resources/static/user/payment/payment.html"))
+        }
+
 
 
 

@@ -20,6 +20,10 @@ kotlin {
     jvmToolchain(21)
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation("io.ktor:ktor-server-pebble")
     implementation("io.ktor:ktor-server-core")
@@ -32,6 +36,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-config-yaml")
+    implementation("com.sun.mail:javax.mail:1.6.2")
+    implementation("com.sun.activation:javax.activation:1.2.0")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

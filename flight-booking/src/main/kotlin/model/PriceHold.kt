@@ -4,7 +4,7 @@ import org.jetbrains.exposed.sql.Table
 
 data class PriceHold(
     val holdId: Int,
-    val userId: Int?,
+    val userId: Int,
     val flightId: String,
     val expiryTime: String,
     val totalPrice: Double
