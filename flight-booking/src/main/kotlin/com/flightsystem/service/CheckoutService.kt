@@ -23,8 +23,8 @@ class CheckoutService(
     private val emailService = EmailService(
         smtpHost = "smtp.gmail.com",
         smtpPort = "587",
-        smtpUsername = "mikaeelm06@gmail.com",
-        smtpPassword = "hqtqsoheznwaamfu",
+        smtpUsername = "",
+        smtpPassword = "",
         fromEmail = "YOUR_EMAIL@gmail.com"
     )
 
