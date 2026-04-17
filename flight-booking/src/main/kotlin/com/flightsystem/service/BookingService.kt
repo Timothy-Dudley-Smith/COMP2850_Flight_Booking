@@ -152,9 +152,11 @@ class BookingService {
                 (Seats.flightId eq flightId) and (Seats.isAvailable eq true)
             }.map {
                 Seat(
+                    seatId = it[Seats.seatId],
                     flightId = it[Seats.flightId],
                     seatNumber = it[Seats.seatNumber],
-                    isAvailable = it[Seats.isAvailable]
+                    isAvailable = it[Seats.isAvailable],
+                    seatClass = it[Seats.seatClass]
                 )
             }           
         }

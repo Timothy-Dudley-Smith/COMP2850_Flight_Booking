@@ -42,15 +42,23 @@ fun Application.configureDatabases() {
 
         val columns = listOf("A","B","C","D","E","F")
         val flights = Flights.selectAll().map { it[Flights.flightId] }
+
         for (flightId in flights) {
             val existingSeats = Seats.selectAll().where { Seats.flightId eq flightId }.count()
             if (existingSeats == 0L) {
                 for (row in 1..12) {
+                    val seatClass = when (row) {
+                        1, 2 -> SeatClass.BUSINESS
+                        3, 4, 5 -> SeatClass.PREMIUM_ECONOMY
+                        else -> SeatClass.ECONOMY
+                    }
+
                     for (col in columns) {
                         Seats.insert {
                             it[Seats.flightId] = flightId
                             it[Seats.seatNumber] = "$row$col"
                             it[Seats.isAvailable] = true
+                            it[Seats.seatClass] = seatClass
                         }
                     }
                 }

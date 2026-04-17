@@ -1,7 +1,9 @@
 package com.flightsystem.model
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class SeatClass {
     ECONOMY,
-    BUSINESS,
-    FIRST
+    PREMIUM_ECONOMY,
+    BUSINESS
 }

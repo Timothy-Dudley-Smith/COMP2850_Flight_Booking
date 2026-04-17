@@ -14,6 +14,15 @@ import org.jetbrains.exposed.sql.deleteWhere
 
 
 class PriceHoldService {
+    private fun getSeatMultiplier(seatClass: SeatClass): Double {
+        return when (seatClass) {
+            SeatClass.ECONOMY -> 1.0
+            SeatClass.PREMIUM_ECONOMY -> 1.6
+            SeatClass.BUSINESS -> 3.5
+        }
+    }
+    
+    
     fun createHold(
         userId: Int,
         flightId: String,
@@ -42,7 +51,14 @@ class PriceHoldService {
                 throw IllegalArgumentException("Flight doesn't exist") 
             }
             val basePrice = flightRow[Flights.price]
-            val totalPrice = basePrice * seatNumbers.size
+            var totalPrice = 0.0
+            for (seatRow in seatsFromDb) {
+                val seatClass = seatRow[Seats.seatClass]
+                val multiplier = getSeatMultiplier(seatClass)
+                totalPrice += basePrice * multiplier
+            }
+
+
             val expiryTime = LocalDateTime.now().plusMinutes(15).toString() // set hold to expire in 15 mins 
             val inserted = PriceHolds.insert {
                 it[PriceHolds.userId] = userId
@@ -209,7 +225,7 @@ class PriceHoldService {
                 bookingId = newBookingId,
                 userId = userId,
                 flightId = flightId,
-                totalPrice = 10.0
+                totalPrice = holdRow[PriceHolds.totalPrice]
             )
         }
     }
