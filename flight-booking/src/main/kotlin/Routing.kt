@@ -11,6 +11,9 @@ import com.flightsystem.service.CheckoutService
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
+import com.flightsystem.service.TicketService
+import model.CreateTicketRequest
+import model.UpdateTicketRequest
 
 
 import io.ktor.server.request.receive
@@ -164,6 +167,7 @@ data class CreateHoldResponse(
 
 fun Application.configureRouting() {
     val authenticationService = AuthenticationService()
+    val ticketService = TicketService()
 
     routing {
 
@@ -330,6 +334,36 @@ fun Application.configureRouting() {
             )
 
             call.respond(HttpStatusCode.Created, savedPassengers)
+        }
+
+        route("/api/passengers") {
+            post {
+                val request = call.receive<CreateTicketRequest>()
+                val createdTicket = ticketService.createTicket(request)
+                call.respond(HttpStatusCode.Created, createdTicket)
+            }
+
+            get {
+                val tickets = ticketService.getAllTickets()
+                call.respond(HttpStatusCode.OK, tickets)
+            }
+
+            put("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ticket ID")
+                    return@put
+                }
+
+                val request = call.receive<UpdateTicketRequest>()
+                val updatedTicket = ticketService.updateTicket(id, request)
+
+                if (updatedTicket == null) {
+                    call.respond(HttpStatusCode.NotFound, "Ticket not found")
+                } else {
+                    call.respond(HttpStatusCode.OK, updatedTicket)
+                }
+            }
         }
 
         get("/api/manager/flights") {

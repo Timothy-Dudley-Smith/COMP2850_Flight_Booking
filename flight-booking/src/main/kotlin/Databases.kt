@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import kotlinx.serialization.json.*
 import java.io.File
+import model.*
 
 import com.flightsystem.model.*
 
@@ -39,7 +40,8 @@ fun Application.configureDatabases() {
             PriceHolds,
             PriceHoldSeats,
             Passengers,
-            LoyaltyAccounts
+            LoyaltyAccounts,
+            SupportTickets
         )
 
         val columns = listOf("A","B","C","D","E","F")
