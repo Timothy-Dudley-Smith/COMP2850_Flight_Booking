@@ -84,7 +84,9 @@
                 <label for="last-name">Last name</label>
                 <input type="text" id="last-name" placeholder="As shown on your passport">
             </div>
-            <button type="submit" class="login-btn" onclick="window.location.href='/home/loyaltypage.html'">Find Booking</button>
+            <button type="submit" class="login-btn" onclick="findBooking()">Find Booking</button>
+
+
         </form>
 
         <div class="divider"><span>or</span></div>
@@ -115,6 +117,37 @@
         } else {
             input.type = 'password';
             btn.textContent = 'Show';
+        }
+    }
+
+    async function findBooking() {
+
+        // get what the user typed in
+        const bookingId = document.getElementById('booking-ref').value.trim();
+        const lastName = document.getElementById('last-name').value.trim();
+
+        // get the message box so we can show errors
+        const messageBox = document.getElementById('booking-message');
+
+        // check both fields have something in them
+        if (bookingId == '' || lastName == '') {
+            messageBox.textContent = 'Please enter both fields.';
+            return;
+        }
+
+        // make the url safe to use in a link
+        const safeBookingId = encodeURIComponent(bookingId);
+        const safeLastName = encodeURIComponent(lastName);
+
+        // call the server to check if the booking exists
+        const response = await fetch(`/api/bookings/lookup?bookingId=${safeBookingId}&lastName=${safeLastName}`);
+
+        // if booking was found, go to the booking page
+        if (response.ok) {
+            window.location.href = `/view-booking?bookingId=${safeBookingId}&lastName=${safeLastName}`;
+        } else {
+            // otherwise show an error message
+            messageBox.textContent = 'No booking found. Check your details.';
         }
     }
 </script>

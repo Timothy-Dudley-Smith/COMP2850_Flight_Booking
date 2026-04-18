@@ -162,6 +162,14 @@ data class CreateHoldResponse(
     val expiryTime: String
 )
 
+@Serializable
+data class BookingLookupResponse(
+    val bookingId: Int,
+    val flightId: String,
+    val seats: List<String>,
+    val passengers: List<String>
+)
+
 fun Application.configureRouting() {
     val authenticationService = AuthenticationService()
 
@@ -633,6 +641,74 @@ fun Application.configureRouting() {
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.BadRequest, "Error while creating hold")
             }
+        }
+        get("/api/bookings/lookup") {
+
+            // get  parameters from the request url
+            val bookingIdParam = call.request.queryParameters["bookingId"]
+            val lastName = call.request.queryParameters["lastName"]?.trim()
+
+            // convert booking id to int, if fails it will be null
+            val bookingId = bookingIdParam?.toIntOrNull()
+
+            // validate both fields are present
+            if (bookingId == null || lastName.isNullOrBlank()) {
+                call.respond(HttpStatusCode.BadRequest, ErrorResponse("Missing bookingId or lastName"))
+                return@get
+            }
+
+            // create services
+            val bookingService = BookingService()
+            val passengerService = PassengerService()
+
+            // look up the booking by id
+            val details = bookingService.getBookingDetails(bookingId)
+
+            // if no booking found return 404
+            if (details == null) {
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Booking not found"))
+                return@get
+            }
+
+            // get all passengers on this booking
+            val passengers = passengerService.getPassengersByBooking(bookingId)
+
+            // check if any passenger last name matches what was entered (not case sensitive)
+            var lastNameMatches = false
+            for (passenger in passengers) {
+                if (passenger.lastName.equals(lastName, ignoreCase = true)) {
+                    lastNameMatches = true
+                    break
+                }
+            }
+
+            // if no name match, return 404 (same message to avoid exposing booking exists)
+            if (lastNameMatches == false) {
+                call.respond(HttpStatusCode.NotFound, ErrorResponse("Booking not found"))
+                return@get
+            }
+
+            // build list of passenger full names
+            val passengerNames = mutableListOf<String>()
+            for (passenger in passengers) {
+                passengerNames.add("${passenger.firstName} ${passenger.lastName}")
+            }
+
+            // return the booking details
+            call.respond(
+                HttpStatusCode.OK,
+                BookingLookupResponse(
+                    bookingId  = details.booking.bookingId,
+                    flightId   = details.booking.flightId,
+                    seats      = details.seats,
+                    passengers = passengerNames
+                )
+            )
+        }
+
+// serves the view booking html page
+        get("/view-booking") {
+            call.respondFile(File("src/main/resources/static/user/booking/view-booking.html"))
         }
     }
 

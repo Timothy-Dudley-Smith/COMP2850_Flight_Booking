@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Booking</title>
+    <link rel="stylesheet" href="/log_in/styles/style.css">
+</head>
+<body>
+<main class="login-page">
+    <div class="login-card">
+        <h1>Booking Details</h1>
+        <div id="booking-info"><p>Loading...</p></div>
+    </div>
+</main>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get('bookingId');
+    const lastName = params.get('lastName');
+
+    fetch(`/api/bookings/lookup?bookingId=${encodeURIComponent(bookingId)}&lastName=${encodeURIComponent(lastName)}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('booking-info').innerHTML = `
+                <p><strong>Booking ID:</strong> ${data.bookingId}</p>
+                <p><strong>Flight:</strong> ${data.flightId}</p>
+                <p><strong>Seats:</strong> ${data.seats.join(', ')}</p>
+                <p><strong>Passengers:</strong> ${data.passengers.join(', ')}</p>
+            `;
+        })
+        .catch(() => {
+            document.getElementById('booking-info').innerHTML = '<p>Could not load booking.</p>';
+        });
+</script>
+</body>
+</html>
