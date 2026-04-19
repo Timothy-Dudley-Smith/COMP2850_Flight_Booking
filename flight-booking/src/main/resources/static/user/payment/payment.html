@@ -272,6 +272,18 @@
                 return;
             } else {
                 sessionStorage.setItem("latestCheckoutResponse", JSON.stringify(result));
+
+// save passengers to DB
+                const draft = JSON.parse(sessionStorage.getItem("bookingDraft") || "{}");
+                await fetch("/api/passengers", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        bookingId: result.bookingId,
+                        passengers: draft.passengers
+                    })
+                });
+
                 window.location.href = "/confirmation";
             }
         } catch {

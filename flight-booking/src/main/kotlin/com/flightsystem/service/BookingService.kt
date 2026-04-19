@@ -276,6 +276,38 @@ class BookingService {
         }
     }
 
+    //  function gets bookings from the database and returns list
+    fun getAllBookings(): List<BookingDetails> {
+
+        return transaction {
+            // get every booking for the bookings table
+            Bookings.selectAll()
+                // if not null turn it into a BookingDetails object.
+                .mapNotNull { row ->
+                    // get booking id
+                    val bookingId = row[Bookings.bookingId]
+                    //  find all rows where the bookingId column matches
+                    val seats = BookingSeats.selectAll()
+                        .where { BookingSeats.bookingId eq bookingId }
+                        //  only want the seat number itself
+                        .map { seatRow -> seatRow[BookingSeats.seatNumber] }
+                    // combine all info into object
+                    val booking = Booking(
+                        bookingId = bookingId,
+                        userId    = row[Bookings.userId],
+                        flightId  = row[Bookings.flightId],
+                        totalPrice = 10.0
+                    )
+
+                    BookingDetails(
+                        booking = booking,
+                        seats   = seats
+                    )
+                }
+
+        }
+    }
+
     // calc total price based on seat class
     /* temp comment this out - trying something 
     fun calculatePriceByClass(flight: Flight, seats: List<Seat>): Double {

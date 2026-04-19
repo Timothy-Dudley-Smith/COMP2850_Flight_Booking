@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager – All Bookings</title>
+    <link rel="stylesheet" href="/manager/flight_view/styles/flight_view.css">
+</head>
+<body>
+<header>
+    <h1>Manager – Bookings</h1>
+    <p>View and edit all passenger bookings.</p>
+</header>
+
+<main>
+    <section>
+        <h2>Filter Bookings</h2>
+        <div style="padding: 16px 18px; display: flex; gap: 16px;">
+            <input type="number" id="filter-booking-id" placeholder="Booking ID" style="padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: Inter, sans-serif; outline: none; width: 160px;">
+            <input type="number" id="filter-user-id" placeholder="User ID" style="padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: Inter, sans-serif; outline: none; width: 160px;">
+            <button onclick="applyFilter()" style="padding: 9px 24px; background: #132e8e; color: white; border: none; border-radius: 30px; font-size: 13px; font-weight: 500; cursor: pointer;">Filter</button>
+            <button onclick="clearFilter()" style="padding: 9px 24px; background: none; border: 1px solid #ccc; border-radius: 30px; font-size: 13px; cursor: pointer;">Clear</button>
+        </div>
+    </section>
+
+
+    <section aria-labelledby="bookings-heading">
+        <h2 id="bookings-heading">All Bookings</h2>
+        <table id="upcoming-flights-table">
+            <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User ID</th>
+                <th>Flight ID</th>
+                <th>Seats</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="upcoming-flights-body">
+            <tr><td colspan="5">Loading...</td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    let allBookings = [];
+
+    fetch('/api/manager/bookings')
+        .then(r => r.json())
+        .then(data => {
+            allBookings = data;
+            renderTable(data);
+        });
+
+    function renderTable(data) {
+        const tbody = document.getElementById('upcoming-flights-body');
+        if (!data.length) {
+            tbody.innerHTML = '<tr><td colspan="5">No bookings found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.map(b => `
+        <tr>
+            <td>${b.booking.bookingId}</td>
+            <td>${b.booking.userId}</td>
+            <td>${b.booking.flightId}</td>
+            <td>${b.seats.join(', ') || 'None'}</td>
+            <td><button class="remove-btn" onclick="editBooking(${b.booking.bookingId})">Edit</button></td>
+        </tr>
+    `).join('');
+    }
+
+    function applyFilter() {
+        const bookingId = document.getElementById('filter-booking-id').value.trim();
+        const userId = document.getElementById('filter-user-id').value.trim();
+
+        let filtered = allBookings;
+        if (bookingId) filtered = filtered.filter(b => b.booking.bookingId == bookingId);
+        if (userId) filtered = filtered.filter(b => b.booking.userId == userId);
+
+        renderTable(filtered);
+    }
+
+    function clearFilter() {
+        document.getElementById('filter-booking-id').value = '';
+        document.getElementById('filter-user-id').value = '';
+        renderTable(allBookings);
+    }
+
+    function editBooking(bookingId) {
+        window.location.href = `/manager/edit_bookings?bookingId=${bookingId}`;
+    }
+</script>
+</body>
+</html>

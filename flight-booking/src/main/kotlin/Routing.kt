@@ -710,6 +710,16 @@ fun Application.configureRouting() {
         get("/view-booking") {
             call.respondFile(File("src/main/resources/static/user/booking/view-booking.html"))
         }
+
+        get("/api/manager/bookings") {
+            val bookingService = BookingService()
+            val bookings = bookingService.getAllBookings()
+            call.respond(HttpStatusCode.OK, bookings)
+        }
+
+        get("/manager/bookings") {
+            call.respondFile(File("src/main/resources/static/manager/edit_bookings/edit_bookings.html"))
+        }
     }
 
 }

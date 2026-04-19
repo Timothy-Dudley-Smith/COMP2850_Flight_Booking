@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Booking</title>
-    <link rel="stylesheet" href="/log_in/styles/style.css">
+    <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<main class="login-page">
-    <div class="login-card">
-        <h1>Booking Details</h1>
-        <div id="booking-info"><p>Loading...</p></div>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/recommendations">Recommendations</a>
+            <a href="/book">Book</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<section class="flights-overview-header">
+    <div class="flights-overview">
+        <h1>Your Booking</h1>
+        <p>Booking reference details</p>
     </div>
-</main>
+</section>
+
+<div id="booking-content"></div>
+<p id="booking-error" style="max-width:700px;margin:24px auto;padding:0 20px;color:#c0392b;font-weight:600;"></p>
+
 <script>
     const params = new URLSearchParams(window.location.search);
     const bookingId = params.get('bookingId');
@@ -20,16 +48,48 @@
     fetch(`/api/bookings/lookup?bookingId=${encodeURIComponent(bookingId)}&lastName=${encodeURIComponent(lastName)}`)
         .then(r => r.json())
         .then(data => {
-            document.getElementById('booking-info').innerHTML = `
-                <p><strong>Booking ID:</strong> ${data.bookingId}</p>
-                <p><strong>Flight:</strong> ${data.flightId}</p>
-                <p><strong>Seats:</strong> ${data.seats.join(', ')}</p>
-                <p><strong>Passengers:</strong> ${data.passengers.join(', ')}</p>
-            `;
+            const container = document.getElementById('booking-content');
+
+            // booking info card
+            container.insertAdjacentHTML('beforeend', `
+                <div class="booking_page_1">
+                    <h2>Booking Details</h2>
+                    <p class="age-label">Your confirmed booking information</p>
+
+                    <div class="user_input_box">
+                        <label>Booking ID</label>
+                        <input type="text" value="${data.bookingId}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Flight</label>
+                        <input type="text" value="${data.flightId}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Seat(s)</label>
+                        <input type="text" value="${data.seats.join(', ')}" disabled>
+                    </div>
+                </div>
+            `);
+
+            // one card per passenger
+            data.passengers.forEach((name, i) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="booking_page_1">
+                        <h2>Passenger ${i + 1}</h2>
+                        <div class="user_input_box">
+                            <label>Full name</label>
+                            <input type="text" value="${name}" disabled>
+                        </div>
+                    </div>
+                `);
+            });
         })
         .catch(() => {
-            document.getElementById('booking-info').innerHTML = '<p>Could not load booking.</p>';
+            document.getElementById('booking-error').textContent = 'Could not load booking details.';
         });
 </script>
+
 </body>
 </html>
