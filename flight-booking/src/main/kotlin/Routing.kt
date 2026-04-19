@@ -57,6 +57,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
+import com.flightsystem.model.BookingDetails
+import com.flightsystem.model.Passenger
 
 @Serializable
 data class FlightResponse(
@@ -68,6 +70,12 @@ data class FlightResponse(
     val departureTime: String,
     val arrivalTime: String,
     val length: Double
+)
+
+@Serializable
+data class ManagerBookingDetailResponse(
+    val booking: BookingDetails?,
+    val passengers: List<Passenger>
 )
 
 @Serializable
@@ -741,14 +749,17 @@ fun Application.configureRouting() {
             val booking = bookingService.getBookingDetails(bookingId)
             val passengers = passengerService.getPassengersByBooking(bookingId)
 
-            val response = mapOf("booking" to booking, "passengers" to passengers)
-            call.respond(response)
+            call.respond(ManagerBookingDetailResponse(booking = booking, passengers = passengers))
+
+
         }
 
         // update a passenger in a booking
-        put("/api/manager/bookings/{bookingId}/passengers/{passengerId}") {
+        put("/api/manager/passengers/{passengerId}") {
 
-            val passengerId = call.parameters["passengerId"]?.toIntOrNull()
+
+
+        val passengerId = call.parameters["passengerId"]?.toIntOrNull()
                 ?: return@put call.respond(HttpStatusCode.BadRequest, "invalid passenger id")
 
             val input = call.receive<PassengerInput>()
@@ -795,6 +806,11 @@ fun Application.configureRouting() {
             if (success) call.respond(HttpStatusCode.OK)
             else call.respond(HttpStatusCode.NotFound)
 
+        }
+
+        get("/api/debug/passengers") {
+            val all = passengerService.getPassengersByBooking(161)
+            call.respond(all)
         }
 
 
