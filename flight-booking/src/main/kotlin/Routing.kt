@@ -8,6 +8,10 @@ import com.flightsystem.model.Manager
 import com.flightsystem.model.PaymentRequest
 import com.flightsystem.service.AuthenticationService
 import com.flightsystem.service.CheckoutService
+import com.flightsystem.model.PassengerInput
+
+
+
 import com.flightsystem.service.LoyaltyService
 import com.flightsystem.service.PaymentService
 import com.flightsystem.service.PriceHoldService
@@ -170,6 +174,11 @@ data class BookingLookupResponse(
     val passengers: List<String>
 )
 
+@Serializable
+data class UpdateSeatsRequest(
+    val seats: List<String>
+)
+
 fun Application.configureRouting() {
     val authenticationService = AuthenticationService()
 
@@ -195,6 +204,8 @@ fun Application.configureRouting() {
             call.respondFile(File("src/main/resources/static/user/log_in/register.html"))
         }
         val passengerService = PassengerService()
+        val bookingService = BookingService()
+
 
         staticResources("/", "static/user/home")
         staticResources("/log_in", "static/user/log_in")
@@ -720,6 +731,73 @@ fun Application.configureRouting() {
         get("/manager/bookings") {
             call.respondFile(File("src/main/resources/static/manager/edit_bookings/edit_bookings.html"))
         }
+
+        // get booking + its passengers
+        get("/api/manager/bookings/{bookingId}") {
+
+            val bookingId = call.parameters["bookingId"]?.toIntOrNull()
+                ?: return@get call.respond(HttpStatusCode.BadRequest, "invalid booking id")
+
+            val booking = bookingService.getBookingDetails(bookingId)
+            val passengers = passengerService.getPassengersByBooking(bookingId)
+
+            val response = mapOf("booking" to booking, "passengers" to passengers)
+            call.respond(response)
+        }
+
+        // update a passenger in a booking
+        put("/api/manager/bookings/{bookingId}/passengers/{passengerId}") {
+
+            val passengerId = call.parameters["passengerId"]?.toIntOrNull()
+                ?: return@put call.respond(HttpStatusCode.BadRequest, "invalid passenger id")
+
+            val input = call.receive<PassengerInput>()
+
+            passengerService.updatePassenger(passengerId, input)
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        // update seats on a booking (frees old seats, books new ones)
+        put("/api/manager/bookings/{bookingId}/seats") {
+
+            // get booking id
+            val bookingId = call.parameters["bookingId"]?.toIntOrNull()
+                ?: return@put call.respond(HttpStatusCode.BadRequest, "invalid booking id")
+            // get the new seats list from request body
+            val request = call.receive<UpdateSeatsRequest>()
+            val newSeats = request.seats
+            // try to update the seats
+            val success = bookingService.updateBookingSeats(bookingId, newSeats)
+
+            // send back result
+            if (success) call.respond(HttpStatusCode.OK)
+            else call.respond(HttpStatusCode.BadRequest, "invalid seats")
+
+
+        }
+
+        // Delete entire booking + free seats + delete passengers
+        // cancel a booking (removes passengers, frees seats, deletes booking)
+        delete("/api/manager/bookings/{bookingId}") {
+
+            // get booking id from url
+            val bookingId = call.parameters["bookingId"]?.toIntOrNull()
+                ?: return@delete call.respond(HttpStatusCode.BadRequest, "invalid booking id")
+
+            // remove all passengers on this booking first
+            passengerService.deletePassengersByBooking(bookingId)
+
+            // cancel the booking (frees seats + deletes it)
+            val success = bookingService.cancelBooking(bookingId)
+
+            // send back result
+            if (success) call.respond(HttpStatusCode.OK)
+            else call.respond(HttpStatusCode.NotFound)
+
+        }
+
+
     }
 
 }

@@ -1,9 +1,15 @@
 package com.flightsystem.service
 
 import com.flightsystem.model.*
+import com.flightsystem.model.Passengers.passportNumber
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+
+
 
 class PassengerService {
     // add 1 or more passengers to an existing booking 
@@ -52,6 +58,8 @@ class PassengerService {
         }
     }
 
+
+
     // return all passengers linked to a specific booking 
     fun getPassengersByBooking(bookingId: Int): List<Passenger> {
         return transaction {
@@ -69,6 +77,26 @@ class PassengerService {
                     passportNumber = row[Passengers.passportNumber]
                 )
             }
+        }
+    }
+
+    fun updatePassenger(passengerId: Int, input: PassengerInput) {
+        transaction {
+            // find passenger by id and update their info
+            Passengers.update({ Passengers.passengerId eq passengerId }) {
+                it[title] = input.title
+                it[firstName] = input.firstName
+                it[lastName] = input.lastName
+                it[gender] = input.gender
+                it[dateOfBirth] = input.dateOfBirth
+                it[passportNumber] = input.passportNumber
+            }
+        }
+    }
+
+    fun deletePassengersByBooking(bookingId: Int) {
+        transaction {
+            Passengers.deleteWhere { Passengers.bookingId eq bookingId }
         }
     }
 }

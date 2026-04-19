@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager – Edit Booking</title>
+    <link rel="stylesheet" href="/manager/flight_view/styles/flight_view.css">
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Manager – Edit Booking</h1>
+    <p>Edit passenger details, seats, or delete this booking.</p>
+</header>
+
+<main>
+    <div id="booking-content"></div>
+    <p id="booking-error" style="color:#c0392b;font-weight:600;padding:20px;"></p>
+</main>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get('bookingId');
+    let loadedData = null;
+
+    fetch(`/api/manager/bookings/${bookingId}`)
+        .then(r => {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+        })
+        .then(data => {
+            loadedData = data;
+            render(data);
+        })
+        .catch(() => {
+            document.getElementById('booking-error').textContent = 'Could not load booking.';
+        });
+
+    function render(data) {
+        const container = document.getElementById('booking-content');
+        const booking = data.booking.booking;
+        const seats = data.booking.seats;
+        const passengers = data.passengers;
+
+        container.innerHTML = `
+            <div class="booking_page_1">
+                <h2>Booking Info</h2>
+
+                <div class="user_input_box">
+                    <label>Booking ID</label>
+                    <input type="text" value="${booking.bookingId}" disabled>
+                </div>
+
+                <div class="user_input_box">
+                    <label>Flight ID</label>
+                    <input type="text" value="${booking.flightId}" disabled>
+                </div>
+
+                <div class="user_input_box">
+                    <label>Seats (comma separated)</label>
+                    <input type="text" id="seats-input" value="${seats.join(', ')}">
+                </div>
+
+                <button onclick="saveSeats()" style="margin-top:10px;padding:9px 24px;background:#132e8e;color:white;border:none;border-radius:30px;cursor:pointer;">Save Seats</button>
+                <span id="seats-msg" style="margin-left:10px;font-size:13px;"></span>
+            </div>
+
+            <div id="passengers-container">
+                ${passengers.map((p, i) => `
+                <div class="booking_page_1">
+                    <h2>Passenger ${i + 1}</h2>
+
+                    <div class="user_input_box">
+                        <label>Title</label>
+                        <select id="p-title-${p.passengerId}">
+                            ${['Mr','Mrs','Miss','Ms','Dr'].map(t =>
+            `<option ${p.title === t ? 'selected' : ''}>${t}</option>`
+        ).join('')}
+                        </select>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>First Name</label>
+                        <input type="text" id="p-firstName-${p.passengerId}" value="${p.firstName}">
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Last Name</label>
+                        <input type="text" id="p-lastName-${p.passengerId}" value="${p.lastName}">
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Gender</label>
+                        <select id="p-gender-${p.passengerId}">
+                            ${['Male','Female','Other'].map(g =>
+            `<option ${p.gender === g ? 'selected' : ''}>${g}</option>`
+        ).join('')}
+                        </select>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Date of Birth</label>
+                        <input type="text" id="p-dob-${p.passengerId}" value="${p.dateOfBirth}">
+                    </div>
+
+                    <div class="user_input_box">
+                        <label>Passport Number</label>
+                        <input type="text" id="p-passport-${p.passengerId}" value="${p.passportNumber}">
+                    </div>
+
+                    <button onclick="savePassenger(${p.passengerId})" style="margin-top:10px;padding:9px 24px;background:#132e8e;color:white;border:none;border-radius:30px;cursor:pointer;">Save Passenger</button>
+                    <span id="p-msg-${p.passengerId}" style="margin-left:10px;font-size:13px;"></span>
+                </div>
+                `).join('')}
+            </div>
+
+            <div class="booking_page_1" style="border:1px solid #e74c3c;">
+                <h2>Danger Zone</h2>
+                <button onclick="deleteBooking()" style="padding:9px 24px;background:#c0392b;color:white;border:none;border-radius:30px;cursor:pointer;">Delete Entire Booking</button>
+                <span id="delete-msg" style="margin-left:10px;font-size:13px;"></span>
+            </div>
+
+            <div style="padding:20px;">
+                <a href="/manager/bookings" style="color:#132e8e;">← Back to all bookings</a>
+            </div>
+        `;
+    }
+
+    function saveSeats() {
+        const raw = document.getElementById('seats-input').value;
+        const seats = raw.split(',').map(s => s.trim()).filter(s => s);
+        fetch(`/api/manager/bookings/${bookingId}/seats`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seats })
+        }).then(r => {
+            document.getElementById('seats-msg').textContent = r.ok ? 'Saved!' : 'Error saving seats.';
+        });
+    }
+
+    function savePassenger(passengerId) {
+        const body = {
+            title: document.getElementById(`p-title-${passengerId}`).value,
+            firstName: document.getElementById(`p-firstName-${passengerId}`).value,
+            lastName: document.getElementById(`p-lastName-${passengerId}`).value,
+            gender: document.getElementById(`p-gender-${passengerId}`).value,
+            dateOfBirth: document.getElementById(`p-dob-${passengerId}`).value,
+            passportNumber: document.getElementById(`p-passport-${passengerId}`).value
+        };
+        fetch(`/api/manager/passengers/${passengerId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        }).then(r => {
+            document.getElementById(`p-msg-${passengerId}`).textContent = r.ok ? 'Saved!' : 'Error saving.';
+        });
+    }
+
+    function deleteBooking() {
+        if (!confirm('Delete this entire booking? This cannot be undone.')) return;
+        fetch(`/api/manager/bookings/${bookingId}`, { method: 'DELETE' })
+            .then(r => {
+                if (r.ok) window.location.href = '/manager/bookings';
+                else document.getElementById('delete-msg').textContent = 'Error deleting booking.';
+            });
+    }
+</script>
+
+</body>
+</html>
