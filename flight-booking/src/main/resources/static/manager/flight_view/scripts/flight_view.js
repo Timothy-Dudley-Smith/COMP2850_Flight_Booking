@@ -13,12 +13,22 @@
     }
     "use strict";
 
-    const flightsEndpoint = "/api/manager/flights";
+    const allFlightsEndpoint = "/api/flights?date=";
     const createFlightEndpoint = "/api/manager/flight_view";
     const deleteFlightEndpoint = (flightId) => `/api/manager/flights/${encodeURIComponent(flightId)}`;
     const message = document.getElementById("manager-message");
     const form = document.getElementById("add-flight-form");
     const tableBody = document.getElementById("upcoming-flights-body");
+    const filterSummary = document.getElementById("flight-filter-summary");
+    const filterButtons = Array.from(document.querySelectorAll("[data-flight-filter]"));
+    const filterLabels = {
+        upcoming: "upcoming",
+        past: "past",
+        all: "all"
+    };
+
+    let allFlights = [];
+    let activeFilter = "upcoming";
 
     function setMessage(text, state) {
         if (!message) {
@@ -27,6 +37,14 @@
 
         message.textContent = text;
         message.className = state && state !== "info" ? state : "";
+    }
+
+    function setFilterSummary(text) {
+        if (!filterSummary) {
+            return;
+        }
+
+        filterSummary.textContent = text;
     }
 
     function formatPrice(value) {
@@ -53,6 +71,114 @@
         const cell = document.createElement("td");
         cell.textContent = text;
         row.appendChild(cell);
+    }
+
+    function toLocalDateString(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+
+    function parseFlightDepartureDateTime(flight) {
+        if (!flight || typeof flight.date !== "string" || !flight.date) {
+            return null;
+        }
+
+        const time = typeof flight.departureTime === "string" && flight.departureTime
+            ? flight.departureTime
+            : "00:00";
+
+        const dateTime = new Date(`${flight.date}T${time}`);
+        return Number.isNaN(dateTime.getTime()) ? null : dateTime;
+    }
+
+    function isPastFlight(flight) {
+        const departureDateTime = parseFlightDepartureDateTime(flight);
+
+        if (departureDateTime) {
+            return departureDateTime.getTime() < Date.now();
+        }
+
+        if (typeof flight?.date !== "string") {
+            return false;
+        }
+
+        return flight.date < toLocalDateString(new Date());
+    }
+
+    function compareFlightsAscending(leftFlight, rightFlight) {
+        const leftDateTime = parseFlightDepartureDateTime(leftFlight);
+        const rightDateTime = parseFlightDepartureDateTime(rightFlight);
+
+        if (!leftDateTime && !rightDateTime) {
+            return 0;
+        }
+
+        if (!leftDateTime) {
+            return 1;
+        }
+
+        if (!rightDateTime) {
+            return -1;
+        }
+
+        return leftDateTime.getTime() - rightDateTime.getTime();
+    }
+
+    function getFilteredFlights() {
+        const filteredFlights = allFlights.filter((flight) => {
+            if (activeFilter === "past") {
+                return isPastFlight(flight);
+            }
+
+            if (activeFilter === "upcoming") {
+                return !isPastFlight(flight);
+            }
+
+            return true;
+        });
+
+        filteredFlights.sort(compareFlightsAscending);
+
+        if (activeFilter === "past") {
+            filteredFlights.reverse();
+        }
+
+        return filteredFlights;
+    }
+
+    function getEmptyFlightText() {
+        if (activeFilter === "past") {
+            return "No past flights found.";
+        }
+
+        if (activeFilter === "all") {
+            return "No flights found.";
+        }
+
+        return "No upcoming flights found.";
+    }
+
+    function getSummaryText(flightCount) {
+        if (activeFilter === "past") {
+            return flightCount === 1 ? "Showing 1 past flight." : `Showing ${flightCount} past flights.`;
+        }
+
+        if (activeFilter === "all") {
+            return flightCount === 1 ? "Showing 1 flight." : `Showing ${flightCount} flights.`;
+        }
+
+        return flightCount === 1 ? "Showing 1 upcoming flight." : `Showing ${flightCount} upcoming flights.`;
+    }
+
+    function updateFilterButtons() {
+        filterButtons.forEach((button) => {
+            const buttonFilter = button.dataset.flightFilter;
+            const isActive = buttonFilter === activeFilter;
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
     }
 
     async function readResponseMessage(response, fallbackMessage) {
@@ -110,7 +236,8 @@
         }
 
         if (!Array.isArray(flights) || flights.length === 0) {
-            renderEmptyRow("No upcoming flights found.");
+            renderEmptyRow(getEmptyFlightText());
+            setFilterSummary(getSummaryText(0));
             return;
         }
 
@@ -141,30 +268,37 @@
 
             tableBody.appendChild(row);
         });
+
+        setFilterSummary(getSummaryText(flights.length));
+    }
+
+    function applyActiveFilter() {
+        updateFilterButtons();
+        renderFlights(getFilteredFlights());
     }
 
     async function loadFlights() {
-        setMessage("Loading upcoming flights...", "info");
+        setMessage("Loading flights...", "info");
 
         try {
-            const response = await fetch(flightsEndpoint);
+            const response = await fetch(allFlightsEndpoint);
 
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}`);
             }
 
             const flights = await response.json();
-            renderFlights(flights);
+            allFlights = Array.isArray(flights) ? flights : [];
+            applyActiveFilter();
 
-            if (Array.isArray(flights) && flights.length > 0) {
-                const suffix = flights.length === 1 ? "" : "s";
-                setMessage(`Loaded ${flights.length} upcoming flight${suffix}.`, "success");
-            } else {
-                setMessage("No upcoming flights found.", "info");
-            }
+            const suffix = allFlights.length === 1 ? "" : "s";
+            setMessage(`Loaded ${allFlights.length} flight${suffix}.`, "success");
         } catch (error) {
+            allFlights = [];
+            updateFilterButtons();
             renderEmptyRow("Failed to load flights.");
-            setMessage("Failed to load upcoming flights.", "error");
+            setFilterSummary("Unable to show flights right now.");
+            setMessage("Failed to load flights.", "error");
             console.error(error);
         }
     }
@@ -205,6 +339,19 @@
         setMessage("Flight submitted successfully.", "success");
         await loadFlights();
     }
+
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const selectedFilter = button.dataset.flightFilter;
+
+            if (!selectedFilter || !(selectedFilter in filterLabels) || selectedFilter === activeFilter) {
+                return;
+            }
+
+            activeFilter = selectedFilter;
+            applyActiveFilter();
+        });
+    });
 
     if (form) {
         form.addEventListener("submit", async (event) => {

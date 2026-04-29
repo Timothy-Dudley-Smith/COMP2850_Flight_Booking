@@ -140,6 +140,13 @@
                 <p id="summary-seat">Not selected yet</p>
             </div>
 
+            <div class="user_input_box" id="return-leg-summary" style="display: none;">
+                <label>Return flight</label>
+                <p id="return-route">Not available</p>
+                <p id="return-date-display" style="margin: 6px 0 0;">Not available</p>
+                <p style="margin: 6px 0 0;">Seats: <span id="return-seats-display">Not selected yet</span></p>
+            </div>
+
             <div class="user_input_box">
                 <label>Add-ons</label>
                 <p id="summary-loyalty">Not selected yet</p>
@@ -176,6 +183,7 @@
 <script>
     const pendingBookingRequestRaw = sessionStorage.getItem("pendingBookingRequest");
     const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const holdDataRaw = sessionStorage.getItem("holdData");
     let bookingData = null;
     let loyaltyPoints = 0;
     const message = document.getElementById("payment-message");
@@ -191,6 +199,10 @@
     const pointsInput = document.getElementById("points-to-redeem");
     const pointsDiscount = document.getElementById("points-discount");
     const finalTotal = document.getElementById("final-total");
+    const returnLegSummary = document.getElementById("return-leg-summary");
+    const returnRoute = document.getElementById("return-route");
+    const returnDateDisplay = document.getElementById("return-date-display");
+    const returnSeatsDisplay = document.getElementById("return-seats-display");
 
     const sessionId = sessionStorage.getItem("sessionId");
     const firstName = sessionStorage.getItem("firstName");
@@ -230,13 +242,27 @@
         });
     }
 
-    try {
-        bookingData = pendingBookingRequestRaw
-            ? JSON.parse(pendingBookingRequestRaw)
-            : (bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null);
-    } catch {
-        bookingData = null;
+    function parseStoredJson(rawValue) {
+        if (!rawValue) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(rawValue);
+        } catch {
+            return null;
+        }
     }
+
+    const pendingBookingRequest = parseStoredJson(pendingBookingRequestRaw);
+    const bookingDraft = parseStoredJson(bookingDraftRaw);
+    const holdData = parseStoredJson(holdDataRaw);
+
+    bookingData = {
+        ...(bookingDraft ?? {}),
+        ...(pendingBookingRequest ?? {}),
+        ...(holdData ?? {})
+    };
 
     function formatDisplayDate(date) {
         if (!date) {
@@ -277,6 +303,22 @@
     function getSeatSummary(data) {
         const seatNumbers = Array.isArray(data?.seatNumbers) ? data.seatNumbers : [];
         return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    function getReturnSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.returnSeatNumbers) ? data.returnSeatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    function getReturnRouteSummary(data) {
+        const from = data?.returnFrom ?? data?.to ?? "";
+        const to = data?.returnTo ?? data?.from ?? "";
+
+        if (!from || !to) {
+            return data?.returnFlightId ?? "Not available";
+        }
+
+        return `${from} → ${to}`;
     }
 
     function getAddOnSummary(data) {
@@ -401,6 +443,13 @@
     document.getElementById("summary-seat").textContent = getSeatSummary(bookingData);
     document.getElementById("summary-loyalty").textContent = getAddOnSummary(bookingData);
     document.getElementById("summary-total").textContent = formatCurrency(Number(bookingData?.totalPrice));
+
+    if (bookingData?.returnFlightId) {
+        returnLegSummary.style.display = "block";
+        returnRoute.textContent = getReturnRouteSummary(bookingData);
+        returnDateDisplay.textContent = formatDisplayDate(bookingData?.returnDate);
+        returnSeatsDisplay.textContent = getReturnSeatSummary(bookingData);
+    }
 
     finalTotal.textContent = `Final total: ${formatCurrency(Number(bookingData?.totalPrice))}`;
 
@@ -536,6 +585,7 @@
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     holdId: bookingData.holdId,
+                    returnHoldId: bookingData.returnHoldId ?? null,
                     cardholderName: name,
                     cardNumber: number,
                     expiryMonth: month,
@@ -589,7 +639,18 @@
                     })
                 });
 
-                window.location.href = "/confirmation";
+                if (result.returnBookingId) {
+                    await fetch("/api/passengers", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            bookingId: result.returnBookingId,
+                            passengers: draft.passengers
+                        })
+                    });
+                }
+
+                window.location.href = "confirmation";
             }
         } catch {
             message.textContent = "Payment failed. Try again.";

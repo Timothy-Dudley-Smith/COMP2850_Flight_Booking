@@ -16,7 +16,7 @@ open class User(
 ) {
 
 
-    private var lastLogin: String = "00:00"
+    private var lastLogin: String? = null
     private var accountLocked: Boolean = false
     private var lockedAt: String = "00:00"
     private var failedLoginAttempts: Int = 0
@@ -90,7 +90,7 @@ open class User(
         lockedAt = "00:00"
     }
 
-    fun getLastLogin(): LocalDateTime = LocalDateTime.parse(lastLogin)
+    fun getLastLogin(): LocalDateTime? = lastLogin?.let { LocalDateTime.parse(it) }
 
 
 

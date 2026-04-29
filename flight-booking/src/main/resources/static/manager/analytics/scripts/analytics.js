@@ -15,6 +15,7 @@
 
     const analyticsEndpoint = "/api/manager/analytics";
     const analyticsMessage = document.getElementById("analytics-message");
+    const analyticsRetry = document.getElementById("analytics-retry");
     const totalReservations = document.getElementById("total-reservations");
     const upcomingFlightsCount = document.getElementById("upcoming-flights-count");
     const openSupportTickets = document.getElementById("open-support-tickets");
@@ -46,6 +47,29 @@
         }
 
         element.textContent = String(value);
+    }
+
+    function setAnalyticsMessage(message, tone = "") {
+        if (!analyticsMessage) {
+            return;
+        }
+
+        analyticsMessage.textContent = message ?? "";
+        analyticsMessage.classList.remove("is-error", "is-success");
+
+        if (tone === "error") {
+            analyticsMessage.classList.add("is-error");
+        } else if (tone === "success") {
+            analyticsMessage.classList.add("is-success");
+        }
+    }
+
+    function setRetryVisible(isVisible) {
+        if (!analyticsRetry) {
+            return;
+        }
+
+        analyticsRetry.hidden = !isVisible;
     }
 
     function getCount(value) {
@@ -282,6 +306,16 @@
         }
     }
 
+    function clearBookingsByHour(message) {
+        if (hourlyBookingChart) {
+            hourlyBookingChart.innerHTML = "";
+        }
+
+        if (hourlyBookingEmpty) {
+            hourlyBookingEmpty.textContent = message;
+        }
+    }
+
     function renderAnalytics(data) {
         const topRoute = data.mostPopularRoute ?? data.popularRoute ?? data.popularRoutes?.[0];
         const bookingsByHour = data.bookingsPerHour ?? data.bookingsByHour ?? data.peakBookingTimes;
@@ -298,40 +332,72 @@
         renderBookingsByHour(bookingsByHour);
     }
 
-    function renderAnalyticsUnavailable() {
-        setText(totalReservations, "Backend pending");
-        setText(upcomingFlightsCount, "Backend pending");
-        setText(openSupportTickets, "Backend pending");
-        setText(popularRoute, "Backend pending");
-        setText(peakBookingTime, "Backend pending");
+    function describeAnalyticsError(error) {
+        if (error?.status) {
+            return `Unable to load analytics right now (HTTP ${error.status}).`;
+        }
 
-        setTableMessage(bookingsPerFlightBody, 4, "Add /api/manager/analytics to populate this report.");
-        setTableMessage(popularRoutesBody, 2, "Add /api/manager/analytics to populate this report.");
+        if (error instanceof SyntaxError) {
+            return "Unable to load analytics because the server returned invalid data.";
+        }
+
+        if (error instanceof TypeError) {
+            return "Unable to load analytics right now. Check the server is running and try again.";
+        }
+
+        return error?.message || "Unable to load analytics right now.";
+    }
+
+    function renderAnalyticsUnavailable(error) {
+        bookingsPerFlightRows = [];
+        popularRouteRows = [];
+        visibleBookingsPerFlightCount = initialReportLimit;
+        visiblePopularRoutesCount = initialReportLimit;
+
+        setText(totalReservations, "Unavailable");
+        setText(upcomingFlightsCount, "Unavailable");
+        setText(openSupportTickets, "Unavailable");
+        setText(popularRoute, "Unavailable");
+        setText(peakBookingTime, "Unavailable");
+
+        setTableMessage(bookingsPerFlightBody, 4, "Unable to load bookings-per-flight data.");
+        setTableMessage(popularRoutesBody, 2, "Unable to load popular-route data.");
         updateReportControls(bookingsPerFlightShowFewer, bookingsPerFlightShowMore, [], visibleBookingsPerFlightCount);
         updateReportControls(popularRoutesShowFewer, popularRoutesShowMore, [], visiblePopularRoutesCount);
-        renderBookingsByHour([]);
+        clearBookingsByHour("Unable to load hourly booking data.");
+        setAnalyticsMessage(describeAnalyticsError(error), "error");
+        setRetryVisible(true);
+    }
 
-        if (analyticsMessage) {
-            analyticsMessage.textContent = "Analytics page is ready. Complete the backend endpoint to show live data.";
-        }
+    function renderLoadingState() {
+        setAnalyticsMessage("Loading analytics...");
+        setRetryVisible(false);
     }
 
     async function loadAnalytics() {
+        renderLoadingState();
+
         try {
             const response = await fetch(analyticsEndpoint);
 
             if (!response.ok) {
-                throw new Error(`Analytics request failed with status ${response.status}`);
+                const error = new Error(`Analytics request failed with status ${response.status}`);
+                error.status = response.status;
+                throw error;
             }
 
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                throw new SyntaxError("Analytics response was not valid JSON.");
+            }
+
             renderAnalytics(data);
-
-            if (analyticsMessage) {
-                analyticsMessage.textContent = "";
-            }
+            setAnalyticsMessage("");
+            setRetryVisible(false);
         } catch (error) {
-            renderAnalyticsUnavailable();
+            renderAnalyticsUnavailable(error);
             console.warn(error);
         }
     }
@@ -361,6 +427,12 @@
         popularRoutesShowFewer.addEventListener("click", () => {
             visiblePopularRoutesCount = Math.max(initialReportLimit, visiblePopularRoutesCount - reportStepSize);
             renderPopularRoutes(popularRouteRows);
+        });
+    }
+
+    if (analyticsRetry) {
+        analyticsRetry.addEventListener("click", () => {
+            loadAnalytics();
         });
     }
 

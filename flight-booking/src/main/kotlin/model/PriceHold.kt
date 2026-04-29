@@ -6,6 +6,7 @@ data class PriceHold(
     val holdId: Int,
     val userId: Int,
     val flightId: String,
+    val returnFlightId: String? = null,
     val expiryTime: String,
     val totalPrice: Double
 )
@@ -23,6 +24,7 @@ object PriceHolds : Table() {
     val holdId = integer("holdId").autoIncrement()
     val userId = reference("userId", Users.userId)
     val flightId = reference("flightId", Flights.flightId)
+    val returnFlightId = optReference("returnFlightId", Flights.flightId)
     val expiryTime = varchar("expiryTime", VARCHAR_LENGTH)
     val totalPrice = double("totalPrice")
     override val primaryKey = PrimaryKey(holdId)
@@ -47,5 +49,6 @@ object PriceHoldSeats : Table() {
 
 data class PriceHoldDetails(
     val hold: PriceHold,
-    val seats: List<String>
+    val seats: List<String>,
+    val returnSeats: List<String> = emptyList()
 )

@@ -20,17 +20,6 @@
             padding: 20px 40px;
         }
 
-        .page-header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .page-header p {
-            margin: 8px 0 0;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
         .page-container {
             max-width: 1100px;
             margin: 30px auto;
@@ -44,8 +33,9 @@
             margin-bottom: 24px;
         }
 
-        .refresh-btn {
-            background-color: #1f3c88;
+        .refresh-btn,
+        .update-btn,
+        .history-btn {
             color: white;
             border: none;
             padding: 10px 16px;
@@ -54,8 +44,17 @@
             font-size: 14px;
         }
 
-        .refresh-btn:hover {
-            background-color: #162d66;
+        .refresh-btn {
+            background-color: #1f3c88;
+        }
+
+        .update-btn {
+            background-color: #28a745;
+        }
+
+        .history-btn {
+            background-color: #6c757d;
+            margin-left: 8px;
         }
 
         .ticket-grid {
@@ -67,20 +66,17 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             border-left: 6px solid #1f3c88;
         }
 
         .ticket-card h2 {
-            margin-top: 0;
-            margin-bottom: 16px;
-            font-size: 20px;
             color: #1f3c88;
+            margin-top: 0;
         }
 
         .ticket-details p {
             margin: 8px 0;
-            line-height: 1.4;
         }
 
         .ticket-controls {
@@ -101,155 +97,220 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 14px;
             margin-bottom: 14px;
             box-sizing: border-box;
         }
 
         .ticket-controls textarea {
             min-height: 90px;
-            resize: vertical;
         }
 
-        .update-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
+        .ticket-history {
+            display: none;
+            margin-top: 16px;
+            padding: 14px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            border: 1px solid #ddd;
         }
 
-        .update-btn:hover {
-            background-color: #218838;
+        .history-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
         }
 
         .result-message {
             margin-top: 12px;
-            font-size: 14px;
             font-weight: bold;
-        }
-
-        .empty-message {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
+
 <body>
-    <div class="page-header">
-        <h1>Support Ticket Manager</h1>
-        <p>Review, update, and manage customer support requests.</p>
-    </div>
+<div class="page-header">
+    <h1>Support Ticket Manager</h1>
+    <p>Review, update, and manage customer support requests.</p>
+</div>
 
-    <div class="page-container">
-        <div class="top-bar">
-            <h2>All Tickets</h2>
-            <button class="refresh-btn" onclick="loadTickets()">Refresh Tickets</button>
+<div class="page-container">
+    <div class="top-bar">
+        <h2>Support Tickets</h2>
+
+        <div>
+            <button onclick="setView('active')" id="active-tab" class="refresh-btn">Active</button>
+            <button onclick="setView('archived')" id="archived-tab" class="refresh-btn">Archived</button>
+
+            <input
+                type="text"
+                id="booking-search"
+                placeholder="Search by booking ID"
+                oninput="renderTickets()"
+                style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-left: 10px;"
+            >
+
+            <button class="refresh-btn" onclick="loadTickets()">Refresh</button>
         </div>
-
-        <div id="ticketList" class="ticket-grid"></div>
     </div>
 
-    <script>
-        async function loadTickets() {
+    <div id="ticketList" class="ticket-grid"></div>
+</div>
 
-            const sessionId = sessionStorage.getItem("sessionId");
-            if (!sessionId) {
-                window.location.href = "/log_in";
-                return;
-            }
+<script>
+    let allTickets = [];
+    let currentView = "active"; // default
 
-            const sessionCheck = await fetch(`/api/auth/session?sessionId=${encodeURIComponent(sessionId)}`);
-            const sessionData = await sessionCheck.json();
-            if (!sessionCheck.ok || sessionData.role !== "MANAGER") {
-                window.location.href = "/log_in";
-                return;
-            }
-            const response = await fetch("/api/tickets");
-            const tickets = await response.json();
+    async function loadTickets() {
+        const response = await fetch("/api/tickets");
 
-            const ticketList = document.getElementById("ticketList");
-            ticketList.innerHTML = "";
+        allTickets = await response.json();
 
-            if (tickets.length === 0) {
-                ticketList.innerHTML = `
-                    <div class="empty-message">
-                        <p>No tickets found.</p>
-                    </div>
-                `;
-                return;
-            }
+        renderTickets();
+    }
 
-            tickets.forEach(ticket => {
-                const ticketDiv = document.createElement("div");
-                ticketDiv.className = "ticket-card";
+    function setView(view) {
+        currentView = view;
+        renderTickets();
+    }
 
-                ticketDiv.innerHTML = `
-                    <h2>Ticket #${ticket.id}</h2>
+    function renderTickets() {
+    const searchValue = document.getElementById("booking-search")?.value.trim() ?? "";
+    const ticketList = document.getElementById("ticketList");
+    ticketList.innerHTML = "";
 
-                    <div class="ticket-details">
-                        <p><strong>Booking ID:</strong> ${ticket.bookingId}</p>
-                        <p><strong>Name:</strong> ${ticket.customerName}</p>
-                        <p><strong>Email:</strong> ${ticket.customerEmail}</p>
-                        <p><strong>Request Type:</strong> ${ticket.requestType}</p>
-                        <p><strong>Message:</strong> ${ticket.message}</p>
-                        <p><strong>Status:</strong> ${ticket.status}</p>
-                    </div>
+    const filteredTickets = allTickets.filter(ticket => {
+        // tab filter (active vs archived)
+        if (currentView === "active" && ticket.archived) return false;
+        if (currentView === "archived" && !ticket.archived) return false;
 
-                    <div class="ticket-controls">
-                        <label for="status-${ticket.id}">Update Status</label>
-                        <select id="status-${ticket.id}">
-                            <option value="OPEN">OPEN</option>
-                            <option value="IN_PROGRESS">IN_PROGRESS</option>
-                            <option value="RESOLVED">RESOLVED</option>
-                            <option value="REJECTED">REJECTED</option>
-                        </select>
+        // search filter
+        if (searchValue === "") return true;
 
-                        <label for="note-${ticket.id}">Manager Note</label>
-                        <textarea id="note-${ticket.id}">${ticket.managerNote ?? ""}</textarea>
+        return ticket.bookingId.toString().includes(searchValue);
+    });
 
-                        <button class="update-btn" onclick="updateTicket(${ticket.id})">Update Ticket</button>
-                        <p id="result-${ticket.id}" class="result-message"></p>
-                    </div>
-                `;
+    if (filteredTickets.length === 0) {
+        ticketList.innerHTML = "<p>No matching tickets found.</p>";
+        return;
+    }
 
-                ticketList.appendChild(ticketDiv);
+    filteredTickets.forEach(ticket => {
+        const ticketDiv = document.createElement("div");
+        ticketDiv.className = "ticket-card";
 
-                document.getElementById(`status-${ticket.id}`).value = ticket.status;
-            });
+        ticketDiv.innerHTML = `
+            <h2>Ticket #${ticket.id}</h2>
+
+            <div class="ticket-details">
+                <p><strong>Booking ID:</strong> ${ticket.bookingId}</p>
+                <p><strong>Name:</strong> ${ticket.customerName}</p>
+                <p><strong>Email:</strong> ${ticket.customerEmail}</p>
+                <p><strong>Request Type:</strong> ${ticket.requestType}</p>
+                <p><strong>Message:</strong> ${ticket.message}</p>
+                <p><strong>Status:</strong> ${ticket.status}</p>
+            </div>
+
+            <div class="ticket-controls">
+                <label>Status</label>
+                <select id="status-${ticket.id}">
+                    <option value="OPEN">OPEN</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="RESOLVED">RESOLVED</option>
+                    <option value="REJECTED">REJECTED</option>
+                </select>
+
+                <label>Manager Note</label>
+                <textarea id="note-${ticket.id}">${ticket.managerNote ?? ""}</textarea>
+
+                <button class="update-btn" onclick="updateTicket(${ticket.id})">Update Ticket</button>
+                <button class="history-btn" onclick="loadTicketHistory(${ticket.id})">View History</button>
+                ${currentView === "active"
+                    ? `<button class="history-btn" onclick="archiveTicket(${ticket.id})">Archive</button>`
+                    : ""
+                }
+
+                <p id="result-${ticket.id}" class="result-message"></p>
+                <div id="history-${ticket.id}" class="ticket-history"></div>
+            </div>
+        `;
+
+        ticketList.appendChild(ticketDiv);
+        document.getElementById(`status-${ticket.id}`).value = ticket.status;
+    });
+}
+
+    async function updateTicket(ticketId) {
+        const status = document.getElementById(`status-${ticketId}`).value;
+        const note = document.getElementById(`note-${ticketId}`).value;
+
+        const response = await fetch(`/api/tickets/${ticketId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status, managerNote: note })
+        });
+
+        const result = document.getElementById(`result-${ticketId}`);
+        const text = await response.text();
+
+        if (response.ok) {
+            result.textContent = "Updated successfully.";
+            loadTickets();
+        } else {
+            result.textContent = text || "Update failed.";
+        }
+    }
+
+    async function loadTicketHistory(ticketId) {
+        const box = document.getElementById(`history-${ticketId}`);
+
+        if (box.style.display === "block") {
+            box.style.display = "none";
+            return;
         }
 
-        async function updateTicket(ticketId) {
-            const status = document.getElementById(`status-${ticketId}`).value;
-            const managerNote = document.getElementById(`note-${ticketId}`).value;
+        const response = await fetch(`/api/tickets/${ticketId}/history`);
+        const history = await response.json();
 
-            const response = await fetch(`/api/tickets/${ticketId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    status: status,
-                    managerNote: managerNote
-                })
-            });
+        box.style.display = "block";
 
-            const result = document.getElementById(`result-${ticketId}`);
-            const responseText = await response.text();
-
-            if (response.ok) {
-                result.textContent = "Ticket updated successfully.";
-                loadTickets();
-            } else {
-                result.textContent = responseText;
-            }
+        if (!response.ok) {
+            box.innerHTML = "<p>Unable to load history.</p>";
+            return;
         }
 
-        loadTickets();
-    </script>
+        if (history.length === 0) {
+            box.innerHTML = "<p>No history yet.</p>";
+            return;
+        }
+
+        box.innerHTML = history.map(h => `
+            <div class="history-item">
+                <p><strong>Status:</strong> ${h.oldStatus} → ${h.newStatus}</p>
+                <p><strong>Note:</strong> ${h.managerNote ?? "None"}</p>
+                <p><strong>Time:</strong> ${h.changedAt}</p>
+            </div>
+        `).join("");
+    }
+
+    async function archiveTicket(ticketId) {
+        const confirmArchive = confirm("Archive this ticket?");
+        if (!confirmArchive) return;
+
+        const response = await fetch(`/api/tickets/${ticketId}/archive`, {
+            method: "PUT"
+        });
+
+        if (response.ok) {
+            loadTickets();
+        } else {
+            alert("Failed to archive ticket");
+        }
+    }
+
+    loadTickets();
+</script>
 </body>
 </html>

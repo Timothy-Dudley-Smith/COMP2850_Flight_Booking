@@ -103,13 +103,13 @@ class BookingService {
             }
 
             // mark those seats avail again
-            val flightId = bookedSeats.first()[BookingSeats.flightId]
-            val seatNumbers = bookedSeats.map { it[BookingSeats.seatNumber] }
-            // then update seats
-            Seats.update({
-                (Seats.flightId eq flightId) and (Seats.seatNumber inList seatNumbers)
-            }) {
-                it[isAvailable] = true
+            val seatsByFlight = bookedSeats.groupBy { it[BookingSeats.flightId] }
+            for ((fId, fSeats) in seatsByFlight) {
+
+                val nums = fSeats.map { it[BookingSeats.seatNumber] }
+                Seats.update({ (Seats.flightId eq fId) and (Seats.seatNumber inList nums) }) {
+                    it[isAvailable] = true
+                }
             }
 
             // delete from BookingSeats
@@ -329,7 +329,8 @@ class BookingService {
                     "arrivalAirport"   to flightRow[Flights.arrivalAirport],
                     "date"             to flightRow[Flights.date],
                     "departureTime"    to flightRow[Flights.departureTime],
-                    "arrivalTime"      to flightRow[Flights.arrivalTime]
+                    "arrivalTime"      to flightRow[Flights.arrivalTime],
+                    "returnFlightId"   to (bookingRow[Bookings.returnFlightId] ?: ""),
                 ))
             }
 

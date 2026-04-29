@@ -17,8 +17,12 @@ import com.flightsystem.service.CheckoutService
 import com.flightsystem.model.PassengerInput
 import com.flightsystem.model.Users
 
+import model.ManagerSentEmails
+import model.ManagerSentEmailResponse
+
 
 import com.flightsystem.AppEnv
+import com.flightsystem.model.AccountStatus
 import com.flightsystem.service.EmailService
 
 
@@ -75,6 +79,7 @@ import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
 import com.flightsystem.model.BookingDetails
+import com.flightsystem.model.LoyaltyAccounts
 import com.flightsystem.model.Passenger
 
 @Serializable
@@ -106,6 +111,18 @@ data class ManagerBookingDetailResponse(
 
 @Serializable
 data class UpcomingFlightData(
+    val flightId: String,
+    val departureAirport: String,
+    val arrivalAirport: String,
+    val price: Double,
+    val date: String,
+    val departureTime: String,
+    val arrivalTime: String,
+    val length: Double
+)
+
+@Serializable
+data class HistoricFlightData(
     val flightId: String,
     val departureAirport: String,
     val arrivalAirport: String,
@@ -169,7 +186,7 @@ data class CreatePromoCodeRequest(
 @Serializable
 data class CreatePromoCodeResponse(
     val success: Boolean,
-    val message: String
+    val message: String? = null,
 )
 
 
@@ -231,7 +248,9 @@ data class CreateBookingRequest(
 data class CreateHoldRequest(
     val userId: Int?,
     val flightId: String,
-    val seatNumbers: List<String>
+    val seatNumbers: List<String>,
+    val returnFlightId: String? = null,
+    val returnSeatNumbers: List<String> = emptyList()
 )
 
 @Serializable
@@ -241,7 +260,9 @@ data class CreateHoldResponse(
     val flightId: String,
     val seatNumbers: List<String>,
     val totalPrice: Double,
-    val expiryTime: String
+    val expiryTime: String,
+    val returnFlightId: String? = null,
+    val returnSeatNumbers: List<String>,
 )
 
 
@@ -260,6 +281,7 @@ data class AccountSummary (
 data class BookingLookupResponse(
     val bookingId: Int,
     val flightId: String,
+    val returnFlightId: String? = null,
     val seats: List<String>,
     val passengers: List<String>,
     val cabin: String?,
@@ -315,6 +337,24 @@ data class OtpWaitingresponse(val success: Boolean, val otpRequired: Boolean)
 
 @Serializable
 data class OtpVerifyRequest(val email: String, val otp: String)
+
+@Serializable
+data class ManagerAccountChanges(
+    val userId: Int,
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val role: String,
+    val status: AccountStatus,
+    val loyaltyPoints: Int
+)
+
+@Serializable
+data class AddPointsRequest(
+    val points: Int
+)
+
+
 
 fun Application.configureRouting() {
     val authenticationService = AuthenticationService()
@@ -375,7 +415,7 @@ fun Application.configureRouting() {
         }
 
         get("/confirmation.html") {
-            call.respondFile(File("src/main/resources/static/user/book/confirmation.html"))
+            call.respondFile(File("src/main/resources/static/user/payment/confirmation.html"))
         }
 
         val passengerService = PassengerService()
@@ -612,6 +652,30 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.OK, updatedTicket)
                 }
             }
+
+            get("/{id}/history") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ticket ID")
+                    return@get
+                }
+                val history = ticketService.getTicketHistory(id)
+                call.respond(HttpStatusCode.OK, history)
+            }
+
+            put("/{id}/archive") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ticket ID")
+                    return@put
+                }
+                val archived = ticketService.archiveTicket(id)
+                if (archived) {
+                    call.respond(HttpStatusCode.OK, "Ticket archived")
+                } else {
+                    call.respond(HttpStatusCode.NotFound, "Ticket not found")
+                }
+            }
         }
 
         get("/api/manager/flights") {
@@ -702,6 +766,7 @@ fun Application.configureRouting() {
         }
 
         post("/checkout") {
+
             val request = call.receive<CheckoutRequest>()
 
             val checkoutService = CheckoutService(
@@ -722,6 +787,7 @@ fun Application.configureRouting() {
 
             val response = checkoutService.checkout(
                 holdId = request.holdId,
+                returnHoldId = request.returnHoldId,
                 request = paymentRequest,
                 pointsToRedeem = request.pointsToRedeem,
                 promoCode = request.promoCode,
@@ -998,6 +1064,7 @@ fun Application.configureRouting() {
                             it[passwordHash] = "guest"
                             it[salt] = "guest"
                             it[role] = "USER"
+                            it[status] = AccountStatus.ACTIVE
                         }
 
                         insertedGuest[Users.userId]
@@ -1005,8 +1072,25 @@ fun Application.configureRouting() {
                 }
                 var flightId = request.flightId
                 val seatNumbers = request.seatNumbers
+                val returnFlightId = request.returnFlightId
+                val returnSeatNumbers = request.returnSeatNumbers
+                val hold = priceHoldService.createHold(userId, flightId, seatNumbers, returnFlightId, returnSeatNumbers)
+                val user = transaction {
+                    Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+                }
 
-                val hold = priceHoldService.createHold(userId, flightId, seatNumbers)
+                if (user == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid user")
+                    return@post
+                }
+
+                val accountStatus = user[Users.status]
+
+                if (accountStatus != AccountStatus.ACTIVE) {
+                    call.respond(HttpStatusCode.BadRequest, "Account status is inactive")
+                    return@post
+                }
+
 
                 val holdId = hold.holdId
                 userId = hold.userId
@@ -1014,9 +1098,10 @@ fun Application.configureRouting() {
                 val expiryTime = hold.expiryTime
                 val totalPrice = hold.totalPrice
 
-                val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime)
+                val holdResponse = CreateHoldResponse(holdId, userId, flightId, seatNumbers, totalPrice, expiryTime, hold.returnFlightId, returnSeatNumbers)
                 call.respond(HttpStatusCode.Created, holdResponse)
             } catch (e: Exception) {
+                e.printStackTrace()
                 call.respond(HttpStatusCode.BadRequest, "Error while creating hold")
             }
         }
@@ -1078,6 +1163,7 @@ fun Application.configureRouting() {
                 BookingLookupResponse(
                     bookingId  = details.booking.bookingId,
                     flightId   = details.booking.flightId,
+                    returnFlightId = details.booking.returnFlightId,
                     seats      = details.seats,
                     passengers = passengerNames,
                     cabin = details.booking.cabin,
@@ -1190,6 +1276,19 @@ fun Application.configureRouting() {
                     body = request.message
                 )
 
+                val now = LocalDateTime.now().toString()
+
+                transaction{
+                    ManagerSentEmails.insert {
+                        it[ManagerSentEmails.managerId] = user.userId
+                        it[ManagerSentEmails.managerEmail] = user.email
+                        it[ManagerSentEmails.toEmail] = request.toEmail
+                        it[ManagerSentEmails.subject] = request.subject
+                        it[ManagerSentEmails.message] = request.message
+                        it[ManagerSentEmails.sentAt] = now
+                    }
+                }
+
                 call.respond(
                     HttpStatusCode.OK,
                     SendManagerEmailResponse(
@@ -1205,6 +1304,23 @@ fun Application.configureRouting() {
                         message = e.message ?: "Failed to send email"
                     )
                 )
+            }
+
+            get("/api/manager/sent-emails") {
+                val sentEmails = transaction {
+                    ManagerSentEmails.selectAll().map { row ->
+                        ManagerSentEmailResponse(
+                            emailId = row[ManagerSentEmails.emailId],
+                            managerId = row[ManagerSentEmails.managerId],
+                            managerEmail = row[ManagerSentEmails.managerEmail],
+                            toEmail = row[ManagerSentEmails.toEmail],
+                            subject = row[ManagerSentEmails.subject],
+                            message = row[ManagerSentEmails.message],
+                            sentAt = row[ManagerSentEmails.sentAt]
+                        )
+                    }
+                }
+                call.respond(HttpStatusCode.OK, sentEmails)
             }
         }
 
@@ -1439,6 +1555,251 @@ fun Application.configureRouting() {
         get("/api/manager/analytics") {
             val analytics = ManagerAnalyticsService().getAnalytics()
             call.respond(analytics)
+        }
+
+        get("/api/manager/users") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@get
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@get
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@get
+            }
+
+            val pointsByUserId = transaction {
+                LoyaltyAccounts.selectAll().associate { row -> row[LoyaltyAccounts.userId] to row[LoyaltyAccounts.loyaltyPoints] }
+            }
+
+            val managerAccountChanges = transaction { Users.selectAll().map { row -> ManagerAccountChanges(
+                    userId = row[Users.userId],
+                    firstName = row[Users.firstName],
+                    lastName = row[Users.lastName],
+                    email = row[Users.email],
+                    role = row[Users.role],
+                    status = row[Users.status],
+                    loyaltyPoints = pointsByUserId[row[Users.userId]] ?: 0
+            ) } }
+            call.respond(HttpStatusCode.OK, managerAccountChanges)
+        }
+
+        post("/api/manager/users/{userId}/freeze") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@post
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val userId = call.parameters["userId"]?.toIntOrNull()
+
+            if (userId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val account = transaction {
+                Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+            }
+
+            if (account == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            transaction {
+                Users.update({ Users.userId eq userId }) {it[Users.status] = AccountStatus.FROZEN }
+            }
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        post("/api/manager/users/{userId}/unfreeze") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@post
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val userId = call.parameters["userId"]?.toIntOrNull()
+
+            if (userId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val account = transaction {
+                Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+            }
+
+            if (account == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            transaction {
+                Users.update({ Users.userId eq userId }) {it[Users.status] = AccountStatus.ACTIVE }
+            }
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        post("/api/manager/users/{userId}/delete") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@post
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val userId = call.parameters["userId"]?.toIntOrNull()
+
+            if (userId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val account = transaction {
+                Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+            }
+
+            if (account == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            transaction {
+                Users.update({ Users.userId eq userId }) {it[Users.status] = AccountStatus.DELETED }
+            }
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        post("/api/manager/users/{userId}/restore") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@post
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val userId = call.parameters["userId"]?.toIntOrNull()
+
+            if (userId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val account = transaction {
+                Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+            }
+
+            if (account == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            transaction {
+                Users.update({ Users.userId eq userId }) {it[Users.status] = AccountStatus.ACTIVE }
+            }
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        post("/api/manager/users/{userId}/points") {
+            val sessionId = call.request.queryParameters["sessionId"]
+
+            val request = call.receive<AddPointsRequest>()
+
+            if (sessionId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid sessionId")
+                return@post
+            }
+
+            val user = authenticationService.validateSession(sessionId)
+
+            if (user == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            if (user !is Manager) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val userId = call.parameters["userId"]?.toIntOrNull()
+
+            if (userId == null) {
+                call.respond(HttpStatusCode.BadRequest, "invalid user")
+                return@post
+            }
+
+            val loyaltyService = LoyaltyService()
+            val loyaltyAccount = loyaltyService.getLoyaltyAccount(userId) ?: loyaltyService.createLoyaltyAccount(userId)
+
+            val success = loyaltyService.addPoints(userId, request.points)
+
+            call.respond(HttpStatusCode.OK, success)
         }
     }
 }

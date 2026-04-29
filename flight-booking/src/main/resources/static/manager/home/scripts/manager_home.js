@@ -85,6 +85,7 @@
                 managerEmailTo.value = "";
                 managerEmailSubject.value = "";
                 managerEmailMessage.value = "";
+                loadSentEmails();
             } catch {
                 managerEmailStatus.textContent = "Unable to send email right now.";
             } finally {
@@ -178,4 +179,71 @@
             year: "numeric"
         });
     }
+
+    let sentEmails = [];
+    let emailHistoryVisible = false;
+
+    async function loadSentEmails() {
+        const list = document.getElementById("sent-email-list");
+        if (!list) return;
+
+        const response = await fetch("/api/manager/sent-emails");
+        sentEmails = await response.json();
+
+        renderSentEmails();
+    }
+
+    const toggleEmailHistoryButton = document.getElementById("toggle-email-history-btn");
+    const emailHistorySearch = document.getElementById("email-history-search");
+    const sentEmailList = document.getElementById("sent-email-list");
+
+    if (toggleEmailHistoryButton && sentEmailList && emailHistorySearch) {
+        toggleEmailHistoryButton.addEventListener("click", () => {
+            emailHistoryVisible = !emailHistoryVisible;
+
+            sentEmailList.style.display = emailHistoryVisible ? "block" : "none";
+            emailHistorySearch.style.display = emailHistoryVisible ? "block" : "none";
+
+            toggleEmailHistoryButton.textContent = emailHistoryVisible
+                ? "Hide Email History"
+                : "Show Email History";
+
+            if (emailHistoryVisible) {
+                renderSentEmails();
+            }
+        });
+
+        emailHistorySearch.addEventListener("input", renderSentEmails);
+    }
+
+    function renderSentEmails() {
+        const list = document.getElementById("sent-email-list");
+        const searchInput = document.getElementById("email-history-search");
+        if (!list) return;
+
+        const searchValue = searchInput?.value.trim().toLowerCase() ?? "";
+
+        const filteredEmails = sentEmails.filter(email => {
+            if (searchValue === "") return true;
+            return email.toEmail.toLowerCase().includes(searchValue);
+        });
+
+        if (filteredEmails.length === 0) {
+            list.innerHTML = "<p>No matching sent emails found.</p>";
+            return;
+        }
+
+        list.innerHTML = `
+            <h3>Sent Email History</h3>
+            ${filteredEmails.map(email => `
+                <div style="border: 1px solid #ddd; border-radius: 10px; padding: 14px; margin-bottom: 12px; background: #f8fafc;">
+                    <p><strong>To:</strong> ${email.toEmail}</p>
+                    <p><strong>Subject:</strong> ${email.subject}</p>
+                    <p><strong>Message:</strong> ${email.message}</p>
+                    <p><strong>Sent at:</strong> ${email.sentAt}</p>
+                </div>
+            `).join("")}
+        `;
+    }
+loadSentEmails();
 })();

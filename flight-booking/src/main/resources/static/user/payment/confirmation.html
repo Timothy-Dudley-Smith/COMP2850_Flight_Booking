@@ -54,6 +54,12 @@
         <p id="booking-id-line"></p>
         <p id="email-line"></p>
         <p id="final-amount-line"></p>
+        <div id="return-leg-confirmation" style="display: none; margin: 16px 0;">
+            <p id="return-booking-id-line"></p>
+            <p id="return-flight-line"></p>
+            <p id="return-date-line"></p>
+            <p id="return-seats-line"></p>
+        </div>
         <p id="points-used-line"></p>
         <p id="points-earned-line"></p>
         <p id="updated-points-line"></p>
@@ -65,23 +71,72 @@
 <script>
     let checkout = null;
 
-    try {
-        checkout = JSON.parse(sessionStorage.getItem("latestCheckoutResponse"));
-    } catch {
-        checkout = null;
+    function parseStoredJson(rawValue) {
+        if (!rawValue) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(rawValue);
+        } catch {
+            return null;
+        }
     }
+
+    checkout = parseStoredJson(sessionStorage.getItem("latestCheckoutResponse"));
+    const bookingDraft = parseStoredJson(sessionStorage.getItem("bookingDraft"));
+    const holdData = parseStoredJson(sessionStorage.getItem("holdData"));
+    const confirmationData = {
+        ...(bookingDraft ?? {}),
+        ...(holdData ?? {}),
+        ...(checkout ?? {})
+    };
 
     const firstName = sessionStorage.getItem("firstName") ?? "there";
     const email = sessionStorage.getItem("userEmail") ?? null;
     const bookingId = checkout?.bookingId ?? null;
     const role = sessionStorage.getItem("role");
     const isLoggedIn = !!sessionStorage.getItem("sessionId");
+    const returnLegConfirmation = document.getElementById("return-leg-confirmation");
+    const returnFlightLine = document.getElementById("return-flight-line");
+    const returnDateLine = document.getElementById("return-date-line");
+    const returnSeatsLine = document.getElementById("return-seats-line");
+    const returnBookingIdLine = document.getElementById("return-booking-id-line");
 
     function formatCurrency(amount) {
         if (typeof amount !== "number" || !Number.isFinite(amount)) {
             return "";
         }
         return fmt(amount);
+    }
+
+    function formatDisplayDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB");
+    }
+
+    function getReturnRouteSummary(data) {
+        const from = data?.returnFrom ?? data?.to ?? "";
+        const to = data?.returnTo ?? data?.from ?? "";
+
+        if (!from || !to) {
+            return data?.returnFlightId ?? "Not available";
+        }
+
+        return `${from} → ${to}`;
+    }
+
+    function getReturnSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.returnSeatNumbers) ? data.returnSeatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
     }
 
     document.getElementById("greeting").textContent =
@@ -102,6 +157,20 @@
         finalAmountLine.textContent = `Final amount paid: ${formatCurrency(checkout.finalAmountPaid)}`;
     } else {
         finalAmountLine.textContent = "";
+    }
+
+    if (confirmationData?.returnFlightId || checkout?.returnBookingId) {
+        returnLegConfirmation.style.display = "block";
+
+        returnBookingIdLine.textContent = checkout?.returnBookingId
+            ? `Return booking ID: ${checkout.returnBookingId}`
+            : "";
+
+        returnFlightLine.textContent = `Return flight: ${getReturnRouteSummary(confirmationData)}`;
+        returnDateLine.textContent = `Return date: ${formatDisplayDate(confirmationData?.returnDate)}`;
+        returnSeatsLine.textContent = `Return seats: ${getReturnSeatSummary(confirmationData)}`;
+    } else {
+        returnLegConfirmation.style.display = "none";
     }
 
     if (isLoggedIn) {

@@ -56,6 +56,10 @@
     const price = params.get("price") ?? "0";
     const flightId = params.get("flightId") ?? "";
 
+    const returnFlightId = params.get("returnFlightId") ?? "";
+    const returnDate = params.get("returnDate") ?? "";
+    const returnCabin = params.get("returnCabin") ?? "";
+
     const sessionId = sessionStorage.getItem("sessionId");
     const firstName = sessionStorage.getItem("firstName");
 
@@ -262,11 +266,18 @@
             price,
             passengers: passengerData,
             seatNumbers: [],
-            addOns: {}
+            addOns: {},
+            returnFlightId: returnFlightId || null,
+            returnDate: returnDate || null,
+            returnFrom: to,
+            returnTo: from,
+            returnCabin: returnCabin || cabin,
         };
 
         sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-        window.location.href = "/seatmap?flightId=" + encodeURIComponent(flightId);
+        window.location.href =
+            "/seatmap?flightId=" + encodeURIComponent(flightId) +
+            "&returnFlightId=" + encodeURIComponent(returnFlightId);
     }
 </script>
 <div class="footer-divider"></div>

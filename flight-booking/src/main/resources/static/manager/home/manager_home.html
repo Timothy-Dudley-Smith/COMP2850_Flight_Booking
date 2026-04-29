@@ -22,6 +22,7 @@
             <a href="/manager/flight_view">Flight View</a>
             <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
             <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
             <a href="/manager/support/support.html">Support</a>
         </div>
 
@@ -83,6 +84,13 @@
                 <h3>Analytics</h3>
                 <p>Review reservations, route demand, flight counts, and booking time reports.</p>
                 <span class="card-link">Open analytics dashboard</span>
+            </a>
+
+            <a class="action-card" href="/manager/accounts/accounts.html">
+                <span class="card-tag">Accounts</span>
+                <h3>Manage Accounts</h3>
+                <p>Freeze, restore, delete, and top up customer loyalty points from one place.</p>
+                <span class="card-link">Open account management</span>
             </a>
 
             <a class="action-card" href="/manager/support/support.html">
@@ -163,6 +171,20 @@
                 </div>
 
                 <p id="manager-email-status" style="font-weight: 600; margin: 0;"></p>
+                <div style="margin-top: 20px;">
+                    <button id="toggle-email-history-btn" type="button" class="action-card" style="cursor: pointer; border: none;">
+                        Show Email History
+                    </button>
+
+                    <input
+                        type="text"
+                        id="email-history-search"
+                        placeholder="Search by customer email"
+                        style="display: none; width: 100%; padding: 12px; margin-top: 12px;"
+                    >
+
+                    <div id="sent-email-list" style="display: none; margin-top: 20px;"></div>
+                </div>
             </div>
         </div>
     </section>

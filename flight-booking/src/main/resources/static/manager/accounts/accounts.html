@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Accounts</title>
+    <link rel="stylesheet" href="/manager/accounts/styles/accounts.css">
+</head>
+<body>
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html">Home</a>
+            <a href="/manager/flight_view">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html" class="active">Accounts</a>
+            <a href="/manager/support/support.html">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="accounts-hero" aria-labelledby="accounts-title">
+        <p class="eyebrow">Manager Controls</p>
+        <h1 id="accounts-title">Account Management</h1>
+        <p>
+            Review customer accounts, update loyalty points, and manage frozen or deleted statuses from one workspace.
+        </p>
+    </section>
+
+    <section class="accounts-summary" aria-labelledby="accounts-summary-heading">
+        <div class="section-heading">
+            <h2 id="accounts-summary-heading">Account Snapshot</h2>
+            <p>Live totals for the current customer account list.</p>
+        </div>
+
+        <div class="summary-grid" aria-live="polite">
+            <article class="summary-card">
+                <span class="summary-label">Total Accounts</span>
+                <strong id="accounts-total">Loading...</strong>
+                <p>All accounts returned by the manager account service.</p>
+            </article>
+
+            <article class="summary-card">
+                <span class="summary-label">Active</span>
+                <strong id="accounts-active">Loading...</strong>
+                <p>Accounts currently available for standard customer use.</p>
+            </article>
+
+            <article class="summary-card">
+                <span class="summary-label">Frozen</span>
+                <strong id="accounts-frozen">Loading...</strong>
+                <p>Accounts temporarily blocked from normal booking activity.</p>
+            </article>
+
+            <article class="summary-card">
+                <span class="summary-label">Deleted</span>
+                <strong id="accounts-deleted">Loading...</strong>
+                <p>Soft-deleted accounts still retained for records and review.</p>
+            </article>
+
+            <article class="summary-card summary-card-wide">
+                <span class="summary-label">Total Loyalty Points</span>
+                <strong id="accounts-total-points">Loading...</strong>
+                <p>A combined view of all points currently attached to user loyalty accounts.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="control-card" aria-labelledby="account-controls-heading">
+        <div class="section-heading compact-heading">
+            <h2 id="account-controls-heading">Find an Account</h2>
+            <p>Search by name or email, then narrow the list by account status.</p>
+        </div>
+
+        <div class="control-grid">
+            <label class="field-group" for="account-search">
+                <span>Search</span>
+                <input id="account-search" type="search" placeholder="Search by name or email">
+            </label>
+
+            <label class="field-group" for="account-status-filter">
+                <span>Status</span>
+                <select id="account-status-filter">
+                    <option value="ALL">All statuses</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="FROZEN">Frozen</option>
+                    <option value="DELETED">Deleted</option>
+                </select>
+            </label>
+
+            <div class="control-actions">
+                <button id="refresh-accounts" class="secondary-button" type="button">Refresh</button>
+            </div>
+        </div>
+
+        <p id="accounts-message" class="accounts-message" role="status">Loading account data.</p>
+    </section>
+
+    <section class="table-card" aria-labelledby="account-table-heading">
+        <div class="section-heading compact-heading">
+            <h2 id="account-table-heading">Customer Accounts</h2>
+            <p>Freeze, restore, delete, and top up points directly from the manager view.</p>
+        </div>
+
+        <div class="table-wrap">
+            <table class="accounts-table">
+                <thead>
+                <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Add Points</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="accounts-table-body">
+                <tr>
+                    <td colspan="7">Loading accounts.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="/manager/accounts/scripts/accounts.js"></script>
+</body>
+</html>

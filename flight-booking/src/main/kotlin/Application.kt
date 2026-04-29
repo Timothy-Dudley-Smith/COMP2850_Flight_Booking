@@ -13,3 +13,5 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
 }
+
+// http://localhost:8080 <- for Musaddak - IGNORE, NOT IMPORTANT

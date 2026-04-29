@@ -45,10 +45,23 @@
     const bookingId = params.get('bookingId');
     const lastName = params.get('lastName');
 
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll("\"", "&quot;")
+            .replaceAll("'", "&#39;");
+    }
+
     fetch(`/api/bookings/lookup?bookingId=${encodeURIComponent(bookingId)}&lastName=${encodeURIComponent(lastName)}`)
         .then(r => r.json())
         .then(data => {
             const container = document.getElementById('booking-content');
+            const outboundSeats = Array.isArray(data.seats) ? data.seats : [];
+            const returnSeats = Array.isArray(data.returnSeatNumbers)
+                ? data.returnSeatNumbers
+                : (Array.isArray(data.returnSeats) ? data.returnSeats : []);
 
             // booking info card
             container.insertAdjacentHTML('beforeend', `
@@ -63,12 +76,12 @@
 
                     <div class="user_input_box">
                         <label>Flight</label>
-                        <input type="text" value="${data.flightId}" disabled>
+                        <input type="text" value="${escapeHtml(data.flightId)}" disabled>
                     </div>
 
                     <div class="user_input_box">
                         <label>Seat(s)</label>
-                        <input type="text" value="${data.seats.join(', ')}" disabled>
+                        <input type="text" value="${escapeHtml(outboundSeats.join(', '))}" disabled>
                     </div>
 
                     <div class="user_input_box">
@@ -85,6 +98,25 @@
 
 
             `);
+
+            if (data.returnFlightId) {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="booking_page_1" id="return-flight-section">
+                        <h2>Return Flight</h2>
+                        <p class="age-label">Return journey details</p>
+
+                        <div class="user_input_box">
+                            <label>Return flight</label>
+                            <input type="text" value="${escapeHtml(data.returnFlightId)}" disabled>
+                        </div>
+
+                        <div class="user_input_box">
+                            <label>Return seat(s)</label>
+                            <input type="text" value="${escapeHtml(returnSeats.length > 0 ? returnSeats.join(', ') : 'Not available')}" disabled>
+                        </div>
+                    </div>
+                `);
+            }
 
             function formatAddOns(raw) {
                 if (!raw) return 'None';
@@ -103,7 +135,7 @@
                         <h2>Passenger ${i + 1}</h2>
                         <div class="user_input_box">
                             <label>Full name</label>
-                            <input type="text" value="${name}" disabled>
+                            <input type="text" value="${escapeHtml(name)}" disabled>
                         </div>
                     </div>
                 `);

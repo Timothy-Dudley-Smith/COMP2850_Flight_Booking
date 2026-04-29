@@ -48,7 +48,9 @@ fun Application.configureDatabases() {
             LoyaltyAccounts,
             PromoCodes,
             PromoCodeUsages,
-            SupportTickets
+            SupportTickets,
+            SupportTicketHistory,
+            ManagerSentEmails
         )
 
 
@@ -75,6 +77,42 @@ fun Application.configureDatabases() {
             exec("""ALTER TABLE BOOKINGS ADD COLUMN "addOns" VARCHAR(1000)""")
         } catch (e: Exception) {
             println("addOns column already exists")
+        }
+
+        try {
+            exec("""ALTER TABLE SUPPORT_TICKETS ADD COLUMN ARCHIVED BOOLEAN DEFAULT FALSE""")
+        } catch (e: Exception) {
+            println("archived column already exists")
+        }
+
+        try {
+            exec("""ALTER TABLE BOOKINGS ADD COLUMN "returnFlightId" VARCHAR(128)""")
+        } catch (e: Exception) {
+            println("returnFlightId column already exists in BOOKINGS")
+        }
+
+        try {
+            exec("""ALTER TABLE PRICEHOLDS ADD COLUMN "returnFlightId" VARCHAR(128)""")
+        } catch (e: Exception) {
+            println("returnFlightId column already exists in PRICEHOLDS")
+        }
+
+        try {
+            exec("""ALTER TABLE BOOKINGS ADD COLUMN "date" VARCHAR(255)""")
+        } catch (e: Exception) {
+            println("date column already exists")
+        }
+
+        try {
+            exec("""ALTER TABLE BOOKINGS ADD COLUMN "time" VARCHAR(255)""")
+        } catch (e: Exception) {
+            println("time column already exists")
+        }
+
+        try {
+            exec("ALTER TABLE USERS ADD COLUMN STATUS VARCHAR(30) DEFAULT 'ACTIVE'")
+        } catch (e: Exception) {
+            println("status column already exists")
         }
 
         val authservice = AuthenticationService()

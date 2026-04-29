@@ -9,7 +9,7 @@
 <body>
 <header>
     <h1>Manager Flight View</h1>
-    <p>View, add, and remove upcoming flights.</p>
+    <p>View, add, and remove flights, including past services.</p>
 </header>
 
 <main>
@@ -65,8 +65,22 @@
         </form>
     </section>
 
-    <section aria-labelledby="upcoming-flights-heading">
-        <h2 id="upcoming-flights-heading">Upcoming Flights</h2>
+    <section aria-labelledby="flight-results-heading">
+        <h2 id="flight-results-heading">Flights</h2>
+        <div class="flight-filter-bar" role="group" aria-label="Filter flights by time">
+            <button type="button" class="flight-filter-button active" data-flight-filter="upcoming">
+                Upcoming
+            </button>
+            <button type="button" class="flight-filter-button" data-flight-filter="past">
+                Past
+            </button>
+            <button type="button" class="flight-filter-button" data-flight-filter="all">
+                All
+            </button>
+        </div>
+        <p id="flight-filter-summary" class="flight-filter-summary">
+            Showing upcoming flights.
+        </p>
         <table id="upcoming-flights-table">
             <thead>
             <tr>
@@ -83,7 +97,7 @@
             </thead>
             <tbody id="upcoming-flights-body">
             <tr>
-                <td colspan="9">No flights loaded.</td>
+                <td colspan="9">Loading flights.</td>
             </tr>
             </tbody>
         </table>

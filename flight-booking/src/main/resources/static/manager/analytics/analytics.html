@@ -22,6 +22,7 @@
             <a href="/manager/flight_view">Flight View</a>
             <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
             <a href="/manager/analytics" class="active">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
             <a href="/manager/support/support.html">Support</a>
         </div>
 
@@ -79,7 +80,10 @@
             </article>
         </div>
 
-        <p id="analytics-message" class="analytics-message" role="status"></p>
+        <div class="analytics-feedback">
+            <p id="analytics-message" class="analytics-message" role="status"></p>
+            <button id="analytics-retry" class="analytics-retry" type="button" hidden>Retry</button>
+        </div>
     </section>
 
     <section class="report-grid" aria-label="Detailed analytics reports">

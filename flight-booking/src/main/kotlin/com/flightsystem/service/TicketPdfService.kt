@@ -1,5 +1,7 @@
 package com.flightsystem.service
 
+import com.example.com.Route
+
 class TicketPdfService {
 
     fun generateTicketPdf(
@@ -8,24 +10,45 @@ class TicketPdfService {
         route: String,
         date: String,
         seats: String,
-        total: Double
+        total: Double,
+        returnBookingId: String? = null,
+        returnRoute: String? = null,
+        returnDate: String? = null,
+        returnSeats: String? = null
     ): ByteArray {
-        val lines = listOf(
+        val lines = mutableListOf(
             "ASTRAEUS AIRWAYS",
             "ELECTRONIC TICKET / BOARDING DOCUMENT",
             "================================================",
             "Passenger Name   : $passengerName",
+            "",
+            "OUTBOUND BOOKING",
             "Booking Ref      : $bookingId",
             "Route            : $route",
             "Travel Date      : $date",
             "Seat Assignment  : $seats",
             "Total Paid       : £${"%.2f".format(total)}",
-            "================================================",
-            "Important:",
-            "Please arrive at the airport at least 2 hours",
-            "before departure and bring a valid ID/passport.",
-            "",
-            "Thank you for booking with us!"
+            "================================================"
+        )
+
+        if (returnBookingId != null) {
+            lines.add("")
+            lines.add("RETURN BOOKING")
+            lines.add("Booking Ref      : $returnBookingId")
+            lines.add("Route            : ${returnRoute ?: "Not available"}")
+            lines.add("Travel Date      : ${returnDate ?: "Not available"}")
+            lines.add("Seat Assignment  : ${returnSeats ?: "Not available"}")
+            lines.add("================================================")
+        }
+
+        lines.addAll(
+            listOf(
+                "Important:",
+                "Please arrive at the airport at least 2 hours",
+                "before departure and bring a valid ID/passport.",
+                "",
+                "Thank you for booking with us!"
+            )
         )
 
         val contentStream = buildString {

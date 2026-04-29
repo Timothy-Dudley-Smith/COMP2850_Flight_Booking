@@ -29,7 +29,11 @@ class EmailService(
         date: String,
         seats: String,
         total: Double,
-        ticketPdfBytes: ByteArray
+        ticketPdfBytes: ByteArray,
+        returnBookingId: String? = null,
+        returnRoute: String? = null,
+        returnDate: String? = null,
+        returnSeats: String? = null
     ) {
         val props = Properties().apply {
             put("mail.smtp.auth", "true")
@@ -49,6 +53,20 @@ class EmailService(
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail))
         message.subject = "Astraeus Airways Booking Confirmation - $bookingId"
 
+        val returnSection = if (returnBookingId != null) {
+            """
+                RETURN BOOKING
+                -------------------------------
+                Return Booking Reference: $returnDate
+                Route: $returnRoute
+                Travel Date: $returnDate
+                Seat Assignment: $returnSeats
+                -------------------------------
+            """.trimIndent()
+        } else {
+            ""
+        }
+
         val textPart = MimeBodyPart()
         textPart.setText(
             """
@@ -64,7 +82,9 @@ class EmailService(
     Seat Assignment: $seats
     Total Paid: £${"%.2f".format(total)}
     ------------------------------
-
+    
+    $returnSection
+    
     Your e-ticket is attached as a PDF.
 
     Please keep this email for your records and arrive at the airport at least 2 hours before departure.

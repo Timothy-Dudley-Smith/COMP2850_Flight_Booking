@@ -57,6 +57,7 @@ class CheckoutService(
 
     fun checkout(
         holdId: Int,
+        returnHoldId: Int? = null,
         request: PaymentRequest,
         pointsToRedeem: Int = 0,
         promoCode: String? = null,
@@ -73,6 +74,14 @@ class CheckoutService(
             )
 
         val hold = holdDetails.hold
+
+        val returnHoldDetails = returnHoldId?.let {
+            priceHoldService.getHoldDetails(it)
+        }
+
+        val returnHold = returnHoldDetails?.hold
+
+
 
         val expiryTime = try {
             LocalDateTime.parse(hold.expiryTime)
@@ -106,6 +115,10 @@ class CheckoutService(
 
         var finalAmount = hold.totalPrice
 
+        returnHold?.let {
+            finalAmount += it.totalPrice
+        }
+
         if (pointsToRedeem > 0) {
             val loyaltyAccount = loyaltyService.getLoyaltyAccount(hold.userId)
                 ?: return PaymentResponse(
@@ -125,7 +138,7 @@ class CheckoutService(
             }
 
             finalAmount = loyaltyService.applyDiscount(
-                originalPrice = hold.totalPrice,
+                originalPrice = finalAmount,
                 pointsToRedeem = pointsToRedeem
             )
         }
@@ -183,14 +196,20 @@ class CheckoutService(
             loyaltyService.redeemPoints(hold.userId, pointsToRedeem)
         }
 
-        val booking = priceHoldService.confirmHoldToBooking(holdId, cabin, addOns)
-
+        val outboundBooking = priceHoldService.confirmHoldToBooking(holdId, cabin, addOns)
             ?: return PaymentResponse(
                 success = false,
-                message = "Payment succeeded but booking creation failed",
+                message = "Payment succeeded but outbound booking creation failed",
                 paymentId = payment.paymentID,
-                bookingId = null
+                bookingId = null,
             )
+        val returnBooking = if (returnHoldId != null) {
+            priceHoldService.confirmHoldToBooking(returnHoldId, cabin, addOns)
+        } else {
+            null
+        }
+
+
 
         val pointsEarned = finalAmount.toInt()
         loyaltyService.addPoints(hold.userId, pointsEarned)
@@ -208,6 +227,7 @@ class CheckoutService(
         try {
             val userDetails = getUserEmailAndName(hold.userId)
             val flightDetails = getFlightDisplayDetails(hold.flightId)
+            val returnFlightDetails = returnHold?.let { getFlightDisplayDetails(it.flightId) }
 
             if (userDetails != null) {
                 val (email, fullName) = userDetails
@@ -216,26 +236,40 @@ class CheckoutService(
                 val date = flightDetails?.second ?: "Date unavailable"
                 val timeRange = flightDetails?.third ?: "Time unavailable"
 
+                val returnRoute = returnFlightDetails?.first
+                val returnDateText = returnFlightDetails?.let { "${it.second} . ${it.third}" }
+
+                val returnSeatsText = returnHoldDetails?.seats?.joinToString ( ", " )
+
                 
 
                 val ticketPdf = ticketPdfService.generateTicketPdf(
-                    bookingId = booking.bookingId.toString(),
+                    bookingId = outboundBooking.bookingId.toString(),
                     passengerName = fullName,
                     route = route,
                     date = "$date • $timeRange",
                     seats = holdDetails.seats.joinToString(", "),
-                    total = finalAmount
+                    total = finalAmount,
+                    returnBookingId = returnBooking?.bookingId?.toString(),
+                    returnRoute = returnRoute,
+                    returnDate = returnDateText,
+                    returnSeats = returnSeatsText
+
                 )
 
                 emailService.sendBookingConfirmationEmail(
                     toEmail = email,
                     passengerName = fullName,
-                    bookingId = booking.bookingId.toString(),
+                    bookingId = outboundBooking.bookingId.toString(),
                     route = route,
                     date = "$date • $timeRange",
                     seats = holdDetails.seats.joinToString(", "),
                     total = finalAmount,
-                    ticketPdfBytes = ticketPdf
+                    ticketPdfBytes = ticketPdf,
+                    returnBookingId = returnBooking?.bookingId?.toString(),
+                    returnRoute = returnRoute,
+                    returnDate = returnDateText,
+                    returnSeats = returnSeatsText
                 )
 
                 println("Booking confirmed!")
@@ -249,7 +283,8 @@ class CheckoutService(
             success = true,
             message = "Payment successful and booking confirmed",
             paymentId = payment.paymentID,
-            bookingId = booking.bookingId,
+            bookingId = outboundBooking.bookingId,
+            returnBookingId = returnBooking?.bookingId,
             pointsEarned = pointsEarned,
             pointsUsed = pointsToRedeem,
             updatedPointsTotal = updatedLoyaltyAccount?.loyaltyPoints,

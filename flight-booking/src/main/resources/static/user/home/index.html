@@ -58,31 +58,34 @@
 
     <div class="search-card">
 
-    <form action="/book" method="get" class="flight-bar">
+        <form action="/book" method="get" class="flight-bar">
 
-        <!-- flight search fields + button -->
+            <input type="text" name="from" placeholder="From">
 
+            <input type="text" name="to" placeholder="To">
 
-        <input type="text" name="from" placeholder="From">
+            <input type="date" name="date">
 
-        <input type="text" name="to" placeholder="To">
+            <input type="date" name="returnDate" id="return-date" style="display: none;">
 
-        <input type="date" name="date">
+            <label style="display:flex; align-items:center; gap:4px;">
+                <input type="checkbox" id="return-toggle">
+                Return
+            </label>
 
-         <select name="passengers">
-        <option>1 Passenger</option>
-        <option>2 Passengers</option>
-        <option>3 Passenger</option>
-        <option>4 Passengers</option>
-        <option>5 Passenger</option>
-        <option>6 Passengers</option>
-        <option>7 Passengers</option>
+            <select name="passengers">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5">5 Passengers</option>
+                <option value="6">6 Passengers</option>
+                <option value="7">7 Passengers</option>
+            </select>
 
-         </select>
-        
-        <button type="submit" class="search-btn">Search flights</button>
+            <button type="submit" class="search-btn">Search flights</button>
 
-    </form>
+        </form>
 
     </div>
     
@@ -182,6 +185,20 @@
 
 </section>
 
+<script>
+    const toggle = document.getElementById("return-toggle");
+    const returnDate = document.getElementById("return-date");
+
+    toggle.addEventListener("change", function () {
+        returnDate.style.display = this.checked ? "inline-block" : "none";
+        returnDate.required = this.checked;
+
+        if (!this.checked) {
+            returnDate.value = "";
+        }
+    });
+</script>
+
 <section class="support-banner">
     <div class="support-container">
 
@@ -250,6 +267,20 @@
     </div>
     <div class="footer-right">Astraeus UK</div>
 </footer>
+
+<script>
+    const toggle = document.getElementById("return-toggle");
+    const returnDate = document.getElementById("return-date");
+
+    toggle.addEventListener("change", function () {
+        returnDate.style.display = this.checked ? "inline-block" : "none";
+        returnDate.required = this.checked;
+
+        if (!this.checked) {
+            returnDate.value = "";
+        }
+    });
+</script>
 
 
 </body>

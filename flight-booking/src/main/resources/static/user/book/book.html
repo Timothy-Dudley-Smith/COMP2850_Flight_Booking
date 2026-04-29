@@ -75,8 +75,13 @@
 
 
 <section class="results-wrapper">
-    <div class="results-list" id="flight-list">
-    </div>
+    <h2>Outbound flights</h2>
+    <div class="results-list" id="flight-list"></div>
+</section>
+
+<section class="results-wrapper" id="return-section" style="display: none;">
+    <h2>Return flights</h2>
+    <div class="results-list" id="return-flight-list"></div>
 </section>
 
 
@@ -166,21 +171,161 @@
         }
     }
 
+
+    function renderFlights(list, flights, onBookClick) {
+        list.innerHTML = "";
+
+        if (flights.length === 0) {
+            list.innerHTML = "<p>No flights found for this route.</p>";
+            return;
+        }
+
+        flights.forEach(flight => {
+            const hours = Math.trunc(flight.length);
+            const decimal = flight.length - hours;
+            const minutes = Math.round(decimal * 60);
+
+            list.insertAdjacentHTML("beforeend", `
+            <div class="flight-card">
+                <div class="flight-left">
+                    <div class="airline-block">
+                        <img src="/images/Logo.png" class="flight-logo">
+                        <div class="buttons">
+                            <button class="details-btn">Details</button>
+                            <button class="Book_Now-btn">Select Flight</button>
+                        </div>
+                    </div>
+
+                    <div class="time-section">
+                        <div class="time-block">
+                            <h2>${flight.departureTime}</h2>
+                            <span>${flight.departureAirport}</span>
+                        </div>
+
+                        <div class="duration">
+                            <small>Direct</small>
+                            <div class="line"></div>
+                            <small>${hours}h ${minutes}m</small>
+                        </div>
+
+                        <div class="time-block">
+                            <h2>${flight.arrivalTime}</h2>
+                            <span>${flight.arrivalAirport}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flight-prices">
+                    <div class="price-box">
+                        <span>Economy</span>
+                        <strong>£${flight.price.toFixed(0)}</strong>
+                    </div>
+
+                    <div class="price-box">
+                        <span>Premium Economy</span>
+                        <strong>£${(flight.price * 1.6).toFixed(0)}</strong>
+                    </div>
+
+                    <div class="price-box">
+                        <span>Business</span>
+                        <strong>£${(flight.price * 3.5).toFixed(0)}</strong>
+                    </div>
+                </div>
+            </div>
+        `);
+
+            const flightCard = list.lastElementChild;
+            const priceBoxes = flightCard.querySelectorAll(".price-box");
+            const bookBtn = flightCard.querySelector(".Book_Now-btn");
+
+            bookBtn.disabled = true;
+
+            priceBoxes.forEach(box => {
+                box.addEventListener("click", function () {
+                    priceBoxes.forEach(item => item.classList.remove("selected"));
+                    this.classList.add("selected");
+                    bookBtn.disabled = false;
+                    bookBtn.classList.add("active");
+                });
+            });
+
+            bookBtn.addEventListener("click", () => {
+                const selectedBox = flightCard.querySelector(".price-box.selected");
+                if (!selectedBox) return;
+
+                const cabin = selectedBox.querySelector("span").textContent.trim();
+                onBookClick(flight, cabin);
+            });
+        });
+    }
+
     async function loadFlights() {
         const params = new URLSearchParams(window.location.search);
         const from = params.get("from");
         const to   = params.get("to");
         const date = params.get("date");
+        const returnDate = params.get("returnDate");
         const passengers = params.get("passengers");
+        const isReturnTrip = returnDate && returnDate.trim() !== "";
+
+        let selectedOutboundFlight = null;
+        let selectedOutboundCabin = null;
+        let selectedReturnFlight = null;
+        let selectedReturnCabin = null;
+
+        function tryContinueReturnBooking() {
+            if (!selectedOutboundFlight || !selectedReturnFlight) {
+                alert("Please select both an outbound and return flight.");
+                return;
+            }
+
+            clearBookingProgress();
+
+            const nextParams = new URLSearchParams({
+                from: from ?? "",
+                to: to ?? "",
+                date: date ?? "",
+                returnDate: returnDate ?? "",
+                passengers: passengers ?? "1",
+                cabin: selectedOutboundCabin ?? "Economy",
+                returnCabin: selectedReturnCabin ?? "Economy",
+                flightId: selectedOutboundFlight.flightId ?? "",
+                returnFlightId: selectedReturnFlight.flightId ?? ""
+            });
+
+            window.location.href = `/booking-personal?${nextParams.toString()}`;
+        }
+
+        if (isReturnTrip) {
+            const returnSection = document.getElementById("return-section");
+            const returnList = document.getElementById("return-flight-list");
+
+            returnSection.style.display = "block";
+
+            const returnResponse = await fetch(`/api/flights?from=${to}&to=${from}&date=${returnDate}&passengers=${passengers}`);
+            const returnFlights = await returnResponse.json();
+
+            renderFlights(returnList, returnFlights, (flight, cabin) => {
+                selectedReturnFlight = flight;
+                selectedReturnCabin = cabin;
+
+                sessionStorage.setItem("selectedReturnFlightId", flight.flightId ?? "");
+                sessionStorage.setItem("selectedReturnCabin", cabin);
+
+                tryContinueReturnBooking();
+            });
+        }
 
 
         //from the url get the from,to,date parameters
 
-        document.getElementById("route-title").textContent = from + " → " + to;
-        //used text header of page telling user which flights are to be shown
+        document.getElementById("route-title").textContent = isReturnTrip
+            ? `${from} ↔ ${to}`
+            : `${from} → ${to}`;
 
-        document.getElementById("route-date").textContent = formatRouteDate(date);
-        //put the date string into a readable "day month" format ie "28 March"
+        document.getElementById("route-date").textContent = isReturnTrip
+            ? `Outbound: ${formatRouteDate(date)} | Return: ${formatRouteDate(returnDate)}`
+            : formatRouteDate(date);
 
         try {
             const response = await fetch(`/api/flights?from=${from}&to=${to}&date=${date}&passengers=${passengers}`);
@@ -195,103 +340,11 @@
             }
             // if no flight matches are found then simply write a message saying that
 
-            flights.forEach(flight => {
-                const hours = Math.trunc(flight.length);
-                const decimal = flight.length - hours;
-                const minutes = Math.round(decimal * 60);
-            // math alg to calc duration of flight in hrs and mins done for ease of user but also for filtering and sorting
+            renderFlights(list, flights, (flight, cabin) => {
+                selectedOutboundFlight = flight;
+                selectedOutboundCabin = cabin;
 
-                list.insertAdjacentHTML("beforeend", `
-                <div class="flight-card">
-                <!-- each result is split into 3 parts the left middle and right section -->
-
-                    <!-- the left section holds the logo and details button -->
-                    <div class="flight-left">
-                    <!-- logo and details button -->
-                    <div class="airline-block">
-                        <img src="/images/Logo.png" class="flight-logo">
-                        <div class="buttons">
-                            <button class="details-btn">Details</button>
-                            <button class="Book_Now-btn">Book Now</button>
-                        </div>
-                    </div>
-                    <!-- the middle section houses the timings and airport details -->
-                    <div class="time-section">
-                        <div class="time-block">
-                            <h2>${flight.departureTime}</h2>
-                            <span>${flight.departureAirport}</span>
-                        </div>
-
-                        <!-- puts the num of stops and flight len in small with line between the two -->
-                        <div class="duration">
-                            <small>${new Date(flight.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'})}</small>
-                            <small>Direct</small>
-                            <div class="line"></div>
-                            <small>${hours}h ${minutes}m</small>
-                        </div>
-
-                        <!-- arrival time and airport -->
-                        <div class="time-block">
-                            <h2>${flight.departureTime}</h2>
-                            <span>${flight.departureAirport}</span>
-
-                        </div>
-                    </div>
-                </div>
-                    <!-- pricing options-->
-                    <div class="flight-prices">
-                        <div class="price-box">
-                            <span>Economy</span>
-                            <strong>${fmt(flight.price)}</strong>
-                        </div>
-
-                        <div class="price-box">
-                            <span>Premium Economy</span>
-                            <strong>${fmt(flight.price * 1.6)}</strong>
-                        </div>
-
-                        <div class="price-box">
-                            <span>Business</span>
-                            <strong>${fmt(flight.price * 3.5)}</strong>
-                        </div>
-                    </div>
-
-                </div>
-                `);
-                const flightCard = list.lastElementChild;
-                const priceBoxes = flightCard.querySelectorAll(".price-box");
-                const bookBtn = flightCard.querySelector(".Book_Now-btn");
-                bookBtn.disabled = true;
-
-                // loop through each price box
-                for (let i = 0; i < priceBoxes.length; i++) {
-
-                    // add a click listener to each box
-                    priceBoxes[i].addEventListener("click", function() {
-
-                        // remove selected from all boxes first
-                        for (let j = 0; j < priceBoxes.length; j++) {
-                            priceBoxes[j].classList.remove("selected");
-                        }
-
-                        // highlight the box that was clicked
-                        this.classList.add("selected");
-
-                        // enable the book button
-                        bookBtn.disabled = false;
-                        bookBtn.classList.add("active");
-                    });
-                }
-
-                bookBtn.addEventListener("click", () => {
-                    const selectedBox = flightCard.querySelector(".price-box.selected");
-
-                    if (!selectedBox) {
-                        return;
-                    }
-
-                    const cabin = selectedBox.querySelector("span").textContent.trim();
-
+                if (!isReturnTrip) {
                     clearBookingProgress();
 
                     window.location.href = buildBookingUrl({
@@ -302,7 +355,14 @@
                         cabin,
                         flightId: flight.flightId ?? ""
                     });
-                });
+
+                    return;
+                }
+
+                sessionStorage.setItem("selectedOutboundFlightId", flight.flightId ?? "");
+                sessionStorage.setItem("selectedOutboundCabin", cabin);
+
+                tryContinueReturnBooking();
             });
 
             //catch block is for error handling ie if anything goes wrong then the catchj block runs

@@ -218,12 +218,47 @@ main {
     line-height: 1.5;
 }
 
+.analytics-feedback {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+}
+
 .analytics-message {
     min-height: 22px;
-    margin: 16px 0 0;
-    color: #6a4b00;
+    margin: 0;
+    color: #135f91;
     font-size: 14px;
     font-weight: 600;
+}
+
+.analytics-message.is-error {
+    color: #a12a2a;
+}
+
+.analytics-message.is-success {
+    color: #1c6a45;
+}
+
+.analytics-retry {
+    border: 1px solid #bfd8e8;
+    border-radius: 999px;
+    background: #f3f9fd;
+    color: #135f91;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 14px;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.analytics-retry:hover {
+    background: #e4f3fb;
+    border-color: #00a1de;
+    transform: translateY(-1px);
 }
 
 .report-grid {
@@ -416,6 +451,11 @@ td {
         width: 100%;
         justify-content: center;
         margin-top: 12px;
+    }
+
+    .analytics-feedback {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .hourly-chart {

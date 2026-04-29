@@ -80,6 +80,44 @@ section h2 {
 
 /*section heading inside card, matches .sh style*/
 
+.flight-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 18px 0;
+}
+
+.flight-filter-button {
+    padding: 9px 16px;
+    border: 1px solid #bfd8e8;
+    border-radius: 999px;
+    background: #f3f9fd;
+    color: #135f91;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.flight-filter-button:hover {
+    background: #e4f3fb;
+    border-color: #00a1de;
+}
+
+.flight-filter-button.active {
+    background: #132e8e;
+    border-color: #132e8e;
+    color: #ffffff;
+}
+
+.flight-filter-summary {
+    margin: 0;
+    padding: 10px 18px 0;
+    color: #5f6b75;
+    font-size: 13px;
+}
+
 
 
 /* ----------------------------- */
@@ -303,6 +341,12 @@ section h2 {
     color: white;
 }
 
+@media (max-width: 700px) {
+    .flight-filter-button {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
 
 
 

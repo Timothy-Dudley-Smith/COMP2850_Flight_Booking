@@ -24,6 +24,5 @@ object BookingSeats : Table() {
 
     init {
         foreignKey(flightId, seatNumber, target = Seats.primaryKey)
-        foreignKey(bookingId to Bookings.bookingId, flightId to Bookings.flightId)
     }
 }

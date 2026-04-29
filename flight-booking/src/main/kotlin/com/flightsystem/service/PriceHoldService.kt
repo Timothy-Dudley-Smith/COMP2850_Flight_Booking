@@ -28,8 +28,11 @@ class PriceHoldService {
     fun createHold(
         userId: Int,
         flightId: String,
-        seatNumbers: List<String>
+        seatNumbers: List<String>,
+        returnFlightId: String? = null,
+        returnSeatNumbers: List<String> = emptyList()
     ): PriceHold {
+
         return transaction {
             require(seatNumbers.isNotEmpty()) {
                 "At least 1 seat must be selected" 
@@ -60,8 +63,45 @@ class PriceHoldService {
                 totalPrice += basePrice * multiplier
             }
 
+            if (!returnFlightId.isNullOrBlank() && returnSeatNumbers.isNotEmpty()) {
+                val returnSeatsFromDb = Seats.selectAll().where {
+                    (Seats.flightId eq returnFlightId) and
+                    (Seats.seatNumber inList returnSeatNumbers)
+                }.toList()
 
-            val expiryTime = LocalDateTime.now().plusMinutes(15).toString() // set hold to expire in 15 mins 
+                val numberOfSeatsFound = returnSeatsFromDb.size
+                val numberOfSeatsRequested = returnSeatNumbers.size
+                if (numberOfSeatsFound != numberOfSeatsRequested) {
+                    throw IllegalArgumentException ("One or more of the seats requeted are not available")
+
+                }
+
+                for (seat in returnSeatsFromDb) {
+                    val isAvailabe = seat[Seats.isAvailable]
+                    if (!isAvailabe){
+                        throw IllegalArgumentException ("One or more of the seats requeted are not available")
+                    }
+                }
+
+                val returnFlightRow = Flights.selectAll().where{
+                    Flights.flightId eq returnFlightId
+                }.singleOrNull()
+
+                if (returnFlightRow == null) {
+                    throw IllegalArgumentException ("return flight doesnt exist")
+                }
+
+                val returnBasePrice = returnFlightRow[Flights.price]
+
+                for (seat in returnSeatsFromDb){
+                    val seatClass = seat[Seats.seatClass]
+                    val multiplier = getSeatMultiplier(seatClass)
+                    val seatPrice = returnBasePrice * multiplier
+                    totalPrice = totalPrice + seatPrice
+                }
+
+            }
+            val expiryTime = LocalDateTime.now().plusMinutes(15).toString() // set hold to expire in 15 mins
             val inserted = PriceHolds.insert {
                 it[PriceHolds.userId] = userId
                 it[PriceHolds.flightId] = flightId

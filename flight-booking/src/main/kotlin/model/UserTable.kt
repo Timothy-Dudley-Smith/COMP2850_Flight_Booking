@@ -1,8 +1,15 @@
 package com.flightsystem.model
 
+import model.TicketStatus
 import org.jetbrains.exposed.sql.Table
 
 private const val VARIABLE_LENGTH = 128
+
+enum class AccountStatus {
+    ACTIVE,
+    FROZEN,
+    DELETED
+}
 
 object Users : Table() {
     val userId = integer("user_id").autoIncrement()
@@ -18,6 +25,7 @@ object Users : Table() {
     val lockedAt = varchar("locked_at", VARIABLE_LENGTH).nullable()
     val lastLogin = varchar("last_login", VARIABLE_LENGTH).nullable()
     val role = varchar("role", 20).default("USER")
+    val status = enumerationByName("status", 20, AccountStatus::class).default(AccountStatus.ACTIVE)
 
     override val primaryKey = PrimaryKey(userId)
 }
