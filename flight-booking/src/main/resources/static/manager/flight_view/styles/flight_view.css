@@ -21,6 +21,31 @@ header {
 
 /*dark navy header with blue accent underline*/
 
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.header-home-link {
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.header-home-link:hover,
+.header-home-link:focus {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
 header h1 {
     margin: 0 0 6px 0;
     font-size: clamp(20px, 3vw, 30px);
@@ -36,6 +61,13 @@ header p {
 }
 
 /*subtitle below title, slightly faded*/
+
+@media (max-width: 720px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 
 
 
@@ -157,7 +189,8 @@ section h2 {
 /* ADD FLIGHT FORM */
 /* ----------------------------- */
 
-#add-flight-form {
+#add-flight-form,
+#add-airport-form {
     padding: 20px 18px;
     display: flex;
     flex-wrap: wrap;
@@ -166,7 +199,8 @@ section h2 {
 
 /*form uses flex wrap so fields sit side by side where space allows*/
 
-#add-flight-form div {
+#add-flight-form div,
+#add-airport-form div {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -174,7 +208,8 @@ section h2 {
     /* each field grows but has a min width */
 }
 
-#add-flight-form label {
+#add-flight-form label,
+#add-airport-form label {
     font-size: 11px;
     font-weight: 500;
     color: #1a2b4a;
@@ -184,7 +219,8 @@ section h2 {
 
 /*small uppercase label above each field*/
 
-#add-flight-form input {
+#add-flight-form input,
+#add-airport-form input {
     padding: 9px 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -196,13 +232,15 @@ section h2 {
 
 /*input field styling*/
 
-#add-flight-form input:focus {
+#add-flight-form input:focus,
+#add-airport-form input:focus {
     border-color: #132e8e;
 }
 
 /*blue border on focus to match brand colour*/
 
-#add-flight-form button[type="submit"] {
+#add-flight-form button[type="submit"],
+#add-airport-form button[type="submit"] {
     align-self: flex-end;
     padding: 10px 24px;
     background: #132e8e;
@@ -219,8 +257,16 @@ section h2 {
 
 /*submit button uses same pill shape and navy colour as .search-btn*/
 
-#add-flight-form button[type="submit"]:hover {
+#add-flight-form button[type="submit"]:hover,
+#add-airport-form button[type="submit"]:hover {
     background: #0f1c36;
+}
+
+.manager-form-hint {
+    flex: 1 1 100%;
+    margin: -4px 0 0;
+    color: #5f6b75;
+    font-size: 12px;
 }
 
 /*darker shade on hover*/
@@ -347,6 +393,4 @@ section h2 {
         text-align: center;
     }
 }
-
-
 

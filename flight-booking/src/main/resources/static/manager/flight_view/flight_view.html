@@ -8,8 +8,13 @@
 </head>
 <body>
 <header>
-    <h1>Manager Flight View</h1>
-    <p>View, add, and remove flights, including past services.</p>
+    <div class="header-content">
+        <div>
+            <h1>Manager Flight View</h1>
+            <p>View, add, and remove flights, including past services.</p>
+        </div>
+        <a class="header-home-link" href="/manager/home/manager_home.html">Back to Manager Home</a>
+    </div>
 </header>
 
 <main>
@@ -62,6 +67,64 @@
             </div>
 
             <button type="submit">Add Flight</button>
+        </form>
+    </section>
+
+    <section aria-labelledby="add-airport-heading">
+        <h2 id="add-airport-heading">Add Airport</h2>
+        <form id="add-airport-form" method="post" action="/api/manager/airports">
+            <div>
+                <label for="airport-code">Airport Code</label>
+                <input
+                    id="airport-code"
+                    name="code"
+                    type="text"
+                    maxlength="3"
+                    pattern="[A-Za-z]{3}"
+                    placeholder="LHR"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="airport-name">Airport Name</label>
+                <input
+                    id="airport-name"
+                    name="name"
+                    type="text"
+                    maxlength="128"
+                    placeholder="London Heathrow Airport"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="airport-city">City</label>
+                <input
+                    id="airport-city"
+                    name="city"
+                    type="text"
+                    maxlength="128"
+                    placeholder="London"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="airport-country">Country</label>
+                <input
+                    id="airport-country"
+                    name="country"
+                    type="text"
+                    maxlength="128"
+                    placeholder="United Kingdom"
+                    required
+                >
+            </div>
+
+            <p class="manager-form-hint">Use the standard three-letter IATA code. Example: `LHR`, `JFK`, `DXB`.</p>
+
+            <button type="submit">Add Airport</button>
         </form>
     </section>
 

@@ -300,7 +300,8 @@
     const firstName = sessionStorage.getItem("firstName");
 
     const loggedInUserId = getLoggedInUserId();
-    const isSignedIn = !!sessionId && typeof loggedInUserId == "number";
+    const isSignedIn = !!sessionId && typeof loggedInUserId == "number"
+    const nextBookingPage = isSignedIn ? "/loyaltypage" : "/addons";
 
     const welcomeMessage = document.getElementById("welcome-message");
     const loginLink = document.getElementById("login-link");

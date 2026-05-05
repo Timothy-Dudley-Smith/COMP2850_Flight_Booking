@@ -22,7 +22,7 @@ class EmailService(
 ) {
 
     fun sendBookingConfirmationEmail(
-        toEmail: String,
+        toEmail: String?,
         passengerName: String,
         bookingId: String,
         route: String,

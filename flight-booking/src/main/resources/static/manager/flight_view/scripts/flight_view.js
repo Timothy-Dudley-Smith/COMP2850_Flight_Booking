@@ -15,9 +15,15 @@
 
     const allFlightsEndpoint = "/api/flights?date=";
     const createFlightEndpoint = "/api/manager/flight_view";
+    const allAirportsEndpoint = "/api/airports";
+    const createAirportEndpoint = sessionId
+        ? `/api/manager/airports?sessionId=${encodeURIComponent(sessionId)}`
+        : "/api/manager/airports";
     const deleteFlightEndpoint = (flightId) => `/api/manager/flights/${encodeURIComponent(flightId)}`;
     const message = document.getElementById("manager-message");
     const form = document.getElementById("add-flight-form");
+    const airportForm = document.getElementById("add-airport-form");
+    const airportCodeInput = document.getElementById("airport-code");
     const tableBody = document.getElementById("upcoming-flights-body");
     const filterSummary = document.getElementById("flight-filter-summary");
     const filterButtons = Array.from(document.querySelectorAll("[data-flight-filter]"));
@@ -29,6 +35,7 @@
 
     let allFlights = [];
     let activeFilter = "upcoming";
+    let existingAirportCodes = new Set();
 
     function setMessage(text, state) {
         if (!message) {
@@ -71,6 +78,14 @@
         const cell = document.createElement("td");
         cell.textContent = text;
         row.appendChild(cell);
+    }
+
+    function normalizeAirportCode(value) {
+        return value.trim().toUpperCase();
+    }
+
+    function normalizeTextField(value) {
+        return value.trim().replace(/\s+/g, " ");
     }
 
     function toLocalDateString(date) {
@@ -303,6 +318,27 @@
         }
     }
 
+    async function loadAirportCodes() {
+        try {
+            const response = await fetch(allAirportsEndpoint);
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            const airports = await response.json();
+            const codes = Array.isArray(airports)
+                ? airports
+                    .map((airport) => typeof airport?.code === "string" ? normalizeAirportCode(airport.code) : "")
+                    .filter(Boolean)
+                : [];
+
+            existingAirportCodes = new Set(codes);
+        } catch (error) {
+            console.error("Failed to load airport codes.", error);
+        }
+    }
+
     function buildFlightPayload(formElement) {
         const formData = new FormData(formElement);
 
@@ -316,6 +352,45 @@
             length: Number(formData.get("length")),
             price: Number(formData.get("price"))
         };
+    }
+
+    function buildAirportPayload(formElement) {
+        const formData = new FormData(formElement);
+
+        return {
+            code: normalizeAirportCode((formData.get("code") ?? "").toString()).slice(0, 3),
+            name: normalizeTextField((formData.get("name") ?? "").toString()),
+            city: normalizeTextField((formData.get("city") ?? "").toString()),
+            country: normalizeTextField((formData.get("country") ?? "").toString())
+        };
+    }
+
+    function validateAirportPayload(payload) {
+        if (!payload.code) {
+            return "Enter an airport code.";
+        }
+
+        if (!/^[A-Z]{3}$/.test(payload.code)) {
+            return "Airport code must be exactly 3 letters.";
+        }
+
+        if (!payload.name) {
+            return "Enter the airport name.";
+        }
+
+        if (!payload.city) {
+            return "Enter the airport city.";
+        }
+
+        if (!payload.country) {
+            return "Enter the airport country.";
+        }
+
+        if (existingAirportCodes.has(payload.code)) {
+            return `Airport code ${payload.code} already exists.`;
+        }
+
+        return null;
     }
 
     async function submitFlight(formElement) {
@@ -338,6 +413,34 @@
         formElement.reset();
         setMessage("Flight submitted successfully.", "success");
         await loadFlights();
+    }
+
+    async function submitAirport(formElement) {
+        const payload = buildAirportPayload(formElement);
+        const validationError = validateAirportPayload(payload);
+
+        if (validationError) {
+            throw new Error(validationError);
+        }
+
+        setMessage(`Adding airport ${payload.code}...`, "info");
+
+        const response = await fetch(createAirportEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorMessage = await readResponseMessage(response, "Failed to add airport.");
+            throw new Error(errorMessage);
+        }
+
+        existingAirportCodes.add(payload.code);
+        formElement.reset();
+        setMessage(`Airport ${payload.code} added successfully.`, "success");
     }
 
     filterButtons.forEach((button) => {
@@ -366,5 +469,25 @@
         });
     }
 
+    if (airportCodeInput) {
+        airportCodeInput.addEventListener("input", () => {
+            airportCodeInput.value = normalizeAirportCode(airportCodeInput.value).slice(0, 3);
+        });
+    }
+
+    if (airportForm) {
+        airportForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            try {
+                await submitAirport(airportForm);
+            } catch (error) {
+                setMessage(error.message || "Failed to add airport.", "error");
+                console.error(error);
+            }
+        });
+    }
+
+    await loadAirportCodes();
     loadFlights();
 })();

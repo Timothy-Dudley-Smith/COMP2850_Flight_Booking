@@ -5,7 +5,6 @@ import com.flightsystem.model.Users
 import com.flightsystem.model.Flights
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import com.flightsystem.model.PaymentResponse
 import com.flightsystem.AppEnv
 import java.time.LocalDateTime
@@ -15,8 +14,6 @@ class CheckoutService(
     private val paymentService: PaymentService,
     private val loyaltyService: LoyaltyService,
     private val promoCodeService: PromoCodeService
-
-
 
 ) {
     private val ticketPdfService = TicketPdfService()
@@ -62,7 +59,9 @@ class CheckoutService(
         pointsToRedeem: Int = 0,
         promoCode: String? = null,
         cabin: String? = null,
-        addOns: String? = null
+        addOns: String? = null,
+        guestEmail: String? = null
+
     ): PaymentResponse {
 
         val holdDetails = priceHoldService.getHoldDetails(holdId)
@@ -81,6 +80,27 @@ class CheckoutService(
 
         val returnHold = returnHoldDetails?.hold
 
+
+
+        val userId = hold.userId
+
+        val userRow = transaction {
+            Users.selectAll().where { Users.userId eq userId }.singleOrNull()
+        }
+        if (userRow == null) {
+            return PaymentResponse(
+                success = false,
+                message = "Invalid user ID",
+                paymentId = null,
+                bookingId = null
+            )
+        }
+
+        val userEmail = userRow[Users.email]
+
+        val isGuestBooking = userEmail == "guest@astraeus.local"
+        val trimmedGuestEmail = guestEmail?.trim()
+        val confirmationEmail = if (isGuestBooking) trimmedGuestEmail else userEmail
 
 
         val expiryTime = try {
@@ -241,7 +261,7 @@ class CheckoutService(
 
                 val returnSeatsText = returnHoldDetails?.seats?.joinToString ( ", " )
 
-                
+
 
                 val ticketPdf = ticketPdfService.generateTicketPdf(
                     bookingId = outboundBooking.bookingId.toString(),
@@ -258,7 +278,7 @@ class CheckoutService(
                 )
 
                 emailService.sendBookingConfirmationEmail(
-                    toEmail = email,
+                    toEmail = confirmationEmail,
                     passengerName = fullName,
                     bookingId = outboundBooking.bookingId.toString(),
                     route = route,

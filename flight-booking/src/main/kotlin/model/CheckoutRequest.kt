@@ -13,6 +13,7 @@ data class CheckoutRequest (
     val billingAddress: String,
     val pointsToRedeem: Int = 0,
     val promoCode: String? = null,
+    val guestEmail: String? = null,
     val cabin: String? = null,
     val addOns: String? = null
 

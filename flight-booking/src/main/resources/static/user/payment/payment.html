@@ -285,6 +285,10 @@
         return fmt(amount);
     }
 
+    function isValidEmail(email) {
+        return /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
+    }
+
     function getPassengerSummary(data) {
         const passengerList = Array.isArray(data?.passengers) ? data.passengers : [];
 
@@ -565,6 +569,8 @@
         const cvv = document.getElementById("cvv").value.trim();
         const address = document.getElementById("billing-address").value.trim();
         const promoCode = appliedPromoCode;
+        const guestEmail = typeof bookingData?.guestEmail === "string" ? bookingData.guestEmail.trim() : "";
+        const isGuestBooking = bookingData?.bookingType === "guest";
 
         message.textContent = "";
         promoMessage.textContent = "";
@@ -576,6 +582,10 @@
         if (month < 1 || month > 12) { message.textContent = "Invalid expiry month."; return; }
         if (year < 2026) { message.textContent = "Card expired."; return; }
         if (address === "") { message.textContent = "Enter billing address."; return; }
+        if (isGuestBooking && !isValidEmail(guestEmail)) {
+            message.textContent = "A valid guest confirmation email is required. Return to add-ons and update it.";
+            return;
+        }
 
         try {
             payButton.disabled = true;
@@ -595,7 +605,8 @@
                     pointsToRedeem: usePointsCheckbox.checked ? Number(pointsInput.value) || 0 : 0,
                     promoCode: promoCode === "" ? null : promoCode,
                     cabin: bookingData?.cabin ?? null,
-                    addOns: JSON.stringify(bookingData?.addOns ?? {})
+                    addOns: JSON.stringify(bookingData?.addOns ?? {}),
+                    guestEmail: guestEmail || null
                 })
             });
 

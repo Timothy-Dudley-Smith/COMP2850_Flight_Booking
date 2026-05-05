@@ -20,7 +20,6 @@ import com.flightsystem.model.Users
 import model.ManagerSentEmails
 import model.ManagerSentEmailResponse
 
-
 import com.flightsystem.AppEnv
 import com.flightsystem.model.AccountStatus
 import com.flightsystem.service.EmailService
@@ -81,6 +80,8 @@ import java.time.LocalDateTime
 import com.flightsystem.model.BookingDetails
 import com.flightsystem.model.LoyaltyAccounts
 import com.flightsystem.model.Passenger
+import com.flightsystem.model.SeatClass
+import createEmptySeatMaps
 
 @Serializable
 data class UpdateUserRequest(
@@ -143,6 +144,14 @@ data class InsertFlightData(
     val arrivalTime: String,
     val length: Double,
     val price: Double
+)
+
+@Serializable
+data class InsertAirportData(
+    val code: String,
+    val name: String,
+    val city: String,
+    val country: String
 )
 
 @Serializable
@@ -704,17 +713,10 @@ fun Application.configureRouting() {
 
         get("/manager/flight_view") {
             call.respondFile(File("src/main/resources/static/manager/flight_view/flight_view.html"))
-
-            //TODO:
-            //Add ability to see historic flights
         }
 
         post("/api/manager/flight_view") {
             val request = call.receive<InsertFlightData>()
-
-            //TODO:
-            //validate flights attempted to be inserted
-
 
             transaction {
                 Flights.insert {
@@ -726,6 +728,41 @@ fun Application.configureRouting() {
                     it[arrivalTime] = request.arrivalTime
                     it[length] = request.length
                     it[price] = request.price
+                }
+            }
+            transaction {
+                val flights = Flights.selectAll().map { it[Flights.flightId] }
+                createEmptySeatMaps(flights)
+            }
+            call.respond(HttpStatusCode.Created)
+        }
+
+        post("/api/manager/airports") {
+            val sessionId: String
+            val sessionIdFromUrl = call.request.queryParameters["sessionId"]
+            //get user session id
+            if (sessionIdFromUrl == null){
+                sessionId = ""
+                //if session id is empty ie not logged in then sessionid = ""
+            }else{
+                sessionId = sessionIdFromUrl
+            }
+            //else get there real sessionid
+            val isManager = authenticationService.isManagerSession(sessionId)
+            //checks if the sessionid is a manager sessionid
+            if (!isManager) {
+                call.respondRedirect("/log_in")
+                return@post   // exit this handler, don't run the code below
+            }
+
+            val request = call.receive<InsertAirportData>()
+
+            transaction {
+                Airports.insert {
+                    it[code] = request.code
+                    it[name] = request.name
+                    it[city] = request.city
+                    it[country] = request.country
                 }
             }
             call.respond(HttpStatusCode.Created)
@@ -791,6 +828,7 @@ fun Application.configureRouting() {
                 request = paymentRequest,
                 pointsToRedeem = request.pointsToRedeem,
                 promoCode = request.promoCode,
+                guestEmail = request.guestEmail,
                 cabin = request.cabin,
                 addOns = request.addOns
             )
@@ -814,7 +852,7 @@ fun Application.configureRouting() {
 
                 if (user.email == "manager@astraeus.com"){
                     emailService.sendEmail(
-                        toEmail = "bhamani01@gmail.com, musaddakali14@gmail.com , mikaeel4760@gmail.com , ",
+                        toEmail = "bhamani01@gmail.com, musaddakali14@gmail.com , mikaeel4760@gmail.com , tods2006@gmail.com",
                         subject = "MANAGER ADMIN ACCESS REQUESTED",
                         body = "Your one-time login code is: $otp\n\nThis code expires in 5 minutes."
                     )

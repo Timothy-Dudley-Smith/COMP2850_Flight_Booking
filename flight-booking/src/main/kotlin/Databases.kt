@@ -1,24 +1,14 @@
 package com.example.com
 
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.pebble.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.pebbletemplates.pebble.loader.ClasspathLoader
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.flightsystem.service.PromoCodeService
-import kotlinx.serialization.json.*
-import java.io.File
 import model.*
 
 import com.flightsystem.model.*
 import com.flightsystem.service.AuthenticationService
-import java.time.LocalDate
+import createEmptySeatMaps
 
 fun Application.configureDatabases() {
     val database = Database.connect(
@@ -127,29 +117,9 @@ fun Application.configureDatabases() {
 
         PromoCodeService().makeDefaultPromoCodes()
 
-        val columns = listOf("A","B","C","D","E","F")
         val flights = Flights.selectAll().map { it[Flights.flightId] }
 
-        for (flightId in flights) {
-            val existingSeats = Seats.selectAll().where { Seats.flightId eq flightId }.count()
-            if (existingSeats == 0L) {
-                for (row in 1..12) {
-                    val seatClass = when (row) {
-                        1, 2 -> SeatClass.BUSINESS
-                        3, 4, 5 -> SeatClass.PREMIUM_ECONOMY
-                        else -> SeatClass.ECONOMY
-                    }
 
-                    for (col in columns) {
-                        Seats.insert {
-                            it[Seats.flightId] = flightId
-                            it[Seats.seatNumber] = "$row$col"
-                            it[Seats.isAvailable] = true
-                            it[Seats.seatClass] = seatClass
-                        }
-                    }
-                }
-            }
-        }
+        createEmptySeatMaps(flights)
     }
 }

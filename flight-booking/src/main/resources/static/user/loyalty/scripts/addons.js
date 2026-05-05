@@ -10,6 +10,8 @@
     const continueButton = document.getElementById("continue-button");
     const backButton = document.getElementById("back-button");
     const handoffMessage = document.getElementById("handoff-message");
+    const guestEmailInput = document.getElementById("guest-email");
+    const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (bookingDraft && typeof bookingDraft.baseFareTotal !== "number") {
         bookingDraft.baseFareTotal = Number(bookingDraft.totalPrice) || 0;
@@ -91,6 +93,14 @@
         return total;
     }
 
+    function getGuestEmailValue() {
+        return (guestEmailInput?.value || "").trim();
+    }
+
+    function isGuestEmailValid(email) {
+        return EMAIL_REGEX.test(email);
+    }
+
     function buildBookingHandoff(draft) {
         return {
             userId: draft.userId,
@@ -106,6 +116,7 @@
             holdId: draft.holdId,
             holdExpiryTime: draft.holdExpiryTime,
             totalPrice: draft.totalPrice,
+            guestEmail: draft.guestEmail,
             bookingType: "guest"
         };
     }
@@ -164,6 +175,7 @@
             from: bookingDraft.from ?? "",
             to: bookingDraft.to ?? "",
             date: bookingDraft.date ?? "",
+            guestEmail: getGuestEmailValue(),
             passengerCount: passengers.length > 0 ? passengers.length : Math.max(1, Number(bookingDraft.passengerCount ?? 1)),
             cabin: bookingDraft.cabin ?? "Economy",
             passengers,
@@ -190,7 +202,8 @@
                 flightId: bookingDraft.flightId,
                 seatNumbers: bookingDraft.seatNumbers,
                 expiryTime: bookingDraft.holdExpiryTime,
-                totalPrice: bookingDraft.totalPrice
+                totalPrice: bookingDraft.totalPrice,
+                guestEmail: bookingDraft.guestEmail
             }));
         }
 
@@ -250,6 +263,9 @@
         document.getElementById("ext-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel} reserved`;
         document.getElementById("sum-seat").textContent = `Seat${seatNumbers.length === 1 ? "" : "s"} ${seatLabel}`;
         document.getElementById("sum-cabin").textContent = `${bookingDraft.cabin ?? "Economy"} fare`;
+        if (guestEmailInput) {
+            guestEmailInput.value = bookingDraft.guestEmail || "";
+        }
 
         restoreSavedSelections();
         saveSelections();
@@ -282,9 +298,16 @@
         if (!Array.isArray(updatedDraft.seatNumbers) || updatedDraft.seatNumbers.length === 0) missingItems.push("selected seats");
         if (updatedDraft.holdId === null || updatedDraft.holdId === undefined || updatedDraft.holdId === "") missingItems.push("a seat hold");
         if (!updatedDraft.holdExpiryTime) missingItems.push("a hold expiry time");
+        if (!updatedDraft.guestEmail) missingItems.push("a confirmation email");
 
         if (missingItems.length > 0) {
             handoffMessage.textContent = `Complete ${missingItems.join(", ")} before continuing to payment.`;
+            return;
+        }
+
+        if (!isGuestEmailValid(updatedDraft.guestEmail)) {
+            handoffMessage.textContent = "Enter a valid email address for your booking confirmation.";
+            guestEmailInput?.focus();
             return;
         }
 

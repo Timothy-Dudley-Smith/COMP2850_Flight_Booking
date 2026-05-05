@@ -210,7 +210,7 @@ class AuthenticationService(
                 )
             }
 
-            val status = row[Users.status] ?: AccountStatus.ACTIVE
+            val status = row[Users.status]
 
             if (status != AccountStatus.ACTIVE) {
                 return@transaction Result.failure(IllegalStateException("Account is not Active"))
