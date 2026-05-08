@@ -13,6 +13,10 @@ import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
 import javax.mail.util.ByteArrayDataSource
 
+/** Used Generative AI to help me understand the different libraries to send a email and help my understanding
+ * of setting up an email using SMTP
+ */
+
 /**
 Handles email communication for the system.
 
