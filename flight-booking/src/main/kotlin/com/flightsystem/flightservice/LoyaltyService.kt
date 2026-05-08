@@ -1,8 +1,7 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.LoyaltyAccount
 import com.flightsystem.model.LoyaltyAccounts
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -118,8 +117,6 @@ class LoyaltyService {
             return@transaction true
         }
     }
-
-
 
     // subtract redeemed points only if the account has enough balance
     fun redeemPoints(

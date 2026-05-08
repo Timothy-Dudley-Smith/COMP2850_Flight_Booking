@@ -1,4 +1,4 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.Booking
 import com.flightsystem.model.BookingSeats
@@ -11,9 +11,6 @@ import com.flightsystem.model.PriceHolds
 import com.flightsystem.model.SeatClass
 import com.flightsystem.model.Seats
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import com.flightsystem.model.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

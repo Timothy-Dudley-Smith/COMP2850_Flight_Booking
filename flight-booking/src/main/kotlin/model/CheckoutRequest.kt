@@ -16,5 +16,5 @@ data class CheckoutRequest(
     val guestEmail: String? = null,
     val cabin: String? = null,
     val addOns: String? = null,
-    val finalAmountFromFrontEnd: Double? = null
+    val finalAmountFromFrontEnd: Double? = null,
 )

@@ -1,4 +1,4 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.Booking
 import com.flightsystem.model.BookingDetails
@@ -9,16 +9,6 @@ import com.flightsystem.model.Flights
 import com.flightsystem.model.Seat
 import com.flightsystem.model.Seats
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
-import com.flightsystem.model.*
-import org.h2.api.H2Type.row
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

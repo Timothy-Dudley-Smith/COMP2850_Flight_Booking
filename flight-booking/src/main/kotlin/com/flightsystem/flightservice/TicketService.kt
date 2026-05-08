@@ -1,4 +1,4 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import model.CreateTicketRequest
 import model.SupportTicketHistory

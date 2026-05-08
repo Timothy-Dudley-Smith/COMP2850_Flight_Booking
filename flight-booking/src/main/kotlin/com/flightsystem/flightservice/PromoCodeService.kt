@@ -1,4 +1,4 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.PromoCode
 import com.flightsystem.model.PromoCodeUsages
@@ -9,18 +9,6 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
-
-/**
-Handles promo code creation, validation, discount calculation, and usage tracking.
-
-Used during checkout to apply discounts and prevent repeated promo code use.
- */
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 
 class PromoCodeService {
     /**

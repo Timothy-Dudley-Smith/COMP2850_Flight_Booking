@@ -1,7 +1,7 @@
 package com.example.com
 
-import com.flightsystem.flight_service.AuthenticationService
-import com.flightsystem.flight_service.PromoCodeService
+import com.flightsystem.flightservice.AuthenticationService
+import com.flightsystem.flightservice.PromoCodeService
 import com.flightsystem.model.Airports
 import com.flightsystem.model.BookingSeats
 import com.flightsystem.model.Bookings

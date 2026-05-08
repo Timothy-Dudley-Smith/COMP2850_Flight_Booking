@@ -1,4 +1,4 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.Payment
 import java.time.LocalDateTime

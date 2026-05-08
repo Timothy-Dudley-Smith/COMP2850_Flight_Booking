@@ -1,13 +1,9 @@
-package com.flightsystem.flight_service
+package com.flightsystem.flightservice
 
 import com.flightsystem.model.Bookings
 import com.flightsystem.model.Passenger
 import com.flightsystem.model.PassengerInput
 import com.flightsystem.model.Passengers
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import com.flightsystem.model.*
-import com.flightsystem.model.Passengers.passportNumber
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

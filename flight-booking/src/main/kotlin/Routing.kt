@@ -2,29 +2,33 @@ package com.example.com
 
 import com.example.com.service.ManagerAnalyticsService
 import com.flightsystem.AppEnv
-import com.flightsystem.flight_service.AuthenticationService
-import com.flightsystem.flight_service.BookingService
-import com.flightsystem.flight_service.CheckoutService
-import com.flightsystem.flight_service.EmailService
-import com.flightsystem.flight_service.LoyaltyService
-import com.flightsystem.flight_service.PassengerService
-import com.flightsystem.flight_service.PaymentService
-import com.flightsystem.flight_service.PriceHoldService
-import com.flightsystem.flight_service.PromoCodeService
-import com.flightsystem.flight_service.TicketService
+import com.flightsystem.flightservice.AuthenticationService
+import com.flightsystem.flightservice.BookingService
+import com.flightsystem.flightservice.CheckoutService
+import com.flightsystem.flightservice.EmailService
+import com.flightsystem.flightservice.LoyaltyService
+import com.flightsystem.flightservice.PassengerService
+import com.flightsystem.flightservice.PaymentService
+import com.flightsystem.flightservice.PriceHoldService
+import com.flightsystem.flightservice.PromoCodeService
+import com.flightsystem.flightservice.TicketService
 import com.flightsystem.model.AccountStatus
 import com.flightsystem.model.Airports
+import com.flightsystem.model.BookingDetails
 import com.flightsystem.model.Bookings
 import com.flightsystem.model.CheckoutRequest
 import com.flightsystem.model.Flights
 import com.flightsystem.model.Layovers
+import com.flightsystem.model.LoyaltyAccounts
 import com.flightsystem.model.Manager
+import com.flightsystem.model.Passenger
 import com.flightsystem.model.PassengerInput
 import com.flightsystem.model.PaymentRequest
 import com.flightsystem.model.PriceHoldSeats
 import com.flightsystem.model.PriceHolds
+import com.flightsystem.model.SavePassengersRequest
+import com.flightsystem.model.Seats
 import com.flightsystem.model.Users
-
 import createEmptySeatMaps
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -39,43 +43,21 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
-import model.CreateTicketRequest
-import model.UpdateTicketRequest
-
-import io.ktor.server.request.receive
-import io.ktor.server.routing.post
-
-
-import com.flightsystem.model.SavePassengersRequest
-import com.flightsystem.model.Seats
-
-
-
-// imports the flight info
-import io.ktor.http.*
 import kotlinx.serialization.Serializable
-
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.*
-import io.ktor.server.http.content.*
+import model.CreateTicketRequest
 import model.ManagerSentEmailResponse
 import model.ManagerSentEmails
+import model.UpdateTicketRequest
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-// import org.h2.api.H2Type.row
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
-import com.flightsystem.model.BookingDetails
-import com.flightsystem.model.LoyaltyAccounts
-import com.flightsystem.model.Passenger
 
 @Serializable
 data class UpdateUserRequest(
@@ -836,7 +818,7 @@ fun Application.configureRouting() {
                     guestEmail = request.guestEmail,
                     cabin = request.cabin,
                     addOns = request.addOns,
-                    finalAmountFromFrontEnd = request.finalAmountFromFrontEnd
+                    finalAmountFromFrontEnd = request.finalAmountFromFrontEnd,
                 )
 
             if (response.success) {
@@ -1890,9 +1872,5 @@ fun Application.configureRouting() {
 
             call.respond(HttpStatusCode.OK, success)
         }
-
-
-
-
     }
 }

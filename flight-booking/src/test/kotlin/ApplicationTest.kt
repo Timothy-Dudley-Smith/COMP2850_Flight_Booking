@@ -1,15 +1,15 @@
 package com.example.com
 
-import com.flightsystem.flight_service.EncryptionService.generateSalt
-import com.flightsystem.flight_service.EncryptionService.hashPassword
-import com.flightsystem.flight_service.EncryptionService.verifyPassword
-import com.flightsystem.flight_service.LoyaltyService
-import com.flightsystem.flight_service.PaymentService
+import com.flightsystem.flightservice.EncryptionService.generateSalt
+import com.flightsystem.flightservice.EncryptionService.hashPassword
+import com.flightsystem.flightservice.EncryptionService.verifyPassword
+import com.flightsystem.flightservice.LoyaltyService
+import com.flightsystem.flightservice.PaymentService
 import com.flightsystem.model.Payment
 import com.flightsystem.model.PaymentStatus
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.server.testing.*
+import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.testApplication
 import java.time.LocalDateTime
 import java.util.Base64
 import kotlin.test.Test
