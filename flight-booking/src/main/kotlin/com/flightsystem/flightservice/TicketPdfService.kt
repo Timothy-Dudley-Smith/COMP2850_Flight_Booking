@@ -1,11 +1,5 @@
 package com.flightsystem.flightservice
 
-
-/** Used Generative AI to help me understand how to format a PDF in a certain way by
- * removing excess characters etc.
- */
-
-
 /**
 Generates a PDF ticket containing booking and passenger details.
 
@@ -130,3 +124,7 @@ class TicketPdfService {
             .replace("(", "\\(")
             .replace(")", "\\)")
 }
+
+/** Used Generative AI to help me understand how to format a PDF in a certain way by
+ * removing excess characters etc.
+ */
