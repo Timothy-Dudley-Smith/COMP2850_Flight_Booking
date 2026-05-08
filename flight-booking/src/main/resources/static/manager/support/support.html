@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Support Tickets</title>
+    <link rel="stylesheet" href="/manager/home/styles/manager_home.css">
+
+    <style>
+        /* Inline styles keep the support desk self-contained without relying on a separate manager stylesheet. */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+
+        /* The header introduces the support workspace above the ticket management area. */
+        .page-header {
+            background-color: #1f3c88;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        /* The page container centers the ticket tools and cards at a readable width. */
+        .page-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px 40px;
+        }
+
+        /* The top bar groups view toggles, search, and manual refresh controls. */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .refresh-btn,
+        .update-btn,
+        .history-btn {
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .refresh-btn {
+            background-color: #1f3c88;
+        }
+
+        .update-btn {
+            background-color: #004aff;
+        }
+
+        .history-btn {
+            background-color: #6c757d;
+            margin-left: 8px;
+        }
+
+        /* Tickets render as stacked cards so each case can carry its own update controls and history. */
+        .ticket-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .ticket-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-left: 6px solid #1f3c88;
+        }
+
+        .ticket-card h2 {
+            color: #1f3c88;
+            margin-top: 0;
+        }
+
+        .ticket-details p {
+            margin: 8px 0;
+        }
+
+        .ticket-controls {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #ddd;
+        }
+
+        .ticket-controls label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .ticket-controls select,
+        .ticket-controls textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            box-sizing: border-box;
+        }
+
+        .ticket-controls textarea {
+            min-height: 90px;
+        }
+
+        /* History stays hidden until a manager explicitly expands it for one ticket. */
+        .ticket-history {
+            display: none;
+            margin-top: 16px;
+            padding: 14px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .history-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-message {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+<!-- The support manager header explains that this page is for reviewing and updating customer requests. -->
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html">Home</a>
+            <a href="/manager/flight_view">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
+            <a href="/manager/support/support.html" class="active">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
+</header>
+
+<div class="page-container">
+    <div class="top-bar">
+        <h2>Support Tickets</h2>
+
+        <div>
+            <!-- View tabs swap between active and archived tickets using the already-fetched ticket list. -->
+            <button onclick="setView('active')" id="active-tab" class="refresh-btn">Active</button>
+            <button onclick="setView('archived')" id="archived-tab" class="refresh-btn">Archived</button>
+
+            <label for="booking-search" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Search by booking ID</label>
+            <input
+                    type="text"
+                    id="booking-search"
+                    placeholder="Search by booking ID"
+                    oninput="renderTickets()"
+                    style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-left: 10px;"
+            >
+
+            <button class="refresh-btn" onclick="loadTickets()">Refresh</button>
+        </div>
+    </div>
+
+    <!-- Ticket cards are injected here after filtering by archive state and booking-id search. -->
+    <div id="ticketList" class="ticket-grid"></div>
+</div>
+
+<script>
+    /** Keeps the full ticket list in memory so the view tabs and search box can filter locally. */
+    let allTickets = [];
+    let currentView = "active"; // default
+
+    /** Fetches the latest ticket list from the support API and re-renders the current view. */
+    async function loadTickets() {
+        const response = await fetch("/api/tickets");
+
+        allTickets = await response.json();
+
+        renderTickets();
+    }
+
+    /** Switches between active and archived ticket views without reloading the page. */
+    function setView(view) {
+        currentView = view;
+        renderTickets();
+    }
+
+    /** Rebuilds the visible ticket cards from the cached list using the current tab and search term. */
+    function renderTickets() {
+        const searchValue = document.getElementById("booking-search")?.value.trim() ?? "";
+        const ticketList = document.getElementById("ticketList");
+        ticketList.innerHTML = "";
+
+        const filteredTickets = allTickets.filter(ticket => {
+            // tab filter (active vs archived)
+            if (currentView === "active" && ticket.archived) return false;
+            if (currentView === "archived" && !ticket.archived) return false;
+
+            // search filter
+            if (searchValue === "") return true;
+
+            return ticket.bookingId.toString().includes(searchValue);
+        });
+
+        if (filteredTickets.length === 0) {
+            ticketList.innerHTML = "<p>No matching tickets found.</p>";
+            return;
+        }
+
+        filteredTickets.forEach(ticket => {
+            const ticketDiv = document.createElement("div");
+            ticketDiv.className = "ticket-card";
+
+            ticketDiv.innerHTML = `
+            <h2>Ticket #${ticket.id}</h2>
+
+            <div class="ticket-details">
+                <p><strong>Booking ID:</strong> ${ticket.bookingId}</p>
+                <p><strong>Name:</strong> ${ticket.customerName}</p>
+                <p><strong>Email:</strong> ${ticket.customerEmail}</p>
+                <p><strong>Request Type:</strong> ${ticket.requestType}</p>
+                <p><strong>Message:</strong> ${ticket.message}</p>
+                <p><strong>Status:</strong> ${ticket.status}</p>
+            </div>
+
+            <div class="ticket-controls">
+                <label for="status-${ticket.id}">Status</label>
+                <select id="status-${ticket.id}">
+                    <option value="OPEN">OPEN</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="RESOLVED">RESOLVED</option>
+                    <option value="REJECTED">REJECTED</option>
+                </select>
+
+                <label for="note-${ticket.id}">Manager Note</label>
+                <textarea id="note-${ticket.id}"></textarea>
+
+                <button class="update-btn" onclick="updateTicket(${ticket.id})">Update Ticket</button>
+                <button class="history-btn" onclick="loadTicketHistory(${ticket.id})">View History</button>
+                ${currentView === "active"
+                ? `<button class="history-btn" onclick="archiveTicket(${ticket.id})">Archive</button>`
+                : ""
+            }
+
+                <p id="result-${ticket.id}" class="result-message"></p>
+                <div id="history-${ticket.id}" class="ticket-history"></div>
+            </div>
+        `;
+
+            ticketList.appendChild(ticketDiv);
+            document.getElementById(`status-${ticket.id}`).value = ticket.status;
+        });
+    }
+
+    /** Sends the selected status and manager note back to the ticket update endpoint. */
+    async function updateTicket(ticketId) {
+        const status = document.getElementById(`status-${ticketId}`).value;
+        const note = document.getElementById(`note-${ticketId}`).value;
+
+        const response = await fetch(`/api/tickets/${ticketId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status, managerNote: note })
+        });
+
+        const result = document.getElementById(`result-${ticketId}`);
+        const text = await response.text();
+
+        if (response.ok) {
+            result.textContent = "Updated successfully.";
+            loadTickets();
+        } else {
+            result.textContent = text || "Update failed.";
+        }
+    }
+
+    /** Lazily loads one ticket's history the first time the manager expands its history panel. */
+    async function loadTicketHistory(ticketId) {
+        const box = document.getElementById(`history-${ticketId}`);
+
+        if (box.style.display === "block") {
+            box.style.display = "none";
+            return;
+        }
+
+        const response = await fetch(`/api/tickets/${ticketId}/history`);
+        const history = await response.json();
+
+        box.style.display = "block";
+
+        if (!response.ok) {
+            box.innerHTML = "<p>Unable to load history.</p>";
+            return;
+        }
+
+        if (history.length === 0) {
+            box.innerHTML = "<p>No history yet.</p>";
+            return;
+        }
+
+        box.innerHTML = history.map(h => `
+            <div class="history-item">
+                <p><strong>Status:</strong> ${h.oldStatus} → ${h.newStatus}</p>
+                <p><strong>Note:</strong> ${h.managerNote ?? "None"}</p>
+                <p><strong>Time:</strong> ${h.changedAt}</p>
+            </div>
+        `).join("");
+    }
+
+    /** Archives a ticket after confirmation so resolved cases can move out of the active queue. */
+    async function archiveTicket(ticketId) {
+        const confirmArchive = confirm("Archive this ticket?");
+        if (!confirmArchive) return;
+
+        const response = await fetch(`/api/tickets/${ticketId}/archive`, {
+            method: "PUT"
+        });
+
+        if (response.ok) {
+            loadTickets();
+        } else {
+            alert("Failed to archive ticket");
+        }
+    }
+
+    /** Initial page load fetches the ticket queue before any filters or actions are used. */
+    loadTickets();
+</script>
+</body>
+</html>

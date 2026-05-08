@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — Astraeus Airlines</title>
+    <link rel="stylesheet" href="/support/styles/style.css">
+</head>
+<body>
+
+<!-- Shared customer header keeps support reachable from the main navigation. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
+        </div>
+    </nav>
+</header>
+
+<!-- main nav bar at top -->
+<div class="page-container">
+    <!-- The support form collects the minimum booking context needed to open a help ticket. -->
+    <h1>Create Support Request</h1>
+    <p>Submit a request for help with your booking. A manager will review it.</p>
+
+    <!-- The form posts directly to the support ticket API through support/scripts/script.js. -->
+    <form id="ticketForm">
+        <label for="bookingId">Booking ID</label>
+        <input type="number" id="bookingId" required>
+
+        <label for="customerName">Name</label>
+        <input type="text" id="customerName" required>
+
+        <label for="customerEmail">Email</label>
+        <input type="email" id="customerEmail" required>
+
+        <label for="requestType">Request Type</label>
+        <select id="requestType" required>
+            <option value="CHANGE_BOOKING">Change Booking</option>
+            <option value="REFUND">Refund</option>
+            <option value="OTHER">Other</option>
+        </select>
+
+        <label for="message">Message</label>
+        <textarea id="message" required></textarea>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+    <!-- Inline result text is updated after the ticket request succeeds or fails. -->
+    <p id="result"></p>
+</main>
+
+<!-- Shared footer closes the customer support page. -->
+<div class="footer-divider"></div>
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">© 2026 Astraeus Airlines · All rights reserved</p>
+        <p class="footer-trust">Trusted worldwide · Secure booking · 24/7 support</p>
+    </div>
+
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+
+<!-- Support form logic serializes the inputs and submits them to the ticket API. -->
+<script src="/support/scripts/script.js"></script>
+</body>
+</html>

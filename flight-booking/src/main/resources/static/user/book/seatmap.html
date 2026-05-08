@@ -6,30 +6,196 @@
     <title>Select Seats</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../home/styles/style.css">
+
+<style>
+    /* Page-specific seat-selection card that sits inside the shared booking layout styles. */
+    .seat-page {
+        max-width: 760px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* The seat map is rendered row by row by the inline script below. */
+    #seat-map {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        margin-bottom: 24px;
+    }
+
+        .cabin-section-header {
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+            margin: 14px 0 6px;
+        }
+
+    /* Each seat row uses a fixed grid so the aisle stays aligned between seat groups. */
+    .seat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 42px) 50px repeat(3, 42px);
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+    }
+
+        .col-labels {
+            display: grid;
+            grid-template-columns: repeat(3, 42px) 50px repeat(3, 42px);
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .col-label,
+        .row-num {
+            text-align: center;
+        }
+
+    /* Base seat button styles are combined with availability/cabin classes from the script. */
+    .seat {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    /* Colour coding communicates cabin zone and availability at a glance. */
+    .seat.available {
+        background: #4CAF50;
+    }
+
+        .seat.business-zone.available {
+            background: #d4af37;
+        }
+
+        .seat.premium-zone.available {
+            background: #2aa198;
+        }
+
+        .seat.economy-zone.available {
+            background: #4CAF50;
+        }
+
+        .seat.taken,
+        .seat.business-zone.taken,
+        .seat.premium-zone.taken,
+        .seat.economy-zone.taken {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        .seat.selected,
+        .seat.business-zone.selected,
+        .seat.premium-zone.selected,
+        .seat.economy-zone.selected {
+            background: #2196F3;
+        }
+
+        .seat.exit-seat {
+            background: #f44336;
+            cursor: not-allowed;
+        }
+
+        .seat.wrong-cabin {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+    /* Legend underneath the map mirrors the same seat-state colours used in the grid. */
+    .key {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin: 22px 0 16px;
+        font-size: 14px;
+    }
+
+        .key-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+        }
+
+        .key-box.business {
+            background: #d4af37;
+        }
+
+        .key-box.premium {
+            background: #2aa198;
+        }
+
+        .key-box.economy {
+            background: #4CAF50;
+        }
+
+        .key-box.taken {
+            background: #bdbdbd;
+        }
+
+        .key-box.selected {
+            background: #2196F3;
+        }
+
+        .key-box.exit {
+            background: #f44336;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+
 </head>
 <body>
 
+<!-- Shared customer header for the seat-selection step. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
 
+<!-- Seat-selection card for the current outbound or return leg. -->
 <div class="seat-page">
     <h2>Select Your Seats</h2>
     <p class="selected-label" id="seat-help-label" style="margin-bottom: 20px;">Choose one seat for each passenger.</p>
@@ -50,8 +216,10 @@
 
     <!-- colour key -->
     <div class="key">
+        <div class="key-item"><div class="key-box business"></div>Business</div>
+        <div class="key-item"><div class="key-box premium"></div>Premium Economy</div>
+        <div class="key-item"><div class="key-box economy"></div>Economy</div>
         <div class="key-item"><div class="key-box taken"></div>Taken</div>
-        <div class="key-item"><div class="key-box available"></div>Available</div>
         <div class="key-item"><div class="key-box selected"></div>Selected</div>
         <div class="key-item"><div class="key-box exit"></div>Exit row</div>
     </div>
@@ -70,6 +238,13 @@
 
 
 <script>
+    /**
+     * Drives the seat-selection step for outbound and optional return legs.
+     *
+     * The page reads the in-progress booking draft from sessionStorage, loads
+     * available seats from the backend, tracks the current seat choices in the DOM,
+     * and creates hold records before redirecting into the next booking step.
+     */
     const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
     let bookingDraft = bookingDraftRaw ? JSON.parse(bookingDraftRaw) : null;
     const seatMap = document.getElementById("seat-map");
@@ -77,21 +252,128 @@
     const selectedLabel = document.getElementById("selected-label");
     const helpLabel = document.getElementById("seat-help-label");
     const holdMessage = document.getElementById("hold-message");
+    const seatPageHeading = document.querySelector(".seat-page h2");
     const columns = ["A", "B", "C", "D", "E", "F"];
     const exitRows = new Set([9]);
     const totalRows = 12;
-    const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
-    const selectedSeats = new Set(Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : []);
-    const availableSeats = new Set();
 
-    document.querySelector(".seat-page h2").textContent = requiredSeats === 1
-        ? "Select Your Seat"
-        : `Select ${requiredSeats} Seats`;
+    // Cabin row ranges decide both the seat colours and which seats match the selected fare class.
+    const businessRows = new Set([1, 2]);
+    const premiumRows = new Set([3, 4, 5]);
+    const economyRows = new Set([6, 7, 8, 9, 10, 11, 12]);
 
-    if (bookingDraft?.from && bookingDraft?.to) {
-        helpLabel.textContent = `Choose ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} for ${bookingDraft.from} → ${bookingDraft.to}.`;
+    /**
+     * Normalises the stored cabin label from earlier steps into the internal zone names used here.
+     */
+    function normaliseCabinClass(cabinClass) {
+        const value = cabinClass?.toLowerCase().trim();
+
+        if (value === "business") {
+            return "business"
+        }
+        if (value === "premium" || value === "premium economy" || value === "premium-economy") {
+            return "premium";
+        }
+        if (value === "economy") {
+            return "economy";
+        }
+        return null;
     }
 
+    /**
+     * Reads a string value from sessionStorage and treats empty strings as missing.
+     */
+    function readSessionValue(key) {
+        const value = sessionStorage.getItem(key);
+        return value && value.trim() !== "" ? value : null;
+    }
+
+    const outboundFlightId = bookingDraft?.flightId ?? readSessionValue("flightId") ?? "";
+    const returnFlightId = bookingDraft?.returnFlightId ?? readSessionValue("returnFlightId");
+    const outboundCabin = normaliseCabinClass(bookingDraft?.cabin ?? readSessionValue("cabin"));
+    const returnCabin = normaliseCabinClass(bookingDraft?.returnCabin ?? readSessionValue("returnCabin")) ?? outboundCabin;
+
+    function getCabinByRow(rowNumber) {
+        if (businessRows.has(rowNumber)) {
+            return "business";
+        }
+        if (premiumRows.has(rowNumber)) {
+            return "premium";
+        }
+        if (economyRows.has(rowNumber)) {
+            return "economy"
+        }
+        return null;
+    }
+
+    function getCabinLabel(cabin) {
+        if (cabin === "business") {
+            return "Business Class";
+        }
+        if (cabin === "premium") {
+            return "Premium Economy";
+        }
+        if (cabin === "economy") {
+            return "Economy";
+        }
+        return "";
+    }
+
+    const requiredSeats = Math.max(1, bookingDraft?.passengers?.length ?? bookingDraft?.passengerCount ?? 1);
+    const outboundSelectedSeats = new Set(
+        Array.isArray(bookingDraft?.outboundSeatNumbers)
+            ? bookingDraft.outboundSeatNumbers
+            : (Array.isArray(bookingDraft?.seatNumbers) ? bookingDraft.seatNumbers : [])
+    );
+    const returnSelectedSeats = new Set(Array.isArray(bookingDraft?.returnSeatNumbers) ? bookingDraft.returnSeatNumbers : []);
+    let seatStep = returnFlightId && bookingDraft?.seatSelectionStep === "return" ? "return" : "outbound";
+    const availableSeats = new Set();
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const firstName = sessionStorage.getItem("firstName");
+
+    const loggedInUserId = getLoggedInUserId();
+    const isSignedIn = !!sessionId && typeof loggedInUserId == "number"
+    const nextBookingPage = isSignedIn ? "/loyaltypage" : "/addons";
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
+
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
+
+    /**
+     * Reads the signed-in user ID from the booking draft or the stored session payload.
+     */
     function getLoggedInUserId() {
         if (typeof bookingDraft?.userId === "number") {
             return bookingDraft.userId;
@@ -105,8 +387,88 @@
         }
     }
 
+    /**
+     * Returns a stable, de-duplicated seat list so stored selections and hold requests stay consistent.
+     */
     function normalizeSeatNumbers(seatNumbers) {
         return [...new Set(seatNumbers)].sort();
+    }
+
+    function hasReturnLeg() {
+        return typeof returnFlightId === "string" && returnFlightId.trim() !== "";
+    }
+
+    function getCurrentSelectionSet() {
+        return seatStep === "return" ? returnSelectedSeats : outboundSelectedSeats;
+    }
+
+    function getCurrentFlightId() {
+        return seatStep === "return" ? returnFlightId : outboundFlightId;
+    }
+
+    function getCurrentCabin() {
+        return seatStep === "return" ? returnCabin : outboundCabin;
+    }
+
+    /**
+     * Returns the route details for the leg currently being edited so the page copy can stay accurate.
+     */
+    function getLegRoute(step = seatStep) {
+        if (step === "return") {
+            return {
+                from: bookingDraft?.returnFrom ?? readSessionValue("returnFrom") ?? bookingDraft?.to ?? "",
+                to: bookingDraft?.returnTo ?? readSessionValue("returnTo") ?? bookingDraft?.from ?? "",
+                date: bookingDraft?.returnDate ?? readSessionValue("returnDate") ?? ""
+            };
+        }
+
+        return {
+            from: bookingDraft?.from ?? "",
+            to: bookingDraft?.to ?? "",
+            date: bookingDraft?.date ?? ""
+        };
+    }
+
+    function setSelection(targetSet, seatNumbers) {
+        targetSet.clear();
+
+        const normalizedSeats = normalizeSeatNumbers(seatNumbers);
+        for (let i = 0; i < normalizedSeats.length; i++) {
+            targetSet.add(normalizedSeats[i]);
+        }
+    }
+
+    function getNextPageUrl() {
+        return isSignedIn ? "/loyaltypage" : "/addons";
+    }
+
+    /**
+     * Updates the heading, helper text, and continue-button label for outbound vs return selection.
+     */
+    function updatePageCopy() {
+        const route = getLegRoute();
+        const seatText = `seat${requiredSeats === 1 ? "" : "s"}`;
+        const routeText = route.from && route.to ? `${route.from} → ${route.to}` : "this flight";
+
+        if (seatPageHeading) {
+            if (seatStep === "return") {
+                seatPageHeading.textContent = requiredSeats === 1
+                    ? "Select Your Return Seat"
+                    : `Select ${requiredSeats} Return Seats`;
+            } else {
+                seatPageHeading.textContent = requiredSeats === 1
+                    ? "Select Your Seat"
+                    : `Select ${requiredSeats} Seats`;
+            }
+        }
+
+        helpLabel.textContent = seatStep === "return"
+            ? `Choose ${requiredSeats} return ${seatText} for ${routeText}.`
+            : `Choose ${requiredSeats} ${seatText} for ${routeText}.`;
+
+        continueButton.textContent = seatStep === "outbound" && hasReturnLeg()
+            ? "Continue to return seats"
+            : "Continue";
     }
 
     function seatListsMatch(left, right) {
@@ -126,30 +488,61 @@
         return true;
     }
 
+    /**
+     * Persists the current outbound and return seat selections back into the booking draft.
+     */
     function persistBookingDraft() {
         if (!bookingDraft) {
             return;
         }
 
-        bookingDraft.seatNumbers = normalizeSeatNumbers(Array.from(selectedSeats));
+        const outboundSeatNumbers = normalizeSeatNumbers(Array.from(outboundSelectedSeats));
+        const returnSeatNumbers = normalizeSeatNumbers(Array.from(returnSelectedSeats));
+
+        bookingDraft.flightId = outboundFlightId;
+        bookingDraft.seatNumbers = outboundSeatNumbers;
+        bookingDraft.outboundSeatNumbers = outboundSeatNumbers;
+        bookingDraft.returnFlightId = hasReturnLeg() ? returnFlightId : null;
+        bookingDraft.returnSeatNumbers = returnSeatNumbers;
+        bookingDraft.seatSelectionStep = seatStep;
+
+        if (hasReturnLeg()) {
+            bookingDraft.returnFrom = bookingDraft.returnFrom ?? readSessionValue("returnFrom") ?? bookingDraft.to ?? "";
+            bookingDraft.returnTo = bookingDraft.returnTo ?? readSessionValue("returnTo") ?? bookingDraft.from ?? "";
+            bookingDraft.returnDate = bookingDraft.returnDate ?? readSessionValue("returnDate") ?? "";
+            bookingDraft.returnCabin = bookingDraft.returnCabin ?? readSessionValue("returnCabin") ?? bookingDraft.cabin ?? null;
+        }
+
         sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
 
-        if (bookingDraft.seatNumbers.length > 0) {
-            sessionStorage.setItem("selectedSeat", bookingDraft.seatNumbers.join(", "));
+        if (outboundSeatNumbers.length > 0) {
+            sessionStorage.setItem("selectedSeat", outboundSeatNumbers.join(", "));
         } else {
             sessionStorage.removeItem("selectedSeat");
         }
     }
 
+    /**
+     * Drops any existing seat hold if the user changes the selection after a hold was created.
+     */
     function clearStoredHoldIfSelectionChanged() {
         if (!bookingDraft) {
             return;
         }
 
-        const currentSelection = Array.from(selectedSeats);
-        const storedSelection = Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : [];
+        const currentOutboundSelection = Array.from(outboundSelectedSeats);
+        const currentReturnSelection = Array.from(returnSelectedSeats);
+        const storedOutboundSelection = Array.isArray(bookingDraft.outboundSeatNumbers)
+            ? bookingDraft.outboundSeatNumbers
+            : (Array.isArray(bookingDraft.seatNumbers) ? bookingDraft.seatNumbers : []);
+        const storedReturnSelection = Array.isArray(bookingDraft.returnSeatNumbers)
+            ? bookingDraft.returnSeatNumbers
+            : [];
 
-        if (seatListsMatch(currentSelection, storedSelection)) {
+        if (
+            seatListsMatch(currentOutboundSelection, storedOutboundSelection) &&
+            seatListsMatch(currentReturnSelection, storedReturnSelection)
+        ) {
             return;
         }
 
@@ -160,10 +553,25 @@
         persistBookingDraft();
     }
 
+    /**
+     * Rebuilds the visible seat grid using the latest availability, cabin rules, and current selection.
+     */
     function renderSeatMap() {
         seatMap.innerHTML = "";
+        const currentSelection = getCurrentSelectionSet();
+        const currentCabin = getCurrentCabin();
 
         for (let rowNumber = 1; rowNumber <= totalRows; rowNumber++) {
+            const cabin = getCabinByRow(rowNumber);
+
+            if (rowNumber === 1 || rowNumber === 3 || rowNumber === 6) {
+                const sectionHeader = document.createElement("div");
+                sectionHeader.className = "cabin-section-header";
+                sectionHeader.textContent = getCabinLabel(cabin);
+                seatMap.append(sectionHeader);
+            }
+
+
             const rowDiv = document.createElement("div");
             rowDiv.className = "seat-row";
 
@@ -178,37 +586,65 @@
                 const seatId = `${rowNumber}${columns[seatIndex]}`;
                 const seatButton = document.createElement("button");
                 seatButton.dataset.seatId = seatId;
+                seatButton.setAttribute("aria-label", `Seat ${seatId}`);
+
 
                 if (exitRows.has(rowNumber)) {
                     seatButton.className = "seat exit-seat";
+                    seatButton.setAttribute("aria-label", `Seat ${seatId}, exit row, not available`);
+                    seatButton.setAttribute("disabled", "true");
+                    seatButton.innerHTML = '<span class="sr-only">Exit row</span>';
+
                     rowDiv.append(seatButton);
                     continue;
                 }
 
-                const isSelected = selectedSeats.has(seatId);
+                const isSelected = currentSelection.has(seatId);
                 const isAvailable = availableSeats.has(seatId);
 
                 if (isSelected) {
                     seatButton.className = "seat selected";
+                    seatButton.setAttribute("aria-label", `Seat ${seatId}, selected`);
+                    seatButton.innerHTML = '<span class="sr-only">Selected</span>';
                 } else if (isAvailable) {
                     seatButton.className = "seat available";
+                    seatButton.setAttribute("aria-label", `Seat ${seatId}, available`);
+                    seatButton.innerHTML = '<span class="sr-only">Available</span>';
                 } else {
                     seatButton.className = "seat taken";
+                    seatButton.setAttribute("aria-label", `Seat ${seatId}, taken`);
+                    seatButton.setAttribute("disabled", "true");
+                    seatButton.innerHTML = '<span class="sr-only">Taken</span>';
                 }
 
-                if (isSelected || isAvailable) {
+                if (cabin === "business") {
+                    seatButton.classList.add("business-zone");
+                } else if (cabin === "premium") {
+                    seatButton.classList.add("premium-zone");
+                } else if (cabin === "economy") {
+                    seatButton.classList.add("economy-zone");
+                }
+
+                const isWrongCabin = currentCabin && cabin !== currentCabin;
+
+                if (isWrongCabin) {
+                    seatButton.classList.add("wrong-cabin");
+                    seatButton.disabled = true;
+                }
+
+                if ((isSelected || isAvailable) && !isWrongCabin) {
                     seatButton.addEventListener("click", () => {
                         holdMessage.textContent = "";
 
-                        if (selectedSeats.has(seatId)) {
-                            selectedSeats.delete(seatId);
+                        if (currentSelection.has(seatId)) {
+                            currentSelection.delete(seatId);
                         } else {
-                            if (selectedSeats.size >= requiredSeats) {
+                            if (currentSelection.size >= requiredSeats) {
                                 updateUI();
                                 return;
                             }
 
-                            selectedSeats.add(seatId);
+                            currentSelection.add(seatId);
                         }
 
                         clearStoredHoldIfSelectionChanged();
@@ -224,29 +660,44 @@
         }
     }
 
+    /**
+     * Refreshes the selected-seat summary and enables the continue button only when the seat count is complete.
+     */
     function updateUI() {
-        if (!bookingDraft || !bookingDraft.flightId) {
+        if (!bookingDraft || !outboundFlightId || (seatStep === "return" && !hasReturnLeg())) {
             selectedLabel.textContent = "Booking details are missing. Please restart your booking.";
             continueButton.classList.remove("active");
             continueButton.disabled = true;
             return;
         }
 
-        const chosenSeats = normalizeSeatNumbers(Array.from(selectedSeats));
+        const currentSelection = getCurrentSelectionSet();
+        const chosenSeats = normalizeSeatNumbers(Array.from(currentSelection));
+        const seatText = `seat${requiredSeats === 1 ? "" : "s"}`;
 
         if (chosenSeats.length > 0) {
-            selectedLabel.textContent = `Selected: ${chosenSeats.join(", ")}`;
+            selectedLabel.textContent = seatStep === "return"
+                ? `Selected return ${seatText}: ${chosenSeats.join(", ")}`
+                : `Selected: ${chosenSeats.join(", ")}`;
         } else {
-            selectedLabel.textContent = `Select ${requiredSeats} seat${requiredSeats === 1 ? "" : "s"} to continue`;
+            selectedLabel.textContent = seatStep === "return"
+                ? `Select ${requiredSeats} return ${seatText} to continue`
+                : `Select ${requiredSeats} ${seatText} to continue`;
         }
 
         const selectionComplete = chosenSeats.length === requiredSeats;
         continueButton.classList.toggle("active", selectionComplete);
         continueButton.disabled = !selectionComplete;
+        updatePageCopy();
     }
 
+    /**
+     * Loads availability for the current leg and then re-renders the seat map from the backend response.
+     */
     async function loadSeats() {
-        if (!bookingDraft || !bookingDraft.flightId) {
+        const currentFlightId = getCurrentFlightId();
+
+        if (!bookingDraft || !currentFlightId) {
             holdMessage.textContent = "Choose a flight first, then return to seat selection.";
             updateUI();
             return;
@@ -255,7 +706,7 @@
         holdMessage.textContent = "";
 
         try {
-            const response = await fetch(`/api/seats?flightId=${encodeURIComponent(bookingDraft.flightId)}`);
+            const response = await fetch(`/api/seats?flightId=${encodeURIComponent(currentFlightId)}`);
 
             if (!response.ok) {
                 throw new Error("Unable to load seats");
@@ -271,86 +722,183 @@
             renderSeatMap();
             updateUI();
         } catch {
-            holdMessage.textContent = "Unable to load seats right now. Please try again.";
+            holdMessage.textContent = seatStep === "return"
+                ? "Unable to load return-flight seats right now. Please try again."
+                : "Unable to load seats right now. Please try again.";
             updateUI();
         }
     }
 
+    /**
+     * Finalises the current leg's selection, creates outbound/return seat holds when needed,
+     * and then redirects into the next booking page once the booking draft is complete.
+     */
     continueButton.addEventListener("click", async () => {
-        if (!bookingDraft || selectedSeats.size !== requiredSeats) {
+        const currentSelection = getCurrentSelectionSet();
+
+        if (!bookingDraft || currentSelection.size !== requiredSeats) {
             return;
         }
 
-        const userId = getLoggedInUserId();
-        if (userId === null) {
-            holdMessage.textContent = "Log in before continuing so your seats can be held.";
-            return;
+        const currentSeatNumbers = normalizeSeatNumbers(Array.from(currentSelection));
+
+        if (seatStep === "outbound") {
+            setSelection(outboundSelectedSeats, currentSeatNumbers);
+            persistBookingDraft();
+
+            if (hasReturnLeg()) {
+                seatStep = "return";
+                holdMessage.textContent = "";
+                persistBookingDraft();
+                availableSeats.clear();
+                renderSeatMap();
+                updateUI();
+                await loadSeats();
+                return;
+            }
+        } else {
+            setSelection(returnSelectedSeats, currentSeatNumbers);
+            persistBookingDraft();
         }
 
-        const seatNumbers = normalizeSeatNumbers(Array.from(selectedSeats));
+        const outboundSeatNumbers = normalizeSeatNumbers(Array.from(outboundSelectedSeats));
+        const returnSeatNumbers = normalizeSeatNumbers(Array.from(returnSelectedSeats));
 
         if (
             bookingDraft.holdId &&
             bookingDraft.holdExpiryTime &&
-            seatListsMatch(seatNumbers, bookingDraft.seatNumbers ?? [])
+            seatListsMatch(outboundSeatNumbers, bookingDraft.outboundSeatNumbers ?? bookingDraft.seatNumbers ?? []) &&
+            seatListsMatch(returnSeatNumbers, bookingDraft.returnSeatNumbers ?? [])
         ) {
-            bookingDraft.userId = userId;
+            bookingDraft.userId = isSignedIn ? loggedInUserId : null;
             persistBookingDraft();
-            window.location.href = "/loyaltypage";
+            window.location.href = getNextPageUrl();
             return;
         }
 
         holdMessage.textContent = "";
         continueButton.disabled = true;
 
-        try {
-            const response = await fetch("/api/holds", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    userId,
-                    flightId: bookingDraft.flightId,
-                    seatNumbers
-                })
-            });
+          // Holds are created only after all required seats are chosen for every leg in the trip.
+          try {
+                const outboundHoldResponse = await fetch("/api/holds", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId: isSignedIn ? loggedInUserId : null,
+                        flightId: outboundFlightId,
+                        seatNumbers: outboundSeatNumbers
+                    })
+                });
 
-            const text = await response.text();
-            let result = null;
+            const outboundText = await outboundHoldResponse.text();
+            let outboundHold = null;
 
             try {
-                result = text ? JSON.parse(text) : null;
+                outboundHold = outboundText ? JSON.parse(outboundText) : null;
             } catch {
-                result = null;
+                outboundHold = null;
             }
 
-            if (!response.ok) {
-                holdMessage.textContent = result?.error ?? text ?? "Unable to hold the selected seats.";
+            if (!outboundHoldResponse.ok) {
+                holdMessage.textContent = outboundHold?.error ?? outboundText ?? "Unable to hold the outbound seats.";
                 return;
             }
 
-            bookingDraft.userId = userId;
-            bookingDraft.seatNumbers = seatNumbers;
-            bookingDraft.holdId = result?.holdId ?? null;
-            bookingDraft.holdExpiryTime = result?.expiryTime ?? null;
-            bookingDraft.totalPrice = result?.totalPrice ?? null;
-            persistBookingDraft();
+            let returnHold = null;
 
-            if (result) {
-                sessionStorage.setItem("holdData", JSON.stringify(result));
+            if (hasReturnLeg()) {
+                const returnHoldResponse = await fetch("/api/holds", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId: isSignedIn ? loggedInUserId : null,
+                        flightId: returnFlightId,
+                        seatNumbers: returnSeatNumbers
+                    })
+                });
+
+                const returnText = await returnHoldResponse.text();
+
+                try {
+                    returnHold = returnText ? JSON.parse(returnText) : null;
+                } catch {
+                    returnHold = null;
+                }
+
+                if (!returnHoldResponse.ok) {
+                    holdMessage.textContent = returnHold?.error ?? returnText ?? "Unable to hold the return seats.";
+                    return;
+                }
             }
 
-            window.location.href = "/loyaltypage";
+            bookingDraft.userId = outboundHold?.userId ?? (isSignedIn ? loggedInUserId : null);
+            bookingDraft.seatNumbers = outboundSeatNumbers;
+            bookingDraft.outboundSeatNumbers = outboundSeatNumbers;
+            bookingDraft.returnFlightId = hasReturnLeg() ? returnFlightId : null;
+            bookingDraft.returnSeatNumbers = returnSeatNumbers;
+
+            bookingDraft.holdId = outboundHold?.holdId ?? null;
+            bookingDraft.returnHoldId = returnHold?.holdId ?? null;
+            bookingDraft.holdExpiryTime = outboundHold?.expiryTime ?? null;
+
+            bookingDraft.totalPrice = hasReturnLeg()
+                ? (outboundHold?.totalPrice ?? 0) + (returnHold?.totalPrice ?? 0)
+                : (outboundHold?.totalPrice ?? 0);
+
+            bookingDraft.baseFareTotal = bookingDraft.totalPrice;
+
+            persistBookingDraft();
+
+            sessionStorage.setItem("holdData", JSON.stringify({
+                holdId: bookingDraft.holdId,
+                returnHoldId: bookingDraft.returnHoldId,
+                userId: bookingDraft.userId,
+                flightId: outboundFlightId,
+                seatNumbers: outboundSeatNumbers,
+                returnFlightId: hasReturnLeg() ? returnFlightId : null,
+                returnSeatNumbers,
+                expiryTime: bookingDraft.holdExpiryTime,
+                totalPrice: bookingDraft.totalPrice
+            }));
+
+            window.location.href = getNextPageUrl();
         } catch {
             holdMessage.textContent = "Unable to hold the selected seats right now. Please try again.";
         } finally {
             updateUI();
         }
+
+
+
     });
 
+    updatePageCopy();
     loadSeats();
 </script>
+<div class="footer-divider"></div>
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
 
 </body>
 </html>

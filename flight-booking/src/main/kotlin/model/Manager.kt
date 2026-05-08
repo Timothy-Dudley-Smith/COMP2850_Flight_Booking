@@ -1,7 +1,6 @@
 package com.flightsystem.model
 
-import com.flightsystem.service.BookingService
-import java.time.LocalDate
+import com.flightsystem.flightservice.BookingService
 
 class Manager(
     userId: Int,
@@ -10,10 +9,13 @@ class Manager(
     dateOfBirth: String,
     email: String,
     passwordHash: String,
-    salt: String
+    salt: String,
 ) : User(userId, firstName, lastName, dateOfBirth, email, passwordHash, salt) {
-
-    fun resetuserPassword(user: User, newPasswordHash: String, newSalt: String) {
+    fun resetuserPassword(
+        user: User,
+        newPasswordHash: String,
+        newSalt: String,
+    ) {
         user.updatePassword(newPasswordHash, newSalt)
         println("Password reset for user: ${user.userId}")
     }
@@ -23,13 +25,7 @@ class Manager(
         println("Account unlocked for user: ${user.userId}")
     }
 
-    fun viewUserBookings(userId: Int): List<Booking> {
-        return BookingService().getBookingsByUser(userId)
-    }
+    fun viewUserBookings(userId: Int): List<Booking> = BookingService().getBookingsByUser(userId)
 
-    fun cancelBooking(bookingId: Int): Boolean {
-        return BookingService().cancelBooking(bookingId)
-    }
-
-
+    fun cancelBooking(bookingId: Int): Boolean = BookingService().cancelBooking(bookingId)
 }

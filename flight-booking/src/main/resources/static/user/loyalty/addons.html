@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Extras</title>
+    <link rel="stylesheet" href="/home/styles/style.css">
+    <link rel="stylesheet" href="/loyalty/styles/addons.css">
+    <script src="/shared/currency.js"></script>
+
+</head>
+
+
+
+<body>
+<!-- Shared customer header with currency selection and sign-in entry point. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <label for="currency-select" class="sr-only">Select currency</label>
+            <select id="currency-select" aria-label="Select currency" onchange="setSelectedCurrency(this.value); location.reload();">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="AUD">A$ AUD</option>
+                <option value="JPY">¥ JPY</option>
+            </select>
+            <script>document.getElementById("currency-select").value = getSelectedCurrency();</script>
+            <a href="/log_in" id="login-link">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- This hero summarizes the current guest booking before paid add-ons are chosen. -->
+<section class="flights-overview-header guest-addons-hero">
+    <div class="flights-overview">
+        <p class="eyebrow">Guest booking</p>
+        <h1 id="route-title">Add extras to your trip</h1>
+        <p id="route-date">Choose optional add-ons before payment.</p>
+    </div>
+</section>
+
+<!-- The main layout keeps add-on selections on the left and a live order summary on the right. -->
+<main class="wrap guest-addons-layout">
+    <div>
+        <!-- The guest card mirrors the primary traveller and collects the email used for confirmation. -->
+        <div class="card guest-card">
+            <div class="lt guest-card-header">
+                <div class="av" id="guest-initials">--</div>
+                <div>
+                    <div class="mn" id="guest-name">Guest traveller</div>
+                    <div class="mt">No loyalty discounts applied</div>
+                </div>
+                <div class="pts guest-note">Extras only</div>
+            </div>
+
+            <div class="perks">
+                <div class="pk">
+                    <span class="bg bd">Paid</span>
+                    <strong>Seat selection</strong>
+                    <p id="ext-seat">Your selected seat is reserved.</p>
+                </div>
+                <div class="pk">
+                    <span class="bg bd">Full price</span>
+                    <strong>In-flight meals</strong>
+                    <p>No member discount applied.</p>
+                </div>
+                <div class="pk">
+                    <span class="bg bd">Paid</span>
+                    <strong>Wi-fi</strong>
+                    <p>Full-flight access available.</p>
+                </div>
+            </div>
+
+            <div class="user_input_box" style="margin: 20px 24px 24px;">
+                <label for="guest-email">Email for booking confirmation</label>
+                <small>We will use this to send your booking confirmation and ticket.</small>
+                <input
+                        type="email"
+                        id="guest-email"
+                        name="guest-email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                >
+            </div>
+        </div>
+
+        <!-- Optional baggage choices are stored into the booking draft as a single radio selection. -->
+        <div class="card">
+            <div class="sh">Baggage</div>
+            <label class="row"><input type="radio" name="bag" data-price="0" data-label="No hold bag"><div class="rl"><div class="rn">No hold bag</div><div class="rs">Cabin only</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="bag" checked data-price="32" data-label="1 x 23kg bag"><div class="rl"><div class="rn">1 x 23 kg</div><div class="rs">Most popular</div></div><div class="rp">£32</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="58" data-label="2 x 23kg bags"><div class="rl"><div class="rn">2 x 23 kg</div><div class="rs">Long trips</div></div><div class="rp">£58</div></label>
+            <label class="row"><input type="radio" name="bag" data-price="45" data-label="1 x 32kg bag"><div class="rl"><div class="rn">1 x 32 kg</div><div class="rs">Heavy items</div></div><div class="rp">£45</div></label>
+        </div>
+
+        <!-- Meal prices are always shown at guest rates on this page. -->
+        <div class="card">
+            <div class="sh">Meals <span class="guest-full-price">Full guest price</span></div>
+            <label class="row"><input type="radio" name="meal" data-price="0" data-label="No meal"><div class="rl"><div class="rn">No meal</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="meal" checked data-price="12" data-label="Classic hot meal"><div class="rl"><div class="rn">Classic hot meal</div><div class="rs">Chicken, pasta or vegetarian</div></div><div class="rp">£12</div></label>
+            <label class="row"><input type="radio" name="meal" data-price="22" data-label="Premium dine set"><div class="rl"><div class="rn">Premium dine</div><div class="rs">3-course meal and drink</div></div><div class="rp">£22</div></label>
+        </div>
+
+        <!-- Insurance is treated as another mutually exclusive add-on group. -->
+        <div class="card">
+            <div class="sh">Insurance</div>
+            <label class="row"><input type="radio" name="ins" data-price="0" data-label="No insurance"><div class="rl"><div class="rn">No insurance</div></div><div class="rp">—</div></label>
+            <label class="row"><input type="radio" name="ins" checked data-price="14.99" data-label="Standard insurance"><div class="rl"><div class="rn">Standard cover</div><div class="rs">Cancellation, delays, lost bags</div></div><div class="rp">£14.99</div></label>
+            <label class="row"><input type="radio" name="ins" data-price="28.50" data-label="Premium insurance"><div class="rl"><div class="rn">Premium cover</div><div class="rs">Medical and adventure sports</div></div><div class="rp">£28.50</div></label>
+        </div>
+
+        <!-- Extras can be combined, so these options are persisted as a checkbox list. -->
+        <div class="card">
+            <div class="sh">Extras</div>
+            <label class="row"><input type="checkbox" checked data-price="8" data-label="Priority boarding"><div class="rl"><div class="rn">Priority boarding</div><div class="rs">Board first</div></div><div class="rp">£8</div></label>
+            <label class="row"><input type="checkbox" data-price="35" data-label="Lounge access"><div class="rl"><div class="rn">Airport lounge</div><div class="rs">Relax before departure</div></div><div class="rp">£35</div></label>
+            <label class="row"><input type="checkbox" data-price="12" data-label="Fast-track security"><div class="rl"><div class="rn">Fast-track security</div></div><div class="rp">£12</div></label>
+            <label class="row"><input type="checkbox" data-price="89" data-label="Premium Economy upgrade"><div class="rl"><div class="rn">Upgrade to Premium Economy</div></div><div class="rp">£89</div></label>
+        </div>
+    </div>
+
+    <!-- The summary column reflects saved selections and the running checkout total. -->
+    <aside class="sum">
+        <div class="sh2">Your order</div>
+        <div class="sb">
+            <div class="sr"><span id="sum-seat">Seat —</span><span id="sum-seat-price">£20.00</span></div>
+            <div class="sr"><span>Wi-fi</span><span id="sum-wifi-price">£8.99</span></div>
+            <div class="sr"><span id="sum-cabin">Economy fare</span><span id="sum-base">Calculated at checkout</span></div>
+            <div id="lines"></div>
+            <hr class="sdiv">
+            <div class="st"><span class="stl">Total</span><span class="sta" id="tot">Calculated at checkout</span></div>
+        </div>
+        <div class="sf2">
+            <button class="btn" id="continue-button" type="button">Continue to payment →</button>
+            <button class="btnb" id="back-button" type="button">← Back to seats</button>
+        </div>
+        <p id="handoff-message" class="handoff-message"></p>
+    </aside>
+</main>
+
+<!-- Guest add-on logic restores the draft, validates the email, and prepares the payment handoff. -->
+<script src="/loyalty/scripts/addons.js"></script>
+<script>
+    /** Formats the visible option prices through the shared currency helper on initial render. */
+    const rows = document.querySelectorAll(".row");
+
+    rows.forEach(row => {
+        const input = row.querySelector("input[data-price]");
+        const rp = row.querySelector(".rp");
+
+        if (!input || !rp) {
+            return;
+        }
+
+        if (rp.querySelector("s")) {
+            return;
+        }
+
+        rp.textContent = fmt(parseFloat(input.dataset.price));
+    });
+</script>
+<div class="footer-divider"></div>
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+</body>
+</html>

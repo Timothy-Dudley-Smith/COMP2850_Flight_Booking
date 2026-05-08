@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Account</title>
+    <link rel="stylesheet" href="/manage-account/styles/style.css">
+    <!-- Shared session UI updates the nav, while the page script loads and saves account data. -->
+    <script src="/scripts/sessionHome.js" defer></script>
+    <script src="/manage-account/scripts/manage-account.js" defer></script>
+</head>
+<body>
+
+<!-- Shared customer header with links into manage-account and support flows. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
+        </div>
+    </nav>
+</header>
+
+<main class="manage-page">
+
+    <!-- This overview card is populated from the account-summary API when the page loads. -->
+    <div class="account-overview">
+        <h2>Your Account</h2>
+        <div class="overview-grid">
+            <div class="overview-item">
+                <span class="overview-label">Membership Number</span>
+                <span class="overview-value" id="membership-number">—</span>
+            </div>
+            <div class="overview-item">
+                <span class="overview-label">Membership Tier</span>
+                <span class="overview-value" id="membership-tier">—</span>
+            </div>
+            <div class="overview-item">
+                <span class="overview-label">Loyalty Points</span>
+                <span class="overview-value" id="loyalty-points">—</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- The edit form lets a signed-in user update core personal details in one request. -->
+    <div class="edit-card">
+        <div class="edit-header">
+            <h2>Edit Details</h2>
+            <p>Update your personal information below</p>
+        </div>
+
+
+
+        <form class="login-form" id="edit-form">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <p id="save-message" class="form-message"></p>
+            <button type="submit" class="login-btn">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Tier progress visuals explain the user's current loyalty level and next milestone. -->
+    <div class="edit-card">
+        <div class="edit-header">
+            <h2>Membership Tiers</h2>
+            <p>Earn points to unlock exclusive rewards</p>
+        </div>
+
+        <div class="tier-progress-wrap">
+            <div class="tier-progress-labels">
+                <span>0</span>
+                <span>Silver 10,000</span>
+                <span>Gold 20,000</span>
+                <span>Platinum 35,000</span>
+            </div>
+            <div class="tier-progress-bar">
+                <div class="tier-progress-fill" id="tier-progress-fill"></div>
+            </div>
+            <p class="tier-progress-text" id="tier-progress-text"></p>
+        </div>
+
+        <div class="tier-cards">
+
+            <div class="tier-card" id="tier-silver">
+                <div class="tier-badge silver-badge">Silver</div>
+                <div class="tier-points-needed">10,000 pts</div>
+                <ul class="tier-benefits">
+                    <li>Early check-in</li>
+                    <li>1,000 free Points!</li>
+                    <li>10% off Astraeus car hire</li>
+                    <li>10% off Astraeus hotel partners</li>
+                </ul>
+            </div>
+
+            <div class="tier-card" id="tier-gold">
+                <div class="tier-badge gold-badge">Gold</div>
+                <div class="tier-points-needed">20,000 pts</div>
+                <ul class="tier-benefits">
+                    <li>2,500 free points!</li>
+                    <li>15% off Astraeus car hire</li>
+                    <li>15% off Astraeus hotel partners</li>
+                    <li>Priority Check In</li>
+                    <li>Exclusive Promo Codes!</li>
+                </ul>
+            </div>
+
+            <div class="tier-card" id="tier-platinum">
+                <div class="tier-badge platinum-badge">Platinum</div>
+                <div class="tier-points-needed">35,000 pts</div>
+                <ul class="tier-benefits">
+                    <li>5,000 Free points!</li>
+                    <li>Free seat upgrade when available</li>
+                    <li>Dedicated platinum support line</li>
+                    <li>20% off all Astraeus partners</li>
+                    <li>Free priority security fast track</li>
+                    <li>Exclusive Monthly Promo Codes!</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Booking history is rendered dynamically from the user's saved bookings. -->
+    <div class="edit-card">
+        <div class="edit-header">
+            <h2>Your Bookings</h2>
+            <p>All flights you have booked</p>
+        </div>
+        <div id="bookings-list">
+            <p class="no-bookings">Loading...</p>
+        </div>
+    </div>
+
+</main>
+<!-- Shared footer closes the account area with navigation back to operations pages. -->
+<div class="footer-divider"></div>
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+
+</body>
+</html>

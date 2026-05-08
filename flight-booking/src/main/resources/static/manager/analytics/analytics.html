@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Analytics</title>
+    <link rel="stylesheet" href="/manager/analytics/styles/analytics.css">
+</head>
+<body>
+<!-- Shared manager header keeps analytics alongside the rest of the operations tools. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html">Home</a>
+            <a href="/manager/flight_view">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/analytics" class="active">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
+            <a href="/manager/support/support.html">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <!-- The hero introduces the analytics workspace and frames the metrics shown below. -->
+    <section class="analytics-hero" aria-labelledby="analytics-title">
+        <p class="eyebrow">Manager Reports</p>
+        <h1 id="analytics-title">Analytics Dashboard</h1>
+        <p>
+            Track reservations, flight availability, route demand, and booking-time patterns for airline staff.
+        </p>
+    </section>
+
+    <!-- Snapshot cards surface the highest-level analytics values as soon as data loads. -->
+    <section class="analytics-snapshot" aria-labelledby="snapshot-heading">
+        <div class="section-heading">
+            <h2 id="snapshot-heading">Operations Snapshot</h2>
+            <p>Live summary cards for the management system requirements.</p>
+        </div>
+
+        <div class="analytics-grid" aria-live="polite">
+            <article class="analytics-card">
+                <span class="analytics-label">Total Reservations</span>
+                <strong id="total-reservations">Loading...</strong>
+                <p>All confirmed bookings made through the system.</p>
+            </article>
+
+            <article class="analytics-card">
+                <span class="analytics-label">Upcoming Flights</span>
+                <strong id="upcoming-flights-count">Loading...</strong>
+                <p>Flights still available from today onwards.</p>
+            </article>
+
+            <article class="analytics-card">
+                <span class="analytics-label">Open Support Tickets</span>
+                <strong id="open-support-tickets">Loading...</strong>
+                <p>Customer requests waiting for manager action.</p>
+            </article>
+
+            <article class="analytics-card analytics-card-wide">
+                <span class="analytics-label">Most Popular Route</span>
+                <strong id="popular-route">Loading...</strong>
+                <p>Route with the highest number of reservations.</p>
+            </article>
+
+            <article class="analytics-card analytics-card-wide">
+                <span class="analytics-label">Peak Booking Time</span>
+                <strong id="peak-booking-time">Loading...</strong>
+                <p>The busiest booking hour once booking timestamps are available.</p>
+            </article>
+        </div>
+
+        <div class="analytics-feedback">
+            <p id="analytics-message" class="analytics-message" role="status"></p>
+            <button id="analytics-retry" class="analytics-retry" type="button" hidden>Retry</button>
+        </div>
+    </section>
+
+    <!-- Detailed report cards render tabular and chart views from the same analytics payload. -->
+    <section class="report-grid" aria-label="Detailed analytics reports">
+        <article class="report-card">
+            <div class="section-heading compact-heading">
+                <h2>Bookings Per Flight</h2>
+                <p>Reservation counts grouped by flight.</p>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Flight ID</th>
+                    <th>Route</th>
+                    <th>Date</th>
+                    <th>Bookings</th>
+                </tr>
+                </thead>
+                <tbody id="bookings-per-flight-body">
+                <tr><td colspan="4">Loading...</td></tr>
+                </tbody>
+            </table>
+            <div class="report-actions">
+                <button id="bookings-per-flight-show-fewer" class="report-toggle" type="button" hidden>
+                    Show Fewer
+                </button>
+                <button id="bookings-per-flight-show-more" class="report-toggle" type="button" hidden>
+                    Show More
+                </button>
+            </div>
+        </article>
+
+        <article class="report-card">
+            <div class="section-heading compact-heading">
+                <h2>Popular Routes</h2>
+                <p>Routes ranked by total reservations.</p>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Route</th>
+                    <th>Bookings</th>
+                </tr>
+                </thead>
+                <tbody id="popular-routes-body">
+                <tr><td colspan="2">Loading...</td></tr>
+                </tbody>
+            </table>
+            <div class="report-actions">
+                <button id="popular-routes-show-fewer" class="report-toggle" type="button" hidden>
+                    Show Fewer
+                </button>
+                <button id="popular-routes-show-more" class="report-toggle" type="button" hidden>
+                    Show More
+                </button>
+            </div>
+        </article>
+
+        <article class="report-card report-card-wide">
+            <div class="section-heading compact-heading">
+                <h2>Bookings Per Hour</h2>
+                <p>Confirmed bookings grouped by the hour they were created.</p>
+            </div>
+            <div class="hourly-chart-wrap">
+                <div id="hourly-booking-chart" class="hourly-chart" aria-label="Bookings per hour bar chart"></div>
+                <p id="hourly-booking-empty" class="chart-empty-message">Loading...</p>
+            </div>
+        </article>
+    </section>
+</main>
+
+<!-- Analytics logic validates the manager session, fetches dashboard data, and renders cards, tables, and charts. -->
+<script src="/manager/analytics/scripts/analytics.js"></script>
+</body>
+</html>

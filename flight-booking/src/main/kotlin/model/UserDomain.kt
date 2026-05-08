@@ -1,7 +1,5 @@
 package com.flightsystem.model
 
-
-
 import java.time.LocalDateTime
 
 open class UserDomain(
@@ -9,7 +7,7 @@ open class UserDomain(
     var name: String,
     var email: String,
     private var passwordHash: String,
-    private var salt: String
+    private var salt: String,
 ) {
     private val bookings: MutableList<Booking> = mutableListOf()
 
@@ -20,7 +18,6 @@ open class UserDomain(
     private var lockedAt: LocalDateTime? = null
     private var failedLoginAttempts: Int = 0
 
-
     private var seatPreference = "ANY"
 
     companion object {
@@ -28,28 +25,29 @@ open class UserDomain(
         private const val MAX_FAILED_ATTEMPTS = 5
         private const val LOCKOUT_MINUTES = 30L
         private const val POINTS_PER_UNIT_SPENT = 10
-
     }
 
-    fun updateDetails(newName: String, newEmail: String) {
-        require(newName.isNotBlank()) {"Name cannot be empty"}
-        require(EMAIL_REGEX.matches(newEmail)) {"Invalid email format"}
+    fun updateDetails(
+        newName: String,
+        newEmail: String,
+    ) {
+        require(newName.isNotBlank()) { "Name cannot be empty" }
+        require(EMAIL_REGEX.matches(newEmail)) { "Invalid email format" }
         name = newName
         email = newEmail
     }
 
-    protected fun updatePassword(newPasswordHash: String, newSalt: String) {
+    protected fun updatePassword(
+        newPasswordHash: String,
+        newSalt: String,
+    ) {
         passwordHash = newPasswordHash
         salt = newSalt
     }
 
-    fun verifyPassword(candidateHash: String): Boolean {
-        return candidateHash == passwordHash
-    }
+    fun verifyPassword(candidateHash: String): Boolean = candidateHash == passwordHash
 
-    fun getSalt(): String {
-        return salt
-    }
+    fun getSalt(): String = salt
 
     fun addBooking(booking: Booking) {
         bookings.add(booking)
@@ -66,22 +64,19 @@ open class UserDomain(
         }
     }
 
-    private fun calculatePoints(price: Double): Int {
-        return (price / POINTS_PER_UNIT_SPENT).toInt()
-    }
+    private fun calculatePoints(price: Double): Int = (price / POINTS_PER_UNIT_SPENT).toInt()
 
-    fun getBookings(): List<Booking> {
-        return bookings.toList()
-    }
+    fun getBookings(): List<Booking> = bookings.toList()
 
     fun getLoyaltyPoints(): Int = loyaltyPoints
 
-    fun redeemPoints(points: Int): Boolean {
-        return if (points <= loyaltyPoints) {
+    fun redeemPoints(points: Int): Boolean =
+        if (points <= loyaltyPoints) {
             loyaltyPoints -= points
             true
-        } else false
-    }
+        } else {
+            false
+        }
 
     fun setSeatPreference(preference: String) {
         seatPreference = preference
@@ -98,7 +93,7 @@ open class UserDomain(
 
     fun recordLoginFailure() {
         failedLoginAttempts++
-        if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS ) {
+        if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS) {
             accountLocked = true
             lockedAt = LocalDateTime.now()
         }
@@ -121,7 +116,4 @@ open class UserDomain(
     }
 
     fun getLastLogin(): LocalDateTime? = lastLogin
-
-
-
 }

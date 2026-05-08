@@ -4,6 +4,22 @@ import org.jetbrains.exposed.sql.Table
 
 private const val VARIABLE_LENGTH = 128
 
+/**
+Represents the status of a user account.
+ */
+
+enum class AccountStatus {
+    ACTIVE,
+    FROZEN,
+    DELETED,
+}
+
+/**
+Database table for storing user accounts.
+
+Includes authentication data, account state, and role information.
+ */
+
 object Users : Table() {
     val userId = integer("user_id").autoIncrement()
     val firstName = varchar("first_name", VARIABLE_LENGTH)
@@ -18,6 +34,7 @@ object Users : Table() {
     val lockedAt = varchar("locked_at", VARIABLE_LENGTH).nullable()
     val lastLogin = varchar("last_login", VARIABLE_LENGTH).nullable()
     val role = varchar("role", 20).default("USER")
+    val status = enumerationByName("status", 20, AccountStatus::class).default(AccountStatus.ACTIVE)
 
     override val primaryKey = PrimaryKey(userId)
 }

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancellation & Refund Policy</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        /* Page-specific layout for policy content while reusing the shared home-page chrome. */
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        /* Hero panel frames the page as guidance content rather than an interactive workflow. */
+        .hero-panel {
+            background: linear-gradient(135deg, #0d2b63, #1f3c88);
+            color: white;
+            border-radius: 24px;
+            padding: 48px;
+            margin-bottom: 32px;
+        }
+
+        .hero-panel h1 {
+            margin: 0 0 12px;
+            font-size: 42px;
+            line-height: 1.1;
+        }
+
+        .hero-panel p {
+            margin: 0;
+            max-width: 760px;
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            margin-bottom: 32px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .content-card h2 {
+            margin-top: 0;
+            margin-bottom: 14px;
+            color: #1f3c88;
+        }
+
+        .content-card h3 {
+            margin-top: 22px;
+            margin-bottom: 8px;
+            color: #1f3c88;
+        }
+
+        .content-card p,
+        .content-card li {
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .content-card ul {
+            padding-left: 20px;
+        }
+
+        /* Policy boxes break the main rules into smaller scan-friendly summaries. */
+        .policy-box {
+            background: #f7f9fc;
+            border-radius: 16px;
+            padding: 18px 20px;
+            border-left: 5px solid #1f3c88;
+            margin-bottom: 16px;
+        }
+
+        .policy-box h3 {
+            margin: 0 0 6px;
+        }
+
+        .image-placeholder {
+            height: 260px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #dfe7f5, #cfd9ec);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5b7c;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary,
+        .cta-secondary {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .cta-primary {
+            background: #1f3c88;
+            color: white;
+        }
+
+        .cta-secondary {
+            background: #eef3fb;
+            color: #1f3c88;
+        }
+
+        /* Switch to a single-column layout on smaller screens to preserve readability. */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel {
+                padding: 32px 24px;
+            }
+
+            .hero-panel h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<div class="page-shell">
+    <!-- Hero copy introduces the refund page before the detailed policy notes below. -->
+    <section class="hero-panel">
+        <h1>Cancellation & Refund Policy</h1>
+        <p>
+            We understand that travel plans can change. Our cancellation and refund
+            guidance is here to help you understand your options before you travel.
+        </p>
+    </section>
+
+    <!-- Main content combines refund guidance with support and booking-management signposts. -->
+    <section class="content-grid">
+        <div class="content-card">
+            <h2>Refund guidance</h2>
+
+            <div class="policy-box">
+                <h3>Flexible bookings</h3>
+                <p>Flexible fares may allow changes or cancellations with reduced fees, depending on fare conditions.</p>
+            </div>
+
+            <div class="policy-box">
+                <h3>Non-refundable bookings</h3>
+                <p>Some bookings may not be eligible for a cash refund, although taxes or selected charges may still be recoverable.</p>
+            </div>
+
+            <div class="policy-box">
+                <h3>Processing times</h3>
+                <p>Where eligible, refunds may take several working days to appear depending on the original payment method.</p>
+            </div>
+
+            <h3>Things to keep in mind</h3>
+            <ul>
+                <li>Refund eligibility can depend on fare type and booking conditions.</li>
+                <li>Changes made close to departure may be subject to additional restrictions.</li>
+                <li>Some services or add-ons may not be refundable once confirmed.</li>
+            </ul>
+
+            <div class="cta-row">
+                <a href="/manage" class="cta-primary">Manage your booking</a>
+                <a href="/" class="cta-secondary">Return to home</a>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="image-placeholder">
+                <img src="/images/policy.png" alt="Airport lounge">
+            </div>
+
+            <h2>Need support?</h2>
+            <p>
+                If your plans have changed and you need help reviewing cancellation
+                options, you can manage your booking or contact support for further guidance.
+            </p>
+
+            <h3>Typical reasons for requesting changes</h3>
+            <p>
+                Customers commonly request cancellations due to scheduling changes,
+                travel restrictions, personal emergencies, or updated travel plans.
+            </p>
+        </div>
+    </section>
+</div>
+<div class="footer-divider"></div>
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+</body>
+</html>

@@ -1,12 +1,7 @@
 package com.flightsystem.model
 
-import com.flightsystem.model.Airports.code
-import com.flightsystem.model.Flights.arrivalAirport
-import com.flightsystem.model.Flights.departureAirport
-import org.jetbrains.exposed.sql.ReferenceOption
-import org.jetbrains.exposed.sql.Table
-import java.awt.print.Book
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.Table
 
 @Serializable
 data class BookingSeat(
@@ -24,6 +19,5 @@ object BookingSeats : Table() {
 
     init {
         foreignKey(flightId, seatNumber, target = Seats.primaryKey)
-        foreignKey(bookingId to Bookings.bookingId, flightId to Bookings.flightId)
     }
 }

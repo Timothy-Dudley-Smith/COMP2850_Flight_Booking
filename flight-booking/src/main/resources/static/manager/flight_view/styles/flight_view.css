@@ -1,3 +1,4 @@
+/* Flight-view styles cover the admin header, inline forms, filter controls, and flight results table. */
 body {
     margin: 0;
     font-family: 'Inter', system-ui, Helvetica, sans-serif;
@@ -8,34 +9,7 @@ body {
 
 
 
-/* ----------------------------- */
-/* HEADER */
-/* ----------------------------- */
 
-header {
-    background: #1a2b4a;
-    color: white;
-    padding: 30px clamp(20px, 5vw, 60px);
-    border-bottom: 3px solid #00a1de;
-}
-
-/*dark navy header with blue accent underline*/
-
-header h1 {
-    margin: 0 0 6px 0;
-    font-size: clamp(20px, 3vw, 30px);
-    font-weight: 500;
-}
-
-/*main page title*/
-
-header p {
-    margin: 0;
-    font-size: 14px;
-    opacity: 0.7;
-}
-
-/*subtitle below title, slightly faded*/
 
 
 
@@ -80,6 +54,45 @@ section h2 {
 
 /*section heading inside card, matches .sh style*/
 
+.flight-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 18px 0;
+}
+
+/* Filter chips switch the table between upcoming, past, and all flights without changing page layout. */
+.flight-filter-button {
+    padding: 9px 16px;
+    border: 1px solid #bfd8e8;
+    border-radius: 999px;
+    background: #f3f9fd;
+    color: #135f91;
+    font-family: 'Inter', system-ui, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.flight-filter-button:hover {
+    background: #e4f3fb;
+    border-color: #00a1de;
+}
+
+.flight-filter-button.active {
+    background: #132e8e;
+    border-color: #132e8e;
+    color: #ffffff;
+}
+
+.flight-filter-summary {
+    margin: 0;
+    padding: 10px 18px 0;
+    color: #5f6b75;
+    font-size: 13px;
+}
+
 
 
 /* ----------------------------- */
@@ -119,7 +132,8 @@ section h2 {
 /* ADD FLIGHT FORM */
 /* ----------------------------- */
 
-#add-flight-form {
+#add-flight-form,
+#add-airport-form {
     padding: 20px 18px;
     display: flex;
     flex-wrap: wrap;
@@ -128,7 +142,8 @@ section h2 {
 
 /*form uses flex wrap so fields sit side by side where space allows*/
 
-#add-flight-form div {
+#add-flight-form div,
+#add-airport-form div {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -136,7 +151,8 @@ section h2 {
     /* each field grows but has a min width */
 }
 
-#add-flight-form label {
+#add-flight-form label,
+#add-airport-form label {
     font-size: 11px;
     font-weight: 500;
     color: #1a2b4a;
@@ -146,7 +162,8 @@ section h2 {
 
 /*small uppercase label above each field*/
 
-#add-flight-form input {
+#add-flight-form input,
+#add-airport-form input {
     padding: 9px 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -158,13 +175,15 @@ section h2 {
 
 /*input field styling*/
 
-#add-flight-form input:focus {
+#add-flight-form input:focus,
+#add-airport-form input:focus {
     border-color: #132e8e;
 }
 
 /*blue border on focus to match brand colour*/
 
-#add-flight-form button[type="submit"] {
+#add-flight-form button[type="submit"],
+#add-airport-form button[type="submit"] {
     align-self: flex-end;
     padding: 10px 24px;
     background: #132e8e;
@@ -181,8 +200,16 @@ section h2 {
 
 /*submit button uses same pill shape and navy colour as .search-btn*/
 
-#add-flight-form button[type="submit"]:hover {
+#add-flight-form button[type="submit"]:hover,
+#add-airport-form button[type="submit"]:hover {
     background: #0f1c36;
+}
+
+.manager-form-hint {
+    flex: 1 1 100%;
+    margin: -4px 0 0;
+    color: #5f6b75;
+    font-size: 12px;
 }
 
 /*darker shade on hover*/
@@ -200,6 +227,8 @@ section h2 {
 }
 
 /*full width table, removes default cell gaps*/
+
+/* The flight table doubles as both a live status view and the surface for row-level delete actions. */
 
 #upcoming-flights-table thead tr {
     background: #f7f8fa;
@@ -303,6 +332,29 @@ section h2 {
     color: white;
 }
 
+@media (max-width: 700px) {
+    /* Small screens turn the filter bar into evenly sized buttons for easier tapping. */
+    .flight-filter-button {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
 
+/* always allow horizontal scroll if table dont fit  */
+section {
+    overflow-x: auto;
+}
 
+/* mobile - form stacks full width  */
+@media (max-width: 900px) {
+    #add-flight-form div,
+    #add-airport-form div {
+        flex: 1 1 100%;
+    }
 
+    #add-flight-form button[type="submit"],
+    #add-airport-form button[type="submit"] {
+        width: 100%;
+        align-self: stretch;
+    }
+}

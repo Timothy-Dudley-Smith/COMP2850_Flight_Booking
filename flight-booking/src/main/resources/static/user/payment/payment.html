@@ -6,32 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment</title>
     <link rel="stylesheet" href="../home/styles/style.css">
+    <!-- Shared currency helper keeps displayed totals aligned with the selected UI currency. -->
+    <script src="/shared/currency.js"></script>
+
 </head>
 <body>
 
+<!-- Shared customer header for the checkout step. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
 
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
 
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <label for="currency-select" class="sr-only">Select currency</label>
+            <select id="currency-select" aria-label="Select currency" onchange="setSelectedCurrency(this.value); location.reload();">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="AUD">A$ AUD</option>
+                <option value="JPY">¥ JPY</option>
+            </select>
+            <!-- Reapply the saved currency selection before the summary prices render. -->
+            <script>document.getElementById("currency-select").value = getSelectedCurrency();</script>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
 
+<!-- Checkout still charges in GBP, so this notice appears when the UI is showing converted prices. -->
+<p id="currency-notice" style="display:none; text-align:center; font-size:0.8rem; background:#f5f0e8; padding:6px; margin:0;">
+    Indicative prices only — you will be charged in GBP at checkout.
+</p>
+<script>
+    if (getSelectedCurrency() !== "GBP") {
+        document.getElementById("currency-notice").style.display = "block";
+    }
+</script>
+
+
+
+<!-- Payment-step heading shown above the form and summary columns. -->
 <section class="flights-overview-header">
     <div class="flights-overview">
         <h1 id="route-title">Payment</h1>
@@ -39,52 +67,62 @@
     </div>
 </section>
 
-<section style="max-width: 1100px; margin: 30px auto; padding: 0 20px;">
-    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: start;">
+<section class="payment-wrap">
+    <div class="payment-grid">
 
-        <!-- PAYMENT FORM -->
+        <!-- Checkout form collects card details, promo input, and inline validation feedback. -->
         <div class="booking_page_1">
             <h2>Payment details</h2>
             <p class="age-label">Enter your card information</p>
 
             <div class="user_input_box">
-                <label>Cardholder name</label>
+                <label for="cardholder-name">Cardholder name</label>
                 <input type="text" id="cardholder-name">
             </div>
 
             <div class="user_input_box">
-                <label>Card number</label>
+                <label for="card-number">Card number</label>
                 <input type="text" id="card-number" maxlength="16" placeholder="1234123412341234">
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
                 <div class="user_input_box">
-                    <label>Expiry month</label>
+                    <label for="expiry-month">Expiry month</label>
                     <input type="number" id="expiry-month" min="1" max="12" placeholder="MM">
                 </div>
 
                 <div class="user_input_box">
-                    <label>Expiry year</label>
+                    <label for="expiry-year">Expiry year</label>
                     <input type="number" id="expiry-year" min="2026" max="2100" placeholder="YYYY">
                 </div>
 
                 <div class="user_input_box">
-                    <label>CVV</label>
+                    <label for="cvv">CVV</label>
                     <input type="text" id="cvv" maxlength="4" placeholder="123">
                 </div>
             </div>
 
             <div class="user_input_box">
-                <label>Billing address</label>
+                <label for="billing-address">Billing address</label>
                 <input type="text" id="billing-address">
             </div>
 
+            <div class="user_input_box">
+                <label for="promo-code">Promo code</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="promo-code" placeholder="Enter promo code" style="flex: 1;">
+                    <button type="button" id="apply-promo-btn" style="padding: 10px 16px;">Apply</button>
+                </div>
+            </div>
+
+            <p id="promo-message" style="margin-top: 10px; font-weight: 600;"></p>
             <p id="payment-message" style="margin-top: 10px; font-weight: 600;"></p>
 
             <button class="continue-btn" id="pay-btn">Pay now</button>
+
         </div>
 
-        <!-- BOOKING SUMMARY -->
+        <!-- Booking summary mirrors the in-progress booking so the customer can review it before paying. -->
         <div class="booking_page_1">
             <h2>Booking summary</h2>
 
@@ -108,8 +146,15 @@
                 <p id="summary-seat">Not selected yet</p>
             </div>
 
+            <div class="user_input_box" id="return-leg-summary" style="display: none;">
+                <label>Return flight</label>
+                <p id="return-route">Not available</p>
+                <p id="return-date-display" style="margin: 6px 0 0;">Not available</p>
+                <p style="margin: 6px 0 0;">Seats: <span id="return-seats-display">Not selected yet</span></p>
+            </div>
+
             <div class="user_input_box">
-                <label>Loyalty</label>
+                <label>Add-ons</label>
                 <p id="summary-loyalty">Not selected yet</p>
             </div>
 
@@ -117,95 +162,633 @@
                 <label>Total</label>
                 <p id="summary-total">To be confirmed</p>
             </div>
+
+            <div class="user_input_box">
+                <label>Your loyalty points</label>
+                <p id="points-balance">Not available</p>
+            </div>
+
+            <div class="user_input_box">
+                <label for="use-points-checkbox">
+                    <input type="checkbox" id="use-points-checkbox">
+                    Use points to reduce the price
+                </label>
+            </div>
+
+            <div class="user_input_box" id="points-section" style="display: none;">
+                <label for="points-to-redeem">Points to use</label>
+                <input type="number" id="points-to-redeem" min="0" value="0" step="1">
+                <p id="points-discount">Discount: £0.00</p>
+                <p id="final-total">Final total: To be confirmed</p>
+            </div>
         </div>
 
     </div>
 </section>
 
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const from = params.get("from");
-    const to = params.get("to");
-    const date = params.get("date");
-    const passengers = params.get("passengers");
-
-    const holdId = sessionStorage.getItem("holdId");
-    const selectedSeat = sessionStorage.getItem("selectedSeat");
-    const loyaltyChoice = sessionStorage.getItem("loyaltyChoice");
-    const bookingDataRaw = sessionStorage.getItem("bookingData");
-
+    /**
+     * Runs the payment step of the booking flow.
+     *
+     * The page rebuilds booking state from sessionStorage, renders the checkout
+     * summary, optionally applies loyalty points and promo discounts, and then
+     * submits the final checkout request to the backend.
+     */
+    const pendingBookingRequestRaw = sessionStorage.getItem("pendingBookingRequest");
+    const bookingDraftRaw = sessionStorage.getItem("bookingDraft");
+    const holdDataRaw = sessionStorage.getItem("holdData");
     let bookingData = null;
-    if (bookingDataRaw) {
-        bookingData = JSON.parse(bookingDataRaw);
+    let loyaltyPoints = 0;
+    const message = document.getElementById("payment-message");
+    const promoMessage = document.getElementById("promo-message");
+    const payButton = document.getElementById("pay-btn");
+    const applyPromoButton = document.getElementById("apply-promo-btn");
+    const promoCodeInput = document.getElementById("promo-code");
+    let appliedPromoCode = null;
+    let discountedTotal = null;
+    const pointsBalance = document.getElementById("points-balance");
+    const usePointsCheckbox = document.getElementById("use-points-checkbox");
+    const pointsSection = document.getElementById("points-section");
+    const pointsInput = document.getElementById("points-to-redeem");
+    const pointsDiscount = document.getElementById("points-discount");
+    const finalTotal = document.getElementById("final-total");
+    const returnLegSummary = document.getElementById("return-leg-summary");
+    const returnRoute = document.getElementById("return-route");
+    const returnDateDisplay = document.getElementById("return-date-display");
+    const returnSeatsDisplay = document.getElementById("return-seats-display");
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const firstName = sessionStorage.getItem("firstName");
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
     }
 
-    document.getElementById("summary-route").textContent = bookingData ? `${bookingData.from} → ${bookingData.to}` : (from && to ? `${from} → ${to}` : "Not available");
-    document.getElementById("summary-date").textContent = bookingData ? new Date(bookingData.date).toLocaleDateString("en-GB") : (date ? new Date(date).toLocaleDateString("en-GB") : "Not available");
-    document.getElementById("summary-passengers").textContent = bookingData ? bookingData.passengers : (passengers ? passengers : "Not available");
-    document.getElementById("summary-seat").textContent = selectedSeat ? selectedSeat : "Not selected yet";
-    document.getElementById("summary-loyalty").textContent = loyaltyChoice ? loyaltyChoice : "Not selected yet";
-    document.getElementById("summary-total").textContent = bookingData && bookingData.price ? bookingData.price : "To be confirmed";
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
 
-    document.getElementById("pay-btn").addEventListener("click", async function () {
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
+
+    function parseStoredJson(rawValue) {
+        if (!rawValue) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(rawValue);
+        } catch {
+            return null;
+        }
+    }
+
+    const pendingBookingRequest = parseStoredJson(pendingBookingRequestRaw);
+    const bookingDraft = parseStoredJson(bookingDraftRaw);
+    const holdData = parseStoredJson(holdDataRaw);
+
+    // Merge the draft, pending request, and hold metadata so the summary can read from one object.
+    bookingData = {
+        ...(bookingDraft ?? {}),
+        ...(pendingBookingRequest ?? {}),
+        ...(holdData ?? {})
+    };
+
+    /**
+     * Formats booking dates for the checkout summary.
+     */
+    function formatDisplayDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB");
+    }
+
+    /**
+     * Formats numeric amounts for display using the shared currency helper.
+     */
+    function formatCurrency(amount) {
+        if (typeof amount !== "number" || !Number.isFinite(amount)) {
+            return "To be confirmed";
+        }
+
+        return fmt(amount);
+    }
+
+    /**
+     * Validates the guest confirmation email when checkout is not tied to a signed-in account.
+     */
+    function isValidEmail(email) {
+        return /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
+    }
+
+    /**
+     * Builds a short passenger-count summary for the review column.
+     */
+    function getPassengerSummary(data) {
+        const passengerList = Array.isArray(data?.passengers) ? data.passengers : [];
+
+        if (passengerList.length > 0) {
+            return `${passengerList.length} passenger${passengerList.length === 1 ? "" : "s"}`;
+        }
+
+        const count = Number(data?.passengerCount);
+        if (Number.isFinite(count) && count > 0) {
+            return `${count} passenger${count === 1 ? "" : "s"}`;
+        }
+
+        return "Not available";
+    }
+
+    function getSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.seatNumbers) ? data.seatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    function getReturnSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.returnSeatNumbers) ? data.returnSeatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    function getReturnRouteSummary(data) {
+        const from = data?.returnFrom ?? data?.to ?? "";
+        const to = data?.returnTo ?? data?.from ?? "";
+
+        if (!from || !to) {
+            return data?.returnFlightId ?? "Not available";
+        }
+
+        return `${from} → ${to}`;
+    }
+
+    /**
+     * Flattens the selected add-ons into a readable summary string for checkout review.
+     */
+    function getAddOnSummary(data) {
+        const addOns = data?.addOns;
+
+        if (!addOns) {
+            return "No add-ons selected";
+        }
+
+        const selections = [];
+
+        if (addOns.baggage) {
+            selections.push(addOns.baggage);
+        }
+
+        if (addOns.meal) {
+            selections.push(addOns.meal);
+        }
+
+        if (addOns.insurance) {
+            selections.push(addOns.insurance);
+        }
+
+        if (Array.isArray(addOns.extras)) {
+            for (let i = 0; i < addOns.extras.length; i++) {
+                selections.push(addOns.extras[i]);
+            }
+        }
+
+        return selections.length > 0 ? selections.join(", ") : "No add-ons selected";
+    }
+
+    /**
+     * Reads the signed-in user ID so the page can load loyalty information when available.
+     */
+    function getCurrentUserId() {
+        const rawUserId = sessionStorage.getItem("userId");
+        const parsedUserId = Number(rawUserId);
+        return Number.isFinite(parsedUserId) ? parsedUserId : null;
+    }
+
+    /**
+     * Calculates the current total after any loyalty redemption but before promo-code discounts.
+     */
+    function getCurrentCheckoutBaseTotal() {
+        const totalPrice = Number(bookingData?.totalPrice) || 0;
+
+        if (!usePointsCheckbox.checked) {
+            return totalPrice;
+        }
+
+        let pointsToRedeem = Number(pointsInput.value) || 0;
+
+        if (pointsToRedeem < 0) {
+            pointsToRedeem = 0;
+        }
+
+        if (pointsToRedeem > loyaltyPoints) {
+            pointsToRedeem = loyaltyPoints;
+        }
+
+        const maxUsefulPoints = Math.floor(totalPrice * 10);
+        if (pointsToRedeem > maxUsefulPoints) {
+            pointsToRedeem = maxUsefulPoints;
+        }
+
+        const discount = calculateDiscount(pointsToRedeem);
+        return Math.max(0, totalPrice - discount);
+    }
+
+    /**
+     * Refreshes the displayed totals after loyalty points or promo codes change the payable amount.
+     */
+    function updateDisplayedTotalWithPromo() {
+        const baseTotal = getCurrentCheckoutBaseTotal();
+        const finalAmount = discountedTotal !== null ? discountedTotal : baseTotal;
+
+        document.getElementById("summary-total").textContent = formatCurrency(finalAmount);
+        finalTotal.textContent = `Final total: ${formatCurrency(finalAmount)}`;
+    }
+
+    /**
+     * Converts redeemed loyalty points into a GBP discount using the checkout rule on this page.
+     */
+    function calculateDiscount(points) {
+        return points / 10;
+    }
+
+    /**
+     * Shows or hides the points section and constrains the entered points to useful limits.
+     */
+    function updateLoyaltyDisplay() {
+        const totalPrice = Number(bookingData?.totalPrice) || 0;
+
+        if (!usePointsCheckbox.checked) {
+            pointsSection.style.display = "none";
+            pointsDiscount.textContent = "Discount: £0.00";
+            discountedTotal = appliedPromoCode ? discountedTotal : null;
+            updateDisplayedTotalWithPromo();
+            return;
+        }
+
+        pointsSection.style.display = "block";
+
+        let pointsToRedeem = Number(pointsInput.value) || 0;
+
+        if (pointsToRedeem < 0) {
+            pointsToRedeem = 0;
+        }
+
+        if (pointsToRedeem > loyaltyPoints) {
+            pointsToRedeem = loyaltyPoints;
+        }
+
+        const maxUsefulPoints = Math.floor(totalPrice * 10);
+        if (pointsToRedeem > maxUsefulPoints) {
+            pointsToRedeem = maxUsefulPoints;
+        }
+
+        pointsInput.value = pointsToRedeem;
+
+        const discount = calculateDiscount(pointsToRedeem);
+        const updatedTotal = Math.max(0, totalPrice - discount);
+
+        pointsDiscount.textContent = `Discount: ${formatCurrency(discount)}`;
+        if (!appliedPromoCode) {
+            discountedTotal = null;
+        }
+        updateDisplayedTotalWithPromo()
+    }
+
+    document.getElementById("summary-route").textContent = bookingData?.from && bookingData?.to
+        ? `${bookingData.from} → ${bookingData.to}`
+        : "Not available";
+    document.getElementById("summary-date").textContent = formatDisplayDate(bookingData?.date);
+    document.getElementById("summary-passengers").textContent = getPassengerSummary(bookingData);
+    document.getElementById("summary-seat").textContent = getSeatSummary(bookingData);
+    document.getElementById("summary-loyalty").textContent = getAddOnSummary(bookingData);
+    document.getElementById("summary-total").textContent = formatCurrency(Number(bookingData?.totalPrice));
+
+    if (bookingData?.returnFlightId) {
+        returnLegSummary.style.display = "block";
+        returnRoute.textContent = getReturnRouteSummary(bookingData);
+        returnDateDisplay.textContent = formatDisplayDate(bookingData?.returnDate);
+        returnSeatsDisplay.textContent = getReturnSeatSummary(bookingData);
+    }
+
+    finalTotal.textContent = `Final total: ${formatCurrency(Number(bookingData?.totalPrice))}`;
+
+    /**
+     * Loads the current loyalty balance so checkout can offer point redemption to signed-in users.
+     */
+    async function loadLoyaltyBalance() {
+        const userId = getCurrentUserId();
+
+        if (!userId) {
+            pointsBalance.textContent = "Log in to use loyalty points";
+            usePointsCheckbox.disabled = true;
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/loyalty/${userId}`);
+            const text = await response.text();
+
+            let account = null;
+            try {
+                account = text ? JSON.parse(text) : null;
+            } catch {
+                account = null;
+            }
+
+            if (!response.ok || !account) {
+                pointsBalance.textContent = "No loyalty account found";
+                usePointsCheckbox.disabled = true;
+                return;
+            }
+
+            loyaltyPoints = account.loyaltyPoints ?? 0;
+            pointsBalance.textContent = `${loyaltyPoints} points`;
+            pointsInput.max = loyaltyPoints.toString();
+
+            if (loyaltyPoints <= 0) {
+                usePointsCheckbox.disabled = true;
+            }
+        } catch {
+            pointsBalance.textContent = "Unable to load points";
+            usePointsCheckbox.disabled = true;
+        }
+    }
+
+    usePointsCheckbox.addEventListener("change", updateLoyaltyDisplay);
+    pointsInput.addEventListener("input", updateLoyaltyDisplay);
+
+    loadLoyaltyBalance();
+    updateDisplayedTotalWithPromo();
+
+    if (!bookingData?.holdId) {
+        message.textContent = "Your booking hold is missing. Return to seat selection and try again.";
+        payButton.disabled = true;
+    }
+
+    /**
+     * Applies a promo code against the current checkout total and updates the summary when valid.
+     */
+    applyPromoButton.addEventListener("click", async function () {
+        const promoCode = promoCodeInput.value.trim();
+
+        promoMessage.textContent = "";
+        appliedPromoCode = null;
+        discountedTotal = null;
+
+        if (promoCode === "") {
+            promoMessage.textContent = "Enter a promo code first.";
+            updateDisplayedTotalWithPromo();
+            return;
+        }
+
+        try {
+            applyPromoButton.disabled = true;
+
+            const baseTotal = getCurrentCheckoutBaseTotal();
+
+            const res = await fetch("/api/promo/apply", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    code: promoCode,
+                    originalAmount: baseTotal
+                })
+            });
+
+            const text = await res.text();
+            let result = null;
+
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch {
+                result = null;
+            }
+
+            if (!res.ok || !result?.success) {
+                promoMessage.textContent = result?.message ?? text ?? "Unable to apply promo code.";
+                updateDisplayedTotalWithPromo();
+                return;
+            }
+
+            appliedPromoCode = promoCode;
+            discountedTotal = Number(result.discountedAmount);
+            promoMessage.textContent = `Promo code applied. New total: ${formatCurrency(discountedTotal)}`;
+            updateDisplayedTotalWithPromo();
+        } catch {
+            promoMessage.textContent = "Unable to apply promo code right now.";
+            updateDisplayedTotalWithPromo();
+        } finally {
+            applyPromoButton.disabled = false;
+        }
+    });
+
+    /**
+     * Validates the payment fields, submits the final checkout request, stores the
+     * response, and then forwards the flow into the confirmation page.
+     */
+    function isPaymentFormValid() {
         const name = document.getElementById("cardholder-name").value.trim();
         const number = document.getElementById("card-number").value.trim();
         const month = parseInt(document.getElementById("expiry-month").value);
         const year = parseInt(document.getElementById("expiry-year").value);
         const cvv = document.getElementById("cvv").value.trim();
         const address = document.getElementById("billing-address").value.trim();
-        const message = document.getElementById("payment-message");
+
+        return (
+            name !== "" &&
+            /^\d{16}$/.test(number) &&
+            /^\d{3,4}$/.test(cvv) &&
+            month >= 1 &&
+            month <= 12 &&
+            year >= 2026 &&
+            address !== "" &&
+            !!bookingData?.holdId
+        );
+    }
+
+    function updatePayButtonState() {
+        if (isPaymentFormValid()) {
+            payButton.classList.add("active");
+        } else {
+            payButton.classList.remove("active");
+        }
+    }
+
+    [
+        "cardholder-name",
+        "card-number",
+        "expiry-month",
+        "expiry-year",
+        "cvv",
+        "billing-address"
+    ].forEach(id => {
+        document.getElementById(id).addEventListener("input", updatePayButtonState);
+    });
+
+    updatePayButtonState();
+
+    payButton.addEventListener("click", async function () {
+        const name = document.getElementById("cardholder-name").value.trim();
+        const number = document.getElementById("card-number").value.trim();
+        const month = parseInt(document.getElementById("expiry-month").value);
+        const year = parseInt(document.getElementById("expiry-year").value);
+        const cvv = document.getElementById("cvv").value.trim();
+        const address = document.getElementById("billing-address").value.trim();
+        const promoCode = appliedPromoCode;
+        const guestEmail = typeof bookingData?.guestEmail === "string" ? bookingData.guestEmail.trim() : "";
+        const isGuestBooking = bookingData?.bookingType === "guest";
 
         message.textContent = "";
+        promoMessage.textContent = "";
 
-        if (!holdId) {
-            message.textContent =  "No active hold found. Please return to booking.";
-            return;
-        }
-
+        // Keep obvious validation failures in-page so the checkout API is only called with usable data.
+        if (!bookingData?.holdId) { message.textContent = "Your booking hold is missing. Return to seat selection and try again."; return; }
         if (name === "") { message.textContent = "Enter cardholder name."; return; }
         if (!/^\d{16}$/.test(number)) { message.textContent = "Card number must be 16 digits."; return; }
         if (!/^\d{3,4}$/.test(cvv)) { message.textContent = "Invalid CVV."; return; }
         if (month < 1 || month > 12) { message.textContent = "Invalid expiry month."; return; }
         if (year < 2026) { message.textContent = "Card expired."; return; }
         if (address === "") { message.textContent = "Enter billing address."; return; }
+        if (isGuestBooking && !isValidEmail(guestEmail)) {
+            message.textContent = "A valid guest confirmation email is required. Return to add-ons and update it.";
+            return;
+        }
 
         try {
+            payButton.disabled = true;
+
+            // Final checkout request includes hold IDs, payment details, add-ons, and optional discounts.
             const res = await fetch("/checkout", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    holdId: Number(holdId),
+                    holdId: bookingData.holdId,
+                    returnHoldId: bookingData.returnHoldId ?? null,
                     cardholderName: name,
                     cardNumber: number,
                     expiryMonth: month,
                     expiryYear: year,
                     cvv: cvv,
                     billingAddress: address,
-                    pointsToRedeem: 0
+                    pointsToRedeem: usePointsCheckbox.checked ? Number(pointsInput.value) || 0 : 0,
+                    promoCode: promoCode === "" ? null : promoCode,
+                    cabin: bookingData?.cabin ?? null,
+                    addOns: JSON.stringify(bookingData?.addOns ?? {}),
+                    guestEmail: guestEmail || null,
+                    finalAmountFromFrontEnd: Number(bookingData.totalPrice) || null
                 })
             });
 
-            const result = await res.json();
+            const text = await res.text();
+            let result = null;
 
-            if (result.success) {
-                sessionStorage.setItem("bookingId", result.bookingId);
-                sessionStorage.setItem("paymentId", result.paymentId);
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch {
+                result = null;
+            }
 
-                message.textContent = "Payment successful.  Redirecting...";
+            if (!res.ok || !result?.success) {
+                const errorMessage = result?.message ?? text ?? "Payment failed. Try again.";
 
-                window.setTimeout(() => {
-                    window.location.href = "/confirmation.html";
-                }, 800);
+                if (promoCode) {
+                    promoMessage.textContent = errorMessage;
+
+                    // Clear invalid/rejected promo state so the shown total goes back to normal
+                    appliedPromoCode = null;
+                    discountedTotal = null;
+                    promoCodeInput.value = "";
+                    updateDisplayedTotalWithPromo();
+                } else {
+                    message.textContent = errorMessage;
+                }
+
+                return;
 
             } else {
-                message.textContent = result.message;
+                sessionStorage.setItem("latestCheckoutResponse", JSON.stringify(result));
 
+// save passengers to DB
+                const draft = JSON.parse(sessionStorage.getItem("bookingDraft") || "{}");
+                // Passenger records are attached after checkout because booking IDs are created by the payment API.
+                await fetch("/api/passengers", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        bookingId: result.bookingId,
+                        passengers: draft.passengers
+                    })
+                });
+
+                if (result.returnBookingId) {
+                    await fetch("/api/passengers", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            bookingId: result.returnBookingId,
+                            passengers: draft.passengers
+                        })
+                    });
+                }
+
+                window.location.href = "confirmation";
             }
         } catch {
             message.textContent = "Payment failed. Try again.";
+        } finally {
+            payButton.disabled = false;
         }
     });
 </script>
+<div class="footer-divider"></div>
+<!-- Shared footer for checkout and confirmation pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
 
 </body>
 </html>

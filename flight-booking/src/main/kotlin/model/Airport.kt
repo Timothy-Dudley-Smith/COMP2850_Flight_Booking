@@ -8,10 +8,10 @@ data class Airport(
     val code: String,
     val name: String,
     val city: String,
-    val country: String
+    val country: String,
 )
 
-object Airports: Table() {
+object Airports : Table() {
     val code = varchar("code", 3)
     val name = varchar("name", VARCHAR_LENGTH)
     val city = varchar("city", VARCHAR_LENGTH)

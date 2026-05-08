@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <link rel="stylesheet" href="../home/styles/style.css">
+    <!-- Shared currency helper formats the displayed paid amount in the selected UI currency. -->
+    <script src="/shared/currency.js"></script>
+
+</head>
+<body>
+
+<!-- Shared customer header for the post-checkout confirmation page. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <select id="currency-select" onchange="setSelectedCurrency(this.value); location.reload();">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="AUD">A$ AUD</option>
+                <option value="JPY">¥ JPY</option>
+            </select>
+            <!-- Restore the selected currency before confirmation totals are rendered. -->
+            <script>document.getElementById("currency-select").value = getSelectedCurrency();</script>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- Static heading shown after a successful checkout redirect. -->
+<section class="flights-overview-header">
+    <div class="flights-overview">
+        <h1>Booking Confirmed</h1>
+    </div>
+</section>
+
+<!-- Confirmation card is populated from stored checkout and booking data after payment succeeds. -->
+<div class="booking-confirmation">
+    <div class="booking_page_1">
+        <!-- Populated entirely by the confirmation script below. -->
+        <p id="greeting"></p>
+        <p id="booking-id-line"></p>
+        <p id="email-line"></p>
+        <p id="final-amount-line"></p>
+        <div id="return-leg-confirmation" style="display: none; margin: 16px 0;">
+            <p id="return-booking-id-line"></p>
+            <p id="return-flight-line"></p>
+            <p id="return-date-line"></p>
+            <p id="return-seats-line"></p>
+        </div>
+        <p id="points-used-line"></p>
+        <p id="points-earned-line"></p>
+        <p id="updated-points-line"></p>
+        <!-- return home -->
+        <a href="/" class="continue-btn">Return to home</a>
+    </div>
+</div>
+
+<script>
+    /**
+     * Renders the final confirmation view after checkout redirects here.
+     *
+     * The page rebuilds its display from the stored checkout response plus the
+     * last booking draft and hold data so both payment and trip details are available.
+     */
+    let checkout = null;
+
+    /**
+     * Safely parses JSON stored in sessionStorage and falls back to null when unavailable.
+     */
+    function parseStoredJson(rawValue) {
+        if (!rawValue) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(rawValue);
+        } catch {
+            return null;
+        }
+    }
+
+    checkout = parseStoredJson(sessionStorage.getItem("latestCheckoutResponse"));
+    const bookingDraft = parseStoredJson(sessionStorage.getItem("bookingDraft"));
+    const holdData = parseStoredJson(sessionStorage.getItem("holdData"));
+    // Merge the sources so confirmation can still render if some details only exist in one payload.
+    const confirmationData = {
+        ...(bookingDraft ?? {}),
+        ...(holdData ?? {}),
+        ...(checkout ?? {})
+    };
+
+    const firstName = sessionStorage.getItem("firstName") ?? "there";
+    const email = sessionStorage.getItem("userEmail") ?? null;
+    const bookingId = checkout?.bookingId ?? null;
+    const role = sessionStorage.getItem("role");
+    const isLoggedIn = !!sessionStorage.getItem("sessionId");
+    const returnLegConfirmation = document.getElementById("return-leg-confirmation");
+    const returnFlightLine = document.getElementById("return-flight-line");
+    const returnDateLine = document.getElementById("return-date-line");
+    const returnSeatsLine = document.getElementById("return-seats-line");
+    const returnBookingIdLine = document.getElementById("return-booking-id-line");
+
+    /**
+     * Formats a numeric confirmation amount using the shared currency helper.
+     */
+    function formatCurrency(amount) {
+        if (typeof amount !== "number" || !Number.isFinite(amount)) {
+            return "";
+        }
+        return fmt(amount);
+    }
+
+    /**
+     * Formats stored travel dates for the confirmation summary.
+     */
+    function formatDisplayDate(date) {
+        if (!date) {
+            return "From today onwards";
+        }
+
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) {
+            return "From today onwards";
+        }
+
+        return parsedDate.toLocaleDateString("en-GB");
+    }
+
+    /**
+     * Reconstructs the return-leg route summary from the stored booking data when available.
+     */
+    function getReturnRouteSummary(data) {
+        const from = data?.returnFrom ?? data?.to ?? "";
+        const to = data?.returnTo ?? data?.from ?? "";
+
+        if (!from || !to) {
+            return data?.returnFlightId ?? "Not available";
+        }
+
+        return `${from} → ${to}`;
+    }
+
+    /**
+     * Formats the return-leg seat list if this booking contains a second leg.
+     */
+    function getReturnSeatSummary(data) {
+        const seatNumbers = Array.isArray(data?.returnSeatNumbers) ? data.returnSeatNumbers : [];
+        return seatNumbers.length > 0 ? seatNumbers.join(", ") : "Not selected yet";
+    }
+
+    // Core confirmation lines render first so the booking outcome is immediately visible.
+    document.getElementById("greeting").textContent =
+        `Hello ${firstName}, your booking is confirmed!`;
+
+    document.getElementById("booking-id-line").textContent =
+        bookingId ? `Your booking ID is: ${bookingId}` : "Booking ID not available.";
+
+    document.getElementById("email-line").textContent =
+        email ? `We've sent a booking confirmation to ${email}` : "";
+
+    const finalAmountLine = document.getElementById("final-amount-line");
+    const pointsUsedLine = document.getElementById("points-used-line");
+    const pointsEarnedLine = document.getElementById("points-earned-line");
+    const updatedPointsLine = document.getElementById("updated-points-line");
+
+    if (checkout?.finalAmountPaid != null) {
+        finalAmountLine.textContent = `Final amount paid: ${formatCurrency(checkout.finalAmountPaid)}`;
+    } else {
+        finalAmountLine.textContent = "";
+    }
+
+    // Return-leg details are only shown when checkout produced a linked return booking.
+    if (confirmationData?.returnFlightId || checkout?.returnBookingId) {
+        returnLegConfirmation.style.display = "block";
+
+        returnBookingIdLine.textContent = checkout?.returnBookingId
+            ? `Return booking ID: ${checkout.returnBookingId}`
+            : "";
+
+        returnFlightLine.textContent = `Return flight: ${getReturnRouteSummary(confirmationData)}`;
+        returnDateLine.textContent = `Return date: ${formatDisplayDate(confirmationData?.returnDate)}`;
+        returnSeatsLine.textContent = `Return seats: ${getReturnSeatSummary(confirmationData)}`;
+    } else {
+        returnLegConfirmation.style.display = "none";
+    }
+
+    // Loyalty totals are only meaningful for signed-in bookings, so guest confirmations hide them.
+    if (isLoggedIn) {
+        pointsUsedLine.textContent =
+            checkout?.pointsUsed != null ? `Points used: ${checkout.pointsUsed}` : "";
+
+        pointsEarnedLine.textContent =
+            checkout?.pointsEarned != null ? `Points earned from this booking: ${checkout.pointsEarned}` : "";
+
+        updatedPointsLine.textContent =
+            checkout?.updatedPointsTotal != null ? `Updated loyalty points total: ${checkout.updatedPointsTotal}` : "";
+    } else {
+        pointsUsedLine.textContent = "";
+        pointsEarnedLine.textContent = "";
+        updatedPointsLine.textContent = "";
+    }
+</script>
+<div class="footer-divider"></div>
+<!-- Shared footer for checkout and confirmation pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+
+</body>
+</html>

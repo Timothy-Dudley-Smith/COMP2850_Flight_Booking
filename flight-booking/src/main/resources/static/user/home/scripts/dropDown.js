@@ -1,3 +1,9 @@
+/**
+ * Enhances the home-page flight search with airport autocomplete.
+ *
+ * Users type friendly airport labels into visible fields, while this script
+ * stores the resolved airport codes in hidden inputs before the form submits.
+ */
 (() => {
     "use strict";
 
@@ -9,6 +15,9 @@
     const normalize = (value) => (value || "").trim().toUpperCase();
     const labelFor = (a) => `${a.city}, ${a.country} (${a.code})`;
 
+    /**
+     * Loads the airport list once so matching can happen client-side as the user types.
+     */
     async function loadAirports() {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`Failed to load airports: ${response.status}`);
@@ -34,6 +43,9 @@
             .slice(0, MAX_OPTIONS);
     }
 
+    /**
+     * Resolves either a typed airport code or a selected display label back to the API-safe code.
+     */
     function resolveCode(inputValue) {
         const typed = normalize(inputValue);
         if (!typed) return "";
@@ -57,6 +69,9 @@
         });
     }
 
+    /**
+     * Pairs one visible text input with a hidden code input and a datalist for suggestions.
+     */
     function wireAirportField(visibleInput, hiddenName, datalistId) {
         const hiddenInput = document.createElement("input");
         hiddenInput.type = "hidden";
@@ -87,6 +102,9 @@
         return { visibleInput, hiddenInput };
     }
 
+    /**
+     * Prevents submission unless each airport field resolves to a known airport code.
+     */
     function enforceValidSelection(form, ...fields) {
         form.addEventListener("submit", (event) => {
             let valid = true;
@@ -111,6 +129,9 @@
         });
     }
 
+    /**
+     * Attaches autocomplete behaviour to the shared home-page search form once the DOM is ready.
+     */
     async function init() {
         const form = document.querySelector("form.flight-bar");
         const fromInput = document.querySelector('input[name="from"]');

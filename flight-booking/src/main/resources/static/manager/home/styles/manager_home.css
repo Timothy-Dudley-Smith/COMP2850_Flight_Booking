@@ -1,3 +1,4 @@
+/* Manager home styles cover the shared console header plus the landing dashboard sections. */
 body {
     margin: 0;
     font-family: "Inter", system-ui, Helvetica, sans-serif;
@@ -82,6 +83,7 @@ main {
     padding-bottom: 56px;
 }
 
+/* The hero combines a photo banner, dark overlay, and floating summary card for the dashboard intro. */
 .hero {
     position: relative;
     margin-bottom: 56px;
@@ -171,13 +173,20 @@ main {
     color: #5b5b5b;
 }
 
+/* Section wrappers keep quick actions and overview panels aligned to one shared content width. */
 .quick-actions,
 .overview {
     width: min(1080px, calc(100% - 32px));
     margin: 0 auto;
 }
 
-.action-grid,
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    padding: 0 16px;
+}
+
 .overview-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -185,6 +194,7 @@ main {
     padding: 0 16px;
 }
 
+/* Action and overview cards share one visual system so buttons and informational panels feel related. */
 .action-card,
 .overview-card {
     background: #ffffff;
@@ -242,6 +252,7 @@ main {
     margin-top: 40px;
 }
 
+/* Responsive rules collapse the wide console layout into stacked sections on smaller screens. */
 @media (max-width: 1000px) {
     .center-nav {
         position: static;
@@ -295,4 +306,81 @@ main {
     .overview-grid {
         padding: 0;
     }
+
+
+}
+
+.manager-button,
+.manager-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 18px;
+    background: #0b6f9e;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.manager-button:hover,
+.manager-btn:hover {
+    background: #09587d;
+    transform: translateY(-1px);
+}
+
+.manager-button:disabled,
+.manager-btn:disabled {
+    background: #9aa8b7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* for the edit bookings page so  table is scaled  */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+.manager-form-card {
+    max-width: 700px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.manager-form-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.manager-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #d6dce5;
+    border-radius: 10px;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.manager-textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+#sent-email-list {
+    width: 100%;
+    box-sizing: border-box;
 }

@@ -1,6 +1,5 @@
 package com.flightsystem.model
 
-import com.flightsystem.model.Bookings.bookingId
 import org.jetbrains.exposed.sql.Table
 
 data class Flight(
@@ -13,7 +12,7 @@ data class Flight(
     val length: Double,
     val seats: List<Seat>,
     val layovers: List<Layover> = emptyList(),
-    val price: Double
+    val price: Double,
 )
 
 object Flights : Table() {

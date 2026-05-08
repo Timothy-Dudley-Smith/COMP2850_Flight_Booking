@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
     <link rel="stylesheet" href="/log_in/styles/style.css">
+    <!-- login.js owns the email sign-in and OTP verification flow for this page. -->
     <script src="/log_in/scripts/login.js" defer></script>
 </head>
 <body>
 
+<!-- Shared customer header for auth pages. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
 
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
 
@@ -33,21 +34,24 @@
     </nav>
 </header>
 
+<!-- Main auth container for both login methods and the OTP follow-up step. -->
 <main class="login-page">
 
     <div class="login-card">
 
+        <!-- Page intro for the standard account sign-in flow. -->
         <div class="login-header">
             <h1>Welcome back</h1>
             <p>Sign in to manage your bookings and miles</p>
         </div>
 
+        <!-- Inline tab switching swaps between account login and booking lookup without leaving the page. -->
         <div class="login-tabs">
             <button class="login-tab active" type="button" onclick="switchTab('email', this)">Email</button>
             <button class="login-tab" type="button" onclick="switchTab('booking', this)">Booking Reference</button>
         </div>
 
-        <!-- Email Login -->
+        <!-- Primary login form. login.js validates required fields, submits credentials, and reveals the OTP step when required. -->
         <form class="login-form" id="email-form">
             <div class="form-group">
                 <label for="email">Email address</label>
@@ -71,10 +75,10 @@
 
             <p id="login-message" class="form-message" role="status" aria-live="polite"></p>
 
-            <button type="submit" class="login-btn">Sign In</button>
+            <button type="submit" class="login-btn">Log In</button>
         </form>
 
-        <!-- Booking Reference Login -->
+        <!-- Alternate lookup flow for customers who only need to find an existing booking reference. -->
         <form class="login-form hidden" id="booking-form" onsubmit="return false;">
             <div class="form-group">
                 <label for="booking-ref">Booking reference</label>
@@ -84,8 +88,21 @@
                 <label for="last-name">Last name</label>
                 <input type="text" id="last-name" placeholder="As shown on your passport">
             </div>
-            <button type="submit" class="login-btn" onclick="window.location.href='/home/loyaltypage.html'">Find Booking</button>
+            <p id="booking-message" class="form-message" style="color:red;"></p>
+            <button type="submit" class="login-btn" onclick="findBooking()">Find Booking</button>
+
+
         </form>
+        <!-- OTP panel stays hidden until the email login API reports that a second factor is required. -->
+        <div class="login-form hidden" id="otp-section">
+            <p style="margin-bottom:16px;color:#000000;">A 6-digit code has been sent to your email address.</p>
+            <div class="form-group">
+                <label for="otp-input">One-time code</label>
+                <input type="text" id="otp-input" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+            </div>
+            <p id="otp-message" class="form-message" role="status" aria-live="polite"></p>
+            <button type="button" class="login-btn" id="otp-submit-btn">Verify Code</button>
+        </div>
 
         <div class="divider"><span>or</span></div>
 
@@ -98,6 +115,9 @@
 </main>
 
 <script>
+    /**
+     * Switches between the email-login form and the booking-reference lookup form.
+     */
     function switchTab(tab, el) {
         document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
@@ -106,6 +126,9 @@
         document.getElementById(tab + '-form').classList.remove('hidden');
     }
 
+    /**
+     * Toggles the password field between masked and plain-text display for the current login form.
+     */
     function togglePassword() {
         const input = document.getElementById('password');
         const btn = document.querySelector('.show-pass');
@@ -117,7 +140,62 @@
             btn.textContent = 'Show';
         }
     }
+
+    /**
+     * Validates the booking-lookup fields, calls the lookup endpoint, and redirects to the
+     * booking details page only when the server confirms a matching booking exists.
+     */
+    async function findBooking() {
+
+        // get what the user typed in
+        const bookingId = document.getElementById('booking-ref').value.trim();
+        const lastName = document.getElementById('last-name').value.trim();
+
+        // get the message box so we can show errors
+        const messageBox = document.getElementById('booking-message');
+
+        // check both fields have something in them
+        if (bookingId == '' || lastName == '') {
+            messageBox.textContent = 'Please enter both fields.';
+            return;
+        }
+
+        // make the url safe to use in a link
+        const safeBookingId = encodeURIComponent(bookingId);
+        const safeLastName = encodeURIComponent(lastName);
+
+        // call the server to check if the booking exists
+        const response = await fetch(`/api/bookings/lookup?bookingId=${safeBookingId}&lastName=${safeLastName}`);
+
+        // if booking was found, go to the booking page
+        if (response.ok) {
+            window.location.href = `/view-booking?bookingId=${safeBookingId}&lastName=${safeLastName}`;
+        } else {
+            // otherwise show an error message
+            messageBox.textContent = 'No booking found. Check your details.';
+        }
+    }
 </script>
+<div class="footer-divider"></div>
+<!-- Shared footer for customer-facing authentication pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
 
 </body>
 </html>

@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="/log_in/styles/style.css">
+    <!-- register.js handles client-side validation, registration submission, and feedback messaging. -->
     <script src="/log_in/scripts/register.js" defer></script>
 </head>
 <body>
 
+<!-- Shared customer header for auth pages. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
 
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
 
@@ -33,15 +34,18 @@
     </nav>
 </header>
 
+<!-- Registration layout reuses the same auth card styling as the login page. -->
 <main class="login-page">
 
     <div class="login-card">
 
+        <!-- Intro copy for the account creation flow. -->
         <div class="login-header">
             <h1>Create an account</h1>
             <p>Sign up to manage your bookings and miles</p>
         </div>
 
+        <!-- Main registration form; register.js builds the payload, validates it, and posts it to the auth API. -->
         <form class="login-form" id="register-form" novalidate>
             <div class="form-group">
                 <label for="first-name">First name</label>
@@ -75,7 +79,7 @@
         <div class="divider"><span>or</span></div>
 
         <div class="register-prompt">
-            Already have an account? <a href="/log_in">Sign in</a>
+            Already have an account? <a href="/log_in">Log In</a>
         </div>
 
     </div>
@@ -83,6 +87,9 @@
 </main>
 
 <script>
+    /**
+     * Toggles the registration password field between masked and plain-text display.
+     */
     function togglePassword() {
         const input = document.getElementById('password');
         const btn = document.querySelector('.show-pass');
@@ -95,6 +102,26 @@
         }
     }
 </script>
+<div class="footer-divider"></div>
+<!-- Shared footer for customer-facing authentication pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Booking</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+<!-- Shared customer header for the booking-reference lookup result page. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
+            </div>
+        </div>
+        <div class="center-nav">
+            <a href="/">Home</a>
+            <a href="/support">Help</a>
+            <a href="/manage">Manage</a>
+
+        </div>
+        <div class="right-nav">
+            <span class="lang">United Kingdom - EN</span>
+            <a href="/log_in">Log In</a>
+        </div>
+    </nav>
+</header>
+
+<!-- Static heading for the retrieved booking details. -->
+<section class="flights-overview-header">
+    <div class="flights-overview">
+        <h1>Your Booking</h1>
+        <p>Booking reference details</p>
+    </div>
+</section>
+
+<!-- The lookup result is rendered into this container after the booking API responds. -->
+<div id="booking-content"></div>
+<!-- Any lookup or rendering failure is shown here instead of leaving the page blank. -->
+<p id="booking-error" style="max-width:700px;margin:24px auto;padding:0 20px;color:#c0392b;font-weight:600;"></p>
+
+<script>
+    /**
+     * Loads a booking by reference and renders the returned data into read-only booking cards.
+     *
+     * This page is driven entirely by query parameters so the booking-reference
+     * login flow can redirect here directly after a successful lookup.
+     */
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get('bookingId');
+    const lastName = params.get('lastName');
+
+    /**
+     * Escapes API-provided text before it is inserted into HTML templates.
+     */
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll("\"", "&quot;")
+            .replaceAll("'", "&#39;");
+    }
+
+    fetch(`/api/bookings/lookup?bookingId=${encodeURIComponent(bookingId)}&lastName=${encodeURIComponent(lastName)}`)
+        .then(r => r.json())
+        .then(data => {
+            const container = document.getElementById('booking-content');
+            const outboundSeats = Array.isArray(data.seats) ? data.seats : [];
+            const returnSeats = Array.isArray(data.returnSeatNumbers)
+                ? data.returnSeatNumbers
+                : (Array.isArray(data.returnSeats) ? data.returnSeats : []);
+
+            // Primary booking card summarises the outbound leg, cabin, and selected add-ons.
+            container.insertAdjacentHTML('beforeend', `
+                <div class="booking_page_1">
+                    <h2>Booking Details</h2>
+                    <p class="age-label">Your confirmed booking information</p>
+
+                    <div class="user_input_box">
+                        <label for="booking-id">Booking ID</label>
+                        <input type="text" id="booking-id" value="${data.bookingId}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label for="flight-id">Flight</label>
+                        <input type="text" id="flight-id" value="${escapeHtml(data.flightId)}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label for="seat-numbers">Seat(s)</label>
+                        <input type="text" id="seat-numbers" value="${escapeHtml(outboundSeats.join(', '))}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label for="cabin-class">Cabin Class</label>
+                        <input type="text" id="cabin-class" value="${data.cabin ?? 'N/A'}" disabled>
+                    </div>
+
+                    <div class="user_input_box">
+                        <label for="add-ons">Add-ons</label>
+                        <input type="text" id="add-ons" value="${formatAddOns(data.addOns)}" disabled>
+                    </div>
+
+                </div>
+
+
+            `);
+
+            if (data.returnFlightId) {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="booking_page_1" id="return-flight-section">
+                        <h2>Return Flight</h2>
+                        <p class="age-label">Return journey details</p>
+
+                        <div class="user_input_box">
+                            <label for="return-flight">Return flight</label>
+                            <input type="text" id="return-flight" value="${escapeHtml(data.returnFlightId)}" disabled>
+                        </div>
+
+                        <div class="user_input_box">
+                            <label for="return-seats">Return seat(s)</label>
+                            <input type="text" id="return-seats" value="${escapeHtml(returnSeats.length > 0 ? returnSeats.join(', ') : 'Not available')}" disabled>
+                        </div>
+                    </div>
+                `);
+            }
+
+            /**
+             * Formats stored add-ons for display whether they arrive as JSON text or plain text.
+             */
+            function formatAddOns(raw) {
+                if (!raw) return 'None';
+                try {
+                    const obj = JSON.parse(raw);
+                    const items = Object.values(obj).filter(Boolean);
+                    return items.length ? items.join(', ') : 'None';
+                } catch { return raw; }
+            }
+
+
+            // Each passenger is rendered as a separate read-only card beneath the booking summary.
+            data.passengers.forEach((name, i) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="booking_page_1">
+                        <h2>Passenger ${i + 1}</h2>
+                        <div class="user_input_box">
+                            <label for="passenger-${i}">Full name</label>
+                            <input type="text" id="passenger-${i}" value="${escapeHtml(name)}" disabled>
+                        </div>
+                    </div>
+                `);
+            });
+        })
+        .catch(() => {
+            // Covers failed lookups, malformed responses, and rendering-time errors.
+            document.getElementById('booking-error').textContent = 'Could not load booking details.';
+        });
+</script>
+<div class="footer-divider"></div>
+<!-- Shared footer for customer-facing booking and lookup pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+
+</body>
+</html>
+

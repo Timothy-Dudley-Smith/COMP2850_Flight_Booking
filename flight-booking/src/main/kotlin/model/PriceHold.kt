@@ -6,15 +6,16 @@ data class PriceHold(
     val holdId: Int,
     val userId: Int,
     val flightId: String,
+    val returnFlightId: String? = null,
     val expiryTime: String,
-    val totalPrice: Double
+    val totalPrice: Double,
 )
 
 // join model links a hold to a selected seat
 data class PriceHoldSeat(
     val holdId: Int,
     val flightId: String,
-    val seatNumber: String
+    val seatNumber: String,
 )
 
 // main DB table for temp price holds
@@ -23,10 +24,10 @@ object PriceHolds : Table() {
     val holdId = integer("holdId").autoIncrement()
     val userId = reference("userId", Users.userId)
     val flightId = reference("flightId", Flights.flightId)
+    val returnFlightId = optReference("returnFlightId", Flights.flightId)
     val expiryTime = varchar("expiryTime", VARCHAR_LENGTH)
     val totalPrice = double("totalPrice")
     override val primaryKey = PrimaryKey(holdId)
-
 }
 
 // join table stores each seat linked to price hold
@@ -34,18 +35,12 @@ object PriceHoldSeats : Table() {
     val holdId = reference("holdId", PriceHolds.holdId)
     val flightId = reference("flightId", Flights.flightId)
     val seatNumber = varchar("seatNumber", VARCHAR_LENGTH)
-    override val primaryKey = PrimaryKey(flightId, holdId, seatNumber) // prevent duplicate seats for the same hold
-    /*
-    init {
-        foreignKey(flightId, seatNumber, target = Seats.primaryKey)
-        
-    }
-     */
+    override val primaryKey = PrimaryKey(flightId, holdId, seatNumber)
+// prevent duplicate seats for the same hold
 }
-
-
 
 data class PriceHoldDetails(
     val hold: PriceHold,
-    val seats: List<String>
+    val seats: List<String>,
+    val returnSeats: List<String> = emptyList(),
 )

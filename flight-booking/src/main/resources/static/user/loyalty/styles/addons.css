@@ -1,0 +1,98 @@
+/* Guest add-ons overrides keep this page visually aligned with the shared booking flow styles. */
+.guest-addons-hero .eyebrow {
+    margin: 0 0 6px;
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.guest-addons-layout {
+    margin-top: 24px;
+}
+
+/* The guest card uses a dedicated header treatment so it reads differently from member pages. */
+.guest-card-header {
+    background: linear-gradient(135deg, #1a2b4a, #244a78);
+}
+
+/* Guest-only labels call out where member discounts do not apply. */
+.guest-note {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.guest-full-price {
+    margin-left: auto;
+    color: #666;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.handoff-message {
+    min-height: 24px;
+    margin: 12px 16px 0;
+    color: #c0392b;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* Summary prices for included seat and wi-fi stay visually prominent in the sidebar. */
+#sum-seat-price,
+#sum-wifi-price {
+    color: #1a2b4a;
+    font-weight: 600;
+}
+
+/* On smaller screens the summary stacks underneath the options instead of beside them. */
+@media (max-width: 800px) {
+    .guest-addons-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* mobile fixes for extras page when signed in  */
+@media (max-width: 900px) {
+
+    /* wrap grid stacks - cards on top, summary below  */
+    .wrap {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+
+    /* unstick the summary so it sits under the cards  */
+    .sum {
+        position: static;
+    }
+
+    /* perks row goes vertical on mobile  */
+    .perks {
+        grid-template-columns: 1fr;
+    }
+
+    /* perks borders - bottom only when stacked  */
+    .pk {
+        border-right: none;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .pk:last-child {
+        border-bottom: none;
+    }
+
+    /* member card top - allow wrappin if name + points dont fit  */
+    .lt {
+        flex-wrap: wrap;
+    }
+
+    /* points pushed under on small screens  */
+    .pts {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+    }
+}

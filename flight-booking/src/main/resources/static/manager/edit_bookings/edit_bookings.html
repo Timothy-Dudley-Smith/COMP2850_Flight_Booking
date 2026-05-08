@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager – All Bookings</title>
+    <link rel="stylesheet" href="/manager/home/styles/manager_home.css">
+    <link rel="stylesheet" href="/manager/flight_view/styles/flight_view.css">
+</head>
+<body>
+<!-- This list page gives managers a lightweight entry point for finding and opening editable bookings. -->
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html">Home</a>
+            <a href="/manager/flight_view">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html" class="active">Edit Bookings</a>
+            <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
+            <a href="/manager/support/support.html">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Filter Bookings</h2>
+        <!-- Client-side filters narrow the already-loaded booking list by booking id and user id. -->
+        <div style="padding: 16px 18px; display: flex; gap: 16px;">
+            <label for="filter-booking-id" class="sr-only">Filter by Booking ID</label>
+            <input type="number" id="filter-booking-id" placeholder="Booking ID" style="padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: Inter, sans-serif; width: 160px;">
+            <label for="filter-user-id" class="sr-only">Filter by User ID</label>
+            <input type="number" id="filter-user-id" placeholder="User ID" style="padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: Inter, sans-serif; width: 160px;">
+            <button onclick="applyFilter()" style="padding: 9px 24px; background: #132e8e; color: white; border: none; border-radius: 30px; font-size: 13px; font-weight: 500; cursor: pointer;">Filter</button>
+            <button onclick="clearFilter()" style="padding: 9px 24px; background: none; border: 1px solid #ccc; border-radius: 30px; font-size: 13px; cursor: pointer;">Clear</button>
+        </div>
+    </section>
+
+
+    <section aria-labelledby="bookings-heading">
+        <h2 id="bookings-heading">All Bookings</h2>
+        <!-- The table body is rebuilt from the current filtered booking array whenever filters change. -->
+        <table id="upcoming-flights-table">
+            <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User ID</th>
+                <th>Flight ID</th>
+                <th>Seats</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="upcoming-flights-body">
+            <tr><td colspan="5">Loading...</td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    /** Stores the full booking list locally so filters can run without re-requesting the API. */
+    let allBookings = [];
+
+    fetch('/api/manager/bookings')
+        .then(r => r.json())
+        .then(data => {
+            allBookings = data;
+            renderTable(data);
+        });
+
+    /** Re-renders the booking rows from the provided data set and preserves the empty state when needed. */
+    function renderTable(data) {
+        const tbody = document.getElementById('upcoming-flights-body');
+        if (!data.length) {
+            tbody.innerHTML = '<tr><td colspan="5">No bookings found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.map(b => `
+        <tr>
+            <td>${b.booking.bookingId}</td>
+            <td>${b.booking.userId}</td>
+            <td>${b.booking.flightId}</td>
+            <td>${b.seats.join(', ') || 'None'}</td>
+            <td><button class="remove-btn" onclick="editBooking(${b.booking.bookingId})">Edit</button></td>
+        </tr>
+    `).join('');
+    }
+
+    /** Applies the current booking-id and user-id filters against the in-memory booking list. */
+    function applyFilter() {
+        const bookingId = document.getElementById('filter-booking-id').value.trim();
+        const userId = document.getElementById('filter-user-id').value.trim();
+
+        let filtered = allBookings;
+        if (bookingId) filtered = filtered.filter(b => b.booking.bookingId == bookingId);
+        if (userId) filtered = filtered.filter(b => b.booking.userId == userId);
+
+        renderTable(filtered);
+    }
+
+    /** Clears both filter inputs and restores the full booking list to the table. */
+    function clearFilter() {
+        document.getElementById('filter-booking-id').value = '';
+        document.getElementById('filter-user-id').value = '';
+        renderTable(allBookings);
+    }
+
+    /** Opens the detail page for the selected booking using a query-string booking id. */
+    function editBooking(bookingId) {
+        window.location.href = `/manager/edit_bookings/edit_booking_detail.html?bookingId=${bookingId}`;
+    }
+</script>
+</body>
+</html>

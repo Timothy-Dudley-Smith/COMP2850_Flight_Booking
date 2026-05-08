@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/manager/home/styles/manager_home.css">
 </head>
 <body>
+<!-- Shared manager header keeps the primary operations tools one click away. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
@@ -21,6 +22,8 @@
             <a href="/manager/home/manager_home.html" class="active">Home</a>
             <a href="/manager/flight_view">Flight View</a>
             <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
             <a href="/manager/support/support.html">Support</a>
         </div>
 
@@ -32,6 +35,7 @@
 </header>
 
 <main>
+    <!-- The hero acts as the landing summary and is updated with the current date in JavaScript. -->
     <section class="hero">
         <img src="/images/Aeroplane_Banner.jpg" alt="Aircraft on runway" class="hero-image">
         <div class="hero-overlay"></div>
@@ -56,6 +60,7 @@
         </div>
     </section>
 
+    <!-- Quick links send managers straight into the main operational workspaces. -->
     <section class="quick-actions" aria-labelledby="quick-actions-heading">
         <div class="section-heading">
             <h2 id="quick-actions-heading">Quick Actions</h2>
@@ -77,6 +82,20 @@
                 <span class="card-link">Open booking tools</span>
             </a>
 
+            <a class="action-card" href="/manager/analytics">
+                <span class="card-tag">Reports</span>
+                <h3>Analytics</h3>
+                <p>Review reservations, route demand, flight counts, and booking time reports.</p>
+                <span class="card-link">Open analytics dashboard</span>
+            </a>
+
+            <a class="action-card" href="/manager/accounts/accounts.html">
+                <span class="card-tag">Accounts</span>
+                <h3>Manage Accounts</h3>
+                <p>Freeze, restore, delete, and top up customer loyalty points from one place.</p>
+                <span class="card-link">Open account management</span>
+            </a>
+
             <a class="action-card" href="/manager/support/support.html">
                 <span class="card-tag">Support</span>
                 <h3>Support</h3>
@@ -86,6 +105,7 @@
         </div>
     </section>
 
+    <!-- This overview row provides static orientation before managers move into detail screens. -->
     <section class="overview" aria-labelledby="overview-heading">
         <div class="section-heading">
             <h2 id="overview-heading">Shift Overview</h2>
@@ -109,8 +129,129 @@
             </article>
         </div>
     </section>
+
+    <!-- Direct email tools post a manager-authenticated message to a customer and expose sent history. -->
+    <section class="overview" aria-labelledby="direct-email-heading">
+        <div class="section-heading">
+            <h2 id="direct-email-heading">Direct Customer Email</h2>
+            <p>Send a message directly to a customer from the manager dashboard.</p>
+        </div>
+
+        <div class="overview-card manager-form-card">
+            <div class="manager-form-grid">
+                <div>
+                    <label for="manager-email-to"><strong>Customer Email</strong></label>
+                    <input
+                            type="email"
+                            id="manager-email-to"
+                            placeholder="customer@example.com"
+                            class="manager-input"
+                    >
+                </div>
+
+                <div>
+                    <label for="manager-email-subject"><strong>Subject</strong></label>
+                    <input
+                            type="text"
+                            id="manager-email-subject"
+                            placeholder="Message from Astraeus Support"
+                            class="manager-input"
+                    >
+                </div>
+
+                <div>
+                    <label for="manager-email-message"><strong>Message</strong></label>
+                    <textarea
+                            id="manager-email-message"
+                            rows="6"
+                            placeholder="Write your message to the customer here..."
+                            class="manager-input manager-textarea"
+                    ></textarea>
+                </div>
+
+                <div>
+                    <button id="send-manager-email-btn" type="button" class="manager-button">
+                        Send Email
+                    </button>
+                </div>
+
+                <p id="manager-email-status" style="font-weight: 600; margin: 0;"></p>
+                <div style="margin-top: 20px;">
+                    <button id="toggle-email-history-btn" type="button" class="manager-button">
+                        Show Email History
+                    </button>
+
+                    <label for="email-history-search" class="sr-only">Search history by customer email</label>
+
+                    <input
+                            type="text"
+                            id="email-history-search"
+                            placeholder="Search by customer email"
+                            style="display: none; width: 100%; padding: 12px; margin-top: 12px;"
+                    >
+
+                    <div id="sent-email-list" style="display: none; margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo creation tools let managers seed checkout discount codes from the dashboard. -->
+    <section class="overview" aria-labelledby="promo-management-heading">
+        <div class="section-heading">
+            <h2 id="promo-management-heading">Promo Code Management</h2>
+            <p>Create new promotional codes for checkout discounts.</p>
+        </div>
+
+        <div class="overview-card manager-form-card">
+            <div class="manager-form-grid">
+                <div>
+                    <label for="promo-create-code"><strong>Promo Code</strong></label>
+                    <input
+                            type="text"
+                            id="promo-create-code"
+                            placeholder="e.g. SPRING25"
+                            class="manager-input"
+                    >
+                </div>
+
+                <div>
+                    <label for="promo-create-type"><strong>Discount Type</strong></label>
+                    <select
+                            id="promo-create-type"
+                            class="manager-input"
+                    >
+                        <option value="PERCENTAGE">Percentage</option>
+                        <option value="FIXED">Fixed Amount</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="promo-create-value"><strong>Discount Value</strong></label>
+                    <input
+                            type="number"
+                            id="promo-create-value"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="Enter discount value"
+                            class="manager-input"
+                    >
+                </div>
+
+                <div>
+                    <button id="create-promo-btn" type="button" class="manager-button">
+                        Create Promo Code
+                    </button>
+                </div>
+
+                <p id="promo-create-status" style="font-weight: 600; margin: 0;"></p>
+            </div>
+        </div>
+    </section>
+
 </main>
 
+<!-- Manager dashboard logic validates the session, fills the date label, and wires email and promo actions. -->
 <script src="/manager/home/scripts/manager_home.js"></script>
 </body>
 </html>

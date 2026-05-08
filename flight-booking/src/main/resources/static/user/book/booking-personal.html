@@ -9,29 +9,32 @@
 </head>
 <body>
 
+<!-- Shared customer header for the passenger-details step. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
 
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
 
         <div class="right-nav">
             <span class="lang">United Kingdom - EN</span>
-            <a href="/log_in">Log In</a>
+            <span id="welcome-message"></span>
+            <a href="/log_in" id="login-link">Log In</a>
+            <button id="logout-button" type="button" style="display: none;">Log Out</button>
         </div>
     </nav>
 </header>
 
+<!-- Route summary for the selected outbound leg. -->
 <section class="flights-overview-header">
 
     <div class="flights-overview">
@@ -42,10 +45,19 @@
 
 </section>
 
+<!-- Passenger forms are generated dynamically so the page can match the searched passenger count. -->
 <div id="passenger-forms"></div>
+<!-- Inline validation messages for missing passenger details are shown here before continuing to seat selection. -->
 <p id="booking-message" style="max-width: 960px; margin: 16px auto 0; padding: 0 20px; color: #c0392b; font-weight: 600;"></p>
 
 <script>
+    /**
+     * Captures passenger details for the selected booking before seat selection begins.
+     *
+     * The page reads the chosen flight and passenger count from the query string,
+     * builds one form card per passenger, validates the completed details, and
+     * saves the booking draft into sessionStorage for later steps.
+     */
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from");
     const to = params.get("to");
@@ -55,8 +67,52 @@
     const price = params.get("price") ?? "0";
     const flightId = params.get("flightId") ?? "";
 
+    const returnFlightId = params.get("returnFlightId") ?? "";
+    const returnDate = params.get("returnDate") ?? "";
+    const returnCabin = params.get("returnCabin") ?? "";
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const firstName = sessionStorage.getItem("firstName");
+
+    const welcomeMessage = document.getElementById("welcome-message");
+    const loginLink = document.getElementById("login-link");
+    const logoutButton = document.getElementById("logout-button");
+
+    if (sessionId && firstName) {
+        if (welcomeMessage) {
+            welcomeMessage.textContent = `Welcome, ${firstName}`;
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "none";
+        }
+
+        if (logoutButton) {
+            logoutButton.style.display = "inline-block";
+        }
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            const currentSessionId = sessionStorage.getItem("sessionId");
+
+            try {
+                if (currentSessionId) {
+                    await fetch(`/api/auth/logout?sessionId=${encodeURIComponent(currentSessionId)}`, {
+                        method: "POST"
+                    });
+                }
+            } catch (_) {}
+
+            sessionStorage.clear();
+            window.location.href = "/log_in";
+        });
+    }
+
     document.getElementById("route-title").textContent = from + " → " + to;
     //used text header of page telling user which flights are to be shown
+
+
 
     if (date) {
         const d = new Date(date);
@@ -71,6 +127,9 @@
     const container = document.getElementById("passenger-forms");
     const message = document.getElementById("booking-message");
 
+    /**
+     * Reads the signed-in user ID from sessionStorage when this booking belongs to an account holder.
+     */
     function getLoggedInUserId() {
         try {
             const user = JSON.parse(sessionStorage.getItem("user") ?? "null");
@@ -80,6 +139,7 @@
         }
     }
 
+    // Build one repeated passenger-details card for each traveller requested in the search step.
     for (let i = 1; i <= passengers; i++) {
         container.insertAdjacentHTML("beforeend", `
             <div class="booking_page_1">
@@ -87,78 +147,62 @@
                 <p class="age-label">Age 16+</p>
 
                 <div class="user_input_box">
-                    <label>Title</label>
-                    <select>
-                        <option value="" disabled selected>Select title</option>
-                        <!-- option for user to click there title with placholder text -->
-                        <option>Mr</option>
-                        <option>Mrs</option>
-                        <option>Miss</option>
-                        <option>Ms</option>
-                        <option>Dr</option>
+                    <label for="title-${i}">Title</label>
+                    <select id="title-${i}">
+                        <option value="">Select title</option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Ms">Ms</option>
+                        <option value="Dr">Dr</option>
                     </select>
                 </div>
 
-
                 <div class="user_input_box">
-                    <label>First names</label>
+                    <label for="firstname-${i}">First names</label>
                     <small>As shown on document</small>
-                    <input type="text">
+                    <input type="text" id="firstname-${i}">
                 </div>
-                <!-- user input toi enter there first name-->
-
 
                 <div class="user_input_box">
-                    <label>Last name</label>
+                    <label for="lastname-${i}">Last name</label>
                     <small>As shown on document</small>
-                    <input type="text">
+                    <input type="text" id="lastname-${i}">
                 </div>
-                <!-- user input toi enter there last name-->
-
 
                 <div class="user_input_box">
-                    <label>Passport Number</label>
+                    <label for="passport-${i}">Passport Number</label>
                     <small>As shown on document</small>
-                    <input type="text">
+                    <input type="text" id="passport-${i}">
                 </div>
-                <!-- user input toi enter there last name-->
-
 
                 <div class="user_input_box">
-                    <label>Gender</label>
+                    <label for="gender-${i}">Gender</label>
                     <small>As shown on document</small>
-                    <select>
-                        <option value="" disabled selected>Select gender</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                    <select id="gender-${i}">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
                     </select>
                 </div>
-                <!-- option for user to click there gender with placholder text -->
-
 
                 <div class="user_input_box">
-                    <!-- used claud sonnet 4.6 to sort fotmatting only -->
-                    <!-- allows user to enter dob -->
                     <label>Date of birth</label>
                     <div class="dob-row">
-
                         <div class="dob-field">
                             <small>DD</small>
-                            <input type="number" min="1" max="31">
+                            <input type="number" min="1" max="31" aria-label="Day of birth">
                         </div>
-
                         <div class="dob-field">
                             <small>MM</small>
-                            <input type="number" min="1" max="12">
+                            <input type="number" min="1" max="12" aria-label="Month of birth">
                         </div>
-
                         <div class="dob-field">
                             <small>YYYY</small>
-                            <input type="number" min="1900" max="2099">
+                            <input type="number" min="1900" max="2099" aria-label="Year of birth">
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -169,6 +213,10 @@
         <button class="continue-btn" onclick="collectAndContinue()">Continue</button>
     `);
 
+    /**
+     * Validates every passenger card, stores the collected passenger list, and
+     * prepares the booking draft that the seat-selection step extends.
+     */
     function collectAndContinue() {
         const forms = document.querySelectorAll('.booking_page_1');
         const passengerData = [];
@@ -208,6 +256,7 @@
 
         message.textContent = "";
 
+        // Passenger details are stored separately and also embedded into the booking draft for later steps.
         sessionStorage.setItem('passengerData', JSON.stringify(passengerData));
 
         const bookingDraft = {
@@ -221,13 +270,85 @@
             price,
             passengers: passengerData,
             seatNumbers: [],
-            addOns: {}
+            addOns: {},
+            returnFlightId: returnFlightId || null,
+            returnDate: returnDate || null,
+            returnFrom: to,
+            returnTo: from,
+            returnCabin: returnCabin || cabin,
         };
 
+        // The seat-map step reads this draft back to know which leg, cabin, and passenger count it is handling.
         sessionStorage.setItem("bookingDraft", JSON.stringify(bookingDraft));
-        window.location.href = "/seatmap?flightId=" + encodeURIComponent(flightId);
+        window.location.href =
+            "/seatmap?flightId=" + encodeURIComponent(flightId) +
+            "&returnFlightId=" + encodeURIComponent(returnFlightId);
     }
+
+    const continueBtn = document.querySelector(".continue-btn");
+
+    function isPassengerFormValid() {
+        const forms = document.querySelectorAll(".booking_page_1");
+
+        for (let i = 0; i < forms.length; i++) {
+            const inputs = forms[i].querySelectorAll("input");
+            const selects = forms[i].querySelectorAll("select");
+
+            for (let j = 0; j < inputs.length; j++) {
+                if (inputs[j].value.trim() === "") {
+                    return false;
+                }
+            }
+
+            for (let j = 0; j < selects.length; j++) {
+                if (selects[j].value === "") {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    function updateContinueButton() {
+        if (isPassengerFormValid()) {
+            continueBtn.classList.add("active");
+        } else {
+            continueBtn.classList.remove("active");
+        }
+    }
+
+    document.querySelectorAll(".user_input_box input, .user_input_box select").forEach(field => {
+        field.addEventListener("input", updateContinueButton);
+        field.addEventListener("change", updateContinueButton);
+    });
+
+    updateContinueButton();
+
+
+
+
 </script>
+<div class="footer-divider"></div>
+<!-- Shared footer for customer-facing booking pages. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
 
 </body>
 </html>

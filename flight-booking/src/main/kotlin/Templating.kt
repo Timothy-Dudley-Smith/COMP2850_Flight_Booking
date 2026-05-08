@@ -1,21 +1,21 @@
 package com.example.com
 
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.pebble.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.pebble.Pebble
+import io.ktor.server.pebble.PebbleContent
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import io.pebbletemplates.pebble.loader.ClasspathLoader
-import org.jetbrains.exposed.sql.*
 
 fun Application.configureTemplating() {
     install(Pebble) {
-        loader(ClasspathLoader().apply {
-            prefix = "templates"
-        })
+        loader(
+            ClasspathLoader().apply {
+                prefix = "templates"
+            },
+        )
     }
     routing {
         get("/pebble-index") {
@@ -24,4 +24,8 @@ fun Application.configureTemplating() {
         }
     }
 }
-data class PebbleUser(val id: Int, val name: String)
+
+data class PebbleUser(
+    val id: Int,
+    val name: String,
+)

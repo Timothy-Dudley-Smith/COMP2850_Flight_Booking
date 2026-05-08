@@ -8,22 +8,23 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
+<!-- Shared home scripts: one validates airport inputs, the other updates the nav for signed-in users. -->
 <script src="scripts/dropDown.js" defer></script>
 <script src="scripts/sessionHome.js" defer></script>
 
 <body>
+<!-- Shared customer header; the hidden support link is revealed only for manager sessions. -->
 <header class="header">
     <nav class="top-nav">
         <div class="left-nav">
             <div class="logo">
-                <img src="/images/Logo.png" class="Airline_Logo">
-                <img src="/images/Star_Alliance.jpg" class="Star_Alliance">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Astraeus Airlines">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance member">
             </div>
         </div>
         <div class="center-nav">
             <a href="/">Home</a>
-            <a href="/recommendations">Recommendations</a>
-            <a href="/book">Book</a>
+            <a href="/support">Help</a>
             <a href="/manage">Manage</a>
         </div>
 
@@ -52,40 +53,45 @@
 
 
     <img src="/images/Aeroplane_Banner.jpg"
-    alt="Flights banner"
-    class="Banner-plane">
+         alt="Flights banner"
+         class="Banner-plane">
 
 
     <div class="search-card">
 
-    <form action="/book" method="get" class="flight-bar">
+        <!-- Home search form posts into the booking flow after dropDown.js resolves visible airport labels to airport codes. -->
+        <form action="/book" method="get" class="flight-bar">
 
-        <!-- flight search fields + button -->
+            <label for="from" class="sr-only">Departure airport</label>
+            <input type="text" name="from" id="from" placeholder="From" aria-label="Departure airport">
+            <label for="to" class="sr-only">Destination airport</label>
+            <input type="text" name="to" id="to" placeholder="To" aria-label="Destination airport">
+            <label for="date" class="sr-only">Outbound date</label>
+            <input type="date" name="date" id="date" aria-label="Outbound date">
+            <label for="return-date" class="sr-only">Return date</label>
+            <input type="date" name="returnDate" id="return-date" style="display: none;" aria-label="Return date">
+            <label style="display:flex; align-items:center; gap:4px;">
+                <input type="checkbox" id="return-toggle">
+                Return
+            </label>
 
+            <label for="passengers" class="sr-only">Number of passengers</label>
+            <select name="passengers" id="passengers">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5">5 Passengers</option>
+                <option value="6">6 Passengers</option>
+                <option value="7">7 Passengers</option>
+            </select>
 
-        <input type="text" name="from" placeholder="From">
+            <button type="submit" class="search-btn">Search flights</button>
 
-        <input type="text" name="to" placeholder="To">
-
-        <input type="date" name="date">
-
-         <select name="passengers">
-        <option>1 Passenger</option>
-        <option>2 Passengers</option>
-        <option>3 Passenger</option>
-        <option>4 Passengers</option>
-        <option>5 Passenger</option>
-        <option>6 Passengers</option>
-        <option>7 Passengers</option>
-
-         </select>
-        
-        <button type="submit" class="search-btn">Search flights</button>
-
-    </form>
+        </form>
 
     </div>
-    
+
 
     <!-- search box sits on top of banner -->
 
@@ -97,31 +103,32 @@
 <!-- featured destinations section -->
 
 
+<!-- Static recommendation cards link out to supporting travel and policy content pages. -->
 <section class="experience">
     <h2>Featured destinations from United Kingdom</h2>
     <p>Browse our itineraries to discover routes, destinations, and travel options designed to help you plan your next trip</p>
 
     <div class="experience-grid">
 
-        <button class="experience-card">
-            <img src="/images/Experience_placholder.jpg" alt="">
-            <span>Fly the World's Best Business Class</span>
-        </button>
+        <a href="/lounges" class="experience-card">
+            <img src="/images/airline_lounge.jpeg" alt="Explore our lounges">
+            <span>Explore our lounges (JFK &amp; LHR)</span>
+        </a>
 
-        <button class="experience-card">
-            <img src="/images/Experience_placholder.jpg" alt="">
-            <span>Stopover at the Best Middle East Airport</span>
-        </button>
+        <a href="/dubai" class="experience-card">
+            <img src="/images/duabi.jpeg" alt="Explore Dubai">
+            <span>Explore Dubai</span>
+        </a>
 
-        <button class="experience-card">
-            <img src="/images/Experience_placholder.jpg" alt="">
-            <span>Savour a world of exquisite flavors</span>
-        </button>
+        <a href="/refunds" class="experience-card">
+            <img src="/images/policy.png" alt="Cancellation and refund policy">
+            <span>Cancellation &amp; refund policy</span>
+        </a>
 
-        <button class="experience-card">
-            <img src="/images/Experience_placholder.jpg" alt="">
-            <span>8,500+ entertainment choices</span>
-        </button>
+        <a href="/entertainment" class="experience-card">
+            <img src="/images/entertainment.png" alt="Explore in-flight entertainment">
+            <span>Explore in-flight entertainment</span>
+        </a>
 
     </div>
 </section>
@@ -131,10 +138,12 @@
 
 
 
-<a href="Manage_account" class="promo-banner">
-    <img src="/images/Manageaccount.png" alt="Starlink Wi-Fi">
+<a href="/manage" class="promo-banner">
+    <img src="/images/Manageaccount.png" alt="Manage your Astraeus account — view bookings, loyalty points and profile settings">
+
 </a>
 
+<!-- Loyalty marketing section highlights the rewards programme and points users toward account management. -->
 <section class="blue-box">
     <!-- loyalty section with blue background -->
 
@@ -146,23 +155,30 @@
 
         <div class="card-text">
 
-            <h2>Collect 5,000 Welcome Bonus Avios</h2>
+            <h2>Earn Up to 35,000 Points & Unlock Premium Travel Rewards</h2>
 
             <p>
-            When you spend £2,000 in your first three months of Cardmembership
-            with a British Airways American Express® Credit Card.
-            Plus, get 1 Avios for every £1 you spend on purchases,
-            with no annual fee.
+                Earn points every time you travel with Astraeus and enjoy premium benefits across our global partners.
+                Earn 1 point per £1 spent and progress through our membership tiers:
             </p>
 
-            <h3>Representative 29.1% APR variable.</h3>
-
-            <p class="small-text">
-            Eligible new Cardmembers only. Your rates may vary depending on your
-            circumstances. Terms apply. 18+ UK residents, subject to status.
+            <p>
+                - Silver (10,000 pts): 10% partner discounts + early check-in
+            </p>
+            <p>
+                - Gold (20,000 pts): 15% discounts + priority services + bonus points
+            </p>
+            <p>
+                - Platinum (35,000 pts): 20% discounts + upgrades + VIP support
+            </p>
+            <p>
+                Use your points on flights, lounge access, and travel extras worldwide.
             </p>
 
-            <a href="#" class="apply-link">Apply now →</a>
+            <h3>Up to 20% off partners, 5,000 bonus points, and free upgrades at Platinum level.</h3>
+
+
+            <a href="/log_in/register.html" class="apply-link">Apply now →</a>
 
         </div>
 
@@ -175,5 +191,116 @@
 
 </section>
 
+<!-- This inline handler keeps the optional return-date field aligned with the checkbox state. -->
+<script>
+    const toggle = document.getElementById("return-toggle");
+    const returnDate = document.getElementById("return-date");
+
+    toggle.addEventListener("change", function () {
+        returnDate.style.display = this.checked ? "inline-block" : "none";
+        returnDate.required = this.checked;
+
+        if (!this.checked) {
+            returnDate.value = "";
+        }
+    });
+</script>
+
+<!-- Support CTA section gives the landing page a direct route into the ticket submission flow. -->
+<section class="support-banner">
+    <div class="support-container">
+
+        <!-- LEFT SIDE -->
+        <div class="support-text">
+            <h1>We’re here to help, anytime.</h1>
+
+            <p>
+                Submit a support ticket and our team will respond within
+                <strong>24 hours, guaranteed.</strong>
+            </p>
+
+            <div class="support-items">
+                <div class="support-item">
+                    <span aria-hidden="true">⏱</span>
+
+                    <div>
+                        <strong>24-Hour Promise</strong>
+                        <p>All tickets answered within 24 hours</p>
+                    </div>
+                </div>
+
+                <div class="support-item">
+                    <span aria-hidden="true">💬</span>
+                    <div>
+                        <strong>Contact Anytime</strong>
+                        <p>Day or night support</p>
+                    </div>
+                </div>
+
+                <div class="support-item">
+                    <span aria-hidden="true">✔</span>
+                    <div>
+                        <strong>Reliable Support</strong>
+                        <p>Real people, real help</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/support" class="support-btn">Submit a Ticket →</a>
+        </div>
+
+        <!-- RIGHT SIDE (YOUR LOGO) -->
+        <div class="support-logo">
+            <img src="/images/red logo astreus.png" alt="Astraeus Logo">
+        </div>
+
+    </div>
+</section>
+
+<div class="footer-divider"></div>
+<!-- Shared customer footer used across the broader user-facing experience. -->
+<footer>
+    <a href="/manager" class="footer-left">Operations Console</a>
+
+    <div class="footer-center">
+        <div class="footer-logos">
+            <img src="/images/Award_1.png" alt="Skytrax World Airline Award">
+            <img src="/images/Award_2.png" alt="Travel Innovation Award">
+            <img src="/images/Award_3.png" alt="Saftey & Reliability Award">
+        </div>
+        <p class="footer-info">
+            © 2026 Astraeus Airlines · All rights reserved
+        </p>
+        <p class="footer-trust">
+            Trusted worldwide · Secure booking · 24/7 support
+        </p>
+    </div>
+    <div class="footer-right">Astraeus UK</div>
+</footer>
+
+<script>
+    const toggle = document.getElementById("return-toggle");
+    const returnDate = document.getElementById("return-date");
+    const searchCard = document.querySelector(".search-card");
+
+    // Mirror the checkbox state into the hidden return-date input so one-way searches stay clean.
+    toggle.addEventListener("change", function () {
+        returnDate.style.display = this.checked ? "inline-block" : "none";
+        returnDate.required = this.checked;
+
+        if (toggle.checked) {
+            searchCard.classList.add("return-active");
+        } else {
+            searchCard.classList.remove("return-active");
+            returnDate.value = "";
+        }
+    }
+
+    toggle.addEventListener("change", updateReturnSearchLayout);
+    updateReturnSearchLayout();
+</script>
+
+
 </body>
+
 </html>

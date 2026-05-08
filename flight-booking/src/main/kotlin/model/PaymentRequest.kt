@@ -8,5 +8,5 @@ data class PaymentRequest(
     val expiryMonth: Int,
     val expiryYear: Int,
     val cvv: String,
-    val billingAddress: String
+    val billingAddress: String,
 )

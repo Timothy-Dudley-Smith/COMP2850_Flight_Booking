@@ -1,0 +1,471 @@
+/* Manager analytics styles combine the shared console shell with snapshot cards, reports, and chart layout. */
+body {
+    margin: 0;
+    font-family: "Inter", system-ui, Helvetica, sans-serif;
+    background: #f2f2f2;
+    color: #111111;
+}
+
+.header {
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px clamp(15px, 5vw, 40px);
+}
+
+.left-nav {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.Airline_Logo {
+    height: clamp(20px, 8vw, 100px);
+    display: block;
+}
+
+.Star_Alliance {
+    height: clamp(2px, 8vw, 24px);
+    opacity: 0.8;
+}
+
+.center-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(14px, 3vw, 36px);
+    white-space: nowrap;
+}
+
+.right-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(15px, 3vw, 36px);
+    font-size: 14px;
+}
+
+.lang {
+    color: #555555;
+    font-size: clamp(8px, 1.3vw, 16px);
+}
+
+.top-nav a {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: border-color 0.2s ease;
+    text-decoration: none;
+    color: #011111;
+    font-weight: 500;
+    font-size: clamp(12px, 1.3vw, 16px);
+}
+
+.top-nav a:hover,
+.top-nav a.active {
+    border-bottom-color: #00a1de;
+}
+
+main {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 40px 0 64px;
+}
+
+/* The hero gives the analytics area a distinct landing treatment above the denser report content. */
+.analytics-hero {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 34px;
+    padding: clamp(28px, 5vw, 48px);
+    border-radius: 22px;
+    background: linear-gradient(135deg, #10233d 0%, #1b4c6d 55%, #087ca7 100%);
+    color: #ffffff;
+    box-shadow: 0 18px 44px rgba(16, 35, 61, 0.2);
+}
+
+.analytics-hero::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    top: -90px;
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #bcecff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.analytics-hero h1 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 12px;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+}
+
+.analytics-hero p:last-child {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+/* Snapshot and report sections share one vertical rhythm but use different internal layouts. */
+.analytics-snapshot,
+.report-grid {
+    margin-bottom: 34px;
+}
+
+.section-heading {
+    margin: 0 0 18px;
+}
+
+.section-heading h2 {
+    margin: 0 0 8px;
+    color: #10233d;
+    font-size: 26px;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #5b5b5b;
+}
+
+.compact-heading {
+    padding: 20px 20px 0;
+}
+
+/* Snapshot cards highlight key metrics before the user scans the larger tables and chart. */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.analytics-card {
+    grid-column: span 2;
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+    padding: 22px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff 0%, #f5fbff 100%);
+    border: 1px solid #dcebf4;
+    box-shadow: 0 10px 24px rgba(7, 36, 58, 0.08);
+}
+
+.analytics-card::after {
+    content: "";
+    position: absolute;
+    right: -32px;
+    bottom: -42px;
+    width: 110px;
+    height: 110px;
+    border-radius: 999px;
+    background: rgba(0, 161, 222, 0.13);
+}
+
+.analytics-card-wide {
+    grid-column: span 3;
+}
+
+.analytics-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #48606f;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.analytics-card strong {
+    display: block;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 12px;
+    color: #10233d;
+    font-size: clamp(26px, 4vw, 40px);
+    line-height: 1;
+}
+
+.analytics-card p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #53626c;
+    line-height: 1.5;
+}
+
+/* Feedback controls keep transient load/error messaging close to the snapshot cards. */
+.analytics-feedback {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.analytics-message {
+    min-height: 22px;
+    margin: 0;
+    color: #135f91;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.analytics-message.is-error {
+    color: #a12a2a;
+}
+
+.analytics-message.is-success {
+    color: #1c6a45;
+}
+
+.analytics-retry {
+    border: 1px solid #bfd8e8;
+    border-radius: 999px;
+    background: #f3f9fd;
+    color: #135f91;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 14px;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.analytics-retry:hover {
+    background: #e4f3fb;
+    border-color: #00a1de;
+    transform: translateY(-1px);
+}
+
+/* The report grid places tabular reports beside each other and reserves a wider slot for the chart. */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.report-card {
+    overflow: hidden;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.report-card-wide {
+    grid-column: span 2;
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 20px 20px;
+}
+
+.report-toggle {
+    border: 1px solid #bfd8e8;
+    border-radius: 999px;
+    background: #f3f9fd;
+    color: #135f91;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 14px;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.report-toggle:hover {
+    background: #e4f3fb;
+    border-color: #00a1de;
+    transform: translateY(-1px);
+}
+
+/* The hourly chart uses pure CSS/DOM bars so each hour can be rendered from normalized analytics data. */
+.hourly-chart-wrap {
+    padding: 10px 20px 24px;
+}
+
+.hourly-chart {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(28px, 1fr));
+    align-items: end;
+    gap: 8px;
+    min-height: 260px;
+    padding: 18px 14px 12px;
+    overflow-x: auto;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f7fbfe 0%, #eef5fa 100%);
+    border: 1px solid #dcebf4;
+}
+
+.hourly-bar-item {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    align-items: end;
+    min-width: 28px;
+    height: 220px;
+}
+
+.hourly-bar {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 12px;
+    width: 100%;
+    border-radius: 8px 8px 3px 3px;
+    background: linear-gradient(180deg, #00a1de 0%, #135f91 100%);
+    box-shadow: 0 8px 18px rgba(0, 95, 145, 0.22);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hourly-bar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px rgba(0, 95, 145, 0.28);
+}
+
+.hourly-bar-value {
+    position: absolute;
+    top: -22px;
+    color: #10233d;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.hourly-bar-label {
+    display: block;
+    margin-top: 8px;
+    color: #53626c;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.chart-empty-message {
+    margin: 12px 0 0;
+    color: #53626c;
+    font-size: 13px;
+}
+
+/* Shared table styles keep both report tables visually consistent with the rest of the dashboard. */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    font-size: 13px;
+}
+
+thead tr {
+    background: #f7f8fa;
+    border-bottom: 2px solid #e4e4e4;
+}
+
+th,
+td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+th {
+    color: #1a2b4a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+td {
+    color: #333333;
+}
+
+@media (max-width: 1000px) {
+/* Responsive rules stack the report cards and widen the chart columns on narrower screens. */
+    .center-nav {
+        position: static;
+        transform: none;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+
+    .top-nav {
+        flex-wrap: wrap;
+    }
+
+    .Star_Alliance {
+        display: none;
+    }
+
+    .analytics-grid,
+    .report-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-card,
+    .analytics-card-wide,
+    .report-card-wide {
+        grid-column: span 1;
+    }
+
+    .hourly-chart {
+        grid-template-columns: repeat(24, 32px);
+    }
+}
+
+@media (max-width: 700px) {
+    main {
+        width: calc(100% - 28px);
+        padding-top: 24px;
+    }
+
+    .analytics-hero {
+        border-radius: 16px;
+    }
+
+    .analytics-feedback {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hourly-chart {
+        min-height: 220px;
+    }
+
+    .hourly-bar-item {
+        height: 180px;
+    }
+}

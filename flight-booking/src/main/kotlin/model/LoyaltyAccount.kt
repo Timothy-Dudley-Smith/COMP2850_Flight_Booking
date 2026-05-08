@@ -1,11 +1,13 @@
 package com.flightsystem.model
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Table
 
-// one loyalty account per user with a current points balance 
+// one loyalty account per user with a current points balance
+@Serializable
 data class LoyaltyAccount(
     val userId: Int,
-    val loyaltyPoints: Int
+    val loyaltyPoints: Int,
 )
 
 // store the account owner and current loyalty points balance
@@ -16,5 +18,3 @@ object LoyaltyAccounts : Table() {
     // each user can only have 1 loyalty account
     override val primaryKey = PrimaryKey(userId)
 }
-
-

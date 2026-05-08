@@ -1,3 +1,4 @@
+/* Shared authentication stylesheet for the login and registration pages. */
 body {
     margin: 0;
     font-family: 'Inter', system-ui, Helvetica, sans-serif;
@@ -130,7 +131,7 @@ body {
 
 
 .lang{
-    color: #555;
+    color: #000000;
     font-size: clamp(8px, 1.3vw, 16px);
 }
 /* Language text col */
@@ -157,6 +158,85 @@ body {
 }
 
 /* for links insidee navbar */
+
+.footer-divider {
+    height: 20px;
+    background: white;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+
+/* main footer */
+footer {
+    background: white;
+    border-top: 1px solid #ddd;
+    padding: 20px clamp(15px, 5vw, 40px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* right text */
+.footer-right {
+    color: #000000;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.footer-left {
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}
+
+.footer-left:hover {
+    color: #00a1de;
+}
+
+/* center logos */
+.footer-logos {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* award images */
+.footer-logos img {
+    height: 50px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+/* subtle hover effect */
+.footer-logos img:hover {
+    transform: translateY(-3px);
+}
+
+.footer-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-info,
+.footer-trust,
+.footer-location,
+.footer-tagline {
+    font-size: 12px;
+    color: #000000;
+    margin: 0;
+    text-align: center;
+}
+
+/* make tagline slightly stronger */
+.footer-tagline {
+    color: #000000;
+    font-weight: 500;
+}
+
+
 /* USED GPT 5.3 FOR ASSISTANCE WITH THE HOVER EFFECT*/
 
 
@@ -193,11 +273,12 @@ body {
 }
 
 .login-header p {
-    color: #888;
+    color: #000000;
     font-size: 13px;
     margin: 0 0 24px;
 }
 
+/* Tabs are only used on the login page to swap between account login and booking lookup in place. */
 /* ----------------------------- */
 /* TABS */
 /* ----------------------------- */
@@ -214,7 +295,7 @@ body {
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 500;
-    color: #888;
+    color: #000000;
     cursor: pointer;
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
@@ -228,7 +309,7 @@ body {
 }
 
 .login-tab:hover:not(.active) {
-    color: #333;
+    color: #000000;
 }
 
 /* ----------------------------- */
@@ -245,6 +326,7 @@ body {
     display: none;
 }
 
+/* Shared form field styling supports both sign-in and registration screens. */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -259,24 +341,15 @@ body {
 
 .form-group small {
     font-size: 12px;
-    color: #888;
+    color: #000000;
     margin-bottom: 2px;
 }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 14px 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #333;
-    font-family: 'Inter', sans-serif;
-    background: #fff;
-    transition: border-color 0.2s ease;
-    outline: none;
-    appearance: none;
+.form-group input:focus-visible,
+.form-group select:focus-visible {
+    border-color: #132e8e;
+    outline: 2px solid #132e8e;
+    outline-offset: 2px;
 }
 
 .form-group input:focus,
@@ -284,6 +357,7 @@ body {
     border-color: #132e8e;
 }
 
+/* Password-wrap reserves room for the inline show/hide button without changing the input width. */
 .password-wrap {
     position: relative;
 }
@@ -323,7 +397,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #555;
+    color: #000000;
     cursor: pointer;
 }
 
@@ -363,6 +437,7 @@ body {
     cursor: wait;
 }
 
+/* Inline message colours reflect validation, loading, and success states set by the auth scripts. */
 .form-message {
     min-height: 20px;
     margin: -8px 0 0;
@@ -402,7 +477,11 @@ body {
     background: #e8e8e8;
 }
 
-.divider span { padding: 0 12px; }
+.divider span {
+    padding: 0 12px;
+    color: #000000;
+}
+
 
 /* ----------------------------- */
 /* REGISTER PROMPT */
@@ -411,7 +490,7 @@ body {
 .register-prompt {
     text-align: center;
     font-size: 14px;
-    color: #555;
+    color: #000000;
 }
 
 .register-prompt a {
@@ -432,3 +511,84 @@ body {
         padding: 28px 20px;
     }
 }
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+
+/* nav stacks centered on small screens  */
+@media (max-width: 700px) {
+    .top-nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+    /* center-nav drops to its own row + centers  */
+    .center-nav {
+        position: static;
+        transform: none;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* hide lang text on small screens  */
+    .lang { display: none; }
+}
+
+/* tabs go vertical on tiny screens so they dont squish  */
+@media (max-width: 480px) {
+    .login-tabs {
+        flex-direction: column;
+        border-bottom: none;
+    }
+
+    .login-tab {
+        text-align: left;
+        border-bottom: 2px solid #e8e8e8;
+        margin-bottom: 0;
+    }
+
+    .login-tab.active {
+        border-bottom: 2px solid #132e8e;
+    }
+
+    /* form options stack instead of row  */
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* login card less padding on tiny screens  */
+    .login-card {
+        padding: 20px 16px;
+    }
+
+    .login-header h1 { font-size: 18px; }
+}
+
+/* footer wraps + stacks centered  */
+footer { flex-wrap: wrap; gap: 20px; }
+
+@media (max-width: 600px) {
+    footer { justify-content: center; }
+    .footer-left, .footer-right { width: 100%; text-align: center; }
+}
+
+.footer-logos { flex-wrap: wrap; gap: 15px; }
+.footer-logos img { height: clamp(30px, 6vw, 50px); }
+
+/* box-sizing global so padding dont overflow  */
+*, *::before, *::after { box-sizing: border-box; }

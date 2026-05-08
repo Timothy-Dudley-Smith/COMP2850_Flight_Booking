@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Flight View</title>
+    <link rel="stylesheet" href="/manager/home/styles/manager_home.css">
     <link rel="stylesheet" href="/manager/flight_view/styles/flight_view.css">
 </head>
 <body>
-<header>
-    <h1>Manager Flight View</h1>
-    <p>View, add, and remove upcoming flights.</p>
+<header class="header">
+    <nav class="top-nav">
+        <div class="left-nav">
+            <div class="logo">
+                <img src="/images/Logo.png" class="Airline_Logo" alt="Airline logo">
+                <img src="/images/Star_Alliance.jpg" class="Star_Alliance" alt="Star Alliance logo">
+            </div>
+        </div>
+<!-- The flight-view header keeps this page focused on flight administration and links back to the manager dashboard. -->
+
+        <div class="center-nav">
+            <a href="/manager/home/manager_home.html">Home</a>
+            <a href="/manager/flight_view" class="active">Flight View</a>
+            <a href="/manager/edit_bookings/edit_bookings.html">Edit Bookings</a>
+            <a href="/manager/analytics">Analytics</a>
+            <a href="/manager/accounts/accounts.html">Accounts</a>
+            <a href="/manager/support/support.html">Support</a>
+        </div>
+
+        <div class="right-nav">
+            <span class="lang">Operations Console</span>
+            <a href="/">Customer Site</a>
+        </div>
+    </nav>
 </header>
 
 <main>
+    <!-- This status area is updated by JavaScript after every load, add, and remove action. -->
     <section aria-labelledby="manager-message-heading">
         <h2 id="manager-message-heading">Messages</h2>
         <p id="manager-message" role="status">No messages.</p>
     </section>
 
+    <!-- The add-flight form posts a new flight definition into the manager flight API. -->
     <section aria-labelledby="add-flight-heading">
         <h2 id="add-flight-heading">Add Flight</h2>
         <form id="add-flight-form" method="post" action="/api/manager/flight_view">
@@ -65,8 +89,82 @@
         </form>
     </section>
 
-    <section aria-labelledby="upcoming-flights-heading">
-        <h2 id="upcoming-flights-heading">Upcoming Flights</h2>
+    <!-- The add-airport form lets managers seed valid airport codes before creating new routes. -->
+    <section aria-labelledby="add-airport-heading">
+        <h2 id="add-airport-heading">Add Airport</h2>
+        <form id="add-airport-form" method="post" action="/api/manager/airports">
+            <div>
+                <label for="airport-code">Airport Code</label>
+                <input
+                        id="airport-code"
+                        name="code"
+                        type="text"
+                        maxlength="3"
+                        pattern="[A-Za-z]{3}"
+                        placeholder="LHR"
+                        required
+                >
+            </div>
+
+            <div>
+                <label for="airport-name">Airport Name</label>
+                <input
+                        id="airport-name"
+                        name="name"
+                        type="text"
+                        maxlength="128"
+                        placeholder="London Heathrow Airport"
+                        required
+                >
+            </div>
+
+            <div>
+                <label for="airport-city">City</label>
+                <input
+                        id="airport-city"
+                        name="city"
+                        type="text"
+                        maxlength="128"
+                        placeholder="London"
+                        required
+                >
+            </div>
+
+            <div>
+                <label for="airport-country">Country</label>
+                <input
+                        id="airport-country"
+                        name="country"
+                        type="text"
+                        maxlength="128"
+                        placeholder="United Kingdom"
+                        required
+                >
+            </div>
+
+            <p class="manager-form-hint">Use the standard three-letter IATA code. Example: `LHR`, `JFK`, `DXB`.</p>
+
+            <button type="submit">Add Airport</button>
+        </form>
+    </section>
+
+    <!-- The flights section supports client-side filtering and row-level removal actions. -->
+    <section aria-labelledby="flight-results-heading">
+        <h2 id="flight-results-heading">Flights</h2>
+        <div class="flight-filter-bar" role="group" aria-label="Filter flights by time">
+            <button type="button" class="flight-filter-button active" data-flight-filter="upcoming">
+                Upcoming
+            </button>
+            <button type="button" class="flight-filter-button" data-flight-filter="past">
+                Past
+            </button>
+            <button type="button" class="flight-filter-button" data-flight-filter="all">
+                All
+            </button>
+        </div>
+        <p id="flight-filter-summary" class="flight-filter-summary">
+            Showing upcoming flights.
+        </p>
         <table id="upcoming-flights-table">
             <thead>
             <tr>
@@ -83,12 +181,13 @@
             </thead>
             <tbody id="upcoming-flights-body">
             <tr>
-                <td colspan="9">No flights loaded.</td>
+                <td colspan="9">Loading flights.</td>
             </tr>
             </tbody>
         </table>
     </section>
 </main>
+<!-- Flight-view logic validates the manager session, handles both forms, and keeps the flights table in sync. -->
 <script src="/manager/flight_view/scripts/flight_view.js"></script>
 </body>
 </html>
